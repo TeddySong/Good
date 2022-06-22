@@ -8,11 +8,12 @@
 <style></style>
 </head>
 <body>
-	<h3>홈페이지</h3>
+	<h3>직원 로그인 페이지</h3>
 	<br/>
 	<hr/>
 	<br/>
-	<input type="button" value="직원전용 페이지" onclick="location.href='login.go'">
+	<input type="button" value="로그인" onclick="location.href='login.do'">
+	
 </body>
 <script></script>
 </html>

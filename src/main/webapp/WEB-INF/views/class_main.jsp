@@ -8,11 +8,12 @@
 <style></style>
 </head>
 <body>
-	<h3>홈페이지</h3>
+	<h3>수업 메인 페이지</h3>
 	<br/>
 	<hr/>
 	<br/>
-	<input type="button" value="직원전용 페이지" onclick="location.href='login.go'">
+	<input type="button" value="수업관리업무" onclick="location.href='subList.go'"><br/>
+	<input type="button" value="과정관리업무" onclick="location.href='courList.go'"><br/>
 </body>
 <script></script>
 </html>

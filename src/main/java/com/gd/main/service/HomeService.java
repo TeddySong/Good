@@ -13,5 +13,15 @@ public class HomeService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired HomeDAO dao;
+
+	public boolean empLogin(String emp_id, String emp_pw) {
+		
+		String loginId = dao.empLogin(emp_id,emp_pw);
+		
+		boolean success = false;
+		success = loginId == null ? false : true;
+	
+		return success;
+	}
 	
 }

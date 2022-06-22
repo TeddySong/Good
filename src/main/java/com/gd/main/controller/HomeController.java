@@ -1,5 +1,9 @@
 package com.gd.main.controller;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.main.service.HomeService;
 
@@ -23,9 +29,28 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value = "/login.go", method = RequestMethod.GET)
-	public String login(Model model) {			
+	@RequestMapping(value = "/login.go")
+	public String login() {	
+		logger.info("로그인 페이지 이동");
 		return "emp_login";
+	}
+	
+	@RequestMapping("/empLogin.ajax")
+	@ResponseBody
+	public HashMap<String, Object> emp_login(
+			@RequestParam String emp_id, @RequestParam String emp_pw
+			,HttpSession session){
+		
+		logger.info("로그인 요청 : {}/{}" ,emp_id, emp_pw);
+		boolean success = service.empLogin(emp_id,emp_pw);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("success", success);
+		
+		if(success){
+			session.setAttribute("loginId", emp_id);
+		}
+		
+		return map;
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)

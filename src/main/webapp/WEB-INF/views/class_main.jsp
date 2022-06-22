@@ -12,7 +12,7 @@
 	<br/>
 	<hr/>
 	<br/>
-	<input type="button" value="수업관리업무" onclick="location.href='subList.go'"><br/>
+	<input type="button" value="과목관리업무" onclick="location.href='subList.go'"><br/>
 	<input type="button" value="과정관리업무" onclick="location.href='courList.go'"><br/>
 </body>
 <script></script>

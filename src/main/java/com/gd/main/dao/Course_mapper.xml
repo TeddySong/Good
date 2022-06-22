@@ -2,7 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.CourseDAO">
+	<select id="list" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
+		co_startTime, co_condition FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
+	</select>
 	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(co_no) FROM course
+	</select>
 	
+	<select id="detail" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
+		co_startTime, co_condition FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+		WHERE co_no = #{param1}
+	</select>
 	
+	<select id="overlay" parameterType="String" resultType="String">
+		SELECT co_name FROM course WHERE co_name = #{chkCo}
+	</select>
+	
+	<!-- <select id="write" parameterType="hashmap">
+		INSERT INTO 
+	</select> -->
 </mapper>

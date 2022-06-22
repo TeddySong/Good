@@ -17,7 +17,10 @@ public class CourseController {
 	@Autowired CourseService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/courList.go", method = RequestMethod.GET)
+	public String courListGo(Model model) {			
+		return "./course/courList";
+	}
 	
 	
 }

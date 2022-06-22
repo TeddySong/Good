@@ -17,7 +17,10 @@ public class ClientController {
 	@Autowired ClientService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/cliList.go", method = RequestMethod.GET)
+	public String cliListGo(Model model) {			
+		return "./client/cliList";
+	}
 	
 	
 }

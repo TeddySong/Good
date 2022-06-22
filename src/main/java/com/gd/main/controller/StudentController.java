@@ -17,7 +17,10 @@ public class StudentController {
 	@Autowired StudentService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/stuList.go", method = RequestMethod.GET)
+	public String stuListGo(Model model) {			
+		return "./student/stuList";
+	}
 	
 	
 }

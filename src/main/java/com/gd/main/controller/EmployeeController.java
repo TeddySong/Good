@@ -17,7 +17,10 @@ public class EmployeeController {
 	@Autowired EmployeeService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/empList.go", method = RequestMethod.GET)
+	public String empListGo(Model model) {			
+		return "./employee/empList";
+	}
 	
 	
 }

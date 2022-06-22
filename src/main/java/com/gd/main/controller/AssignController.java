@@ -17,7 +17,10 @@ public class AssignController {
 	@Autowired AssignService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/assList.go", method = RequestMethod.GET)
+	public String assListGo(Model model) {			
+		return "./assign/assList";
+	}
 	
 	
 }

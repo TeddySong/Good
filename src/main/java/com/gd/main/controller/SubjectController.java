@@ -17,7 +17,10 @@ public class SubjectController {
 	@Autowired SubjectService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	@RequestMapping(value = "/subList.go", method = RequestMethod.GET)
+	public String subListGo(Model model) {			
+		return "./subject/subList";
+	}
 	
 	
 }

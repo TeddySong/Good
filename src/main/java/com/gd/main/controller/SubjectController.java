@@ -1,5 +1,8 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gd.main.dto.StuDTO;
+import com.gd.main.dto.SubDTO;
 import com.gd.main.service.SubjectService;
 
 
@@ -21,6 +29,42 @@ public class SubjectController {
 	public String subListGo(Model model) {			
 		return "./subject/subList";
 	}
+	
+	@RequestMapping(value = "/subList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subList() {
+		logger.info("리스트 요청");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<SubDTO> list = service.subList();
+		logger.info("subList : " + list.size());
+		map.put("subList", list);
+		return map;
+	}
+	
+	@RequestMapping(value = "/subRegister.go")
+	public String subRegisterGo() {
+		logger.info("과목 등록 페이지 이동");
+		return "./subject/subRegister";
+	}
+	
+	@RequestMapping("/subOverlay.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subOverlay(@RequestParam String subname) {
+		logger.info("과목 중복 체크 : " + subname);
+		return service.subOverlay(subname);
+	}
+	
+	@RequestMapping("/subRegister.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subRegister(MultipartFile[] curris,@RequestParam HashMap<String, String> params) {
+		logger.info("과목 등록");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean register = service.subRegister(params,curris);
+		map.put("subRegister", register);
+		
+		return map;
+	}
+
 	
 	
 }

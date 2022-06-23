@@ -3,6 +3,27 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.SubjectDAO">
 	
+	<select id="subList" resultType="com.gd.main.dto.SubDTO">
+		SELECT sub_no, sub_name, sub_condition FROM subject
+	</select>
+	
+	<select id="subOverlay" parameterType="String" resultType="String">
+		SELECT sub_name FROM subject WHERE sub_name = #{subname}
+	</select>
+	
+	<insert id="subRegister" useGeneratedKeys="true" keyColumn="sub_no" keyProperty="sub_no" parameterType="com.gd.main.dto.SubDTO">
+		INSERT INTO subject(sub_name, sub_condition)
+		VALUES(#{sub_name}, #{sub_condition})
+	</insert>
+	
+	<insert id="subHome">
+		INSERT INTO subject_home(sub_time, sub_summary, sub_no)
+		VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+
+
+	
 	
 	
 </mapper>

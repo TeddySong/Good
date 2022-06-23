@@ -2,11 +2,14 @@ package com.gd.main.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AssListDTO {
 
 	private String sub_name;
 	private String co_name;
-	private Date co_startTime;
+	private String co_startTime;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_startDate;
 	private String cli_name;
 	private String cli_phone;
@@ -24,10 +27,10 @@ public class AssListDTO {
 	public void setCo_name(String co_name) {
 		this.co_name = co_name;
 	}
-	public Date getCo_startTime() {
+	public String getCo_startTime() {
 		return co_startTime;
 	}
-	public void setCo_startTime(Date co_startTime) {
+	public void setCo_startTime(String co_startTime) {
 		this.co_startTime = co_startTime;
 	}
 	public Date getCo_startDate() {
@@ -60,7 +63,7 @@ public class AssListDTO {
 	public void setCo_condition(String co_condition) {
 		this.co_condition = co_condition;
 	}
-	
+
 	
 	
 }

@@ -9,6 +9,7 @@
 	<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
 <style>
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -57,12 +58,21 @@
 	    font-weight: 500;
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
+	.registerSh{
+		
+		text-decoration: none;
+		color: rgb(26 18 50 / 100%);
+		border-radius: 4px;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset
+	}
 
 	.register:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
-		
+	.pagination{	
+		justify-content: center;
+	}
 </style>
 </head>
 <body class="sb-nav-fixed">
@@ -182,7 +192,7 @@
 												<option value="co_condition">수강상태</option>
 											</select>
 											<input/>
-											<button>검색</button>
+											<button class="registerSh" onclick = "location.href='assList.go'" >검색</button>
 										</tr>
 										<tr>
 											<th>과목명</th>
@@ -197,10 +207,19 @@
 									</thead>
 									<tbody id="list">
 										
-									</tbody>									
+									</tbody>
+									<tr>
+									<!-- plugin 사용법(twbspagination) -->
+										<td colspan="8" id ="paging">
+											<div class="container">
+												<nav arial-lable="Page navigation" style="text-align:center">
+													<ul class="pagination" id="pagination"></ul>
+												</nav>
+											</div>
+										</td>
+									</tr>							
 								</table>								
                             </div>
-                            <button class="register" onclick = "location.href='stuRegister.go'" >등록</button>
                         </div>
                     </div>
                 </main>
@@ -208,13 +227,17 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>
+	    <!-- <script src="../resources/JS/empDatatables-simple-demo.js"></script> -->
 </body>
 <script>
 
-listCall();
+var currPage = 1;
 
-function listCall(){
+listCall(currPage);
+
+function listCall(page){
+	
+	var pagePerNum = 10;
 	
 	$.ajax({
 		type:'get',
@@ -223,14 +246,43 @@ function listCall(){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
+			drawList(data.assList);
+			currPage=data.currPage;
+			
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage,
+				totalPages:data.pages,
+				visiblePages: 5,
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					listCall(page);
+				}
+			});
+			
 		},
 		error:function(e){
 			console.log(e);
 		}
-		
 	});
-	
 }
-
+	function drawList(list){
+		var content="";
+			list.forEach(function(item){
+				content +='<tr>';
+				content +='<td>'+item.sub_name+'</td>';
+				content +='<td>'+item.co_name+'</td>';
+				content +='<td>'+item.co_startTime+'</td>';
+				content +='<td>'+item.co_startDate+'</td>';
+				content +='<td>'+item.cli_name+'</td>';
+				content +='<td>'+item.cli_phone+'</td>';
+				content +='<td>'+item.emp_name+'</td>';
+				content +='<td>'+item.co_condition+'</td>';
+				content +='<tr>';
+			});
+			$('#list').empty();
+			$('#list').append(content);
+	} 
 </script>
 </html>

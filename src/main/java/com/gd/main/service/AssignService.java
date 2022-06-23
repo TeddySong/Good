@@ -18,6 +18,7 @@ public class AssignService {
 	@Autowired AssignDAO dao;
 
 	public ArrayList<AssListDTO> assList() {
+		
 		logger.info("배정 리스트 서비스 도착");
 		
 		return dao.assList();

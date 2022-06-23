@@ -11,6 +11,8 @@ public interface StudentDAO {
 
 	int allCount();
 
+	ArrayList<StuDTO> cliSearchList(String searchContent);
+
 	
 
 }

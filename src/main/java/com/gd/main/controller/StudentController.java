@@ -1,7 +1,9 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gd.main.dto.StuDTO;
 import com.gd.main.service.StudentService;
 
 
@@ -61,8 +64,20 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/cliSearch.do")
-	public String cliSearch(Model model, HttpSession session, @RequestParam String idx) {
-		return null;
+	public String cliSearch(Model model, HttpServletRequest req) {
+		logger.info("고객 검색");
+		
+		String cliSearchCondition = req.getParameter("cliSearchCondition");
+		String searchContent = req.getParameter("searchContent");
+		
+		logger.info(cliSearchCondition + "/" + searchContent);
+		
+		ArrayList<StuDTO> cliSearchList = service.cliSearchList(searchContent);
+		logger.info("list size : " + cliSearchList.size());
+		
+		model.addAttribute("cliSearchList", cliSearchList);
+		
+		return "./student/cliSearch";
 	}
 	
 	

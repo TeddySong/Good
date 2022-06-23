@@ -52,6 +52,11 @@ public class StudentService {
 		
 		return map;
 	}
+
+	public ArrayList<StuDTO> cliSearchList(String searchContent) {
+		logger.info("리스트 서비스 요청");
+		return dao.cliSearchList(searchContent);		
+	}
 	
 	
 	

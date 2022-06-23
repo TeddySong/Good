@@ -9,5 +9,13 @@
 		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no ;
 	</select>
 	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(stu_no) FROM student s
+	</select>
 	
+	<select id="cliSearchList" resultType="com.gd.main.dto.StuDTO">
+		SELECT cli_no, cli_name, cli_phone, emp_name FROM client c 
+		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no
+		WHERE cli_name=#{param1} OR cli_phone=#{param1}
+	</select>
 </mapper>

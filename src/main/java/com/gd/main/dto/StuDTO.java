@@ -2,12 +2,15 @@ package com.gd.main.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class StuDTO {
 	private int cli_no;
 	private int stu_no;
 	private int sub_no;
 	private String cli_name;
 	private String cli_phone;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date stu_birth;	
 	private int stu_age;
 	private int emp_no;

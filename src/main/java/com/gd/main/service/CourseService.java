@@ -23,6 +23,8 @@ public class CourseService {
 		//hashmap 을 반환하기위해 객체화
 		
 		int cnt = Integer.parseInt(params.get("cnt"));
+		//int cnt = 10;
+		
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		// 1페이지 -> 0(offset:게시글 시작 번호)
@@ -82,6 +84,7 @@ public class CourseService {
 
 	public HashMap<String, Object> write(HashMap<String, Object> params) {
 		HashMap<String, Object> writeResult = new HashMap<String, Object>();
+
 		int row = dao.write(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);

@@ -2,12 +2,16 @@ package com.gd.main.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CourseDTO {
 
 	private int co_no;
 	private String co_name;
 	private String sub_name;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_startDate;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_endDate;
 	private String co_condition;
 	private String co_startTime;

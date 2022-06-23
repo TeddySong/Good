@@ -15,7 +15,7 @@
 	
 	<select id="detail" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
-		co_startTime, co_condition FROM course
+		co_startTime, co_endTime, co_condition,co_capacity FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		WHERE co_no = #{param1}
 	</select>
@@ -24,8 +24,8 @@
 		SELECT co_name FROM course WHERE co_name = #{chkCo}
 	</select>
 	
-	<select id="write" parameterType="hashmap">
+	<insert id="write" parameterType="hashmap">
 		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
-		VALUES (#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
-	</select>
+		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
+	</insert>
 </mapper>

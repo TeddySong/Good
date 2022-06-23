@@ -24,15 +24,7 @@
 <body>
 <h1>과정 리스트</h1><hr/>
     <!--검색 조건 선택-->
-    <div id="courseSearch">
-        <select id="sub_name">
-            <option>과목명</option>
-            <option value="java">JAVA</option>
-            <option value="clang">C언어</option>
-            <option value="python">Python</option>
-            <option value="frontend">프론트</option>
-            <option value="backend">백엔드</option>
-        </select>
+    <div id="courseSearch"> 
         <select id="co_name">
             <option>과정명</option>
             <option value=""></option>
@@ -40,6 +32,14 @@
             <option value=""></option>
             <option value=""></option>
             <option value=""></option>
+        </select>
+        <select id="sub_name">
+            <option>과목명</option>
+            <option value="java">JAVA</option>
+            <option value="clang">C언어</option>
+            <option value="python">Python</option>
+            <option value="frontend">프론트</option>
+            <option value="backend">백엔드</option>
         </select>
         <input type="text" placeholder="검색어를 입력해주세요"/>
         <input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
@@ -94,6 +94,7 @@ function listCall(page) {
 		url: 'courseList.ajax',
 		data:{
 			cnt:pagePerNum,
+			//cnt:10,
 			page:page
 		},
 		dataType:'JSON',
@@ -128,8 +129,8 @@ function drawList(list){
 	list.forEach(function(item){
 		content += '<tr>';
 		content += '<td>'+item.co_no+'</td>';
-		content += '<td>'+item.sub_name+'</td>';
 		content += '<td><a href="detail.go?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
+		content += '<td>'+item.sub_name+'</td>';
 		content += '<td>'+item.co_startDate+'</td>';
 		content += '<td>'+item.co_endDate+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';

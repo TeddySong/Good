@@ -13,6 +13,8 @@ public interface StudentDAO {
 
 	ArrayList<StuDTO> cliSearchList(String searchContent);
 
+	ArrayList<StuDTO> cliChoice(int result);
+
 	
 
 }

@@ -110,24 +110,49 @@
 				<th>담당직원</th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody id="cliSearchList">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
 			<tr>
-				<td><input type="radio" value="${cliSearchList.cli_no}" style="margin:0 auto;"/></td>
-				<td>${cliSearchList.cli_name}</td>
-				<td>${cliSearchList.cli_phone}</td>
-				<td>${cliSearchList.emp_name}</td>
+				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>
+				<td id="cli_name">${cliSearchList.cli_name}</td>
+				<td id="cli_phone">${cliSearchList.cli_phone}</td>
+				<td id="emp_name">${cliSearchList.emp_name}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	
 	<br/><br/><br/><br/><br/><br/>
-	<button onclick="location:href='cliChoice.ajax'">선택</button>
+	<button onclick="cliChoice()">선택</button>
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
+function cliChoice(){
 	
+	var cliChoice = $('#cliSearchList input[type="radio"]:checked').val();
+	
+	
+	console.log(cliChoice);
+	
+ 	$.ajax({
+		type:'get',
+		url:'cliChoice.ajax',
+		data:{
+			"cliChoice":cliChoice
+			},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+	
+}
+
 
 
 </script>

@@ -3,6 +3,13 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.AssignDAO">
 	
-	
+	<select id="assList" resultType="com.gd.main.dto.AssListDTO">
+		select sub_name, co_name, co_startTime,co_startDate, cli_name, cli_phone, emp_name, co_condition 
+			from assign a join client c2
+			left outer join subject s on s.sub_no = a.sub_no
+			left outer join course c on c.co_no = a.co_no
+			left outer join student s2 on s2.cli_no = c2.cli_no 
+			left outer join employee e on e.emp_no =s2.emp_no;
+	</select>
 	
 </mapper>

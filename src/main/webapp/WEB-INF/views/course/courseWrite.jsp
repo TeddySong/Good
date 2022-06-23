@@ -126,42 +126,73 @@ function overlay(){
 //등록
 function save(){
 	console.log('과정등록');
-	var co_name = $("#co_name").val();
-	var sub_name = $("#sub_name").val();
-	var co_startDate = $("#co_startDate").val();
-	var co_endDate = $("#co_endDate").val();
-	var co_startTime = $("#co_startTime").val();
-	var co_endTime = $("#co_endTime").val();
-	var co_capacity = $("#co_capacity").val();
-	var co_condition = $("#co_condition").val();
+	var $co_name = $("#co_name").val();
+	var $sub_name = $("#sub_name").val();
+	var $co_startDate = $("#co_startDate").val();
+	var $co_endDate = $("#co_endDate").val();
+	var $co_startTime = $("#co_startTime").val();
+	var $co_endTime = $("#co_endTime").val();
+	var $co_capacity = $("#co_capacity").val();
+	var $co_condition = $("#co_condition").val();
 	
-	$.ajax({
-		type:'post',
-		url:'write.ajax',
-		data:{
-			co_name : co_name,
-			sub_name : sub_name,
-			co_startDate : co_startDate,
-			co_endDate : co_endDate,
-			co_startTime : co_startTime,
-			co_endTime : co_endTime,
-			co_capacity : co_capacity,
-			co_condition : co_condition
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			if(data.success){
-				location.href="courList.go";
-			} else {
-				alert("로그인이 필요한 서비스입니다.");
-				location.href='/login.go';
-			}
-		},
-		error:function(e){
-			console.log(e);
+	if(overCo){
+		if($co_name.val() == "") {
+			alert("과정명을 입력하세요.");
+			$co_name.focus();
+		} else if($sub_name.val() == "") {
+			alert("과목명을 선택하세요.");
+			$sub_name.focus();
+		} else if($co_startDate.val() == "") {
+			alert("개강일을 선택하세요.");
+			$co_startDate.focus();
+		} else if($co_endDate.val() == "") {
+			alert("종강일을 선택하세요.");
+			$co_endDate.focus();
+		} else if($co_startTime.val() == "") {
+			alert("수업 시작시간을 선택하세요.");
+			$co_startTime.focus();
+		} else if($co_endTime.val() == "") {
+			alert("수업 종료시간을 선택하세요.");
+			$co_endTime.focus();
+		} else if($co_capacity.val() == "") {
+			alert("수강정원을 입력하세요.");
+			$co_capacity.focus();
+		} else if($co_condition.val() == "") {
+			alert("수강상태를 선택하세요.");
+			$co_condition.focus();
+		} else {
+			
+			$.ajax({
+				type:'post',
+				url:'write.ajax',
+				data:{
+					co_name : co_name,
+					sub_name : sub_name,
+					co_startDate : co_startDate,
+					co_endDate : co_endDate,
+					co_startTime : co_startTime,
+					co_endTime : co_endTime,
+					co_capacity : co_capacity,
+					co_condition : co_condition
+				},
+				dataType:'json',
+				success:function(data){
+					console.log(data);
+					if(data.success){
+						location.href="courList.go";
+					} else {
+						alert("로그인이 필요한 서비스입니다.");
+						location.href='/login.go';
+					}
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
 		}
-	});
+	}
+	
+
 }
 </script>
 </html>

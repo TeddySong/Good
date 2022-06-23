@@ -1,8 +1,233 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.ClientDAO">
 	
+	<resultMap type="com.gd.main.dto.Client_Dto" id="client_Dto">
+		<result column="cli_no" property="cli_no"/> 
+		<result column="cli_name" property="cli_name"/> 
+		<result column="cli_phone" property="cli_phone"/> 
+		<result column="cli_req" property="cli_req"/> 
+		<result column="cli_qDate" property="cli_qDate"/> 
+		<result column="emp_no" property="emp_no"/> 
+		<result column="sub_no" property="sub_no"/> 
+		<result column="cli_log_date" property="cli_log_date"/> 
+		<result column="cli_log_content" property="cli_log_content"/> 
+		<result column="cli_log_result" property="cli_log_result"/> 
+		<result column="cli_log_Dday" property="cli_log_Dday"/> 
+		<result column="cli_log_Dtime" property="cli_log_Dtime"/> 
+		<result column="emp_name" property="emp_name"/> 
+		<result column="emp_phone" property="emp_phone"/> 
+		<result column="emp_position" property="emp_position"/> 
+		<result column="emp_id" property="emp_id"/> 
+		<result column="emp_pw" property="emp_pw"/> 
+		<result column="emp_startDate" property="emp_startDate"/> 
+		<result column="emp_endDate" property="emp_endDate"/> 
+		<result column="emp_condition" property="emp_condition"/> 
+		<result column="sub_name" property="sub_name"/> 
+		<result column="sub_condition" property="sub_condition"/> 
+	
+	</resultMap>
 	
 	
+
+	
+	<select id="list_Client2" resultType="hashmap">
+		select distinct  c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+		from qsub q
+		left outer join client c   on q.cli_no =c.cli_no
+		left outer join employee e  on c.emp_no  = e.emp_no 
+		left outer join client_log cl  on c.cli_no = cl.cli_no 
+		left outer join subject ss on ss.sub_no = q.sub_no
+	</select>
+	
+	
+	
+	
+	<select id="client_searh" parameterType="hashmap"  resultMap="client_Dto">
+		SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+		FROM client  c
+		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
+		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
+		<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		    	  	</if>
+		</where>
+			order by c.cli_no  desc
+	</select>
+
+	<!-- 회원 상세보기  -->
+	<select id="detail_Client" parameterType="integer" resultMap="client_Dto">
+		SELECT c.cli_no,c.cli_name,c.cli_phone,c.cli_qDate,c.cli_req,e.emp_name
+		FROM client as c
+		LEFT JOIN employee as e ON c.emp_no=e.emp_no
+		WHERE c.cli_no= #{cli_no}	
+	</select>
+<!-- 상세보기 페이지 일지 보기 -->
+<select id="clientLog" parameterType="integer" resultMap="client_Dto">
+	SELECT client_log.cli_log_result ,client_log.cli_log_Dday,client_log.cli_log_Dtime ,client_log.cli_log_date ,client_log.cli_log_content , employee.emp_name 
+	, client.cli_qDate 
+	FROM client_log
+	LEFT JOIN employee  on client_log.emp_no = employee.emp_no 
+	LEFT JOIN client on client_log.cli_no =client.cli_no 
+	WHERE client.cli_no =#{cli_no}
+</select>
+
+<select id="listsearchCount" parameterType="hashmap" resultType="integer">
+			SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
+			FROM client c
+			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
+			LEFT JOIN client_log cl  on c.cli_no = cl.cli_no 
+			LEFT JOIN qsub q  on q.cli_no =c.cli_no
+			LEFT JOIN subject ss on ss.sub_no = q.sub_no 
+		<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		   	</if>
+		</where> 
+	
+			
+</select>
+<select id="listPageSearch" parameterType="hashmap" resultMap="client_Dto">
+	SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+		FROM client  c
+		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
+		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
+			<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		    	  	</if>
+		</where>
+		
+			order by c.cli_no  desc limit #{postNum}  offset #{pageStart}
+	</select>
+		
+	<select id="allCount" resultType="integer">
+		SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
+			FROM client c
+			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
+			LEFT JOIN client_log cl  on c.cli_no = cl.cli_no 
+			LEFT JOIN qsub q  on q.cli_no =c.cli_no
+			LEFT JOIN subject ss on ss.sub_no = q.sub_no 
+	</select>	
+	
+	<select id="ajaxlist" resultType="com.gd.main.dto.Client_Dto">
+			SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+		FROM client  c
+		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
+		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
+	order by c.cli_no  desc limit #{param1} offset #{param2} 
+	</select>
+	
+	<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">
+	SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+		FROM client  c
+		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
+		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
+			<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		    	  	</if>
+		</where>
+		order by c.cli_no  desc limit #{cnt}  offset #{offset}
+		</select>
+		
+		<select id="ajaxSearchCnt" parameterType="hashmap" resultType="integer">
+			SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
+			FROM client c
+			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
+			LEFT JOIN client_log cl  on c.cli_no = cl.cli_no 
+			LEFT JOIN qsub q  on q.cli_no =c.cli_no
+			LEFT JOIN subject ss on ss.sub_no = q.sub_no 
+		<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		   	</if>
+		</where> 		
+</select>
+
+	<delete id="ajaxDelete" parameterType="String">
+			DELETE FROM client WHERE cli_no=#{idx}
+		</delete>
 </mapper>
+
+
+	

@@ -186,7 +186,7 @@
 									<tr>
 										<th>이름</th>
 										<td><input type="text" id="cli_name"/>
-										<button onclick="search()">고객정보 검색</button>
+										<button onclick="cliSearch_pop()">고객정보 검색</button>
 										</td>
 									</tr>
 									<tr>
@@ -256,7 +256,9 @@
 
 </body>
 <script>
-
+function cliSearch_pop(){	 
+	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	}
 			
 	
 

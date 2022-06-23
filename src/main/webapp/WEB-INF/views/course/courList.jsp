@@ -25,7 +25,7 @@
 <h1>과정 리스트</h1><hr/>
     <!--검색 조건 선택-->
     <div id="courseSearch">
-        <select id="subName">
+        <select id="sub_name">
             <option>과목명</option>
             <option value="java">JAVA</option>
             <option value="clang">C언어</option>
@@ -33,7 +33,7 @@
             <option value="frontend">프론트</option>
             <option value="backend">백엔드</option>
         </select>
-        <select id="courseName">
+        <select id="co_name">
             <option>과정명</option>
             <option value=""></option>
             <option value=""></option>
@@ -42,9 +42,9 @@
             <option value=""></option>
         </select>
         <input type="text" placeholder="검색어를 입력해주세요"/>
-        <input type="date" id="start" name="classStart" value="2022-06-21" min="2022-06-01" max="2100-06-01"/>
+        <input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
         ~
-        <input type="date" id="end" name="classEnd" value="2022-06-21" min="2022-06-01" max="2100-06-01"/>
+        <input type="date" id="co_endDate" value="" min="2022-06-01" max="2100-06-01"/>
         <input type="button" value="검색"/>
     </div><br/>
     

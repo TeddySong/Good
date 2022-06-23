@@ -13,6 +13,7 @@ public class CourseDTO {
 	private String co_startTime;
 	private String co_endTime;
 	private int co_capacity;
+	private int sub_no;
 	
 	
 	public int getCo_no() {
@@ -69,8 +70,12 @@ public class CourseDTO {
 	public void setCo_capacity(int co_capacity) {
 		this.co_capacity = co_capacity;
 	}
-	
-
+	public int getSub_no() {
+		return sub_no;
+	}
+	public void setSub_no(int sub_no) {
+		this.sub_no = sub_no;
+	}
 	
 	
 }

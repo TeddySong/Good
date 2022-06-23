@@ -45,11 +45,11 @@
             <td colspan="3" id="sub_name" value="">
             	<select id="subName">
 		            <option>과목명</option>
-		            <option value="java">JAVA</option>
-		            <option value="clang">C언어</option>
-		            <option value="python">Python</option>
-		            <option value="frontend">프론트</option>
-		            <option value="backend">백엔드</option>
+		            <option value="JAVA">JAVA</option>
+		            <option value="C언어">C언어</option>
+		            <option value="Python">Python</option>
+		            <option value="프론트엔드">프론트엔드</option>
+		            <option value="백엔드">백엔드</option>
 		        </select>
             </td>
         </tr>

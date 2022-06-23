@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="write" parameterType="hashmap">
-		<!-- INSERT INTO course (co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
-		VALUES (); -->
+		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
+		VALUES (#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
 	</select>
 </mapper>

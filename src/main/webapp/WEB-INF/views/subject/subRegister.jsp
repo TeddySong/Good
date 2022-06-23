@@ -76,8 +76,6 @@ button {
 </body>
 <script>
 
-	var subOverChk = false; //과목중복체크 여부
-	
 	function subOverlay() {
 		var sub_name = $("#sub_name").val();
 		console.log('과목 중복 체크 : ' + sub_name);
@@ -102,50 +100,66 @@ button {
 		});
 	}
 	
-function writePage(){
-	console.log('글쓰기');
-	var $sub_name = $('#sub_name');
-	var $sub_condition = $('#sub_condition');
-	
-	//if(subOverChk){
+	function writePage(){
+		var subOverChk = true; //과목중복체크 여부
+		console.log($("#curris")[0].files[0]);
+		console.log('글쓰기');
+		var $sub_name = $('#sub_name');
+		var $sub_condition = $('#sub_condition');
+		var $sub_time  = $('#sub_time');
+		var $sub_summary = $('#sub_summary');
 		
-		if($sub_name.val() ==""){
-			alert("과목명을 입력해 주세요.");
-			$sub_name.focus();
-		}else{
-			console.log("과목등록 요청");
-		
-	
-	$.ajax({
-		type:'get',
-		url:'subRegister.ajax',
-		data:{
-			sub_name:$sub_name.val(),
-			sub_condition:$sub_condition.val()
-		},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
+		if(($sub_name.val() == "" || $sub_name.val() == undefined || $sub_name.val() == null))
+		/*
+		1. 과목명이 입력됐는지 확인
+		2. 노출상태가 입력됐는지 확인
+		3. ... 입력됐는지 확인
+		4. subOverChk = true로 변환하는 작업 필요
+		*/
+		console.log($sub_time.val());
+		console.log($sub_summary.val());
+		// truthy vs falsy
+		//if(subOverChk){
 			
-			if(data.subRegister){
-				alert("과목등록 성공");
-				location.href='subList.go';
+			if($sub_name.val() ==""){
+				alert("과목명을 입력해 주세요.");
+				$sub_name.focus();
 			}else{
-				alert("과목등록 실패");
+				console.log("과목등록 요청");
+				
+				$.ajax({
+					type:'get',
+					url:'subRegister.ajax',
+					data:{
+						sub_name:$sub_name.val(),
+						sub_condition:$sub_condition.val(),
+						sub_time: $sub_time.val(),
+						sub_summary: $sub_summary.val(),
+					},
+					dataType:'JSON',
+					success:function(data){
+						console.log(data);
+						
+						if(data.subRegister){
+							alert("과목등록 성공");
+							location.href='subList.go';
+						}else{
+							alert("과목등록 실패");
+						}
+					},
+					error:function(e){
+						console.log(e);
+					}
+				});
+				
 			}
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
+		
+		//}else{
+			//alert("과목명 중복체크를 진행해 주세요");
+			//$sub_name.focus();
+		//}
+		
 	}
-	
-	//}else{
-		//alert("과목명 중복체크를 진행해 주세요");
-		//$sub_name.focus();
-	//}
-	
-}
 	
 	
 

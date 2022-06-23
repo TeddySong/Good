@@ -56,10 +56,10 @@ public class SubjectController {
 	
 	@RequestMapping("/subRegister.ajax")
 	@ResponseBody
-	public HashMap<String, Object> subRegister(MultipartFile[] curris,@RequestParam HashMap<String, String> params) {
+	public HashMap<String, Object> subRegister(@RequestParam HashMap<String, String> params) {
 		logger.info("과목 등록");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean register = service.subRegister(params,curris);
+		boolean register = service.subRegister(params);
 		map.put("subRegister", register);
 		
 		return map;

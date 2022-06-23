@@ -36,35 +36,39 @@ public class SubjectService {
 		return map;
 	}
 
-	public boolean subRegister(HashMap<String, String> params, MultipartFile[] curris) {
+	public boolean subRegister(HashMap<String, String> params) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		SubDTO dto = new SubDTO();
+		System.out.println("DATA ::: " + params.toString());
+		System.out.println("DATA ::: " + params.get("sub_time"));
+		System.out.println("DATA ::: " + params.get("sub_summary"));
 		
-		int subno = dto.getSub_no();
+		SubDTO dto = new SubDTO();
+		dto.setSub_name(params.get("sub_name"));
+		dto.setSub_condition(params.get("sub_condition"));
+		//dto.setSub_time(params.get("sub_time"));
+		//dto.setSub_summary(params.get("sub_summary"));
+		
+		int row = dao.subRegister(dto);
+		int sub_no = dto.getSub_no();
 		
 		boolean success = false;
-		if(dao.subRegister(params,curris,subno)>0) {
+		if(row >0) {
+			System.out.println("DATA ::: " + dto.getSub_no());
 			success = true;
 		}
 		result.put("success", success);
 		return success;
 	}
 	
-	public void fileSave(MultipartFile[] curris, int subno) {
-		for (MultipartFile curri : curris) {
-			String oriFileName = curri.getOriginalFilename();
-			if(!oriFileName.equals("")) {
-				logger.info("업로드 진행");
-				String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
-				String newFileName = System.currentTimeMillis()+ext;
-				logger.info(oriFileName + "->" + newFileName);
-				
-				
-				
-				
-			}
-		}
+	public void subHome(HashMap<String, String> params, int sub_no) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		SubDTO dto = new SubDTO();
+		dto.setSub_time(params.get("sub_time"));
+		dto.setSub_summary(params.get("sub_summary"));
+		dao.subHome(params,sub_no);
 	}
+	
+	
 
 	
 	

@@ -13,7 +13,11 @@ public interface SubjectDAO {
 
 	String subOverlay(String subname);
 
-	int subRegister(HashMap<String, String> params, MultipartFile[] curris, int subno);
+	int subRegister(SubDTO dto);
+
+	void subHome(HashMap<String, String> params, int sub_no);
+
+
 
 	
 

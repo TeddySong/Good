@@ -11,10 +11,17 @@
 		SELECT sub_name FROM subject WHERE sub_name = #{subname}
 	</select>
 	
-	<insert id="subRegister" parameterType="hashmap">
+	<insert id="subRegister" useGeneratedKeys="true" keyColumn="sub_no" keyProperty="sub_no" parameterType="com.gd.main.dto.SubDTO">
 		INSERT INTO subject(sub_name, sub_condition)
-			VALUES(#{sub_name}, #{sub_condition})
+		VALUES(#{sub_name}, #{sub_condition})
 	</insert>
+	
+	<insert id="subRegister">
+		INSERT INTO subject_home(sub_time, sub_summary, sub_no)
+		VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+
 	
 	
 	

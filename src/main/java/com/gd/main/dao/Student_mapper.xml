@@ -9,5 +9,9 @@
 		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no ;
 	</select>
 	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(stu_no) FROM student s
+	</select>
+	
 	
 </mapper>

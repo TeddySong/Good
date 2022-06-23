@@ -8,7 +8,10 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
 <style>
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -16,7 +19,6 @@
 
 	#stuList {                
               border: 1px #a39485 solid;
-			  font-size: .9em;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
 			  width: 100%;
 			  border-collapse: collapse;
@@ -32,7 +34,7 @@
 		
 	#stuList,#stuList th,#stuList td
 	{
-		font-size:0.95em;
+		font-size:20px;
 		text-align:center;
 		padding:4px;
 		border:1px solid #dddddd;
@@ -171,7 +173,7 @@
                                 <i class="fas fa-table me-1"></i>
                                 직원리스트
                             </div>
-                            <div class="card-body">
+                            <div>
                                 <table id="stuList">
 									<thead>
 										<tr>
@@ -183,18 +185,19 @@
 											<th>담당직원</th>
 										</tr>
 									</thead>
-									<tbody>
-										<c:forEach items="${list}" var="dto">
-										<tr>
-											<td>${dto.stu_no}</td>
-											<td>${dto.cli_name}</td>
-											<td>${dto.cli_phone}</td>
-											<td>${dto.stu_birth}</td>
-											<td>${dto.stu_age}</td>
-											<td>${dto.emp_name}</td>
-										</tr>
-										</c:forEach>
-									</tbody>									
+									<tbody id="list">
+										
+									</tbody>
+									<tr>
+										<td colspan="6" id="paging">
+										<!-- twbspagination 플러그인 -->
+										<div class="container">
+											<nav arial-label="Page navigation" style="text-align:center">
+												<ul class="pagination" id="pagination"></ul>
+											</nav>
+										</div>
+										</td>
+									</tr>
 								</table>								
                             </div>
                             <button class="register" onclick = "location.href='stuRegister.go'" >등록</button>
@@ -210,6 +213,64 @@
 
 </body>
 <script>
+var currPage = 1;
+
+//리스트 불러오기
+listCall(currPage);
+
+function listCall(page) {
 	
+	var pagePerNum = 10;
+	
+	$.ajax({
+		type: 'get',
+		url: 'stuList.ajax',
+		data:{
+			cnt:pagePerNum,
+			page:page
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.list);
+			currPage = data.currPage;
+			
+			//불러오기 성공하면 플러그인 이용해서 페이징처리
+			$("#pagination").twbsPagination({
+				startPage: data.currPage, //시작 페이지
+				totalPages: data.pages, //총 페이지
+				visiblePages: 5, //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
+					console.log(page); //사용자가 클릭한 페이지
+					currPage = page;
+					listCall(page);
+				}
+			});
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+};
+
+//리스트 그리기
+function drawList(list){
+	
+	var content="";
+	
+	list.forEach(function(item){
+		content += '<tr>';
+		content += '<td>'+item.stu_no+'</td>';
+		content += '<td><a href="#">'+item.cli_name+'</a></td>';
+		content += '<td>'+item.cli_phone+'</td>';		
+		content += '<td>'+item.stu_birth+'</td>';
+		content += '<td>'+item.stu_age+'</td>';
+		content += '<td>'+item.emp_name+'</td>';
+		content += '</tr>';
+	});
+	
+	$('#list').empty();
+	$('#list').append(content);
+}
 </script>
 </html>

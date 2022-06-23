@@ -22,7 +22,7 @@ public class StudentController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/stuList.go")
-	public String courListGo() {	
+	public String stuListGo() {	
 		logger.info("수강생 리스트 페이지 이동");
 		return "./student/stuList";
 	}
@@ -47,5 +47,12 @@ public class StudentController {
 		return service.stuList(params);
 	}
 	
+	@RequestMapping(value = "/stuRegister.go")
+	public String stuRegisterGo() {	
+		logger.info("수강생 리스트 페이지 이동");
+		return "./student/stuRegister";
+	}
+	
+
 	
 }

@@ -15,7 +15,9 @@ public interface SubjectDAO {
 
 	int subRegister(SubDTO dto);
 
-	void subHome(HashMap<String, String> params, int sub_no);
+
+	void subHome(String subtime, String subsum, int subno);
+
 
 
 

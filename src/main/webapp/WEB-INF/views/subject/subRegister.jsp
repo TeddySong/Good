@@ -101,13 +101,14 @@ button {
 	}
 	
 	function writePage(){
-		var subOverChk = true; //과목중복체크 여부
-		console.log($("#curris")[0].files[0]);
+		var subOverChk = false; //과목중복체크 여부
+		//console.log($("#curris")[0].files[0]);
 		console.log('글쓰기');
 		var $sub_name = $('#sub_name');
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
+	
 		
 		if(($sub_name.val() == "" || $sub_name.val() == undefined || $sub_name.val() == null))
 		/*

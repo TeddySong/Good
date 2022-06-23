@@ -39,20 +39,22 @@ public class SubjectService {
 	public boolean subRegister(HashMap<String, String> params) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		System.out.println("DATA ::: " + params.toString());
-		System.out.println("DATA ::: " + params.get("sub_time"));
-		System.out.println("DATA ::: " + params.get("sub_summary"));
+		//System.out.println("DATA ::: " + params.get("sub_time"));
+		//System.out.println("DATA ::: " + params.get("sub_summary"));
 		
 		SubDTO dto = new SubDTO();
 		dto.setSub_name(params.get("sub_name"));
 		dto.setSub_condition(params.get("sub_condition"));
-		//dto.setSub_time(params.get("sub_time"));
-		//dto.setSub_summary(params.get("sub_summary"));
+		String subtime = params.get("sub_time");
+		String subsum = params.get("sub_summary");
 		
 		int row = dao.subRegister(dto);
-		int sub_no = dto.getSub_no();
+		int subno = dto.getSub_no();
 		
 		boolean success = false;
 		if(row >0) {
+			dao.subHome(subtime, subsum, subno);
+	
 			System.out.println("DATA ::: " + dto.getSub_no());
 			success = true;
 		}
@@ -60,13 +62,9 @@ public class SubjectService {
 		return success;
 	}
 	
-	public void subHome(HashMap<String, String> params, int sub_no) {
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		SubDTO dto = new SubDTO();
-		dto.setSub_time(params.get("sub_time"));
-		dto.setSub_summary(params.get("sub_summary"));
-		dao.subHome(params,sub_no);
-	}
+	
+	
+	
 	
 	
 

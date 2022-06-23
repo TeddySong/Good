@@ -16,11 +16,12 @@
 		VALUES(#{sub_name}, #{sub_condition})
 	</insert>
 	
-	<insert id="subRegister">
+	<insert id="subHome">
 		INSERT INTO subject_home(sub_time, sub_summary, sub_no)
 		VALUES(#{param1}, #{param2}, #{param3})
 	</insert>
 	
+
 
 	
 	

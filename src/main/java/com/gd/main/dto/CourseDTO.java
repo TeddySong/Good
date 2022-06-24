@@ -2,17 +2,22 @@ package com.gd.main.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class CourseDTO {
 
 	private int co_no;
 	private String co_name;
 	private String sub_name;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_startDate;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_endDate;
 	private String co_condition;
 	private String co_startTime;
 	private String co_endTime;
 	private int co_capacity;
+	private int sub_no;
 	
 	
 	public int getCo_no() {
@@ -69,8 +74,12 @@ public class CourseDTO {
 	public void setCo_capacity(int co_capacity) {
 		this.co_capacity = co_capacity;
 	}
-	
-
+	public int getSub_no() {
+		return sub_no;
+	}
+	public void setSub_no(int sub_no) {
+		this.sub_no = sub_no;
+	}
 	
 	
 }

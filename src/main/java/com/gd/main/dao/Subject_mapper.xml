@@ -21,7 +21,50 @@
 		VALUES(#{param1}, #{param2}, #{param3})
 	</insert>
 	
+	<select id="subDetail" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	SELECT 
+		s.sub_no,
+		s.sub_name,
+		s.sub_condition,
+		h.sub_time,
+		h.sub_summary
+	FROM
+		subject s 
+		JOIN subject_home h on s.sub_no = h.sub_no
+		WHERE s.sub_no = #{sub_no}
+	</select>
+	
+	<update id="subUpdate" parameterType="hashmap">
+		UPDATE subject s JOIN subject_home h
+		ON s.sub_no = h.sub_no
+		SET  s.sub_name = #{sub_name}
+			, s.sub_condition = #{sub_condition}
+			, h.sub_time = #{sub_time}
+			, h.sub_summary = #{sub_summary}
+			WHERE s.sub_no = #{sub_no}
+	</update>
 
+	
+	
+	<select id="subDetailsc" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	SELECT 
+		scr_content
+	FROM
+		script WHERE sub_no = #{sub_no};
+	</select>
+	
+	
+	
+	<select id="scriptlist" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+		SELECT
+	        sc.scr_no,
+	        s.sub_name,
+	        s.sub_condition,
+	        sc.scr_content
+		FROM
+        	subject s
+        JOIN script sc on s.sub_no = sc.sub_no;
+	</select>
 
 	
 	

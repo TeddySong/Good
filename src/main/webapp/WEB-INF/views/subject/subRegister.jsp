@@ -63,9 +63,9 @@ button {
 	 			<td><textarea id="sub_summary"></textarea></td>
 	 		</tr>
 	 		<tr>
-	 			<th>커리큘럼</th>
-	 			<td><input type="file" id="curris" multiple="multiple"/></td>
-	 		</tr>
+				<th>커리큘럼</th>
+				<td><input type="file" id="curri" multiple="multiple"/></td>
+			</tr>
 	 		<tr>
 				<th colspan="2">
 					<input type="button" value="등록 완료" onclick="writePage()"/>
@@ -75,6 +75,8 @@ button {
 	</table>
 </body>
 <script>
+
+	var subOverChk = false; //과목중복체크 여부
 
 	function subOverlay() {
 		var sub_name = $("#sub_name").val();
@@ -90,7 +92,7 @@ button {
 					alert("중복된 과목명 입니다.");
 				}else{
 					alert("사용 가능한 과목명 입니다.")
-					overChk = true;
+					subOverChk = true;
 				}
 			},
 			error:function(e){
@@ -101,16 +103,18 @@ button {
 	}
 	
 	function writePage(){
-		var subOverChk = false; //과목중복체크 여부
+		//var $sub_no = $('#sub_no').html();
+		
 		//console.log($("#curris")[0].files[0]);
 		console.log('글쓰기');
 		var $sub_name = $('#sub_name');
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
+		
 	
 		
-		if(($sub_name.val() == "" || $sub_name.val() == undefined || $sub_name.val() == null))
+		//if(($sub_name.val() == "" || $sub_name.val() == undefined || $sub_name.val() == null))
 		/*
 		1. 과목명이 입력됐는지 확인
 		2. 노출상태가 입력됐는지 확인
@@ -120,11 +124,15 @@ button {
 		console.log($sub_time.val());
 		console.log($sub_summary.val());
 		// truthy vs falsy
-		//if(subOverChk){
+		if(subOverChk){
 			
 			if($sub_name.val() ==""){
 				alert("과목명을 입력해 주세요.");
 				$sub_name.focus();
+			}else if($sub_time.val() == ""){
+				alert("수강시간을 입력해 주세요.");
+			}else if($sub_summary.val() == ""){
+				alert("과목개요를 입력해 주세요.");
 			}else{
 				console.log("과목등록 요청");
 				
@@ -143,7 +151,7 @@ button {
 						
 						if(data.subRegister){
 							alert("과목등록 성공");
-							location.href='subList.go';
+							location.href='/subList.go';
 						}else{
 							alert("과목등록 실패");
 						}
@@ -155,10 +163,10 @@ button {
 				
 			}
 		
-		//}else{
-			//alert("과목명 중복체크를 진행해 주세요");
-			//$sub_name.focus();
-		//}
+		}else{
+			alert("과목명 중복체크를 진행해 주세요");
+			$sub_name.focus();
+		}
 		
 	}
 	

@@ -29,7 +29,7 @@ th,td{
 </div>
 <div>
 <button onclick="location.href='subRegister.go'">등록</button>
-<button onclick="location.href='/'">과목후기</button>
+<button onclick="location.href='scriptlist.go'">과목후기</button>
 <button onclick="location.href='/'">과정목록</button>
 </div>
 	<table>
@@ -66,10 +66,10 @@ function listCall(){
 
 function drawList(list){
 	var content = '';
-	list.forEach(function(item){
-		console.log(item);
+	list.forEach(function(item,sub_no){
+		console.log(item,sub_no);
 		content += '<tr>';
-		content += '<td>'+item.sub_name+'</td>';
+		content += '<td><a href="subDetail.go?sub_no='+item.sub_no+'">'+item.sub_name+'</a></td>';
 		content += '<td>'+item.sub_condition+'</td>';
 		content += '</tr>';
 	});

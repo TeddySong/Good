@@ -7,9 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.gd.main.dao.CourseDAO;
 import com.gd.main.dto.CourseDTO;
+import com.gd.main.dto.SubDTO;
 
 @Service
 public class CourseService {
@@ -22,7 +24,10 @@ public class CourseService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//hashmap 을 반환하기위해 객체화
 		
+		
 		int cnt = Integer.parseInt(params.get("cnt"));
+		//int cnt = 10;
+		
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		// 1페이지 -> 0(offset:게시글 시작 번호)
@@ -82,6 +87,7 @@ public class CourseService {
 
 	public HashMap<String, Object> write(HashMap<String, Object> params) {
 		HashMap<String, Object> writeResult = new HashMap<String, Object>();
+
 		int row = dao.write(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);
@@ -93,4 +99,11 @@ public class CourseService {
 		
 		return writeResult;
 	}
+
+	public ArrayList<CourseDTO> subjectList() {
+		logger.info("과목 리스트 호출");
+		return dao.subjectList();
+	}
+
+	
 }

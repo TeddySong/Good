@@ -63,6 +63,22 @@ public class StudentService {
 		return dao.cliChoice(result);
 	}
 	
+	public ArrayList<StuDTO> subSearchList(String searchContent) {
+		logger.info("리스트 서비스 요청");
+		return dao.subSearchList(searchContent);		
+	}
+	
+	public ArrayList<StuDTO> subChoice(int result) {
+		logger.info("고객 데이터 선택 서비스 요청 : {}",result );
+		return dao.subChoice(result);
+	}
+
+	public StuDTO stuDetail(String stu_no) {
+		
+		return dao.stuDetail(stu_no);
+
+	}
+
 	
 	
 	

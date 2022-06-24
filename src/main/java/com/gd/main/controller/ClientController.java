@@ -64,21 +64,21 @@ public class ClientController {
 	}
 	
 	
-	@RequestMapping("/list.ajax")
+	@RequestMapping("/clientlist.ajax")
 	public @ResponseBody HashMap<String, Object> list(@RequestParam HashMap<String, String> params) {
 		
 		//logger.info("리스트 요청"+params);
 		return service.ajaxlist(params);
 	}
 	
-	@RequestMapping("/search.ajax")
+	@RequestMapping("/clientsearch.ajax")
 	public @ResponseBody HashMap<String, Object> search(@RequestParam HashMap<String, String> params) {
 		
 		logger.info("리스트 요청"+params);
 		return service.ajaxSearch(params);
 	}
 	
-	@RequestMapping("/delete.ajax")
+	@RequestMapping("/clientdelete.ajax")
 	@ResponseBody
 	public HashMap<String, Object> delete(HttpSession session,
 			@RequestParam(value = "delList[]") ArrayList<String> delList) {
@@ -91,4 +91,80 @@ public class ClientController {
 		
 		return map;
 	}
+	
+	// 6/24 추가 
+	
+	@RequestMapping("/cliReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> reg (@RequestParam("cli_name") String cli_name, @RequestParam("cli_phone") String cli_phone,
+			@RequestParam("cli_req") String cli_req,@RequestParam("sub_no") ArrayList<Integer> sub_no
+			) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+//		System.out.println(cli_name);
+//		System.out.println(cli_phone);
+//		System.out.println(cli_req);
+		System.out.println(sub_no);
+		map.put("cli_name", cli_name);
+		map.put("cli_phone", cli_phone);
+		map.put("cli_req", cli_req);
+			//@RequestParam(value="parameter이름[]")List<String>
+		//System.out.println(params);
+//		
+//		List<String> sub = (List<String>) params.get("sub_name");
+//		for (String string : sub) {
+//			System.out.println(string);
+//		}
+		  service.cliReg(map);
+	
+		 service.cliRegCo(sub_no);
+		 
+		return  map;
+	}
+	
+	@RequestMapping("/clientupdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> cliUpdate(@RequestParam HashMap<String, Object> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int cli_no = Integer.parseInt((String) params.get("cli_no"));
+		String cli_name = (String) params.get("cli_name");
+		String cli_phone = (String) params.get("cli_phone");
+		map.put("cli_phone", cli_phone);
+		map.put("cli_name", cli_name);
+		map.put("cli_no", cli_no);
+		
+			int cnt = service.cliUpdate(map);
+			map.put("cnt", cnt);
+		
+		return map;
+	}
+	
+	@RequestMapping("/empSearch.ajax")
+	@ResponseBody
+	public ArrayList<Client_Dto> empSearch(@RequestParam String empkeyword) {
+		ArrayList<Client_Dto> list = new ArrayList<Client_Dto>();
+		
+		return service.empSearch(empkeyword);
+	}
+	
+	@RequestMapping("/empList.ajax")
+	@ResponseBody
+	public ArrayList<Client_Dto> empList() {
+		ArrayList<Client_Dto> list = new ArrayList<Client_Dto>();
+		
+		return service.empList();
+	}
+	
+	@RequestMapping("/empUp.ajax")
+	@ResponseBody
+	public int empUp(String emp_no, int cli_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("emp_no", emp_no);
+		map.put("cli_no", cli_no);
+		return service.empUp(map);
+	}
+	
+	
+	
 }

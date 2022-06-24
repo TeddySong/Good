@@ -41,47 +41,45 @@
             </td>
 		</tr>
         <tr>
-            <th>과목</th>
-            <td colspan="3" id="sub_name" value="">
-            	<select id="subName">
-		            <option>과목명</option>
-		            <option value="java">JAVA</option>
-		            <option value="clang">C언어</option>
-		            <option value="python">Python</option>
-		            <option value="frontend">프론트</option>
-		            <option value="backend">백엔드</option>
-		        </select>
+           <th>과목</th>
+            <td colspan="3">
+		        <select id="sub_name">
+	        		<option>과목명</option>
+	            	<c:forEach items="${subjectList}" var="subjectList">
+		            	<option value="${subjectList.sub_name}">${subjectList.sub_name}</option>
+		            </c:forEach>
+	        	</select>
             </td>
         </tr>
         <tr>
             <th>개강일</th>
             <td>
-            	<input type="date" id="co_startDate" name="classStart" value="" min="2022-06-01" max="2100-06-01"/>
+            	<input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
             </td>
             <th>종강일</th>
-            <td id="co_endDate" value="">
-            	<input type="date" id="co_endDate" name="classEnd" value="" min="2022-06-01" max="2100-06-01"/>
+            <td>
+            	<input type="date" id="co_endDate" value="" min="2022-06-01" max="2100-06-01"/>
             </td>
         </tr>
         <tr>
             <th>수업시작시간</th>
-            <td id="co_startTime" value="">
-            	<select>
-            		<option value="">09:00</option>
-            		<option value="">11:00</option>
-            		<option value="">13:00</option>
-            		<option value="">14:00</option>
-            		<option value="">15:00</option>
+            <td>
+            	<select id="co_startTime">
+            		<option value="09:00">09:00</option>
+            		<option value="11:00">11:00</option>
+            		<option value="13:00">13:00</option>
+            		<option value="14:00">14:00</option>
+            		<option value="15:00">15:00</option>
             	</select>
             </td>
             <th>수업종료시간</th>
-            <td id="co_endTime" value="">
-            	<select>
-            		<option value="">18:00</option>
-            		<option value="">19:00</option>
-            		<option value="">20:00</option>
-            		<option value="">21:00</option>
-            		<option value="">22:00</option>
+            <td>
+            	<select id="co_endTime">
+            		<option value="18:00">18:00</option>
+            		<option value="19:00">19:00</option>
+            		<option value="20:00">20:00</option>
+            		<option value="21:00">21:00</option>
+            		<option value="22:00">22:00</option>
             	</select>
             </td>
         </tr>
@@ -92,13 +90,13 @@
             	<button onclick="location.href='배정상세보기'">자세히</button>
             </td>
             <th>진행상황</th>
-            <td id="co_condition" value="">
-            	<select>
-            		<option value="">모집중</option>
-            		<option value="">모집 마감</option>
-            		<option value="">폐강</option>
-            		<option value="">수업 진행중</option>
-            		<option value="">종강</option>
+            <td>
+            	<select id="co_condition">
+            		<option value="모집중">모집중</option>
+            		<option value="모집 마감">모집 마감</option>
+            		<option value="폐강">폐강</option>
+            		<option value="수업 진행중">수업 진행중</option>
+            		<option value="종강">종강</option>
             	</select>
             </td>
         </tr>
@@ -114,9 +112,18 @@ $.ajax({
 	data:{},
 	dataType:'json',
 	success:function(data){
-		console.log("co_name : "+co_name);
+		//console.log("co_name : "+co_name);
 		$('#co_no').html(data.dto.co_no);
 		$('#co_name').val(data.dto.co_name);
+		$('#sub_name').val(data.dto.sub_name);
+		$('#co_startDate').val(data.dto.co_startDate);
+		$('#co_endDate').val(data.dto.co_endDate);
+		$('#co_startTime').val(data.dto.co_startTime);
+		//var co_startTime = $("#co_startTime option:selected").val();
+		$('#co_endTime').val(data.dto.co_endTime);
+		//var co_endTime = $("#co_endTime option:selected").val();
+		$('#co_capacity').val(data.dto.co_capacity);
+		$('#co_condition').val(data.dto.co_condition);
 
 	},
 	error:function(e){
@@ -146,5 +153,53 @@ function overlay(){
 		}
 	});
 }
+
+
+//저장
+function update(){
+	var params = {};
+	
+	//params['co_no'] = $('#co_no').val();
+	params['co_name'] = $('#co_name').val();
+	//params.sub_name = $('#sub_name').val();
+	params['co_startDate'] = $('#co_startDate').val();
+	params['co_endDate'] = $('#co_endDate').val();
+	params['co_startTime'] = $('#co_startTime').val();
+	params['co_endTime'] = $('#co_endTime').val();
+	params['co_capacity'] = $('#co_capacity').val();
+	params['co_condition'] = $('#co_condition').val();
+	console.log(params);
+	
+	$.ajax({
+		type:'post',
+		url:'update.ajax',
+		data:params,
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			
+			if(!data.login){ //로그인이 true 가 아니면
+				alert('로그인이 필요한 서비스입니다.');
+				location.href = '/login.go';
+			} else {
+				if(data.success){
+					alert('저장에 성공하였습니다.');
+					location.href = 'detail.go?co_no='+params.co_no;
+				} else {
+					alert('저장에 실패하였습니다.');
+				}
+			}
+			
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+
+
 </script>
 </html>

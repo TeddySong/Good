@@ -61,6 +61,33 @@ public class SubjectService {
 		result.put("success", success);
 		return success;
 	}
+
+	public ArrayList<SubDTO> scriptlist() {
+		logger.info("과목후기 리스트 요청");
+		return dao.scriptlist();
+	}
+
+	public SubDTO subDetail(String sub_no) {
+		return dao.subDetail(sub_no);
+	}
+
+	public ArrayList<SubDTO> subDetailsc(String sub_no) {
+		return dao.subDetailsc(sub_no);
+	}
+
+	public boolean subUpdate(HashMap<String, String> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		System.out.println("DATA ::: " + params.toString());
+		
+		boolean success = false;
+		if(dao.subUpdate(params) >0) {
+			success = true;
+		}
+		result.put("success", success);
+		return success;
+	}
+
+
 	
 	
 	

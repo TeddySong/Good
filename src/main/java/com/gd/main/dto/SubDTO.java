@@ -13,9 +13,26 @@ public class SubDTO {
 	private String curri_oriName;
 	private String curri_newName;
 	
+	private int scr_no;
+	private String scr_content;
 	
 	
 	
+	
+	
+	
+	public int getScr_no() {
+		return scr_no;
+	}
+	public void setScr_no(int scr_no) {
+		this.scr_no = scr_no;
+	}
+	public String getScr_content() {
+		return scr_content;
+	}
+	public void setScr_content(String scr_content) {
+		this.scr_content = scr_content;
+	}
 	public int getCurri_no() {
 		return curri_no;
 	}

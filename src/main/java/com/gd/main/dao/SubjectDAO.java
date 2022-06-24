@@ -18,6 +18,14 @@ public interface SubjectDAO {
 
 	void subHome(String subtime, String subsum, int subno);
 
+	ArrayList<SubDTO> scriptlist();
+
+	SubDTO subDetail(String sub_no);
+
+	ArrayList<SubDTO> subDetailsc(String sub_no);
+
+	int subUpdate(HashMap<String, String> params);
+
 
 
 

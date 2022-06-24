@@ -9,7 +9,7 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/js/jquery.twbsPagination.js"></script>
+<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
 <style>
 	table{
 		width: 100%;		
@@ -20,6 +20,7 @@
 		border-collapse: collapse;
 		padding: 5px;
 	}
+	textarea{ resize:none;width:100%;height:150px;}
 </style>
 </head>
 <body>
@@ -37,7 +38,7 @@
 </div>
 <div>	
 	<button type="button">상담일정확인</button>
-	<button type="button">등록</button>
+	<button type="button" id="regOpenBtn">등록</button>
 	<button type="button" onclick="del()" >삭제</button>
 </div>
 
@@ -77,6 +78,57 @@
 	</table>
 	
 	
+	<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        
+        <table>
+        	<tr>
+        		<th>고객명</th>
+        		<td><input type="text" id="cli_name" /></td>
+        	</tr>
+        	<tr>
+        		<th>연락처</th>
+        		<td><input type="text" id="cli_phone" /></td>
+        	</tr>
+        	<tr>
+        		<th colspan="2">
+        			문의과목
+        		</th>
+        	</tr>
+       		<tr>
+	       		<th colspan="2" id="req_course">
+	       			 <label><input type="checkbox" name="java" value="1"> JAVA</label>
+	       			 <label><input type="checkbox" name="c" value="2"> C</label>	
+	       			 <label><input type="checkbox" name="front" value="4362"> 테스트</label>
+	       		 	 <label><input type="checkbox" name="back" value="4"> Back-end</label>
+	       		</th>
+       		</tr>
+        	<tr><th colspan="2">상담요청내용</th></tr>
+        	<tr>
+        		<td colspan="2">
+		        	<textarea id="req_content" placeholder="내용을 입력해 주세요"></textarea>
+        		</td>
+        	</tr>
+        </table>
+         <button type="button" id="regBtn">등록완료</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+	<!-- Modal -->
+	
 </body>
 <script>
 
@@ -98,7 +150,7 @@ function listCall(page){
 	
 	$.ajax({
 		type:'GET',
-		url:'list.ajax',
+		url:'clientlist.ajax',
 		data:{
 			cnt:pagePerNum,
 			page:page
@@ -138,7 +190,7 @@ function listCall(page){
 		//location.href="listPageSearch?"+"searchType="+searchType+"&" +"keyword="+keyword;
 		$.ajax({
 			type:'get',
-			url:'search.ajax',
+			url:'clientsearch.ajax',
 			data:{
 				cnt:pagePerNum,
 				page:page,
@@ -215,7 +267,7 @@ function del(){
 		
 		$.ajax({
 			type:'get',
-			url:'delete.ajax',
+			url:'clientdelete.ajax',
 			data:{delList:chkArr},
 			dataType:'JSON',
 			success:function(data){
@@ -230,5 +282,51 @@ function del(){
 		});
 }
 
+
+
+$("#regOpenBtn").click(function(){
+	        $("#myModal").modal();
+	    });
+	
+
+
+$('#regBtn').on('click',function(){
+	let cli_name=$('#cli_name').val();
+	let cli_phone=$('#cli_phone').val();
+	let req_course= [];	
+	$('#req_course input[type="checkbox"]:checked').each(function(idx,item){
+		req_course.push($(this).val());		
+	});
+	let req_content=$('#req_content').val();
+	
+	console.log(req_course);
+	
+	$.ajax({
+		type:'post',
+		url:'cliReg.ajax',
+		 traditional : true,
+		data:{
+			cli_name:cli_name,
+			cli_phone:cli_phone,
+			cli_req:req_content,
+			sub_no:req_course
+		
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			alert('고객을 등록했습니다.');
+/* 			listCall(currPage);
+			$('#myModal').modal('hide'); */
+			location.reload();
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+		
+	});	
+
+});
 </script>
 </html>

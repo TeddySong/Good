@@ -2,20 +2,25 @@ package com.gd.main.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Client_Dto {
 	// client 
 	 private int cli_no ;
 	 private String cli_name;
 	 private String cli_phone;
 	 private String cli_req ;
+	   @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	 private Date cli_qDate;
 	 private int emp_no ;
 	 private int sub_no;
 	 
 	 //cli_log
+	  @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	  private Date cli_log_date;
 	  private String cli_log_content;
 	  private String cli_log_result;
+	   @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	  private Date cli_log_Dday;
 	  private String cli_log_Dtime;
 	
@@ -27,7 +32,9 @@ public class Client_Dto {
 	 private String emp_position;
 	 private String  emp_id;
 	 private String emp_pw;
+	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	 private Date emp_startDate;
+	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	 private Date emp_endDate;
 	 private String emp_condition;
 	 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.gd.main.dto.Client_Dto;
 
 public interface ClientDAO {
@@ -37,6 +39,21 @@ int ajaxSearchCnt(HashMap<String, Object> data);
 
 int ajaxDelete(String idx);
 
+
+// 6/24  추가
+
+int cliReg(@Param("cli_name")String cli_name, @Param("cli_phone")String cli_phone,@Param("cli_req") String cli_req);
+
+
+int cliUpdate(HashMap<String, Object> map);
+
+ArrayList<Client_Dto> empList();
+
+ArrayList<Client_Dto> empSearch(String empkeyword);
+
+int empUp(HashMap<String, Object> map);
+
+void cliRegCo(HashMap<String, Object> map);
 
 
 

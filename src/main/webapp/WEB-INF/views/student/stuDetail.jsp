@@ -17,39 +17,50 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#stuList {                
+	#registerList {  
+			  margin:0 auto;            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 100%;
+			  width: 70%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #stuList th {
+   #registerList th {
 			background-color:#505050;
-			color:#FFFFFF
+			color:#FFFFFF;
+			text-align:center;
 		}
 		
-	#stuList,#stuList th,#stuList td
+	#registerList,#registerList th,#registerList td
 	{
-		font-size:20px;
-		text-align:center;
+		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#stuList tr:nth-child(odd){
+	#registerList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#stuList tr:nth-child(even){
+	#registerList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
-	.register {
-		display: block;
+	input[type='text']{
+	width : 80%;
+	}
+	input[type='date']{
+		width : 80%;
+	}
+	
+	
+	
+	input[type='button'] {
+		position: relative;
 		margin: 20px auto;
+		margin: 0 auto;
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
@@ -60,7 +71,7 @@
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
 
-	.register:hover {
+	input[type='button']:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
@@ -162,45 +173,64 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">수강생 목록</h1>                        
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                GOOD2 IT 수강생 리스트 입니다.                                
-                            </div>
-                        </div>
+                        <h1 class="mt-4">수강생 등록</h1>                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                수강생리스트
+                                수강생등록
                             </div>
                             <div>
-                                <table id="stuList">
-									<thead>
-										<tr>
-											<th>학번</th>
-											<th>이름</th>
-											<th>연락처</th>
-											<th>생년월일</th>
-											<th>나이</th>
-											<th>담당직원</th>
-										</tr>
-									</thead>
-									<tbody id="list">
-										
-									</tbody>
-									<tr>
-										<td colspan="6" id="paging">
-										<!-- twbspagination 플러그인 -->
-										<div class="container">
-											<nav arial-label="Page navigation" style="text-align:center">
-												<ul class="pagination" id="pagination"></ul>
-											</nav>
-										</div>
-										</td>
+                                <table id="registerList">
+                                	<tr id="stu_no_tr">
+										<th>학번</th>
+										<td id="stu_no"></td>
 									</tr>
-								</table>								
-                            </div>
-                            <button class="register" onclick = "location.href='stuRegister.go'" >등록</button>
+									<tr>
+										<th>이름</th>
+										<td id="cli_name"></td>
+									</tr>
+									<tr>
+										<th>연락처</th>
+										<td id="cli_phone"></td>
+									</tr>
+									<tr>
+										<th>담당직원</th>
+										<td id="emp_name"></td>
+									</tr>
+									<tr>
+										<th>생년월일</th>
+										<td id="stu_birth"></td>
+									</tr>
+									<tr>
+										<th>나이</th>
+										<td id="stu_age"></td>
+									</tr>
+									<tr>
+										<th>성별</th>
+										<td id="stu_gender"></td>
+									</tr>
+									<tr>
+										<th>학생상태</th>
+										<td id="stu_condition"></td>
+									</tr>
+									<tr>
+										<th colspan="2">과목정보</th>										
+									</tr>
+									<tr>
+										<td colspan="2"></td>				
+									</tr>
+									<tr id="subjectDetail">
+										<th>과목</th>
+										<td id="sub_name"></td>
+									</tr>
+									<tr>
+										<th colspan="2">
+											<input type="button" value="수정" onclick="stuUpdate()"/>
+											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
+										</th>				
+									</tr>
+								</table>  				
+                            </div>                            
                         </div>
                     </div>
                 </main>
@@ -209,68 +239,62 @@
                 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>  
+	    
 
 </body>
 <script>
-var currPage = 1;
+	$('#stu_no_tr').attr('style', "display:none;");
 
-//리스트 불러오기
-listCall(currPage);
 
-function listCall(page) {
-	
-	var pagePerNum = 10;
-	
 	$.ajax({
-		type: 'get',
-		url: 'stuList.ajax',
-		data:{
-			cnt:pagePerNum,
-			page:page
-		},
+		type:'get',
+		url:'stuDetail.ajax',
+		data:{},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
-			drawList(data.list);
-			currPage = data.currPage;
+			 console.log(data);
+			$('#stu_no').html(data.dto.stu_no);
+			$('#cli_name').html(data.dto.cli_name);			
+			$('#cli_phone').html(data.dto.cli_phone);
+			$('#emp_name').html(data.dto.emp_name);
+			$('#stu_birth').html(data.dto.stu_birth);
+			$('#stu_age').html(data.dto.stu_age);
+			$('#stu_gender').html(data.dto.stu_gender);			
+			$('#stu_condition').html(data.dto.stu_condition);
 			
-			//불러오기 성공하면 플러그인 이용해서 페이징처리
-			$("#pagination").twbsPagination({
-				startPage: data.currPage, //시작 페이지
-				totalPages: data.pages, //총 페이지
-				visiblePages: 5, //한번에 보여줄 페이지 수
-				onPageClick: function(e,page){
-					console.log(page); //사용자가 클릭한 페이지
-					currPage = page;
-					listCall(page);
-				}
-			});
+			
 		},
-		error:function(e){
-			console.log(e);
+		error:function(error){
+			console.log(error);
 		}
 	});
-};
-
-//리스트 그리기
-function drawList(list){
 	
-	var content="";
 	
-	list.forEach(function(item){
-		content += '<tr>';
-		content += '<td>'+item.stu_no+'</td>';
-		content += '<td><a href="stuDetail.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';
-		content += '<td>'+item.cli_phone+'</td>';		
-		content += '<td>'+item.stu_birth+'</td>';
-		content += '<td>'+item.stu_age+'</td>';
-		content += '<td>'+item.emp_name+'</td>';
-		content += '</tr>';
+	$.ajax({
+		type:'get',
+		url:'subDetail.ajax',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+			 console.log(data);
+			$('#sub_name').html(data.dto.sub_name);			
+		},
+		error:function(error){
+			console.log(error);
+		}
 	});
 	
-	$('#list').empty();
-	$('#list').append(content);
-}
+	
+	
+	
+	function stuUpdate(){
+		var stu_no = $('#stu_no').html();
+		location.href = 'update.go?stu_no='+stu_no;
+	}
+	
+	
+	
+	
+	
 </script>
 </html>

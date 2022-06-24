@@ -2,13 +2,23 @@ package com.gd.main.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class StuDTO {
 	private int cli_no;
 	private int stu_no;
 	private int sub_no;
 	private String cli_name;
 	private String cli_phone;
-	private Date stu_birth;	
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date stu_birth;
+	private String stu_gender;
+	public String getStu_gender() {
+		return stu_gender;
+	}
+	public void setStu_gender(String stu_gender) {
+		this.stu_gender = stu_gender;
+	}
 	private int stu_age;
 	private int emp_no;
 	private String emp_name;

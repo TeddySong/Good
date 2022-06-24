@@ -135,7 +135,44 @@ public class ClientService {
 		return cnt;
 		}
 
+//6/24 추가
+	public int cliReg(HashMap<String, Object> params) {
+		String 	cli_name =(String) params.get("cli_name");
+		String cli_phone = (String) params.get("cli_phone");
+		String cli_req = (String) params.get("cli_req");
+		  
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		 
+		int cnt = dao.cliReg(cli_name,cli_phone,cli_req);
+		map.put("cnt", cnt);
+		return cnt;
+	}
 
+	public void cliRegCo(ArrayList<Integer> sub_no) {
+		for (Integer string : sub_no) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			Integer cli_no=null;
+			map.put("string", string);
+			map.put("cli_no", cli_no);
+			dao.cliRegCo(map);
+		}
+		
+	}
+	
+	public int cliUpdate(HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		 return dao.cliUpdate(map);
+	}
+	public ArrayList<Client_Dto> empList() {
+		return dao.empList();
+	}
+	public ArrayList<Client_Dto> empSearch(String empkeyword) {
+		return dao.empSearch(empkeyword);
+	}
+	public int empUp(HashMap<String, Object> map) {
+
+		return dao.empUp(map);
+	}
 
 	
 	

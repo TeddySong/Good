@@ -28,4 +28,28 @@
 		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
 		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
 	</insert>
+	
+	<update id="update" parameterType="hashmap">
+		UPDATE course SET
+			co_name = #{co_name}
+			<!-- ,sub_name = #{sub_name} -->
+			,co_startDate = #{co_startDate}
+			,co_endDate = #{co_endDate}
+			,co_startTime = #{co_startTime}
+			,co_endTime = #{co_endTime}
+			,co_condition = #{co_condition}
+			,co_capacity = #{co_capacity}
+		WHERE co_no = #{co_no}
+	</update>
+	
+	<!-- <select id="getSubName" resultType="com.gd.main.dto.CourseDTO">
+		<![CDATA[
+			SELECT sub_name FROM subject ORDER BY sub_no
+		]]>
+	</select> -->
+	
+	<select id="subjectList" resultType="com.gd.main.dto.CourseDTO">
+		SELECT sub_name,subject.sub_no FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+	</select>
 </mapper>

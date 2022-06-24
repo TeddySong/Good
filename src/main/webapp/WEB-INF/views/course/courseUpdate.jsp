@@ -41,16 +41,14 @@
             </td>
 		</tr>
         <tr>
-            <th>과목</th>
+           <th>과목</th>
             <td colspan="3">
-            	<select id="sub_name">
-		            <option>과목명</option>
-		            <option value="JAVA">JAVA</option>
-		            <option value="C언어">C언어</option>
-		            <option value="Python">Python</option>
-		            <option value="프론트엔드">프론트엔드</option>
-		            <option value="백엔드">백엔드</option>
-		        </select>
+		        <select id="sub_name">
+	        		<option>과목명</option>
+	            	<c:forEach items="${subjectList}" var="subjectList">
+		            	<option value="${subjectList.sub_name}">${subjectList.sub_name}</option>
+		            </c:forEach>
+	        	</select>
             </td>
         </tr>
         <tr>
@@ -59,7 +57,7 @@
             	<input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
             </td>
             <th>종강일</th>
-            <td id="co_endDate" value="">
+            <td>
             	<input type="date" id="co_endDate" value="" min="2022-06-01" max="2100-06-01"/>
             </td>
         </tr>
@@ -114,17 +112,17 @@ $.ajax({
 	data:{},
 	dataType:'json',
 	success:function(data){
-		console.log("co_name : "+co_name);
+		//console.log("co_name : "+co_name);
 		$('#co_no').html(data.dto.co_no);
 		$('#co_name').val(data.dto.co_name);
 		$('#sub_name').val(data.dto.sub_name);
 		$('#co_startDate').val(data.dto.co_startDate);
 		$('#co_endDate').val(data.dto.co_endDate);
-		//$('#co_startTime option:selected').val(data.dto.co_startTime);
-		var co_startTime = $("#co_startTime option:selected").val();
-		//$('#co_endTime option:selected').val(data.dto.co_endTime);
-		var co_endTime = $("#co_endTime option:selected").val();
-		$('#co_capacity option:selected').val(data.dto.co_capacity);
+		$('#co_startTime').val(data.dto.co_startTime);
+		//var co_startTime = $("#co_startTime option:selected").val();
+		$('#co_endTime').val(data.dto.co_endTime);
+		//var co_endTime = $("#co_endTime option:selected").val();
+		$('#co_capacity').val(data.dto.co_capacity);
 		$('#co_condition').val(data.dto.co_condition);
 
 	},
@@ -155,5 +153,53 @@ function overlay(){
 		}
 	});
 }
+
+
+//저장
+function update(){
+	var params = {};
+	
+	//params['co_no'] = $('#co_no').val();
+	params['co_name'] = $('#co_name').val();
+	//params.sub_name = $('#sub_name').val();
+	params['co_startDate'] = $('#co_startDate').val();
+	params['co_endDate'] = $('#co_endDate').val();
+	params['co_startTime'] = $('#co_startTime').val();
+	params['co_endTime'] = $('#co_endTime').val();
+	params['co_capacity'] = $('#co_capacity').val();
+	params['co_condition'] = $('#co_condition').val();
+	console.log(params);
+	
+	$.ajax({
+		type:'post',
+		url:'update.ajax',
+		data:params,
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			
+			if(!data.login){ //로그인이 true 가 아니면
+				alert('로그인이 필요한 서비스입니다.');
+				location.href = '/login.go';
+			} else {
+				if(data.success){
+					alert('저장에 성공하였습니다.');
+					location.href = 'detail.go?co_no='+params.co_no;
+				} else {
+					alert('저장에 실패하였습니다.');
+				}
+			}
+			
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+
+
 </script>
 </html>

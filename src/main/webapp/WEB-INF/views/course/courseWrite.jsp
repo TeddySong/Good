@@ -35,14 +35,30 @@
         <tr>
             <th>과목</th>
             <td colspan="3">
-            	<select id="sub_name">
+            	<%-- <select id="sub_name">
 		            <option>과목명</option>
-		            <option value="JAVA">JAVA</option>
-		            <option value="C언어">C언어</option>
+		            <c:forEach items="${subNameList}" var="subNameList">
+		            	<option value="${dto.sub_name}">${dto.sub_name}</option>
+		            </c:forEach>
+		            <!-- <option value="C언어">C언어</option>
 		            <option value="Python">Python</option>
 		            <option value="프론트엔드">프론트엔드</option>
-		            <option value="백엔드">백엔드</option>
-		        </select>
+		            <option value="백엔드">백엔드</option> -->
+		        </select> --%>
+		        <%-- <c:if test="${!empty courseDTO}">
+		        	<select id="sub_name">
+		        		<c:forEach var="list" items="${courseDTO}" varStatus="i">
+		        			<option value="${list.sub_name}">${list.sub_name}</option>
+		        		</c:forEach>
+		        	</select>
+		        </c:if> --%>
+		        
+		        <select id="sub_name">
+	        		<option>과목명</option>
+	            	<c:forEach items="${subjectList}" var="subjectList">
+		            	<option value="${subjectList.sub_name}">${subjectList.sub_name}</option>
+		            </c:forEach>
+	        	</select>
             </td>
         </tr>
         <tr>
@@ -98,6 +114,7 @@
     <input type="button" id="button2" value="취소" onclick="location.href='courList.go'"/>
 </body>
 <script>
+
 //과정명 중복체크
 var overChk = false; //중복체크 여부
 

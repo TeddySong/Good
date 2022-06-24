@@ -55,7 +55,9 @@
         </tr>
         <tr>
             <th>수강정원</th>
-            <td id="co_capacity"><button onclick="location.href='배정상세보기'">자세히</button></td>
+	            <td id="co_capacity">
+	            	<!-- <button onclick="location.href='배정상세보기'">자세히</button> -->
+	            </td>
             <th>진행상황</th>
             <td id="co_condition"></td>
         </tr>
@@ -80,7 +82,7 @@ $.ajax({
 	success:function(data){
 		
 		if(data.login){
-			
+		console.log(data);	
 		$('#co_no').html(data.dto.co_no);
 		$('#co_name').html(data.dto.co_name);
 		$('#sub_name').html(data.dto.sub_name);
@@ -93,7 +95,7 @@ $.ajax({
 		
 		$('#co_startTime').html(data.dto.co_startTime);
 		$('#co_endTime').html(data.dto.co_endTime);
-		$('co_capacity').html(data.dto.co_capacity);
+		$('#co_capacity').html(data.dto.co_capacity);
 		$('#co_condition').html(data.dto.co_condition);
 		
 		} else {

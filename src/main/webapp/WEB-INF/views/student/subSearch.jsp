@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>고객 검색</title>
+<title>과목 검색</title>
 <link href="../resources/img/goodfavicon.png" rel="icon">
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 <link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
@@ -85,18 +85,13 @@
 </head>
 <body>
 	<br/>
-		<form action="cliSearch.do" method="get">	
+		<form action="subSearch.do" method="get">	
 		<table id="registerList">
-			<tr><th colspan="3">고객검색창</th></tr>
+			<tr><th colspan="3">과목검색창</th></tr>
 			<tr>
-				<td>
-					<select class="conditionSelect" name="cliSearchCondition">
-			            <option value="cli_name" selected>이름</option>
-			            <option value="cli_phone">연락처</option>			            									            
-			        </select>
-				</td>
+			<td style="text-align:center;">과목명</td>
 			<td><input type="text" name="searchContent" placeholder="검색어를 입력해주세요"/></td>
-			<td><input type="submit" value="검색"/></td>
+			<td><input type="submit" value="검색"></button></td>
 			</tr>
 		</table>
 		</form>
@@ -105,48 +100,42 @@
 		<thead>
 			<tr>
 				<th></th>
-				<th>이름</th>
-				<th>연락처</th>
-				<th>담당직원</th>
+				<th>과목명</th>
 			</tr>
 		</thead>
-		<tbody id="cliSearchList">
-			<c:forEach items="${cliSearchList}" var="cliSearchList">
+		<tbody id="subSearchList">
+			<c:forEach items="${subSearchList}" var="subSearchList">
 			<tr>
-				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>
-				<td id="cli_name">${cliSearchList.cli_name}</td>
-				<td id="cli_phone">${cliSearchList.cli_phone}</td>
-				<td id="emp_name">${cliSearchList.emp_name}</td>
+				<td><input type="radio" value="${subSearchList.sub_no}"/></td>
+				<td id="sub_name">${subSearchList.sub_name}</td>				
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	
 	<br/><br/><br/><br/><br/><br/>
-	<button onclick="cliChoice()">선택</button>
+	<button onclick="subChoice()">선택</button>
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
-function cliChoice(){
+function subChoice(){
 	
-	var cliChoice = $('#cliSearchList input[type="radio"]:checked').val();
+	var subChoice = $('#subSearchList input[type="radio"]:checked').val();
 	
 	
-	console.log(cliChoice);
+	console.log(subChoice);
 	
  	$.ajax({
 		type:'get',
-		url:'cliChoice.ajax',
+		url:'subChoice.ajax',
 		data:{
-			"cliChoice":cliChoice
+			"subChoice":subChoice
 			},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-			opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-			opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value;
-			
+			opener.document.getElementById("sub_name").value = document.getElementById("sub_name").value;
+			window.close()
 		},
 		error:function(e){
 			console.log(e);

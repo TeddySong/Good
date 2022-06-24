@@ -11,7 +11,14 @@ public class StuDTO {
 	private String cli_name;
 	private String cli_phone;
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
-	private Date stu_birth;	
+	private Date stu_birth;
+	private String stu_gender;
+	public String getStu_gender() {
+		return stu_gender;
+	}
+	public void setStu_gender(String stu_gender) {
+		this.stu_gender = stu_gender;
+	}
 	private int stu_age;
 	private int emp_no;
 	private String emp_name;

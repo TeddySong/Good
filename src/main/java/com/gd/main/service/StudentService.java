@@ -57,6 +57,11 @@ public class StudentService {
 		logger.info("리스트 서비스 요청");
 		return dao.cliSearchList(searchContent);		
 	}
+
+	public ArrayList<StuDTO> cliChoice(int result) {
+		logger.info("고객 데이터 선택 서비스 요청 : {}",result );
+		return dao.cliChoice(result);
+	}
 	
 	
 	

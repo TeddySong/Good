@@ -80,5 +80,24 @@ public class StudentController {
 		return "./student/cliSearch";
 	}
 	
+	@RequestMapping(value="/cliChoice.ajax")
+	@ResponseBody
+	public HashMap<String, Object> cliChoice(HttpServletRequest req,
+			@RequestParam HashMap<String, Object>params, HttpSession session) {
+		logger.info("상세보기 페이지 이동 : {}", params );
+		
+		String choice = (String) params.get("cliChoice");
+		logger.info("상세보기 페이지 이동 : " + choice );
+		 int result =Integer.parseInt(choice);
+		 logger.info("상세보기 페이지 이동 : " + result);
+		 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<StuDTO> cliChoice = service.cliChoice(result);
+		
+		map.put("cliChoice", cliChoice);
+		logger.info("클라이언트 : {}", cliChoice );
+		return map;
+	}
+	
 	
 }

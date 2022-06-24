@@ -37,7 +37,7 @@
             <td colspan="3" >
             	<!-- <input type="hidden" id="co_no" value=""/> -->
             	<input type="text" id="co_name" value=""/>
-            	<button onclick="overlay()">중복</button>
+            	<button onclick="courOverlay()">중복</button>
             </td>
 		</tr>
         <tr>
@@ -101,14 +101,14 @@
             </td>
         </tr>
 	</table>
-    <input type="button" id="button1" value="완료" onclick="update()"/>
+    <input type="button" id="button1" value="완료" onclick="courUpdate()"/>
     <input type="button" id="button2" value="취소" onclick="location.href='courList.go'"/>
 </body>
 <script>
 //내용 불러오기
 $.ajax({
 	type: 'get',
-	url: 'detail.ajax',
+	url: 'courDetail.ajax',
 	data:{},
 	dataType:'json',
 	success:function(data){
@@ -132,12 +132,12 @@ $.ajax({
 });
 
 //중복체크
-function overlay(){
+function courOverlay(){
 	var co_name = $("#co_name").val();
 	console.log('과정명 중복 체크'+co_name);
 	$.ajax({
 		type:'get',
-		url:'overlay.ajax',
+		url:'courOverlay.ajax',
 		data:{chkCo:co_name},
 		dataType:'json',
 		success:function(data){
@@ -156,7 +156,7 @@ function overlay(){
 
 
 //저장
-function update(){
+function courUpdate(){
 	var params = {};
 	
 	//params['co_no'] = $('#co_no').val();
@@ -172,7 +172,7 @@ function update(){
 	
 	$.ajax({
 		type:'post',
-		url:'update.ajax',
+		url:'courUpdate.ajax',
 		data:params,
 		dataType:'json',
 		success:function(data){

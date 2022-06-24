@@ -27,56 +27,53 @@
 	<table>
 		<tr>
 			<th>과정번호</th>
-			<td colspan="3" id="co_no"></td>
+			<td colspan="3" id="co_no">${courseName.co_no}</td>
 		</tr>
         <tr>
             <th>과정명
-            	<input type="hidden" id="co_no"/>
-            </th>
-            <td colspan="3" id="co_name">
             	<!-- <input type="hidden" id="co_no"/> -->
-            </td>
+            </th>
+            <td colspan="3" id="co_name">${courseName.co_name}</td>
         </tr>
         <tr>
             <th>과목</th>
-            <td colspan="3" id="sub_name"></td>
+            <td colspan="3" id="sub_name">${subName.sub_name}</td>
         </tr>
         <tr>
             <th>개강일</th>
-            <td id="co_startDate"></td>
+            <td id="co_startDate">${courseName.co_startDate}</td>
             <th>종강일</th>
-            <td id="co_endDate"></td>
+            <td id="co_endDate">${courseName.co_endDate}</td>
         </tr>
         <tr>
             <th>수업시작시간</th>
-            <td id="co_startTime"></td>
+            <td id="co_startTime">${courseName.co_startTime}</td>
             <th>수업종료시간</th>
-            <td id="co_endTime"></td>
+            <td id="co_endTime">${courseName.co_endTime}</td>
         </tr>
         <tr>
             <th>수강정원</th>
-	            <td id="co_capacity">
-	            	<!-- <button onclick="location.href='배정상세보기'">자세히</button> -->
+	            <td id="co_capacity">${courseName.co_capacity}<button onclick="location.href='배정상세보기'">자세히</button>
 	            </td>
             <th>진행상황</th>
-            <td id="co_condition"></td>
+            <td id="co_condition">${courseName.co_condition}</td>
         </tr>
 	</table>
-    <input type="button" id="button1" value="수정" onclick="updateForm()"/>
+    <input type="button" id="button1" value="수정" onclick="courUpdateForm()"/>
     <input type="button" id="button2" value="목록" onclick="location.href='courList.go'"/>
 </body>
 <script>
 //수정 -> 수정 페이지 이동 -> 상세정보 요청 -> 가져온 상세정보 input에 뿌려주기
-function updateForm(){
+function courUpdateForm(){
 	var co_no = $('#co_no').html();
 	console.log(co_no);
-	location.href="update.go?co_no="+co_no;
+	location.href="courUpdate.go?co_no="+co_no;
 }
 
 
 $.ajax({
 	type: 'get',
-	url: 'detail.ajax',
+	url: 'courDetail.ajax',
 	data:{},
 	dataType:'json',
 	success:function(data){

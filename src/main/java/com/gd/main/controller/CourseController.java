@@ -36,68 +36,82 @@ public class CourseController {
 		return "./course/courList";
 	}
 	
-	/*
-	//과목 리스트 호출
+	
+	//과목,과정 리스트 호출
 	@RequestMapping(value = "/courseList.do")
-	public String searchList(Model model, @RequestParam String sub_name){
+	public String searchList(Model model, @RequestParam String sub_no, @RequestParam String co_no){
 		logger.info("과목 리스트 호출");
 		//과목명
 		//CourseDTO dto = service.subNameList(sub_name);
 		//model.addAttribute("dto", dto);
 		
+		//과목명 리스트
+		CourseDTO subName = service.selectSubName(sub_no);
+		model.addAttribute("subName",subName);
+		
+		//과정명 리스트
+		
+		ArrayList<CourseDTO> courseName = service.selectCourseName(co_no);
+		
+		logger.info("courseName"+courseName);
+		
+		model.addAttribute("courseName",courseName);
+		
+		/*
 		ArrayList<CourseDTO> subjectList = service.subjectList(sub_name);
 		logger.info("등록된 과목 가져오기 : "+subjectList.size());
 		model.addAttribute("subjectList", subjectList);
+		*/
 		
 		return "./course/courList";
 	}
-	*/
+	
 
 	//리스트 호출
-	@RequestMapping("courseList.ajax")
+	@RequestMapping("courList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courseList(
-			@RequestParam HashMap<String, String> params, HttpSession session, Model model) {
+	public HashMap<String, Object> courList(
+			@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("과정 리스트 요청 : "+params);
-		
+		/*
 		ArrayList<CourseDTO> subjectList = service.subjectList();
 		logger.info("등록된 과목 가져오기 : "+subjectList.size());
 		model.addAttribute("subjectList", subjectList);	
-		
+		*/
 		boolean login = false;
 		
 		if(session.getAttribute("loginId") != null){
 			login = true;
 		}
 		
-		return service.courseList(params);
+		return service.courList(params);
 	}
 
 	
 	//과정 등록 페이지 이동
-	@RequestMapping("/courseWrite.go")
+	@RequestMapping("/courWrite.go")
 	public String writePage() {
 		logger.info("과정 등록 페이지 이동");
 		return "./course/courseWrite";
 	}
 	
 	//과정명 중복체크
-	@RequestMapping("/overlay.ajax")
+	@RequestMapping("/courOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> overlay(@RequestParam String chkCo) {
+	public HashMap<String, Object> courOverlay(@RequestParam String chkCo) {
 		logger.info("과정명 중복체크 : "+chkCo);
-		return service.overlay(chkCo);
+		return service.courOverlay(chkCo);
 	}
 	
 	//과정 등록
-	@RequestMapping("/write.ajax")
+	@RequestMapping("/courWrite.ajax")
 	@ResponseBody
 	@GetMapping
-	public HashMap<String, Object> write(
+	public HashMap<String, Object> courWrite(
 			@RequestParam HashMap<String, Object> params,HttpServletRequest req,Model model){
 		
 		logger.info("과정 등록하기 : "+params);
-		return service.write(params);
+		return service.courWrite(params);
 	}
 	
 	
@@ -109,11 +123,12 @@ public class CourseController {
 		session.setAttribute("co_no", co_no);
 		return "./course/courseDetail";
 	}
+
 	
 	//과정 상세 보기
-	@RequestMapping("/detail.ajax")
+	@RequestMapping("/courDetail.ajax")
 	@ResponseBody
-	public HashMap<String, Object> detail(HttpSession session) {
+	public HashMap<String, Object> courDetail(HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		boolean login = false;
@@ -123,16 +138,17 @@ public class CourseController {
 			logger.info("과정 상세보기 요청 : "+co_no);
 			session.removeAttribute("co_no");
 			login = true;
-			CourseDTO dto = service.detail(co_no);
+			CourseDTO dto = service.courDetail(co_no);
 			map.put("dto", dto);
 		}
 		map.put("login", login);
 		
 		return map;
 	}
+
 	
 	//수정 페이지 이동
-	@RequestMapping("/update.go")
+	@RequestMapping("/courUpdate.go")
 	public String updatePage(@RequestParam String co_no, HttpSession session) {
 		logger.info("수정 페이지 이동 : "+co_no);
 		session.setAttribute("co_no", co_no);
@@ -140,9 +156,9 @@ public class CourseController {
 	}
 	
 	//수정하기
-	@RequestMapping("/update.ajax")
+	@RequestMapping("/courUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> update(HttpSession session,
+	public HashMap<String, Object> courUpdate(HttpSession session,
 			@RequestParam HashMap<String, String> params) {
 		logger.info("params : "+params);
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -151,7 +167,24 @@ public class CourseController {
 		//로그인 여부 확인
 		if(session.getAttribute("loginId") != null) {
 			login = true;
-			boolean success = service.update(params);
+			
+			String co_name = params.get("co_name");
+			String co_startDate = params.get("co_startDate");
+			String co_endDate = params.get("co_endDate");
+			String co_startTime = params.get("co_startTime");
+			String co_endTime = params.get("co_endTime");
+			String co_condition = params.get("co_condition");
+			String co_capacity = params.get("co_capacity");
+			
+			map.put("co_name", co_name);
+			map.put("co_startDate", co_startDate);
+			map.put("co_endDate", co_endDate);
+			map.put("co_startTime", co_startTime);
+			map.put("co_endTime", co_endTime);
+			map.put("co_condition", co_condition);
+			map.put("co_capacity", co_capacity);
+			
+			int success = service.courUpdate(map);
 			map.put("success", success);
 		}
 		

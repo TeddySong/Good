@@ -29,7 +29,7 @@
             <th>과정명</th>
             <td colspan="3">
             	<input type="text" id="co_name" value=""/>
-            	<button onclick="overlay()">중복</button>
+            	<button onclick="courOverlay()">중복</button>
             </td>
         </tr>
         <tr>
@@ -110,7 +110,7 @@
             </td>
         </tr>
 	</table>
-    <input type="button" id="button1" value="등록완료" onclick="save()"/>
+    <input type="button" id="button1" value="등록완료" onclick="courSave()"/>
     <input type="button" id="button2" value="취소" onclick="location.href='courList.go'"/>
 </body>
 <script>
@@ -118,12 +118,12 @@
 //과정명 중복체크
 var overChk = false; //중복체크 여부
 
-function overlay(){
+function courOverlay(){
 	var co_name = $("#co_name").val();
 	console.log('과정명 중복 체크 : '+co_name);
 	$.ajax({
 		type:'get',
-		url:'overlay.ajax',
+		url:'courOverlay.ajax',
 		data:{chkCo:co_name},
 		dataType:'json',
 		success:function(data){
@@ -144,7 +144,7 @@ function overlay(){
 
 //등록
 
-function save(){
+function courSave(){
 	var $co_name = $('#co_name');
 	var $sub_name = $('#sub_name');
 	var $co_startDate = $('#co_startDate');
@@ -231,7 +231,7 @@ function save(){
 			
 			$.ajax({
 				type:'post',
-				url:'write.ajax',
+				url:'courWrite.ajax',
 				data:{
 					co_name : co_name,
 					sub_name : sub_name,

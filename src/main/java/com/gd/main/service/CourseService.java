@@ -20,7 +20,7 @@ public class CourseService {
 	
 	@Autowired CourseDAO dao;
 	
-	public HashMap<String, Object> courseList(HashMap<String, String> params) {
+	public HashMap<String, Object> courList(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//hashmap 을 반환하기위해 객체화
 		
@@ -52,31 +52,37 @@ public class CourseService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		
-		ArrayList<CourseDTO> list = dao.list(cnt,offset);
-		map.put("list", list);
+		ArrayList<CourseDTO> courList = dao.courList(cnt,offset);
+		map.put("courList", courList);
 		
 		return map;
 	}
 	
-	public CourseDTO detail(String co_no) {
-		return dao.detail(co_no);
+	public CourseDTO courDetail(String co_no) {
+		return dao.courDetail(co_no);
 	}
 
-	public boolean update(HashMap<String, String> params) {
-		boolean success = false;
-		int row = dao.update(params);
+	public int courUpdate(HashMap<String, Object> map) {
+		/*
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		
-		if(row > 0) {
+		boolean success = false;
+		
+		if(dao.courUpdate(params) > 0) {
 			success = true;
 		}
 		
+		result.put("success", success);
 		logger.info("update success : "+success);
 		return success;
+		*/
+		
+		return dao.courUpdate(map);
 	}
 
-	public HashMap<String, Object> overlay(String chkCo) {
+	public HashMap<String, Object> courOverlay(String chkCo) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String overCo = dao.overlay(chkCo);
+		String overCo = dao.courOverlay(chkCo);
 		logger.info("중복 과정명이 있나? "+overCo);
 		boolean over = overCo == null ? false : true; //over == true : 얘 중복이야
 		//조건:overCo 가 null 맞아? 참이면 false(조건1) 거짓이면 true(조건2)
@@ -85,10 +91,10 @@ public class CourseService {
 		return map;
 	}
 
-	public HashMap<String, Object> write(HashMap<String, Object> params) {
+	public HashMap<String, Object> courWrite(HashMap<String, Object> params) {
 		HashMap<String, Object> writeResult = new HashMap<String, Object>();
 
-		int row = dao.write(params);
+		int row = dao.courWrite(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);
 		if(row>0) {
@@ -100,9 +106,21 @@ public class CourseService {
 		return writeResult;
 	}
 
+	/*
 	public ArrayList<CourseDTO> subjectList() {
 		logger.info("과목 리스트 호출");
 		return dao.subjectList();
+	}
+*/
+
+	public CourseDTO selectSubName(String sub_no) {
+		// TODO Auto-generated method stub
+		return dao.selectSubName(sub_no);
+	}
+
+	public ArrayList<CourseDTO> selectCourseName(String co_no) {
+		// TODO Auto-generated method stub
+		return dao.selectCourseName(co_no);
 	}
 
 	

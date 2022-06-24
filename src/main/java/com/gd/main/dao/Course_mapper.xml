@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.CourseDAO">
-	<select id="list" resultType="com.gd.main.dto.CourseDTO">
+
+	<select id="courList" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
@@ -13,23 +14,23 @@
 		SELECT COUNT(co_no) FROM course
 	</select>
 	
-	<select id="detail" resultType="com.gd.main.dto.CourseDTO">
+	<select id="courDetail" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_endTime, co_condition,co_capacity FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		WHERE co_no = #{param1}
 	</select>
 	
-	<select id="overlay" parameterType="String" resultType="String">
+	<select id="courOverlay" parameterType="String" resultType="String">
 		SELECT co_name FROM course WHERE co_name = #{chkCo}
 	</select>
 	
-	<insert id="write" parameterType="hashmap">
+	<insert id="courWrite" parameterType="hashmap">
 		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
 		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
 	</insert>
 	
-	<update id="update" parameterType="hashmap">
+	<update id="courUpdate" parameterType="hashmap">
 		UPDATE course SET
 			co_name = #{co_name}
 			<!-- ,sub_name = #{sub_name} -->
@@ -48,8 +49,18 @@
 		]]>
 	</select> -->
 	
-	<select id="subjectList" resultType="com.gd.main.dto.CourseDTO">
+	<!-- <select id="subjectList" resultType="com.gd.main.dto.CourseDTO">
 		SELECT sub_name,subject.sub_no FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+	</select> -->
+	
+	<!-- 과목명 불러오기 -->
+<!-- 	<select id="selectSubName" resultType="com.gd.main.dto.CourseDTO">
+		SELECT sub_name,sub_no FROM subject
 	</select>
+	
+	과정 정보 불러오기
+	<select id="selectCourseName" resultType="com.gd.main.dto.CourseDTO">
+		SELECT * FROM course
+	</select> -->
 </mapper>

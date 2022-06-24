@@ -10,17 +10,21 @@ import com.gd.main.dto.SubDTO;
 
 public interface CourseDAO {
 
-	ArrayList<CourseDTO> list(int cnt, int offset);
+	ArrayList<CourseDTO> courList(int cnt, int offset);
 
 	int allCount();
 
-	CourseDTO detail(String co_no);
+	CourseDTO courDetail(String co_no);
 
-	int update(HashMap<String, String> params);
+	int courUpdate(HashMap<String, Object> map);
 
-	String overlay(String chkCo);
+	String courOverlay(String chkCo);
 
-	int write(HashMap<String, Object> params);
+	int courWrite(HashMap<String, Object> params);
 
 	ArrayList<CourseDTO> subjectList();
+
+	CourseDTO selectSubName(String sub_no);
+
+	ArrayList<CourseDTO> selectCourseName(String co_no);
 }

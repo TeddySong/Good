@@ -25,5 +25,26 @@
 		WHERE cli_no=#{param1}
 	</select>
 	
+	<select id="subSearchList" resultType="com.gd.main.dto.StuDTO">
+		SELECT sub_no, sub_name FROM subject		
+		WHERE sub_name=#{param1}
+	</select>
+	
+	<select id="subChoice" resultType="com.gd.main.dto.StuDTO">
+		SELECT sub_name FROM subject		
+		WHERE sub_no=#{param1}
+	</select>
+	
+	<select id="stuDetail" resultType="com.gd.main.dto.StuDTO">
+		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, stu_condition, emp_name FROM student s
+		LEFT OUTER JOIN client c ON c.cli_no = s.cli_no 
+		LEFT OUTER JOIN employee e ON e.emp_no =s.emp_no 
+		WHERE stu_no = #{param1}
+	</select>
+	
+	<insert id="stuRegister" parameterType='hashmap'>
+		INSERT INTO student (stu_birth, stu_age, stu_gender, stu_condition)
+		VALUES (#{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
+	</insert>
 	
 </mapper>

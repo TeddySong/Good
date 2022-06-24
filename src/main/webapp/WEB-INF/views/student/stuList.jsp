@@ -261,7 +261,7 @@ function drawList(list){
 	list.forEach(function(item){
 		content += '<tr>';
 		content += '<td>'+item.stu_no+'</td>';
-		content += '<td><a href="#">'+item.cli_name+'</a></td>';
+		content += '<td><a href="stuDetail.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';
 		content += '<td>'+item.cli_phone+'</td>';		
 		content += '<td>'+item.stu_birth+'</td>';
 		content += '<td>'+item.stu_age+'</td>';

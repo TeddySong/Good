@@ -227,6 +227,43 @@
 	<delete id="ajaxDelete" parameterType="String">
 			DELETE FROM client WHERE cli_no=#{idx}
 		</delete>
+		
+		
+<!-- 6 / 24 추가 -->
+		
+		<insert id="cliReg" parameterType="String">
+			INSERT INTO client(cli_name,cli_phone,cli_req)values(#{cli_name},#{cli_phone},#{cli_req})
+		</insert>
+		
+		<insert id="cliRegCo" parameterType="hashmap">
+			 <selectKey keyProperty="cli_no" resultType="int" order="BEFORE">
+    			 SELECT LAST_INSERT_ID()
+  			</selectKey>
+			INSERT INTO qsub (sub_no,cli_no) values(#{string},#{cli_no})
+		</insert>
+		
+		<update id="cliUpdate" parameterType="hashmap">
+			UPDATE client SET  cli_name =#{cli_name} , cli_phone =#{cli_phone} WHERE cli_no=#{cli_no}
+		</update>
+		
+		<select id="empList" resultType="com.gd.main.dto.Client_Dto">
+			SELECT emp_no, emp_condition, emp_position,emp_phone, emp_name FROM employee
+		
+		</select>
+		
+		<select id="empSearch" parameterType="String" resultType="com.gd.main.dto.Client_Dto">
+			SELECT emp_no, emp_condition,emp_position, emp_phone, emp_name FROM employee 
+			<where>
+				
+					emp_name LIKE  concat('%',#{keyword},'%') 
+			</where>	
+
+		</select>
+		
+		<update id="empUp" parameterType="hashmap">
+			UPDATE client SET emp_no =#{emp_no} WHERE cli_no=#{cli_no}
+		</update>
+		
 </mapper>
 
 

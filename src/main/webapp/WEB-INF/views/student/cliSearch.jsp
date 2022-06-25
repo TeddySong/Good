@@ -146,6 +146,7 @@
 		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
 		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
 		
+		window.close()
 	});	
 
 }

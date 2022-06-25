@@ -131,7 +131,7 @@ $('#subSearchList input[type="radio"]:checked').each(function(idx){
 	
 	opener.document.getElementById("sub_name").value =$tr.find('#sub_name').text();
 	
-	
+	window.close()
 });	
 
 }

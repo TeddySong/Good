@@ -77,6 +77,10 @@
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
+	
+	#subPlus td {
+		background-color: #fff;
+	}
 		
 </style>
 </head>
@@ -226,16 +230,13 @@
 									<tr>
 										<th colspan="2" >과목정보</th>										
 									</tr>
-									<tr>
+									<tr id=subPlus>
 										<td colspan="2" style="text-align:end;">
 											<input type="button" value="과목추가" onclick="subSearch_pop()"/>
 											<input type="button" value="과목삭제" onclick="#"/>
 										</td>				
 									</tr>
-									<tr>
-										<th><input type="checkbox"></th>
-										<td><input type="text" id="sub_name"/></td>
-									</tr>
+									<tr id="subtable"></tr>
 									<tr>
 										<th colspan="2">
 											<input type="button" value="등록완료" onclick="stuRegister()"/>
@@ -261,6 +262,15 @@ function cliSearch_pop(){
 	}
 
 function subSearch_pop(){
+	var subtable = ""
+	subtable += '<tr>';
+	subtable += '<th><input type="checkbox"></th>';
+	subtable += '<td><input type="text" id="sub_name"/></td>'
+	subtable += '</tr>';
+	
+	$('#subtable').after(subtable);
+	
+	
 	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 }
 

@@ -224,10 +224,10 @@
 								        </td>
 									</tr>
 									<tr>
-										<th colspan="2">과목정보</th>										
+										<th colspan="2" >과목정보</th>										
 									</tr>
 									<tr>
-										<td colspan="2">
+										<td colspan="2" style="text-align:end;">
 											<input type="button" value="과목추가" onclick="subSearch_pop()"/>
 											<input type="button" value="과목삭제" onclick="#"/>
 										</td>				

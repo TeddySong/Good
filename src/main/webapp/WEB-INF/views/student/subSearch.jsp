@@ -105,7 +105,7 @@
 		</thead>
 		<tbody id="subSearchList">
 			<c:forEach items="${subSearchList}" var="subSearchList">
-			<tr>
+			<tr id="subSearch_${subSearchList.sub_no}">
 				<td><input type="radio" value="${subSearchList.sub_no}"/></td>
 				<td id="sub_name">${subSearchList.sub_name}</td>				
 			</tr>
@@ -120,28 +120,20 @@
 <script>
 function subChoice(){
 	
-	var subChoice = $('#subSearchList input[type="radio"]:checked').val();
+	var subArr = new Array();
 	
-	
+$('#subSearchList input[type="radio"]:checked').each(function(idx){
+	var subChoice = $(this).val();
 	console.log(subChoice);
 	
- 	$.ajax({
-		type:'get',
-		url:'subChoice.ajax',
-		data:{
-			"subChoice":subChoice
-			},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			opener.document.getElementById("sub_name").value = document.getElementById("sub_name").value;
-			window.close()
-		},
-		error:function(e){
-			console.log(e);
-		}
-	}); 
+	$tr = $("#subSearch_"+subChoice);
+	console.log($tr.text());	
 	
+	opener.document.getElementById("sub_name").value =$tr.find('#sub_name').text();
+	
+	
+});	
+
 }
 
 

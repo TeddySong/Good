@@ -77,4 +77,33 @@ public class EmployeeController {
 		logger.info("직원 등록하기 : "+params);
 		return service.empWrite(params);
 	}
+
+	
+	//0625 수정 진행중.........
+	
+	
+	
+	//수정 페이지 이동
+	@RequestMapping(value="/empUpdate.go")
+	public String EmpUpdate() {
+		logger.info("수정 페이지 이동");
+		//session.setAttribute("emp_no", emp_no);
+		return "./employee/empUpdate";
+	}
+
+	//수정하기
+	@RequestMapping(value="/empUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> update(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		logger.info("params : "+params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		boolean success = service.empUpdate(params);
+		map.put("success", success);
+		
+		return map;		
+	}	
+	
+
 }

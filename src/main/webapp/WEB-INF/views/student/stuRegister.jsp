@@ -128,7 +128,7 @@
                             <div class="collapse" id="collapseLayoutsb" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="empList.go">직원리스트</a>
-                                    <a class="nav-link" href="empRegister.go">직원등록</a>
+                                    <a class="nav-link" href="empWrite.go">직원등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -187,7 +187,7 @@
                             </div>
                             <div>
                                 <table id="registerList">
-                                	<tr id="cli_no_hidden">
+                                	<tr class="hidden">
 										<th>고객번호</th>
 										<td><input type="text" id="cli_no"/></td>
 									</tr>									
@@ -201,7 +201,7 @@
 										<th>연락처</th>
 										<td><input type="text" id="cli_phone"/></td>
 									</tr>
-									<tr id="emp_no_hidden">
+									<tr class="hidden">
 										<th>직원번호</th>
 										<td><input type="text" id="emp_no"/></td>
 									</tr>
@@ -267,25 +267,28 @@
 <script>
 noHidden();
 function noHidden(){
-	$("#cli_no_hidden").css("display", "none");
-	$("#emp_no_hidden").css("display", "none");
+	$(".hidden").css("display", "none");	
 } 
 
 function cliSearch_pop(){	
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 	}
 
+
+
 function subSearch_pop(){
 	var subtable = ""
 	subtable += '<tr>';
 	subtable += '<th><input type="checkbox"></th>';
-	subtable += '<td><input type="text" id="sub_name"/></td>'
+	subtable += '<td><input type="text" id="sub_name"/><input type="text" id="sub_no" class="hidden"/></td>';
 	subtable += '</tr>';
 	
 	$('#subtable').after(subtable);
 	
 	
 	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	
+	
 }
 
 

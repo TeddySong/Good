@@ -117,6 +117,8 @@
 				<td id="cli_name">${cliSearchList.cli_name}</td>
 				<td id="cli_phone">${cliSearchList.cli_phone}</td>
 				<td id="emp_name">${cliSearchList.emp_name}</td>
+				<td id="cli_no" class="hidden">${cliSearchList.cli_no}</td>
+				<td id="emp_no" class="hidden">${cliSearchList.emp_no}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -127,6 +129,10 @@
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
+	noHidden();
+	function noHidden(){
+		$(".hidden").css("display", "none");
+	}
 
 	function cliChoice(){
 	
@@ -141,103 +147,17 @@
 		$tr = $("#cliSearch_"+cliChoice);
 		console.log($tr.text());
 		
-		cliObj.cli_name = $tr.find('#cli_name').text();
-		cliObj.cli_phone = $tr.find('#cli_phone').text();
-		cliObj.emp_name = $tr.find('#emp_name').text();
 		
-		cliArr.push(cliObj);
+		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').text();
+		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
+		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
+		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').text();
+		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').text();
 		
-		console.log(cliArr);
-		
-		opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-		opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-		opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value;
-		
-	});
-			
-		
-		
-		/* opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-		opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-		opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value; */
+		window.close()
+	});	
 
-	}
-
-
-
-/* function cliChoice(){
-	
-var cliChoice = $('#cliSearchList input[type="radio"]:checked').val();
-		
-	console.log(cliChoice);
-	
-	$tr = $("#cliSearch_"+cliChoice);
-	console.log($tr);
-	
-	var cli_name = $tr.find('#cli_name').val();
-	console.log(cli_name);
-	
-	opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-	opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-	opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value;
-} */
-
-/* var cliChoiceArr = new Array();
-
-$('#cliSearchList input[type="radio"]:checked').each(function(){
-	var cli_no = $(this).val();
-	consoloe.log(cli_no);
-	
-	
-	$tr = $("#tr_"+cli_no);
-	
-	var cli_name = $tr.find('#cli_name').val();
-	console.log(cli_name); */
-	
-	
-/* 	$tr = $("#tr_"+stu_no);
-	opener.document.getElementById("cli_name").value = $tr.find("$('#cli_name')").val();
-	opener.document.getElementById("cli_phone").value = $tr.find("$('#cli_phone')").val();
-	opener.document.getElementById("emp_name").value = $tr.find("$('#emp_name')").val(); */
-		
-
-
-
-
-
-
-/* function cliChoice(){
-	
-	var cliChoice = $('#cliSearchList input[type="radio"]:checked').val();
-	
-	
-	console.log(cliChoice);
-	
- 	$.ajax({
-		type:'get',
-		url:'cliChoice.ajax',
-		data:{
-			"cliChoice":cliChoice
-			},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data); */
-			
-			
-			
-			/* opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-			opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-			opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value; */
-			
-	/* 	},
-		error:function(e){
-			console.log(e);
-		}
-	}); 
-	
-} */ 
-
-
+}
 
 
 </script>

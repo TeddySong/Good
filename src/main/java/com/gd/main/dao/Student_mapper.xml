@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="cliSearchList" resultType="com.gd.main.dto.StuDTO">
-		SELECT cli_no, cli_name, cli_phone, emp_name FROM client c 
+		SELECT cli_no, cli_name, cli_phone, emp_name, c.emp_no FROM client c 
 		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no
 		WHERE cli_name=#{param1} OR cli_phone=#{param1}
 	</select>
@@ -42,9 +42,9 @@
 		WHERE stu_no = #{param1}
 	</select>
 	
-	<insert id="stuRegister" parameterType='hashmap'>
-		INSERT INTO student (stu_birth, stu_age, stu_gender, stu_condition)
-		VALUES (#{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
+	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>
+		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
+		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
 	</insert>
 	
 </mapper>

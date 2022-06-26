@@ -21,5 +21,7 @@ public interface StudentDAO {
 
 	StuDTO stuDetail(String stu_no);
 
+	int stuRegister(HashMap<String, String> params);
+
 
 }

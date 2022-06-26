@@ -2,6 +2,8 @@ package com.gd.main.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,7 @@ public class CourseService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired CourseDAO dao;
-	
+/*	
 	public HashMap<String, Object> courList(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//hashmap 을 반환하기위해 객체화
@@ -57,28 +59,38 @@ public class CourseService {
 		
 		return map;
 	}
-	
+*/	
 	public CourseDTO courDetail(String co_no) {
 		return dao.courDetail(co_no);
 	}
 
-	public int courUpdate(HashMap<String, Object> map) {
+	
+	public CourseDTO courUpdate(HashMap<String, Object> params) {
 		/*
-		HashMap<String, Object> result = new HashMap<String, Object>();
+		HashMap<String, Object> updateResult = new HashMap<String, Object>();
 		
+		CourseDTO dto = new CourseDTO();
+		String sub_name = (String) params.get("sub_name");
+		int sub_no = dto.getSub_no();
+		
+		int row = dao.courUpdate(params);
 		boolean success = false;
+		//int co_no = Integer.parseInt(params.get("co_no"));
+		logger.info("넘어온 값 : "+params);
+		logger.info("수정된 데이터 수 : "+row);
 		
-		if(dao.courUpdate(params) > 0) {
+		if(row > 0) {
+			//dao.subTable(sub_name,sub_no);
 			success = true;
 		}
 		
-		result.put("success", success);
-		logger.info("update success : "+success);
-		return success;
+		updateResult.put("success", success);
+		return updateResult;
 		*/
 		
-		return dao.courUpdate(map);
+		return dao.courUpdate(params);
 	}
+	
 
 	public HashMap<String, Object> courOverlay(String chkCo) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -91,13 +103,20 @@ public class CourseService {
 		return map;
 	}
 
+	
 	public HashMap<String, Object> courWrite(HashMap<String, Object> params) {
 		HashMap<String, Object> writeResult = new HashMap<String, Object>();
-
+		
+		//subject 테이블에 넣을 값(sub_no,sub_name) 객체화
+		CourseDTO dto = new CourseDTO();
+		String sub_name = (String) params.get("sub_name");
+		int sub_no = dto.getSub_no();
+		
 		int row = dao.courWrite(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);
 		if(row>0) {
+			dao.subTable(sub_name,sub_no);
 			success = true;
 		}
 		
@@ -105,6 +124,7 @@ public class CourseService {
 		
 		return writeResult;
 	}
+	
 
 	/*
 	public ArrayList<CourseDTO> subjectList() {
@@ -113,15 +133,43 @@ public class CourseService {
 	}
 */
 
-	public CourseDTO selectSubName(String sub_no) {
+	public ArrayList<CourseDTO> subName() {
 		// TODO Auto-generated method stub
-		return dao.selectSubName(sub_no);
+		return dao.subName();
 	}
 
-	public ArrayList<CourseDTO> selectCourseName(String co_no) {
+	public ArrayList<CourseDTO> courseName() {
 		// TODO Auto-generated method stub
-		return dao.selectCourseName(co_no);
+		return dao.courseName();
 	}
 
+	public ArrayList<CourseDTO> courList() {
+		logger.info("과정 리스트 요청");
+		return dao.courList();
+	}
+
+	/*
+	public CourseDTO selectedSubName(String sub_no) {
+		//CourseDTO dto = new CourseDTO();
+		//int getSubNo = dto.getSub_no();
+		return dao.selectedSubName(sub_no);
+	}
+	*/
+	/*
+	public int courUpdate(HashMap<String, Object> map) {		
+		return dao.courUpdate(map);
+	}
+	*/
+	
+	public CourseDTO courDetail2(int co_no) {
+		return dao.courDetail2(co_no);
+	}
+
+	/*
+	public CourseDTO callSubNo(int co_no) {
+		// TODO Auto-generated method stub
+		return dao.callSubNo(co_no);
+	}
+	*/
 	
 }

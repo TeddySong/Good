@@ -4,7 +4,7 @@
 <mapper namespace="com.gd.main.dao.CourseDAO">
 
 	<select id="courList" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
+		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
@@ -21,19 +21,37 @@
 		WHERE co_no = #{param1}
 	</select>
 	
+	<select id="courDetail2" parameterType="integer" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, course.sub_no, sub_name, co_startDate, co_endDate, 
+		co_startTime, co_endTime, co_condition,co_capacity FROM course
+		LEFT JOIN subject ON subject.sub_no = course.sub_no
+		WHERE co_no = #{co_no}
+	</select>
+	
+	<select id="callSubNo" resultType="com.gd.main.dto.CourseDTO">
+		SELECT sub_no FROM subject
+		WHERE sub_no = #{param1}
+	</select>
+	
+	
 	<select id="courOverlay" parameterType="String" resultType="String">
 		SELECT co_name FROM course WHERE co_name = #{chkCo}
 	</select>
 	
+	<select id="subTable" resultType="com.gd.main.dto.CourseDTO">
+		SELECT sub_no FROM subject
+		WHERE sub_no = #{param1}
+	</select>
+	
 	<insert id="courWrite" parameterType="hashmap">
-		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition)
-		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition})
+		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition,sub_no)
+		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition},#{sub_no})
 	</insert>
 	
 	<update id="courUpdate" parameterType="hashmap">
 		UPDATE course SET
 			co_name = #{co_name}
-			<!-- ,sub_name = #{sub_name} -->
+			,sub_no = #{sub_no}
 			,co_startDate = #{co_startDate}
 			,co_endDate = #{co_endDate}
 			,co_startTime = #{co_startTime}
@@ -41,26 +59,34 @@
 			,co_condition = #{co_condition}
 			,co_capacity = #{co_capacity}
 		WHERE co_no = #{co_no}
+	
+		<!-- UPDATE course JOIN subject ON course.sub_no = subject.sub_no SET
+			course.co_name = #{co_name}
+			,subject.sub_no = #{sub_no}
+			,subject.sub_name = #{sub_name}
+			,course.co_startDate = #{co_startDate}
+			,course.co_endDate = #{co_endDate}
+			,course.co_startTime = #{co_startTime}
+			,course.co_endTime = #{co_endTime}
+			,course.co_condition = #{co_condition}
+			,course.co_capacity = #{co_capacity}
+		WHERE course.co_no = #{co_no} -->
 	</update>
 	
-	<!-- <select id="getSubName" resultType="com.gd.main.dto.CourseDTO">
-		<![CDATA[
-			SELECT sub_name FROM subject ORDER BY sub_no
-		]]>
-	</select> -->
-	
-	<!-- <select id="subjectList" resultType="com.gd.main.dto.CourseDTO">
-		SELECT sub_name,subject.sub_no FROM course
-		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-	</select> -->
-	
 	<!-- 과목명 불러오기 -->
-<!-- 	<select id="selectSubName" resultType="com.gd.main.dto.CourseDTO">
+ 	<select id="subName" resultType="com.gd.main.dto.CourseDTO">
 		SELECT sub_name,sub_no FROM subject
 	</select>
 	
-	과정 정보 불러오기
-	<select id="selectCourseName" resultType="com.gd.main.dto.CourseDTO">
-		SELECT * FROM course
+	<!-- 과정 정보 불러오기 -->
+	<select id="courseName" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, co_startDate, co_endDate,
+		co_startTime, co_endTime, co_condition,co_capacity FROM course
+	</select>
+	
+	<!-- 선택한 과정번호 가져오기 -->
+	<!-- <select id="selectedSubName" resultType="com.gd.main.dto.CourseDTO">
+		SELECT sub_no FROM subject
+		WHERE sub_no = #{param1}
 	</select> -->
 </mapper>

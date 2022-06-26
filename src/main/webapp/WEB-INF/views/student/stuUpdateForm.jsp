@@ -287,12 +287,6 @@
 	
 	
 	
-	function stuUpdate(){
-		var stu_no = $('#stu_no').html();
-		location.href = 'stuUpdate.go?stu_no='+stu_no;
-	}
-	
-	
 	
 	
 	

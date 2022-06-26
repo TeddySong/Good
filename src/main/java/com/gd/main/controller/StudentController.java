@@ -172,4 +172,13 @@ public class StudentController {
 	       logger.info("글쓰기 확인");
 	       return service.stuRegister(params);
 	    }
+	
+	
+	@RequestMapping("/stuUpdate.go")
+	 public String update(@RequestParam String stu_no, HttpSession session) {
+		 logger.info("수정 상세보기 페이지 이동:"+stu_no);
+		 session.setAttribute("stu_no", stu_no);
+		 return "stuUpdateForm";
+	 }
+	
 }

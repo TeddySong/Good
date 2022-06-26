@@ -55,9 +55,7 @@
 		width : 80%;
 	}
 	
-	.conditionSelect{
-		width : 80%;
-	}
+	
 	
 	input[type='button'] {
 		position: relative;
@@ -76,10 +74,6 @@
 	input[type='button']:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
-	}
-	
-	#subPlus td {
-		background-color: #fff;
 	}
 		
 </style>
@@ -128,7 +122,7 @@
                             <div class="collapse" id="collapseLayoutsb" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="empList.go">직원리스트</a>
-                                    <a class="nav-link" href="empWrite.go">직원등록</a>
+                                    <a class="nav-link" href="empRegister.go">직원등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -187,68 +181,52 @@
                             </div>
                             <div>
                                 <table id="registerList">
-                                	<tr class="hidden">
-										<th>고객번호</th>
-										<td><input type="text" id="cli_no"/></td>
-									</tr>									
+                                	<tr id="stu_no_tr">
+										<th>학번</th>
+										<td id="stu_no"></td>
+									</tr>
 									<tr>
 										<th>이름</th>
-										<td><input type="text" id="cli_name"/>
-										<button onclick="cliSearch_pop()">고객정보 검색</button>
-										</td>
+										<td id="cli_name"></td>
 									</tr>
 									<tr>
 										<th>연락처</th>
-										<td><input type="text" id="cli_phone"/></td>
-									</tr>
-									<tr class="hidden">
-										<th>직원번호</th>
-										<td><input type="text" id="emp_no"/></td>
+										<td id="cli_phone"></td>
 									</tr>
 									<tr>
 										<th>담당직원</th>
-										<td><input type="text" id="emp_name"/></td>
+										<td id="emp_name"></td>
 									</tr>
 									<tr>
 										<th>생년월일</th>
-										<td><input type="date" id="stu_birth"/></td>
+										<td id="stu_birth"></td>
 									</tr>
 									<tr>
 										<th>나이</th>
-										<td><input type="text" id="stu_age"/></td>
+										<td id="stu_age"></td>
 									</tr>
 									<tr>
 										<th>성별</th>
-										<td>
-										<input type="radio" id="stu_gender" value="남"> 남
-      									<input type="radio" id="stu_gender" value="여"> 여
-										</td>
+										<td id="stu_gender"></td>
 									</tr>
 									<tr>
 										<th>학생상태</th>
-										<td>
-											<select class="conditionSelect" id="stu_condition">
-									            <option value="재학" selected>재학</option>
-									            <option value="휴학">휴학</option>
-									            <option value="수료">수료</option>
-									            <option value="중퇴">중퇴</option>									            
-									        </select>
-								        </td>
+										<td id="stu_condition"></td>
 									</tr>
 									<tr>
-										<th colspan="2" >과목정보</th>										
+										<th colspan="2">과목정보</th>										
 									</tr>
-									<tr id=subPlus>
-										<td colspan="2" style="text-align:end;">
-											<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-											<input type="button" value="과목삭제" onclick="#"/>
-										</td>				
+									<tr>
+										<td colspan="2"></td>				
 									</tr>
-									<tr id="subtable"></tr>
+									<tr id="subjectDetail">
+										<th>과목</th>
+										<td id="sub_name"></td>
+									</tr>
 									<tr>
 										<th colspan="2">
-											<input type="button" value="등록완료" onclick="stuRegister()"/>
-											<input type="button" value="취소" onclick="location.href='/stuList.go'"/>
+											<input type="button" value="수정" onclick="stuUpdate()"/>
+											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
 									</tr>
 								</table>  				
@@ -261,61 +239,45 @@
                 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>  
+	    
 
 </body>
 <script>
-noHidden();
-function noHidden(){
-	$(".hidden").css("display", "none");	
-} 
+	$('#stu_no_tr').attr('style', "display:none;");
 
-function cliSearch_pop(){	
-	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
-	}
-
-
-
-function subSearch_pop(){
-	var subtable = ""
-	subtable += '<tr>';
-	subtable += '<th><input type="checkbox"></th>';
-	subtable += '<td><input type="text" id="sub_name"/><input type="text" id="sub_no" class="hidden"/></td>';
-	subtable += '</tr>';
-	
-	$('#subtable').after(subtable);
-	
-	
-	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
-	
-	
-}
-
-
-function stuRegister(){
-	
-	var $cli_no = $('#cli_no');
-	var $emp_no = $('#emp_no');
-	var $stu_birth = $('#stu_birth');
-	var $stu_age = $('#stu_age');
-	var $stu_gender = $('#stu_gender');
-	var $stu_condition = $('#stu_condition');
 
 	$.ajax({
 		type:'get',
-		url:'stuRegister.ajax',
-		data:{
-			cli_no:$cli_no.val(),
-			emp_no:$emp_no.val(),
-			stu_birth:$stu_birth.val(),
-			stu_age:$stu_age.val(),
-			stu_gender:$stu_gender.val(),
-			stu_condition:$stu_condition.val()
-		},
+		url:'stuDetail.ajax',
+		data:{},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
-			location.href='stuList.go';		
+			 console.log(data);
+			$('#stu_no').html(data.dto.stu_no);
+			$('#cli_name').html(data.dto.cli_name);			
+			$('#cli_phone').html(data.dto.cli_phone);
+			$('#emp_name').html(data.dto.emp_name);
+			$('#stu_birth').html(data.dto.stu_birth);
+			$('#stu_age').html(data.dto.stu_age);
+			$('#stu_gender').html(data.dto.stu_gender);			
+			$('#stu_condition').html(data.dto.stu_condition);
+			
+			
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+	
+	
+	$.ajax({
+		type:'get',
+		url:'subDetail.ajax',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+			 console.log(data);
+			$('#sub_name').html(data.dto.sub_name);			
 		},
 		error:function(error){
 			console.log(error);
@@ -324,8 +286,6 @@ function stuRegister(){
 	
 	
 	
-}
-
 	
 	
 	

@@ -108,6 +108,7 @@
 			<tr id="subSearch_${subSearchList.sub_no}">
 				<td><input type="radio" value="${subSearchList.sub_no}"/></td>
 				<td id="sub_name">${subSearchList.sub_name}</td>				
+				<td id="sub_no" class="hidden">${subSearchList.sub_no}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -118,6 +119,11 @@
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
+noHidden();
+function noHidden(){
+	$(".hidden").css("display", "none");
+}
+
 function subChoice(){
 	
 	var subArr = new Array();
@@ -130,6 +136,7 @@ $('#subSearchList input[type="radio"]:checked').each(function(idx){
 	console.log($tr.text());	
 	
 	opener.document.getElementById("sub_name").value =$tr.find('#sub_name').text();
+	opener.document.getElementById("sub_no").value =$tr.find('#sub_no').text();
 	
 	window.close()
 });	

@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id = "selectEmpMyInfo" parameterType="com.gd.main.dto.EmployeeDTO" resultType="com.gd.main.dto.EmployeeDTO">
-		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate, emp_endDate 
+		SELECT emp_no, emp_pw, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate, emp_endDate 
 		FROM employee
 		Where emp_no = #{emp_no};
 	</select>

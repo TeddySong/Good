@@ -3,15 +3,16 @@ package com.gd.main.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 
 public class EmployeeDTO{
 	/* 사번,직원명,id,연락처,직급,입사일,퇴사일,재직상태*/
 	private int emp_no;
-	private String emp_name;
 	private String emp_id;
+	private String emp_pw;
+	private String emp_name;
 	private String emp_phone;
 	private String emp_condition;
 	private String emp_position;
@@ -20,24 +21,30 @@ public class EmployeeDTO{
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_endDate;
 	
-
+	
 	public int getEmp_no() {
 		return emp_no;
 	}
 	public void setEmp_no(int emp_no) {
 		this.emp_no = emp_no;
 	}
-	public String getEmp_name() {
-		return emp_name;
-	}
-	public void setEmp_name(String emp_name) {
-		this.emp_name = emp_name;
-	}
 	public String getEmp_id() {
 		return emp_id;
 	}
 	public void setEmp_id(String emp_id) {
 		this.emp_id = emp_id;
+	}
+	public String getEmp_pw() {
+		return emp_pw;
+	}
+	public void setEmp_pw(String emp_pw) {
+		this.emp_pw = emp_pw;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 	public String getEmp_phone() {
 		return emp_phone;
@@ -69,10 +76,9 @@ public class EmployeeDTO{
 	public void setEmp_endDate(Date emp_endDate) {
 		this.emp_endDate = emp_endDate;
 	}
-
+	
 }
 	
-
 	
 
 

@@ -4,13 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="resources/JS/employee/jquery.twbsPagination.js"></script>
   <style>
-  a{
+    a{
   	text-decoration : none;
   }
   table{
@@ -28,9 +27,7 @@
   }
   thead{
   	font-weight: 700;
-
- 
-  </style>
+   </style>
 </head>
 <body>
 <h1>직원목록</h1>
@@ -50,7 +47,7 @@
 		
  	<div>
  		<!-- <input type="button" value="선택수정"  onclick="UpdateValue();"> -->
-    	<button onclick="location.href='empMyInfo.go'">수정</button>
+    	<input type="button" id="button1" value="수정" onclick="EmpUpdateForm()"/>
 		<button onclick="location.href='empWrite.go'">등록</button>
 	</div>
 	<table>
@@ -83,16 +80,23 @@
 		
 </body>
 
+
 <script>
 
-function updateForm(){
-	var emp = $('input[type=radio]:checked').parents('td').next().html();
-	location.href='empMyInfo.go?emp_no='+emp_no;
+function EmpUpdateForm(){
+	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
+	location.href='empUpdate.go?emp_no='+emp_no;
 }
+
 
 var currPage = 1;
 
+
+
+
 //리스트 불러오기
+
+
 
 
 listCall(currPage);
@@ -131,7 +135,7 @@ function listCall(page) {
 		}
 	});
 };
-
+	
 
 //리스트 그리기
 function drawList(list){

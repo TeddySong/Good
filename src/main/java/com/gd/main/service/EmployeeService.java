@@ -82,17 +82,14 @@ public class EmployeeService {
 	
 	//0625 수정페이지 진행중..
 	
-	public boolean empUpdate(HashMap<String, String> params) {
-		boolean success = false;
-		int row = dao.empUpdate(params);
-		
-		if(row > 0) {
-			success = true;
-		}
-		
-		logger.info("update success : "+success);
-		return success;
-	}
+	/*
+	 * public boolean empUpdate(HashMap<String, String> params) { boolean success =
+	 * false; int row = dao.empUpdate(params);
+	 * 
+	 * if(row > 0) { success = true; }
+	 * 
+	 * logger.info("update success : "+success); return success; }
+	 */
 
 }
 

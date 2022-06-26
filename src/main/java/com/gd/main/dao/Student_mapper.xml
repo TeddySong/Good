@@ -42,7 +42,7 @@
 		WHERE stu_no = #{param1}
 	</select>
 	
-	<insert id="stuRegister" parameterType='hashmap'>
+	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>
 		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
 		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
 	</insert>

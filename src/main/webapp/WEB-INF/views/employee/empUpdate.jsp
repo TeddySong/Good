@@ -46,7 +46,7 @@
 		<tr>
 			<th>입사일</th>
 			<td>
-         		<input type="date" id="emp_startDate" name="classStart" min="2022-06-01" max="2100-06-01" value="${employeeDTO.emp_startDate}" />
+         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_startDate}" />
 			</td>			
 		</tr>
 	 	<tr>
@@ -58,17 +58,39 @@
 		</tr> 
 		<tr>
 			<th colspan="2">
-				<input type="button" id="button1" value="수정" onclick="save()"/>
+				<input type="button" id="button1" value="수정" onclick="empUpdate()"/>
 				<input type="button" id="button2" value="취소" onclick="location.href='empList.go'"/>
 			</th>		
 		</tr>
 	</table>
 </body>
 <script>
+
+function empUpdate(){
+	console.log('직원수정');
+	var $emp_id=$("#emp_id").val();
+	var $emp_pw=$("#emp_pw").val();
+	var $emp_name=$("#emp_name").val();
+	var $emp_phone=$("#emp_phone").val();
+	var $emp_position=$("#emp_position").val();
+	var $emp_startDate=$("#emp_startDate").val();
+	var $emp_endDate=$("#emp_endDate").val();
+	var $emp_condition=$("#emp_condition").val();
+
+
 	$.ajax({
-		type:'get',
+		type:'post',
 		url:'empUpdate.ajax',
-		data:{},
+		data:{
+			emp_id:$emp_id,
+			emp_pw:$emp_pw,
+			emp_name:$emp_name,
+			emp_phone:$emp_phone,
+			emp_position:$emp_position,
+	 		emp_startDate:$emp_startDate,
+	 		emp_endDate:$emp_endDate,
+	 		emp_condition:$emp_condition 
+			},
 		dataType:'json',
 		success:function(data){
 			console.log(data);
@@ -84,5 +106,6 @@
 			console.log(e);
 		}
 	});
+}
 </script>
 </html>

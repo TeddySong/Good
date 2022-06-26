@@ -1,6 +1,5 @@
 package com.gd.main.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -11,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.gd.main.dto.Client_Dto;
 import com.gd.main.dto.EmployeeDTO;
 import com.gd.main.service.EmployeeService;
 
@@ -36,6 +33,17 @@ public class EmployeeController {
 		
 	}
 	
+	 @RequestMapping("/empUpdate.ajax")
+	 @ResponseBody
+	 public boolean empUpdate(
+			 @RequestParam HashMap<String, String>params){
+		logger.info("직원 수정: " +params);
+		HashMap<String, Object> map= new HashMap<String, Object>();
+		boolean success=service.empUpdate(params);
+		map.put("success",success);
+		
+		 return service.empUpdate(params);
+	 }
 	//직원 목록페이지 이동
 	@RequestMapping(value = "/empList.go")
 	public String empListGo() {

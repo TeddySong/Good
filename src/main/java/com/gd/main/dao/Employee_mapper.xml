@@ -50,17 +50,15 @@
 	</select>
 
 	<!-- 직원정보 수정하기 -->
-	<update id="update" parameterType="hashmap">
-<!-- 		UPDATE employee SET 
+	<update id="empUpdate" parameterType="hashmap">
+ 		UPDATE employee SET 
 			emp_id = #{emp_id}
 			,emp_pw= #{emp_pw}
-			,emp_no = #{emp_no}
 			,emp_phone = #{emp_phone}
 			,emp_position = #{emp_position}
 			,emp_startDate =#{emp_startDate}
-			,emp_endDate =#{emp_endDate}
 			,emp_condition =#{emp_condition}
-		WHERE emp_no= #{emp_no} -->
+		WHERE emp_no= #{emp_no} 
 	</update>
 
 </mapper>

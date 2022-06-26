@@ -79,6 +79,18 @@ public class StudentService {
 
 	}
 
+	public HashMap<String, Object> stuRegister(HashMap<String, String> params) {
+		logger.info("들어왔는지 확인");
+	      HashMap<String, Object> result=new HashMap<String, Object>();
+	      int row=dao.stuRegister(params);
+	      boolean cnt=false;
+	      if(row>0) {
+	         cnt=true;
+	      }
+	      result.put("success",cnt);
+	      return result;
+	}
+
 	
 	
 	

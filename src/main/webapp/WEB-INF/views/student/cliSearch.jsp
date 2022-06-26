@@ -117,6 +117,8 @@
 				<td id="cli_name">${cliSearchList.cli_name}</td>
 				<td id="cli_phone">${cliSearchList.cli_phone}</td>
 				<td id="emp_name">${cliSearchList.emp_name}</td>
+				<td id="cli_no" class="hidden">${cliSearchList.cli_no}</td>
+				<td id="emp_no" class="hidden">${cliSearchList.emp_no}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -127,6 +129,10 @@
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
+	noHidden();
+	function noHidden(){
+		$(".hidden").css("display", "none");
+	}
 
 	function cliChoice(){
 	
@@ -145,6 +151,8 @@
 		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').text();
 		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
 		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
+		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').text();
+		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').text();
 		
 		window.close()
 	});	

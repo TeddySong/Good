@@ -187,6 +187,10 @@
                             </div>
                             <div>
                                 <table id="registerList">
+                                	<tr id="cli_no_hidden">
+										<th>고객번호</th>
+										<td><input type="text" id="cli_no"/></td>
+									</tr>									
 									<tr>
 										<th>이름</th>
 										<td><input type="text" id="cli_name"/>
@@ -196,6 +200,10 @@
 									<tr>
 										<th>연락처</th>
 										<td><input type="text" id="cli_phone"/></td>
+									</tr>
+									<tr id="emp_no_hidden">
+										<th>직원번호</th>
+										<td><input type="text" id="emp_no"/></td>
 									</tr>
 									<tr>
 										<th>담당직원</th>
@@ -257,6 +265,12 @@
 
 </body>
 <script>
+noHidden();
+function noHidden(){
+	$("#cli_no_hidden").css("display", "none");
+	$("#emp_no_hidden").css("display", "none");
+} 
+
 function cliSearch_pop(){	
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 	}
@@ -277,9 +291,8 @@ function subSearch_pop(){
 
 function stuRegister(){
 	
-	var $cli_name = $('#cli_name');
-	var $cli_phone = $('#cli_phone');
-	var $emp_name = $('#emp_name');
+	var $cli_no = $('#cli_no');
+	var $emp_no = $('#emp_no');
 	var $stu_birth = $('#stu_birth');
 	var $stu_age = $('#stu_age');
 	var $stu_gender = $('#stu_gender');
@@ -289,9 +302,8 @@ function stuRegister(){
 		type:'get',
 		url:'stuRegister.ajax',
 		data:{
-			cli_name:$cli_name.val(),
-			cli_phone:$cli_phone.val(),
-			emp_name:$emp_name.val(),
+			cli_no:$cli_no.val(),
+			emp_no:$emp_no.val(),
 			stu_birth:$stu_birth.val(),
 			stu_age:$stu_age.val(),
 			stu_gender:$stu_gender.val(),
@@ -300,7 +312,7 @@ function stuRegister(){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			// location.href='stuList.go';		
+			location.href='stuList.go';		
 		},
 		error:function(error){
 			console.log(error);

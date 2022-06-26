@@ -164,25 +164,12 @@ public class StudentController {
 	}
 	
 	
-	@RequestMapping(value="stuRegister.ajax")
-	@ResponseBody
-	public HashMap<String, Object> stuRegister(
-			@RequestParam HashMap<String, Object> params){
-	 
-		HashMap<String, Object> map= new HashMap<String, Object>();	 
-		 
-		map.put("cli_name" , params.get("cli_name"));
-		map.put("cli_phone" , params.get("cli_phone"));
-		map.put("emp_name" , params.get("emp_name"));
-		map.put("stu_birth" , params.get("stu_birth"));
-		map.put("stu_age" , params.get("stu_age"));
-		map.put("stu_gender" , params.get("stu_gender"));
-		map.put("stu_condition" , params.get("stu_condition"));
-		
-		logger.info("값 : {}", map);
-		
-		return null;
-		 
-			
-	}
+	@RequestMapping("/stuRegister.ajax")
+	   @ResponseBody
+	    public HashMap<String, Object> write(
+	          @RequestParam HashMap<String, String> params) {
+	       
+	       logger.info("글쓰기 확인");
+	       return service.stuRegister(params);
+	    }
 }

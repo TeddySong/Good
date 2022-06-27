@@ -4,6 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
 
@@ -24,16 +25,17 @@ th,td{
 <select id='sub_name'>
 	<option value='과목명' selected>과목명</option>
 </select>
-<input type="checkbox" name="sub_condition"/>단과
-<input type="checkbox" name="sub_condition"/>종합
-<input type="checkbox" name="sub_condition"/>숨김
-<button onclick="location.href='subRegister.go'">등록</button>
+<input type="radio" name="sub_condition"/>단과
+<input type="radio" name="sub_condition"/>종합
+<input type="radio" name="sub_condition"/>숨김
+<button onclick="scrDel()">삭제</button>
+<button  onclick="scrRegister_pop()">등록</button>
 </div>
 <br/>
 <table>
 	 	<thead>
 	 		<tr>
-	 			<th><input type="checkbox" id="all"/></th>
+	 			<th><input type="checkbox" id="all" class="check-all"/></th>
 	 			<th>과목명</th>
 	 			<th>노출상태</th>
 	 			<th>후기</th>
@@ -53,7 +55,6 @@ th,td{
 			</td>
 		</tr>
  	</table>
- 	<button onclick="scrDel()">삭제</button>
 </body>
 <script>
 var currPage = 1;
@@ -95,6 +96,7 @@ function listCall(page){
 	});
 	
 }
+
 
 
 function drawList(list){
@@ -156,6 +158,10 @@ function scrDel() {
 		}
 			
 	
+}
+
+function scrRegister_pop(){
+	window.open("/scrReg.go","new","width=700, height=300, left=400 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 }
 
 

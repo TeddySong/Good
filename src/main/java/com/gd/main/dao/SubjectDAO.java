@@ -36,6 +36,8 @@ public interface SubjectDAO {
 
 	int allCount();
 
+	ArrayList<SubDTO> scrSublist();
+
 
 
 

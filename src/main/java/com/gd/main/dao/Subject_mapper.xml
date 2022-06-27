@@ -92,6 +92,9 @@
 		DELETE FROM script WHERE scr_no = #{scr_no}
 	</delete>
 
+	<select id="scrSublist" resultType="com.gd.main.dto.SubDTO">
+	SELECT sub_no, sub_name FROM subject
+	</select>
 	
 	
 	

@@ -170,5 +170,12 @@ public class SubjectService {
 		return cnt;
 	}
 
+	public ArrayList<SubDTO> scrSublist() {
+		logger.info("scr 과목 list 요청");
+		return dao.scrSublist();
+	}
+
+
+
 	
 }

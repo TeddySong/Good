@@ -172,7 +172,6 @@ public class SubjectController {
 	}
 	
 	
-	
 	@RequestMapping("/scrDel.ajax")
 	@ResponseBody
 	public HashMap<String, Object> scrDel(@RequestParam (value="scrDelList[]") ArrayList<String> scrDelList) {
@@ -182,6 +181,22 @@ public class SubjectController {
 		int cnt = service.scrDel(scrDelList);
 		map.put("msg",cnt + " 개 삭제 완료됐습니다.");
 		
+		return map;
+	}
+	
+	@RequestMapping("/scrReg.go")
+	public String scrRegGo() {
+		logger.info("과목후기 등록 페이지");
+		return "./subject/scrRegister";
+	}
+	
+	@RequestMapping("/scrReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scrReg(){
+		logger.info("과목후기 과목리스트");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<SubDTO> list = service.scrSublist();
+		map.put("list", list);
 		return map;
 	}
 

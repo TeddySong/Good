@@ -4,9 +4,10 @@
 <mapper namespace="com.gd.main.dao.StudentDAO">
 	
 	<select id="list" resultType="com.gd.main.dto.StuDTO">
-		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, emp_name FROM student s 
+		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, emp_name FROM student s 
 		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
 		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no
+		ORDER BY stu_no DESC limit #{param1} OFFSET #{param2}
 	</select>
 	
 	<select id="allCount" resultType="int">
@@ -46,5 +47,13 @@
 		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
 		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
 	</insert>
+	
+	<update id="stuUpdate" parameterType='hashmap'>
+		UPDATE student SET 
+			stu_birth = #{stu_birth},
+			stu_gender = #{stu_gender},
+			stu_condition = #{stu_condition}
+		WHERE stu_no = #{stu_no}
+	</update>
 	
 </mapper>

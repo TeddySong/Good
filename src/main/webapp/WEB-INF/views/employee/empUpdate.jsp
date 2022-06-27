@@ -12,6 +12,10 @@
 	<h1>수정</h1><hr/>
 
 	<table>
+		<tr style="display:none;" id="hidden">
+			<th>NO</th>
+			<td><input type="text" id="emp_no" name="emp_no" value="${employeeDTO.emp_no}"/></td>		
+		</tr>
 		<tr>
 			<th>ID</th>
 			<td><input type="text" id="emp_id" name="emp_id" value="${employeeDTO.emp_id}"/></td>			
@@ -49,6 +53,12 @@
          		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_startDate}" />
 			</td>			
 		</tr>
+		<tr>
+			<th>퇴사일</th>
+			<td>
+         		<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_endDate}" />
+			</td>			
+		</tr>		
 	 	<tr>
 			<th>재직상태</th>
 			<td>
@@ -68,6 +78,7 @@
 
 function empUpdate(){
 	console.log('직원수정');
+	var $emp_no=$("#emp_no").val();
 	var $emp_id=$("#emp_id").val();
 	var $emp_pw=$("#emp_pw").val();
 	var $emp_name=$("#emp_name").val();
@@ -82,6 +93,7 @@ function empUpdate(){
 		type:'post',
 		url:'empUpdate.ajax',
 		data:{
+			emp_no:$emp_no,
 			emp_id:$emp_id,
 			emp_pw:$emp_pw,
 			emp_name:$emp_name,
@@ -90,18 +102,22 @@ function empUpdate(){
 	 		emp_startDate:$emp_startDate,
 	 		emp_endDate:$emp_endDate,
 	 		emp_condition:$emp_condition 
-			},
+		},
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-		$('#emp_no').html(data.dto.emp_no);
-		$('#emp_id').html(data.dto.emp_pw);
-		$('#emp_name').html(data.dto.emp_name);
-		$('#emp_phone').html(data.dto.emp_phone);
-		$('#emp_position').html(data.dto.emp_position);
-		$('#emp_startDate').html(data.dto.emp_startDate);
-		$('#emp_condition').html(data.dto.emp_position);
-	},
+			/*
+			$('#emp_no').html(data.dto.emp_no);
+			$('#emp_id').html(data.dto.emp_id);
+			$('#emp_pw').html(data.dto.emp_pw);
+			$('#emp_name').html(data.dto.emp_name);
+			$('#emp_phone').html(data.dto.emp_phone);
+			$('#emp_position').html(data.dto.emp_position);
+			$('#emp_startDate').html(data.dto.emp_startDate);
+			$('#emp_endDate').html(data.dto.emp_startDate);
+			$('#emp_condition').html(data.dto.emp_position);
+			*/
+		},
 		error:function(e){
 			console.log(e);
 		}

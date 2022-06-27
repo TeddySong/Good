@@ -63,7 +63,7 @@
         </tr>
 	</table>
     <!-- <input type="button" id="button1" value="수정" onclick="courUpdateForm()"/> -->
-    <input type="button" value="수정" onclick="location.href='courUpdate.do?co_no=${dto.co_no}'"/>
+    <input type="button" value="수정" onclick="location.href='courUpdateForm.do?co_no=${dto.co_no}'"/>
     <input type="button" value="목록" onclick="location.href='courList.go'"/>
 </body>
 <script>

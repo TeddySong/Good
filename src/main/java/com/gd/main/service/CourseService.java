@@ -65,7 +65,7 @@ public class CourseService {
 	}
 
 	
-	public CourseDTO courUpdate(HashMap<String, Object> params) {
+	public void courseUpdate(HashMap<String, String> params) {
 		/*
 		HashMap<String, Object> updateResult = new HashMap<String, Object>();
 		
@@ -87,8 +87,9 @@ public class CourseService {
 		updateResult.put("success", success);
 		return updateResult;
 		*/
-		
-		return dao.courUpdate(params);
+		logger.info("과정 update 요청");
+		int row = dao.courseUpdate(params);
+		logger.info("수정된 데이터 수 : "+row);
 	}
 	
 
@@ -104,15 +105,15 @@ public class CourseService {
 	}
 
 	
-	public HashMap<String, Object> courWrite(HashMap<String, Object> params) {
-		HashMap<String, Object> writeResult = new HashMap<String, Object>();
+	public HashMap<String, Object> courRegister(HashMap<String, Object> params) {
+		HashMap<String, Object> regiResult = new HashMap<String, Object>();
 		
 		//subject 테이블에 넣을 값(sub_no,sub_name) 객체화
 		CourseDTO dto = new CourseDTO();
 		String sub_name = (String) params.get("sub_name");
 		int sub_no = dto.getSub_no();
 		
-		int row = dao.courWrite(params);
+		int row = dao.courRegister(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);
 		if(row>0) {
@@ -120,9 +121,9 @@ public class CourseService {
 			success = true;
 		}
 		
-		writeResult.put("success", success);
+		regiResult.put("success", success);
 		
-		return writeResult;
+		return regiResult;
 	}
 	
 
@@ -161,7 +162,7 @@ public class CourseService {
 	}
 	*/
 	
-	public CourseDTO courDetail2(int co_no) {
+	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);
 	}
 

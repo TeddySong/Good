@@ -86,7 +86,7 @@
 <body>
 	<br/>
 		<form action="cliSearch.do" method="get">	
-		<table id="registerList">
+		<table id="goodList">
 			<tr><th colspan="3">고객검색창</th></tr>
 			<tr>
 				<td>
@@ -101,7 +101,7 @@
 		</table>
 		</form>
 		
-	<table id="registerList">
+	<table id="goodList">
 		<thead>
 			<tr>
 				<th></th>
@@ -110,7 +110,7 @@
 				<th>담당직원</th>
 			</tr>
 		</thead>
-		<tbody id="goodList">
+		<tbody id="list">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
 			<tr id="cliSearch_${cliSearchList.cli_no}">
 				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>

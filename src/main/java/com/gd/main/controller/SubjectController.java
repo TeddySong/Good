@@ -160,14 +160,18 @@ public class SubjectController {
 	
 	@RequestMapping("/scriptlist.ajax")
 	@ResponseBody
-	public HashMap<String, Object> scriptlist() {
-		logger.info("리스트 요청");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<SubDTO> list = service.scriptlist();
-		logger.info("list : " + list.size());
-		map.put("list", list);
-		return map;
+	public HashMap<String, Object> scriptlist(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("과목 후기 리스트 요청" + params);
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+		//ArrayList<SubDTO> list = service.scriptlist();
+		//logger.info("list : " + list.size());
+		//map.put("list", list);
+		
+		
+		return service.scriptlist(params);
 	}
+	
+	
 	
 	@RequestMapping("/scrDel.ajax")
 	@ResponseBody

@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
+
 <style>
 table,th,td{
 	border: 1px solid black;
@@ -40,22 +42,51 @@ th,td{
 	 	<tbody id="list">
 	 		
 	 	</tbody>
+	 	<tr>
+			<td colspan="4" id="paging">
+			<!-- twbspagination 플러그인 -->
+			<div class="container">
+				<nav arial-label="Page navigation" style="text-align:center">
+					<ul class="pagination" id="pagination"></ul>
+				</nav>
+			</div>
+			</td>
+		</tr>
  	</table>
  	<button onclick="scrDel()">삭제</button>
 </body>
 <script>
-listCall();
+var currPage = 1;
 
-function listCall(){
+listCall(currPage);
 
+function listCall(page){
+
+	var pagePerNum = 5;
+	
 	$.ajax({
 		type:'get',
 		url:'scriptlist.ajax',
-		data:{},
+		data:{
+			cnt:pagePerNum,
+			page:page
+		},
 		dataType:'JSON',
 		success:function(data){
 				console.log(data);
 				drawList(data.list);
+				currPage = data.currPage;
+				
+				$("#pagination").twbsPagination({
+					startPage: data.currPage, //시작 페이지
+					totalPages: data.pages, //총 페이지
+					visiblePages: 5, //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
+						console.log(page); //사용자가 클릭한 페이지
+						currPage = page;
+						listCall(page);
+					}
+				});
 		},
 		error:function(e){
 			console.log(e);

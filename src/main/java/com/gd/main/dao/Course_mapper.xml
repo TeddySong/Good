@@ -14,7 +14,7 @@
 		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		ORDER BY co_no DESC limit #{param1} offset #{param2}
+		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
 	</select>
 	
 	<select id="allCount" resultType="int">

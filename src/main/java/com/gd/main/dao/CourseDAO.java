@@ -29,7 +29,9 @@ public interface CourseDAO {
 
 	int courseUpdate(HashMap<String, String> params);
 
-	ArrayList<CourseDTO> courList2(int cnt, int offset);
+	//ArrayList<CourseDTO> courList2(int cnt, int offset);
+
+	ArrayList<CourseDTO> courList2(HashMap<String, Object> searchResult);
 
 	
 }

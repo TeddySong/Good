@@ -202,5 +202,16 @@ public class CourseController {
 		return page;
 	}
 	
+	//과정 검색
+	@RequestMapping("/courSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> courSearch(
+			@RequestParam HashMap<String, String> params){
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("검색결과 리스트 요청"+params);
+		return service.courList2(params);
+	}
+	
+	
 
 }

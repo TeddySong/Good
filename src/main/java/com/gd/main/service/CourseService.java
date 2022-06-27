@@ -28,15 +28,21 @@ public class CourseService {
 		
 		
 		int cnt = Integer.parseInt(params.get("cnt"));
-		//int cnt = 10;
-		
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
-		// 1페이지 -> 0(offset:게시글 시작 번호)
-		// 2페이지 -> 5
-		// 3페이지 -> 10
-		// 4페이지 -> 15
-		// 5페이지 -> 20
+		
+		String subNameSearch = params.get("subNameSearch");
+		String courseNameSearch = params.get("courseNameSearch");
+		String textSearch = params.get("textSearch");
+		String startSearch = params.get("startSearch");
+		String endSearch = params.get("endSearch");
+		
+		HashMap<String, Object> searchResult = new HashMap<String, Object>();
+		searchResult.put("subNameSearch", subNameSearch);
+		searchResult.put("courseNameSearch", courseNameSearch);
+		searchResult.put("textSearch", textSearch);
+		searchResult.put("startSearch", startSearch);
+		searchResult.put("endSearch", endSearch);
 		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		int allCnt = dao.allCount();
@@ -52,9 +58,13 @@ public class CourseService {
 		map.put("currPage", page); //현재 페이지
 		
 		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset);
+		logger.info("offset : "+offset); //offset:게시글 시작번호
 		
-		ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
+		searchResult.put("cnt", cnt);
+		searchResult.put("offset", offset);
+		
+		//ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
+		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
 		map.put("courList", courList);
 		
 		return map;
@@ -130,6 +140,7 @@ public class CourseService {
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);
 	}
+
 
 	
 }

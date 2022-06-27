@@ -7,7 +7,7 @@ import com.gd.main.dto.StuDTO;
 
 public interface StudentDAO {
 
-	ArrayList<StuDTO> list(int cnt, int offset);
+	ArrayList<StuDTO> stuList(HashMap<String, Object> map);
 
 	int allCount();
 
@@ -24,6 +24,8 @@ public interface StudentDAO {
 	int stuRegister(HashMap<String, String> params);
 
 	int stuUpdate(HashMap<String, String> params);
+
+	
 
 
 }

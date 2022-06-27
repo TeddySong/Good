@@ -189,8 +189,8 @@
                             					<option value="emp_name">담당직원</option>
                             				</select>
                             			</td>
-                            			<td><input type="text" placeholder="검색어를 입력해주세요"/></td>
-                            			<td style="text-align:center"><button onclick="stuSearch()" class="goodRegister" style="width:100%;">검색</button></td>
+                            			<td><input type="text" id="stuSearchContent" placeholder="검색어를 입력해주세요"/></td>
+                            			<td style="text-align:center"><button id="stuSearch" class="goodRegister" style="width:100%;">검색</button></td>
                             		</tr>
                             	</table>
                                 <table id="goodList">
@@ -278,7 +278,7 @@ function listCall(page) {
 		}
 	});
 	
-		function stuSearch(){
+		$('#stuSearch').on('click',function(){
 		
 		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
 		console.log(stuSearchCategory);
@@ -318,11 +318,11 @@ function listCall(page) {
 				console.log(e);
 			}
 		}); 
-	}
+	});
 	
 	
 	
-};
+}
 
 //리스트 그리기
 function drawList(list){

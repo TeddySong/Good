@@ -51,6 +51,16 @@ public class StudentController {
 		return service.stuList(params);
 	}
 	
+	@RequestMapping("/stuSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> assSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
+		
+		return service.stuList(params);
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "/stuRegister.go")
 	public String stuRegisterGo() {	
 		logger.info("수강생 리스트 페이지 이동");

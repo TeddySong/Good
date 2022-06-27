@@ -31,6 +31,7 @@
 	
 
 	
+	
 	<select id="list_Client2" resultType="hashmap">
 		select distinct  c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
 		from qsub q
@@ -167,13 +168,13 @@
 	order by c.cli_no  desc limit #{param1} offset #{param2} 
 	</select>
 	
-	<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">
-	SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
+	 	<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">
+	SELECT  DISTINCT c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result
 		FROM client  c
 		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
 		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
 		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
-		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
+
 			<where>          		
 			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
 				
@@ -196,7 +197,35 @@
 		order by c.cli_no  desc limit #{cnt}  offset #{offset}
 		</select>
 		
+		
 		<select id="ajaxSearchCnt" parameterType="hashmap" resultType="integer">
+		SELECT  count(c.cli_no ) 
+		FROM client  c
+		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+		<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		   	</if>	   	
+		</where> 	
+		
+		</select>
+		
+<!-- 		<select id="ajaxSearchCnt" parameterType="hashmap" resultType="integer">
 			SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
 			FROM client c
 			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
@@ -220,26 +249,17 @@
 			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
 		    	  	</if>
 		    	  	
-		   	</if>
-		</where> 		
-</select>
+		   	</if>	   	
+		</where> 	
+		
+		</select> -->
 
-	<delete id="ajaxDelete" parameterType="String">
+		<delete id="ajaxDelete" parameterType="String">
 			DELETE FROM client WHERE cli_no=#{idx}
 		</delete>
 		
-		
-<!-- 6 / 24 추가 -->
-		
 		<insert id="cliReg" parameterType="String">
 			INSERT INTO client(cli_name,cli_phone,cli_req)values(#{cli_name},#{cli_phone},#{cli_req})
-		</insert>
-		
-		<insert id="cliRegCo" parameterType="hashmap">
-			 <selectKey keyProperty="cli_no" resultType="int" order="BEFORE">
-    			 SELECT LAST_INSERT_ID()
-  			</selectKey>
-			INSERT INTO qsub (sub_no,cli_no) values(#{string},#{cli_no})
 		</insert>
 		
 		<update id="cliUpdate" parameterType="hashmap">
@@ -259,12 +279,70 @@
 			</where>	
 
 		</select>
-		
 		<update id="empUp" parameterType="hashmap">
 			UPDATE client SET emp_no =#{emp_no} WHERE cli_no=#{cli_no}
 		</update>
+		<insert id="cliRegCo" parameterType="hashmap">
+			 <selectKey keyProperty="cli_no" resultType="int" order="BEFORE">
+    			 SELECT LAST_INSERT_ID()
+  			</selectKey>
+			INSERT INTO qsub (sub_no,cli_no) values(#{string},#{cli_no})
+		</insert>
+		
+		<select id="ajaxSubSearch" parameterType="integer" resultType="String">
+		SELECT  group_concat(s.sub_name SEPARATOR ',')FROM subject s
+		left join qsub q on q.sub_no  = s.sub_no 
+		left join client c on q.cli_no= c.cli_no
+				where c.cli_no =#{cli_no};	
+		</select>
+		
+		<select id="regSub" resultType="HashMap">
+			SELECT sub_name, sub_no FROM subject;
+		</select>
+		
+		<select id="cli_no" resultType="integer">
+			SELECT cli_no from client ORDER BY cli_no DESC
+		</select>
+		
+		<!--  new 방식
+			<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">
+				SELECT   distinct c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result , group_concat(s.sub_name SEPARATOR ',') as sub_name
+				FROM client  c
+				LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
+				LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
+				LEFT JOIN qsub  q  ON q.cli_no =c.cli_no 
+				left join subject s  on q.sub_no  = s.sub_no 
+			<where>          		
+			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
+				
+			        <if test ='searchType.equals("client")'>		
+			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+						
+		 			<if test ='searchType.equals("phone")'>	
+			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("emp")'>	
+			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			    	</if>
+			    	<if test ='searchType.equals("result")'>	
+			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+		    	  	</if>
+		    	  	
+		    </if>
+		    <if test = "cli_no !=null ">
+		    	c.cli_no=#{no}
+		    </if>
+		</where>
+	
+		
+		
+		
+		</select> -->
 		
 </mapper>
 
+
+	
 
 	

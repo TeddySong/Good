@@ -153,7 +153,7 @@ $("#empSearch").click(function(){
 	/* 모달창 띄우고 뿌리기 .  */
 	$.ajax({
 		type:'get',
-		url:'empList.ajax',
+		url:'cliempList.ajax',
 		data:{},
 		dataType:'json',
 		success:function(data){
@@ -172,7 +172,7 @@ $('#UpdateDo').on('click',function(){
 	let cli_no = '${data.cli_no}'
 	$.ajax({
 		type:'post',
-		url:'clientupdate.ajax',
+		url:'cliupdate.ajax',
 		data:{
 			cli_no:cli_no,
 			cli_name:cli_name,
@@ -200,7 +200,7 @@ $('#empsearch').on('click',function(){
 
 	$.ajax({
 		type:'get',
-		url:'empSearch.ajax',
+		url:'cliempSearch.ajax',
 		data:{empkeyword:empkeyword},
 		dataType:'json',
 		success:function(data){
@@ -237,7 +237,7 @@ $('#empsearch').on('click',function(){
 	
 	$.ajax({
 		type:'post',
-		url:'empUp.ajax',
+		url:'cliempUp.ajax',
 		data:{
 			emp_no:emp,
 			cli_no:cli_no

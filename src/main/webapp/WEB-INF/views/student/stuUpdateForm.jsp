@@ -17,7 +17,7 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#registerList {  
+	#goodList {  
 			  margin:0 auto;            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -28,23 +28,23 @@
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #registerList th {
+   #goodList th {
 			background-color:#505050;
 			color:#FFFFFF;
 			text-align:center;
 		}
 		
-	#registerList,#registerList th,#registerList td
+	#goodList,#goodList th,#goodList td
 	{
 		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#registerList tr:nth-child(odd){
+	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#registerList tr:nth-child(even){
+	#goodList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
@@ -182,7 +182,7 @@
                                 수강생등록
                             </div>
                             <div>
-                                <table id="registerList">
+                                <table id="goodList">
                                 	<tr class="hidden">
 										<th>고객번호</th>
 										<td id="cli_no"></td>

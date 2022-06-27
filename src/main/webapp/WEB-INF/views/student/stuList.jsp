@@ -17,7 +17,7 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#stuList {                
+	#goodList {                
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
 			  width: 100%;
@@ -27,12 +27,12 @@
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #stuList th {
+   #goodList th {
 			background-color:#505050;
 			color:#FFFFFF
 		}
 		
-	#stuList,#stuList th,#stuList td
+	#goodList,#goodList th,#goodList td
 	{
 		font-size:20px;
 		text-align:center;
@@ -40,14 +40,14 @@
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#stuList tr:nth-child(odd){
+	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#stuList tr:nth-child(even){
+	#goodList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
-	.register {
+	.goodRegister {
 		display: block;
 		margin: 20px auto;
 		max-width: 180px;
@@ -60,7 +60,7 @@
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
 
-	.register:hover {
+	.goodRegister:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
@@ -174,7 +174,7 @@
                                 수강생리스트
                             </div>
                             <div>
-                                <table id="stuList">
+                                <table id="goodList">
 									<thead>
 										<tr>
 											<th>학번</th>
@@ -201,7 +201,7 @@
 									</tr>
 								</table>								
                             </div>
-                            <button class="register" onclick = "location.href='stuRegister.go'" >등록</button>
+                            <button class="goodRegister" onclick = "location.href='stuRegister.go'" >등록</button>
                         </div>
                     </div>
                 </main>

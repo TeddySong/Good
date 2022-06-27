@@ -179,26 +179,25 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                배정리스트
+                                배정 상세 페이지
                             </div>
                             <div class="card-body">
                                 <table id="stuList">
 									<thead>
 										<tr>
-											<select id="coName">
-												<option value="sub_name">과목</option>
-												<option value="co_name">과정</option>
-												<option value="emp_name">담당직원</option>
-												<option value="co_condition">수강상태</option>
+											<select id="coStuName">
+												<option value="cli_name">학생명</option>
+												<option value="stu_no">학번</option>
+												<option value="cli_phone">연락처</option>
+												<option value="ass_condition">수강상태</option>
 											</select>
 											<input type = "text" id= "search"/>
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>
+											<th></th>
 											<th>과목명</th>
-											<th>과정명</th>
-											<th>강의시간</th>
-											<th>개강일</th>
+											<th>학번</th>
 											<th>학생명</th>
 											<th>연락처</th>
 											<th>담당자</th>
@@ -231,108 +230,7 @@
 </body>
 <script>
 
-var currPage = 1;
 
-listCall(currPage);
-
-function listCall(page){
-	
-	var pagePerNum = 10;
-	console.log("param page : " + page);
-	
-	$.ajax({
-		type:'get',
-		url:'assList.ajax',
-		data:{
-			cnt : pagePerNum,
-			page : page
-		},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			drawList(data.assList);
-			currPage=data.currPage;
-			
-			//플러그인 사용 페이징
-			$("#pagination").twbsPagination({
-				startPage:data.currPage, //시작페이지
-				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, // 한번에 보여줄 페이지 수
-				onPageClick:function(e,page){
-					console.log(page);
-					currPage=page;
-					listCall(page);
-				}
-			});
-			
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-	
-		//검색
-		$('#assSearch').on('click',function(){
-		
-		var assSearchTarget = $("#coName option:selected").val();
-		console.log(assSearchTarget);
-	
-		var search = $("#search").val();
-		console.log(search);
-		
-		$.ajax({
-			type:'get',
-			url:'assSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				assSearchTarget:assSearchTarget,
-				search:search
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.assList);
-				currPage=data.currPage;
-				
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-}
-	function drawList(assList){
-		var content="";
-		assList.forEach(function(item){
-				content +='<tr>';
-				content +='<td>'+item.sub_name+'</td>';
-				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</td>';
-				content +='<td>'+item.co_startTime+'</td>';
-				content +='<td>'+item.co_startDate+'</td>';
-				content +='<td>'+item.cli_name+'</td>';
-				content +='<td>'+item.cli_phone+'</td>';
-				content +='<td>'+item.emp_name+'</td>';
-				content +='<td>'+item.co_condition+'</td>'; 
-				content +='<tr>';
-			});
-			$('#list').empty();
-			$('#list').append(content);
-	} 
-	
-	
 	
 </script>
 </html>

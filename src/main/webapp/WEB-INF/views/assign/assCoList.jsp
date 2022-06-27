@@ -194,19 +194,21 @@
 											<input type = "text" id= "search"/>
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
-										<tr>
-											<th></th>
+										<tr>					
 											<th>과목명</th>
+												<td id ="co_name"></td>										
 											<th>학번</th>
+												<td id ="stu_no"></td>									
 											<th>학생명</th>
+												<td id =cli_name"></td>										
 											<th>연락처</th>
+												<td id ="cli_phone"></td>									
 											<th>담당자</th>
+												<td id ="emp_name"></td>								
 											<th>수강상태</th>
+												<td id ="ass_condition"></td>
 										</tr>
 									</thead>
-									<tbody id="list">
-										
-									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
 										<td colspan="8" id ="paging">
@@ -230,6 +232,24 @@
 </body>
 <script>
 
+$.ajax({
+	type:'get',
+	url:'assCoDetail.ajax',
+	data:{},
+	dataType:'JSON',
+	success:function(data){
+		console.log(data);
+		$('#co_name').html(data.co_name);
+		$('#stu_no').html(data.stu_no);
+		$('#cli_name').html(data.cli_name);
+		$('#cli_phone').html(data.cli_phone);
+		$('#emp_name').html(data.emp_name);
+		$('#ass_condition').html(data.ass_condition);
+	},
+	error:function(e){
+		console.log(e);
+	}
+});
 
 	
 </script>

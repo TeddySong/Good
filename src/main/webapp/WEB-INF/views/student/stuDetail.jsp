@@ -289,7 +289,7 @@
 	
 	function stuUpdate(){
 		var stu_no = $('#stu_no').html();
-		location.href = 'update.go?stu_no='+stu_no;
+		location.href = 'stuUpdate.go?stu_no='+stu_no;
 	}
 	
 	

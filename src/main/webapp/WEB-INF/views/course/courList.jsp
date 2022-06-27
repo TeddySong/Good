@@ -24,41 +24,42 @@
 <body>
 <h1>과정 리스트</h1><hr/>
     <!--검색 조건 선택-->
-	<select id="sub_name">
-           <option>과목명</option>
-           <c:forEach items="${subjectList}" var="subjectList">
-           		<option value="${subjectList.sub_no}">${subjectList.sub_name}</option>
-           </c:forEach>
-       </select> 
-       <select id="co_name">
-           <option>과정명</option>
-           <option value=""></option>
-           <option value=""></option>
-           <option value=""></option>
-           <option value=""></option>
-           <option value=""></option>
-       </select>
-       <input type="text" placeholder="검색어를 입력해주세요"/>
-       <input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
-       ~
-       <input type="date" id="co_endDate" value="" min="2022-06-01" max="2100-06-01"/>
-       <input type="button" value="검색"/>
+	<select>
+         <option>과목명</option>
+         <c:forEach items="${subName}" var="subName">
+         		<option value="${subName.sub_no}">${subName.sub_name}</option>
+         </c:forEach>
+      </select> 
+      <select>
+          <option>과정명</option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+          <option value=""></option>
+      </select>
+      <input type="text" placeholder="검색어를 입력해주세요"/>
+      <input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/>
+      ~
+      <input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/>
+      <input type="button" value="검색"/>
 	<br/>
     
     <!--표-->
-    게시물 갯수
+   <!--  게시물 갯수
 	<select id="pagePerNum">
 		<option value="5">5</option>
 		<option value="10">10</option>
 		<option value="15">15</option>
 		<option value="20">20</option>
-	</select>
-    <button onclick="location.href='courseWrite.go'">등록</button>
+	</select> -->
+    <button onclick="location.href='courWrite.go'">등록</button>
 	<table>
 		<thead>
 			<tr>
 				<th></th>
 				<th>과정명</th>
+				<!-- <th>과목번호</th> -->
 				<th>과목명</th>
 				<th>개강일</th>
 				<th>종강일</th>
@@ -66,24 +67,50 @@
 				<th>진행상황</th>
 			</tr>
 		</thead>
-		<tbody id="list">
-			
+		<tbody>
+			<c:forEach items="${courList}" var="courList">
+				<tr>
+					<td>${courList.co_no}</td>
+					<td><a href="courDetail.go?co_no=${courList.co_no}">${courList.co_name}</a></td>
+					<%-- <td>${courList.sub_no}</td> --%>
+					<td>${courList.sub_name}</td>
+					<td>${courList.co_startDate}</td>
+					<td>${courList.co_endDate}</td>
+					<td>${courList.co_startTime}</td>
+					<td>${courList.co_condition}</td>
+				</tr>
+			</c:forEach>
 		</tbody>
-		<tr>
+		
+		<!-- <tbody id="list">
+			
+		</tbody> -->
+		<!-- <tr>
 			<td colspan="7" id="paging">
-			<!-- twbspagination 플러그인 -->
+			twbspagination 플러그인
 			<div class="container">
 				<nav arial-label="Page navigation" style="text-align:center">
 					<ul class="pagination" id="pagination"></ul>
 				</nav>
 			</div>
 			</td>
-		</tr>
+		</tr> -->
 	</table>
 
 </body>
 <script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+	location.href='/login.go';
+}
 
+
+
+
+
+
+/*
 var currPage = 1;
 
 //리스트 불러오기
@@ -101,7 +128,7 @@ function listCall(page) {
 	var pagePerNum = $('#pagePerNum').val();
 	$.ajax({
 		type: 'get',
-		url: 'courseList.ajax',
+		url: 'courList.ajax',
 		data:{
 			cnt:pagePerNum,
 			//cnt:10,
@@ -110,7 +137,7 @@ function listCall(page) {
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			drawList(data.list);
+			drawList(data.courList);
 			currPage = data.currPage;
 			
 			//불러오기 성공하면 플러그인 이용해서 페이징처리
@@ -132,11 +159,11 @@ function listCall(page) {
 };
 
 //리스트 그리기
-function drawList(list){
+function drawList(courList){
 	
 	var content="";
 	
-	list.forEach(function(item){
+	courList.forEach(function(item){
 		content += '<tr>';
 		content += '<td>'+item.co_no+'</td>';
 		content += '<td><a href="detail.go?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
@@ -152,7 +179,7 @@ function drawList(list){
 	$('#list').append(content);
 }
 
-
+*/
 
 </script>
 </html>

@@ -112,11 +112,13 @@
 		</thead>
 		<tbody id="cliSearchList">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
-			<tr>
+			<tr id="cliSearch_${cliSearchList.cli_no}">
 				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>
 				<td id="cli_name">${cliSearchList.cli_name}</td>
 				<td id="cli_phone">${cliSearchList.cli_phone}</td>
 				<td id="emp_name">${cliSearchList.emp_name}</td>
+				<td id="cli_no" class="hidden">${cliSearchList.cli_no}</td>
+				<td id="emp_no" class="hidden">${cliSearchList.emp_no}</td>
 			</tr>
 		</c:forEach>
 		</tbody>
@@ -127,34 +129,35 @@
 	<button onclick="window.close()">취소</button>
 </body>
 <script>
-function cliChoice(){
-	
-	var cliChoice = $('#cliSearchList input[type="radio"]:checked').val();
-	
-	
-	console.log(cliChoice);
-	
- 	$.ajax({
-		type:'get',
-		url:'cliChoice.ajax',
-		data:{
-			"cliChoice":cliChoice
-			},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			opener.document.getElementById("cli_name").value = document.getElementById("cli_name").value;
-			opener.document.getElementById("cli_phone").value = document.getElementById("cli_phone").value;
-			opener.document.getElementById("emp_name").value = document.getElementById("emp_name").value;
-			
-		},
-		error:function(e){
-			console.log(e);
-		}
-	}); 
-	
-}
+	noHidden();
+	function noHidden(){
+		$(".hidden").css("display", "none");
+	}
 
+	function cliChoice(){
+	
+		var cliArr = new Array();
+		
+	$('#cliSearchList input[type="radio"]:checked').each(function(idx){
+		var cliChoice = $(this).val();
+		console.log(cliChoice);
+		var cliObj = new Object();
+		
+		
+		$tr = $("#cliSearch_"+cliChoice);
+		console.log($tr.text());
+		
+		
+		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').text();
+		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
+		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
+		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').text();
+		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').text();
+		
+		window.close()
+	});	
+
+}
 
 
 </script>

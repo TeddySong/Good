@@ -220,8 +220,10 @@
 									<tr>
 										<th>성별</th>
 										<td>
-										<input type="radio" id="stu_gender" value="남"> 남
-      									<input type="radio" id="stu_gender" value="여"> 여
+										<label for="male">남</label>
+										<input type="radio" name="stu_gender" value="남"/>
+										<label for="female">여</label>
+      									<input type="radio" name="stu_gender" value="여"/>
 										</td>
 									</tr>
 									<tr>
@@ -298,7 +300,7 @@ function stuRegister(){
 	var $emp_no = $('#emp_no');
 	var $stu_birth = $('#stu_birth');
 	var $stu_age = $('#stu_age');
-	var $stu_gender = $('#stu_gender');
+	var $stu_gender = $('input[name="stu_gender"]:checked');
 	var $stu_condition = $('#stu_condition');
 
 	$.ajax({

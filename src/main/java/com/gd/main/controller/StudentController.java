@@ -178,7 +178,32 @@ public class StudentController {
 	 public String update(@RequestParam String stu_no, HttpSession session) {
 		 logger.info("수정 상세보기 페이지 이동:"+stu_no);
 		 session.setAttribute("stu_no", stu_no);
-		 return "stuUpdateForm";
+		 return "./student/stuUpdateForm";
 	 }
+	
+	@RequestMapping(value="/stuUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stuUpdate(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		
+		logger.info("params : " + params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean login = false;
+				
+		if(session.getAttribute("loginId") != null) {
+			logger.info("수정하기 요청");
+			login = true;	
+			boolean success = service.stuUpdate(params);
+			map.put("success", success);
+		}
+		
+		map.put("login", login);
+		
+		
+		return map;
+	}
+	
+	
 	
 }

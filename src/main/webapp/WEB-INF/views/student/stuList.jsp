@@ -182,6 +182,7 @@
 											<th>연락처</th>
 											<th>생년월일</th>
 											<th>나이</th>
+											<th>성별</th>
 											<th>담당직원</th>
 										</tr>
 									</thead>
@@ -189,7 +190,7 @@
 										
 									</tbody>
 									<tr>
-										<td colspan="6" id="paging">
+										<td colspan="7" id="paging">
 										<!-- twbspagination 플러그인 -->
 										<div class="container">
 											<nav arial-label="Page navigation" style="text-align:center">
@@ -265,6 +266,7 @@ function drawList(list){
 		content += '<td>'+item.cli_phone+'</td>';		
 		content += '<td>'+item.stu_birth+'</td>';
 		content += '<td>'+item.stu_age+'</td>';
+		content += '<td>'+item.stu_gender+'</td>';
 		content += '<td>'+item.emp_name+'</td>';
 		content += '</tr>';
 	});

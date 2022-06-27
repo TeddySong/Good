@@ -55,7 +55,9 @@
 		width : 80%;
 	}
 	
-	
+	.conditionSelect{
+		width : 80%;
+	}
 	
 	input[type='button'] {
 		position: relative;
@@ -181,12 +183,20 @@
                             </div>
                             <div>
                                 <table id="registerList">
-                                	<tr id="stu_no_tr">
-										<th>학번</th>
+                                	<tr class="hidden">
+										<th>고객번호</th>
+										<td id="cli_no"></td>
+									</tr>
+									<tr class="hidden">
+										<th>직원번호</th>
+										<td id="emp_no"></td>
+									</tr>
+									<tr class="hidden">
+										<th>직원번호</th>
 										<td id="stu_no"></td>
 									</tr>
 									<tr>
-										<th>이름</th>
+										<th>이름</th>										
 										<td id="cli_name"></td>
 									</tr>
 									<tr>
@@ -199,19 +209,31 @@
 									</tr>
 									<tr>
 										<th>생년월일</th>
-										<td id="stu_birth"></td>
+										<td><input type="date" id="stu_birth" value=""/></td>
 									</tr>
 									<tr>
 										<th>나이</th>
-										<td id="stu_age"></td>
+										<td><input type="text" id="stu_age" value=""/></td>
 									</tr>
 									<tr>
 										<th>성별</th>
-										<td id="stu_gender"></td>
+										<td>										
+										<label for="male">남</label>
+										<input type="radio" name="stu_gender" value="남"/>
+										<label for="female">여</label>
+      									<input type="radio" name="stu_gender" value="여"/>
+										</td>
 									</tr>
 									<tr>
 										<th>학생상태</th>
-										<td id="stu_condition"></td>
+										<td>
+											<select class="conditionSelect" id="stu_condition">
+									            <option value="재학" selected>재학</option>
+									            <option value="휴학">휴학</option>
+									            <option value="수료">수료</option>
+									            <option value="중퇴">중퇴</option>									            
+									        </select>
+								        </td>
 									</tr>
 									<tr>
 										<th colspan="2">과목정보</th>										
@@ -221,11 +243,11 @@
 									</tr>
 									<tr id="subjectDetail">
 										<th>과목</th>
-										<td id="sub_name"></td>
+										<td><input type="text" id="sub_name" value=""/></td>
 									</tr>
 									<tr>
 										<th colspan="2">
-											<input type="button" value="수정" onclick="stuUpdate()"/>
+											<input type="button" value="수정완료" onclick="stuUpdate()"/>
 											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
 									</tr>
@@ -243,9 +265,6 @@
 
 </body>
 <script>
-	$('#stu_no_tr').attr('style', "display:none;");
-
-
 	$.ajax({
 		type:'get',
 		url:'stuDetail.ajax',
@@ -253,14 +272,16 @@
 		dataType:'JSON',
 		success:function(data){
 			 console.log(data);
+			 $('#cli_no').html(data.dto.cli_no);
+			 $('#emp_no').html(data.dto.emp_no); 
 			$('#stu_no').html(data.dto.stu_no);
 			$('#cli_name').html(data.dto.cli_name);			
 			$('#cli_phone').html(data.dto.cli_phone);
 			$('#emp_name').html(data.dto.emp_name);
-			$('#stu_birth').html(data.dto.stu_birth);
-			$('#stu_age').html(data.dto.stu_age);
-			$('#stu_gender').html(data.dto.stu_gender);			
-			$('#stu_condition').html(data.dto.stu_condition);
+			$('#stu_birth').val(data.dto.stu_birth);
+			$('#stu_age').val(data.dto.stu_age);
+			$('#stu_gender').val(data.dto.stu_gender);			
+			$('#stu_condition').val(data.dto.stu_condition);
 			
 			
 		},
@@ -268,6 +289,7 @@
 			console.log(error);
 		}
 	});
+	
 	
 	
 	$.ajax({
@@ -284,6 +306,58 @@
 		}
 	});
 	
+	
+	
+function stuUpdate(){
+		
+		/*
+		var name = $('#name').val();
+		var sub = $('#sub').val();
+		var cont = $('#cont').val();
+		console.log(name+'/'+sub+'/'+cont); 
+		*/
+		
+		
+		// JavaScript Object에 데이터 넣는 방법
+		var params = {};
+		params['cli_no'] = $('#cli_no').val();
+		params['emp_no'] = $('#emp_no').val();
+		params['stu_no'] = $('#stu_no').val();
+		params['cli_name'] = $('#cli_name').val();
+		params['cli_phone'] = $('#cli_phone').val();
+		params['emp_name'] = $('#emp_name').val();
+		params['stu_birth'] = $('#stu_birth').val();
+		params['stu_age'] = $('#stu_age').val();
+		params['stu_gender'] = $('input[name="stu_gender"]:checked').val();
+		params['stu_condition'] = $('#stu_condition').val();
+		console.log(params);
+		
+		
+		$.ajax({
+			type:'get',
+			url:'stuUpdate.ajax',
+			data:params,
+			dataType:'json',
+			success:function(data){		
+				console.log(data);
+				if(!data.login){
+					alert('로그인이 필요한 서비스입니다.');
+					location.href='/';
+				}else {
+					if(data.success){
+						alert('수정에 성공하였습니다.');
+						location.href='stuDetail.go?stu_no='+params.stu_no;
+					}else{
+						alert('수정에 실패하였습니다.');
+					}
+				}
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+		
+	}
 	
 	
 	

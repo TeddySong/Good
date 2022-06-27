@@ -31,16 +31,21 @@ public class CourseController {
 	
 	//과정 리스트 페이지 이동
 	@RequestMapping(value = "/courList.go")
-	public String courListGo() {	
+	public String courListGo(Model moel, HttpSession session) {
+		String page = "home";
+		
+		if(session.getAttribute("loginId") != null) {
+			page = "redirect:/courList.do";
+		}
 		logger.info("과정 리스트 페이지 이동");
 		//return "./course/courList";
-		return "redirect:/courList.do";
+		return page;
 	}
 	
 	
 	//과목,과정 리스트 호출
 	@RequestMapping(value = "/courList.do")
-	public String courseList(Model model, HttpSession session,String co_no){
+	public String courseList(Model model){
 		
 		String page = "emp_login";
 		
@@ -54,39 +59,22 @@ public class CourseController {
 		logger.info("과정 갯수 : "+courseName.size());
 		model.addAttribute("courseName",courseName);
 		
-		CourseDTO dto = service.courDetail2(co_no);
-		
-		if(session.getAttribute("loginId") != null) {
-			
-			logger.info("과정 리스트 호출");
-			//전체적인 리스트
-			ArrayList<CourseDTO> courList = service.courList();
-			logger.info("리스트 갯수 : "+courList.size());
-			page = "./course/courList";
-			model.addAttribute("courList",courList);
-			
-		} else {
-			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
-		}
+		//CourseDTO dto = service.courDetail2(co_no);
+
+		page = "./course/courList";
 
 		return page;
 	}
 	
 
 	//리스트 호출
-	@RequestMapping("courList.ajax")
+	@RequestMapping("/courList.ajax")
 	@ResponseBody
 	public HashMap<String, Object> courList(
-			@RequestParam HashMap<String, String> params,HttpSession session) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
+			@RequestParam HashMap<String, String> params) {
+		//HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info("과정 리스트 요청 : "+params);	
-		
-		boolean login = false;
-		
-		if(session.getAttribute("loginId") != null){
-			login = true;
-		}
-		
+	
 		return service.courList2(params);
 	}
 
@@ -132,7 +120,6 @@ public class CourseController {
 	}
 	
 	
-	
 	//과정 상세 페이지 이동
 	@RequestMapping("/courDetail.do")
 	public String detailPage(String co_no, Model model) {
@@ -171,17 +158,6 @@ public class CourseController {
 			}
 		}
 		
-		
-		//선택한 과목 뿌려주기
-		/*
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		String sub_no = (String) session.getAttribute("sub_no");
-		session.removeAttribute("sub_no");
-		CourseDTO selectedSubName = service.selectedSubName(sub_no);
-		map.put("selectedSubName", selectedSubName);
-		logger.info("선택한 과목 : "+selectedSubName);
-		model.addAttribute("selectedSubName",selectedSubName);
-		*/
 		return page;
 	}
 	

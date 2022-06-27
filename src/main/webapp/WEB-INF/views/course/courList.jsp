@@ -192,34 +192,32 @@
                             			<select id="subNameSearch" name="subNameSearch">
 									         <option>과목명</option>
 									         <c:forEach items="${subName}" var="subName">
-									         		<option value="${subName.sub_no}">${subName.sub_name}</option>
+									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
 									         </c:forEach>
 									      </select>
                             		</td>
                             		<td><select id="courseNameSearch" name="">
 									          <option>과정명</option>
+									          <option>과정 진행상황</option>
+									      </select>
+									</td>
+                            		<%-- <td><select id="courseNameSearch" name="">
+									          <option>과정명</option>
 									          <c:forEach items="${courseName}" var="courseName">
 									         		<option value="${courseName.co_no}">${courseName.co_name}</option>
 									         </c:forEach>
 									      </select>
-									</td>
+									</td> --%>
                             		<td><input id="textSearch" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
                             		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td>~</td>
                             		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td><button type="button" id="courSearch" onclick="#" class="goodRegister">검색</button></td>
+                            		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
                             	</tr>
                             </table>
 							<br/>
 						    
 						    <!--표-->
-						   <!--  게시물 갯수
-							<select id="pagePerNum">
-								<option value="5">5</option>
-								<option value="10">10</option>
-								<option value="15">15</option>
-								<option value="20">20</option>
-							</select> -->
 						    <button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
 							<table id="goodList">
 								<thead>
@@ -274,42 +272,40 @@
 
 </body>
 <script>
-
 var currPage = 1;
 
-//리스트 불러오기
 listCall(currPage);
 
-function listCall(page) {
-	//var pagePerNum = $('#pagePerNum').val();
+function listCall(page){
+	
 	var pagePerNum = 10;
+	console.log("param page : " + page);
 	
 	$.ajax({
-		type: 'get',
-		url: 'courList.ajax',
+		type:'get',
+		url:'courList.ajax',
 		data:{
-			cnt:pagePerNum,
-			//cnt:10,
-			page:page
+			cnt : pagePerNum,
+			page : page
 		},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			//drawList(data.list);
 			drawList(data.courList);
-			currPage = data.currPage;
+			currPage=data.currPage;
 			
-			//불러오기 성공하면 플러그인 이용해서 페이징처리
+			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
-				startPage: data.currPage, //시작 페이지
-				totalPages: data.pages, //총 페이지
-				visiblePages: 5, //한번에 보여줄 페이지 수
-				onPageClick: function(e,page){
-					console.log(page); //사용자가 클릭한 페이지
-					currPage = page;
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
 					listCall(page);
 				}
 			});
+			
 		},
 		error:function(e){
 			console.log(e);
@@ -321,7 +317,7 @@ function listCall(page) {
 $('#courSearch').on('click',function(){
 	
 	 var subNameSearch = $("#subNameSearch option:selected").val();
-	 console.log(searchSubName);
+	 console.log(subNameSearch);
 	 
 	 var courseNameSearch = $("#courseNameSearch option:selected").val();
 	 console.log(courseNameSearch);
@@ -350,6 +346,7 @@ $('#courSearch').on('click',function(){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
+			//drawList(data.list);
 			drawList(data.courList);
 			currPage = data.currPage;
 			
@@ -371,11 +368,9 @@ $('#courSearch').on('click',function(){
 	 });
 });
 
+
+
 }
-
-
-
-
 
 
 //리스트 그리기
@@ -384,7 +379,7 @@ function drawList(courList){
 	var content="";
 	
 	courList.forEach(function(item){
-		console.log(item);
+		//console.log(item);
 		content += '<tr>';
 		content += '<td>'+item.co_no+'</td>';
 		content += '<td><a href="courDetail.do?co_no='+item.co_no+'">'+item.co_name+'</a></td>';

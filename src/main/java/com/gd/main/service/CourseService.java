@@ -24,12 +24,12 @@ public class CourseService {
 	
 	public HashMap<String, Object> courList2(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//hashmap 을 반환하기위해 객체화
 		
-		
+		//cnt : 리스트 갯수, page : 보여줄 페이지 수
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
+		
 		
 		String subNameSearch = params.get("subNameSearch");
 		String courseNameSearch = params.get("courseNameSearch");
@@ -44,6 +44,7 @@ public class CourseService {
 		searchResult.put("startSearch", startSearch);
 		searchResult.put("endSearch", endSearch);
 		
+		/*
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		int allCnt = dao.allCount();
 		logger.info("allCnt : "+allCnt);
@@ -55,16 +56,18 @@ public class CourseService {
 		}
 		
 		map.put("pages", pages); //만들 수 있는 최대 페이지 수
+		*/
 		map.put("currPage", page); //현재 페이지
 		
 		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset); //offset:게시글 시작번호
+		logger.info("offset,cnt : "+offset+","+cnt); //offset:게시글 시작번호
+		
 		
 		searchResult.put("cnt", cnt);
 		searchResult.put("offset", offset);
 		
-		//ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
+		//ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
 		map.put("courList", courList);
 		
 		return map;
@@ -113,14 +116,6 @@ public class CourseService {
 		
 		return regiResult;
 	}
-	
-
-	/*
-	public ArrayList<CourseDTO> subjectList() {
-		logger.info("과목 리스트 호출");
-		return dao.subjectList();
-	}
-*/
 
 	public ArrayList<CourseDTO> subName() {
 		// TODO Auto-generated method stub
@@ -132,10 +127,12 @@ public class CourseService {
 		return dao.courseName();
 	}
 
+	/*
 	public ArrayList<CourseDTO> courList() {
 		logger.info("과정 리스트 요청");
 		return dao.courList();
 	}
+	*/
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);

@@ -9,7 +9,7 @@ public interface CourseDAO {
 
 	int allCount();
 
-	CourseDTO courDetail(String co_no);
+	//CourseDTO courDetail(String co_no);
 
 	String courOverlay(String chkCo);
 
@@ -19,7 +19,7 @@ public interface CourseDAO {
 
 	ArrayList<CourseDTO> courseName();
 
-	ArrayList<CourseDTO> courList();
+	//ArrayList<CourseDTO> courList();
 
 	void subTable(String sub_name, int sub_no);
 
@@ -29,7 +29,7 @@ public interface CourseDAO {
 
 	int courseUpdate(HashMap<String, String> params);
 
-	//ArrayList<CourseDTO> courList2(int cnt, int offset);
+	ArrayList<CourseDTO> courList2(int cnt, int offset);
 
 	ArrayList<CourseDTO> courList2(HashMap<String, Object> searchResult);
 

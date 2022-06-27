@@ -3,18 +3,51 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.CourseDAO">
 
-	<select id="courList" resultType="com.gd.main.dto.CourseDTO">
+	<!-- <select id="courList" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
-	</select>
+		ORDER BY co_no DESC limit #{param1} offset #{param2}
+	</select> -->
 	
 	<select id="courList2" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
+			<where>
+				<if test="subNameSearch != null and subNameSearch !='' 
+				and courseNameSearch != null and courseNameSearch !='' 
+				and textSearch != null and textSearch !='' 
+				and startSearch != null and startSearch !='' 
+				and endSearch != null and endSearch !=''">
+					<if test="subNameSearch.equals('sub_name')">
+						AND s.sub_name LIKE concat('%',#{textSearch},'%')
+					</if>
+					
+					<if test="courseNameSearch.equals('co_name')">
+						AND co_name LIKE concat('%',#{textSearch},'%')
+					</if>
+					
+					<if test="courseNameSearch.equals('co_condition')">
+						AND co_condition LIKE concat('%',#{textSearch},'%')
+					</if>
+					
+					<if test="courseNameSearch.equals('co_condition')">
+						AND co_condition LIKE concat('%',#{textSearch},'%')
+					</if>
+					
+					<if test="startSearch.equals('co_startDate') 
+					and endSearch.equals('co_endDate')">
+					<![CDATA[
+						co_startDate >= #{startSearch} AND 
+						co_endDate <= #{endSearch}
+					 ]]>
+					</if>
+				</if>
+				
+				<if test="subNameSearch != null and subNameSearch !=''">
+				</if>
+			</where>
 	</select>
 	
 	<select id="allCount" resultType="int">

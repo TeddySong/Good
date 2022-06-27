@@ -8,61 +8,47 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
 <style>
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#registerList {  
-			  margin:0 auto;            
+	#stuList {                
               border: 1px #a39485 solid;
+			  font-size: .9em;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 70%;
+			  width: 100%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #registerList th {
+   #stuList th {
 			background-color:#505050;
-			color:#FFFFFF;
-			text-align:center;
+			color:#FFFFFF
 		}
 		
-	#registerList,#registerList th,#registerList td
+	#stuList,#stuList th,#stuList td
 	{
-		font-size:20px;		
+		font-size:0.95em;
+		text-align:center;
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#registerList tr:nth-child(odd){
+	#stuList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#registerList tr:nth-child(even){
+	#stuList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
-	input[type='text']{
-	width : 80%;
-	}
-	input[type='date']{
-		width : 80%;
-	}
-	
-	.conditionSelect{
-		width : 80%;
-	}
-	
-	input[type='button'] {
-		position: relative;
+	.register {
+		display: block;
 		margin: 20px auto;
-		margin: 0 auto;
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
@@ -72,16 +58,21 @@
 	    font-weight: 500;
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
+	.registerSh{
+		
+		text-decoration: none;
+		color: rgb(26 18 50 / 100%);
+		border-radius: 4px;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset
+	}
 
-	input[type='button']:hover {
+	.register:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
-	
-	#subPlus td {
-		background-color: #fff;
+	.pagination{	
+		justify-content: center;
 	}
-		
 </style>
 </head>
 <body class="sb-nav-fixed">
@@ -128,7 +119,7 @@
                             <div class="collapse" id="collapseLayoutsb" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="empList.go">직원리스트</a>
-                                    <a class="nav-link" href="empWrite.go">직원등록</a>
+                                    <a class="nav-link" href="empRegister.go">직원등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -179,156 +170,67 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">수강생 등록</h1>                        
+                        <h1 class="mt-4">배정 목록</h1>                
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                GOOD2 IT 배정 리스트 입니다.                                
+                            </div>
+                        </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                수강생등록
+                                배정 상세 페이지
                             </div>
-                            <div>
-                                <table id="registerList">
-                                	<tr class="hidden">
-										<th>고객번호</th>
-										<td><input type="text" id="cli_no"/></td>
-									</tr>									
+                            <div class="card-body">
+                                <table id="stuList">
+									<thead>
+										<tr>
+											<select id="coStuName">
+												<option value="cli_name">학생명</option>
+												<option value="stu_no">학번</option>
+												<option value="cli_phone">연락처</option>
+												<option value="ass_condition">수강상태</option>
+											</select>
+											<input type = "text" id= "search"/>
+											<button class="registerSh" id = "assSearch" >검색</button>
+										</tr>
+										<tr>
+											<th></th>
+											<th>과목명</th>
+											<th>학번</th>
+											<th>학생명</th>
+											<th>연락처</th>
+											<th>담당자</th>
+											<th>수강상태</th>
+										</tr>
+									</thead>
+									<tbody id="list">
+										
+									</tbody>
 									<tr>
-										<th>이름</th>
-										<td><input type="text" id="cli_name"/>
-										<button onclick="cliSearch_pop()">고객정보 검색</button>
+									<!-- plugin 사용법(twbspagination) -->
+										<td colspan="8" id ="paging">
+											<div class="container">
+												<nav arial-lable="Page navigation" style="text-align:center">
+													<ul class="pagination" id="pagination"></ul>
+												</nav>
+											</div>
 										</td>
-									</tr>
-									<tr>
-										<th>연락처</th>
-										<td><input type="text" id="cli_phone"/></td>
-									</tr>
-									<tr class="hidden">
-										<th>직원번호</th>
-										<td><input type="text" id="emp_no"/></td>
-									</tr>
-									<tr>
-										<th>담당직원</th>
-										<td><input type="text" id="emp_name"/></td>
-									</tr>
-									<tr>
-										<th>생년월일</th>
-										<td><input type="date" id="stu_birth"/></td>
-									</tr>
-									<tr>
-										<th>나이</th>
-										<td><input type="text" id="stu_age"/></td>
-									</tr>
-									<tr>
-										<th>성별</th>
-										<td>
-										<input type="radio" id="stu_gender" value="남"> 남
-      									<input type="radio" id="stu_gender" value="여"> 여
-										</td>
-									</tr>
-									<tr>
-										<th>학생상태</th>
-										<td>
-											<select class="conditionSelect" id="stu_condition">
-									            <option value="재학" selected>재학</option>
-									            <option value="휴학">휴학</option>
-									            <option value="수료">수료</option>
-									            <option value="중퇴">중퇴</option>									            
-									        </select>
-								        </td>
-									</tr>
-									<tr>
-										<th colspan="2" >과목정보</th>										
-									</tr>
-									<tr id=subPlus>
-										<td colspan="2" style="text-align:end;">
-											<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-											<input type="button" value="과목삭제" onclick="#"/>
-										</td>				
-									</tr>
-									<tr id="subtable"></tr>
-									<tr>
-										<th colspan="2">
-											<input type="button" value="등록완료" onclick="stuRegister()"/>
-											<input type="button" value="취소" onclick="location.href='/stuList.go'"/>
-										</th>				
-									</tr>
-								</table>  				
-                            </div>                            
+									</tr>							
+								</table>								
+                            </div>
                         </div>
                     </div>
                 </main>
             </div>            
         </div>
-                
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>  
-
+	    <!-- <script src="../resources/JS/empDatatables-simple-demo.js"></script> -->
 </body>
 <script>
-noHidden();
-function noHidden(){
-	$(".hidden").css("display", "none");	
-} 
-
-function cliSearch_pop(){	
-	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
-	}
 
 
-
-function subSearch_pop(){
-	var subtable = ""
-	subtable += '<tr>';
-	subtable += '<th><input type="checkbox"></th>';
-	subtable += '<td><input type="text" id="sub_name"/><input type="text" id="sub_no" class="hidden"/></td>';
-	subtable += '</tr>';
-	
-	$('#subtable').after(subtable);
-	
-	
-	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
-	
-	
-}
-
-
-function stuRegister(){
-	
-	var $cli_no = $('#cli_no');
-	var $emp_no = $('#emp_no');
-	var $stu_birth = $('#stu_birth');
-	var $stu_age = $('#stu_age');
-	var $stu_gender = $('#stu_gender');
-	var $stu_condition = $('#stu_condition');
-
-	$.ajax({
-		type:'get',
-		url:'stuRegister.ajax',
-		data:{
-			cli_no:$cli_no.val(),
-			emp_no:$emp_no.val(),
-			stu_birth:$stu_birth.val(),
-			stu_age:$stu_age.val(),
-			stu_gender:$stu_gender.val(),
-			stu_condition:$stu_condition.val()
-		},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			location.href='stuList.go';		
-		},
-		error:function(error){
-			console.log(error);
-		}
-	});
-	
-	
-	
-}
-
-	
-	
-	
 	
 </script>
 </html>

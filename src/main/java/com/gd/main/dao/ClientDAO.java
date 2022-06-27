@@ -39,9 +39,6 @@ int ajaxSearchCnt(HashMap<String, Object> data);
 
 int ajaxDelete(String idx);
 
-
-// 6/24  추가
-
 int cliReg(@Param("cli_name")String cli_name, @Param("cli_phone")String cli_phone,@Param("cli_req") String cli_req);
 
 
@@ -53,7 +50,19 @@ ArrayList<Client_Dto> empSearch(String empkeyword);
 
 int empUp(HashMap<String, Object> map);
 
+void cliRegCo(String string);
+
+
+
 void cliRegCo(HashMap<String, Object> map);
+
+String ajaxSubSearch(Integer idx);
+
+
+ArrayList<HashMap<String, Object>> regSub();
+
+ArrayList<Integer> cli_no();
+
 
 
 

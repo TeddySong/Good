@@ -9,18 +9,30 @@
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
+<script type="text/javascript" src="resources/JS//course/jquery.twbsPagination.js"></script>
 <style>
-	table{
-		width: 100%;		
-	}
+	*{box-sizing: border-box; }
 	
+	body{padding:0; border:0; margin:0;}
+	table{ td:30px; align:center;}
+
 	table,th,td{
-		border: 1px solid black;
+		/* border: 1px solid black; */
 		border-collapse: collapse;
 		padding: 5px;
 	}
+	td{height: 30px;}
+	 tr {
+        line-height: 25px;
+    }
 	textarea{ resize:none;width:100%;height:150px;}
+
+	#colist{float:left;}
+	#myModal table{
+	 	width:500px;
+	}
+	#colist.table {width:85%;}
+	 #subist.table{width:15%;}
 </style>
 </head>
 <body>
@@ -49,23 +61,38 @@
 		<option value="15">15</option>
 		<option value="20">20</option>
 	</select>
-	<table>
-		<thead>
+	
+	<div  >
+	<table id="colist" height="200px"  width="500px" width="60%" class="table table-striped">
+		<thead >
 			<tr>
 				<th><input type="checkbox" id="all"/></th>
 				<th>고객번호</th>
 				<th>고객명</th>
 				<th>연락처</th>
-				<th>문의과목</th>
+
 				<th>상담요청시간</th>
 				<th>담당자</th>
 				<th>상담결과</th>
 			</tr>
 		</thead>
 		<tbody id="list">
-		
+			
 		</tbody>
-			<tr>
+		
+			
+	</table>
+	
+	<table  id="subist" height="200px"   class="table table-striped"> 
+	<thead>
+	<tr><th>문의과목</th></tr>
+	</thead>
+	<tbody id="sub"></tbody>
+	
+	</table> 
+	</div>
+	
+	<tr>
 			<td colspan="8" id="paging">
 				<!-- plugin 사용법(twbspagination) -->
 				<div class="container">
@@ -75,9 +102,6 @@
 				</div>
 			</td>
 		</tr>
-	</table>
-	
-	
 	<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -90,7 +114,7 @@
       </div>
       <div class="modal-body">
         
-        <table>
+        <table  class="table  table-striped  table-bordered" >
         	<tr>
         		<th>고객명</th>
         		<td><input type="text" id="cli_name" /></td>
@@ -104,12 +128,9 @@
         			문의과목
         		</th>
         	</tr>
-       		<tr>
+       		<tr> <!-- 과목 db에서 가져와 뿌리기 .  -->
 	       		<th colspan="2" id="req_course">
-	       			 <label><input type="checkbox" name="java" value="1"> JAVA</label>
-	       			 <label><input type="checkbox" name="c" value="2"> C</label>	
-	       			 <label><input type="checkbox" name="front" value="4362"> 테스트</label>
-	       		 	 <label><input type="checkbox" name="back" value="4"> Back-end</label>
+	       			 
 	       		</th>
        		</tr>
         	<tr><th colspan="2">상담요청내용</th></tr>
@@ -132,9 +153,9 @@
 </body>
 <script>
 
-var currPage = 1;
+ var currPage = 1;
 
-listCall(currPage);
+listCall(currPage); 
 
 $('#pagePerNum').on('change',function(){	
 	console.log('currPage : '+currPage);
@@ -145,20 +166,29 @@ $('#pagePerNum').on('change',function(){
 });
 
 function listCall(page){
+	
+
+
 	var pagePerNum=$('#pagePerNum').val();
+
 	
-	
+		
 	$.ajax({
 		type:'GET',
-		url:'clientlist.ajax',
+		url:'clisearch.ajax',
+	
 		data:{
+			
 			cnt:pagePerNum,
-			page:page
+			page:currPage,
+			
 		},
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			//console.log(data);
+		//	console.log(data.sublist);
 			drawList(data.list);
+			 subSearch();
 			currPage = data.currPage;
 			//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
 			$("#pagination").twbsPagination({
@@ -172,6 +202,7 @@ function listCall(page){
 					console.log(page);//사용자가 클릭한 페이지
 					currPage = page;
 					listCall(page);
+					 
 				}
 			});
 		},
@@ -181,16 +212,18 @@ function listCall(page){
 	});
 	
 	
+	
+	
 	/* 검색 */
 	$('#searchBtn').on('click',function(){
 
 		let searchType =$('select[name=searchType]').val();
 		let keyword = $('input[name=keyword]').val();
-
+	
 		//location.href="listPageSearch?"+"searchType="+searchType+"&" +"keyword="+keyword;
 		$.ajax({
 			type:'get',
-			url:'clientsearch.ajax',
+			url:'clisearch.ajax',
 			data:{
 				cnt:pagePerNum,
 				page:page,
@@ -200,6 +233,7 @@ function listCall(page){
 			dataType:'json',
 			success:function(data){
 				drawList(data.list);
+				 subSearch();
 				currPage = data.currPage;
 				//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
 				$("#pagination").twbsPagination({
@@ -220,6 +254,43 @@ function listCall(page){
 	
 }
 
+
+function subSearch(){
+	var  cli_no=[];
+		$('#list input[type=checkbox]').each(function(idx,item){
+			cli_no.push($(this).val());		
+		});
+		
+	
+		if(cli_no ==null || cli_no==''){
+			$('#sub').empty();
+		}
+		
+	if(cli_no !=null | cli_no !=''){
+		$.ajax({
+			url:'subSearch.ajax',
+			 traditional : true,
+			type:'get',
+			data:{cli_no:cli_no},
+			dataType:'json',
+			success:function(data){
+			//	console.log(data.list);
+				 drawSUb(data.list);
+				 
+			},
+			error:function(e){}
+			
+		});
+		
+	}	
+		
+
+		
+		
+		
+}
+
+
 function drawList(list){
 	var content = '';
 	list.forEach(function(item){
@@ -229,15 +300,32 @@ function drawList(list){
 		content += '<td>'+item.cli_no+'</td>';
 		content += '<td><a href=clientDetail.go?cli_no='+item.cli_no+'>'+item.cli_name+'</a></td>';
 		content += '<td>'+item.cli_phone+'</td>';
-		content += '<td>'+item.sub_name+'</td>';
+ 
 		content += '<td>'+item.cli_qDate+'</td>';
 		content += '<td>'+item.emp_name+'</td>';
-		content += '<td>'+item.cli_log_result+'</td>';
+		content += '<td >'+item.cli_log_result+'</td>';
 		content += '</tr>';
 	});
 	$('#list').empty();
 	$('#list').append(content);
+ 
+	
 }
+ 
+ 
+  function drawSUb(list){
+		var content='';
+		list.forEach(function(item){
+			 content += '<tr>';			 
+			 content += '<td>'+item +'</td>';
+			 content += '</tr>';
+		 });
+		$('#sub').empty();
+		$('#sub').append(content);
+	
+ } 
+
+ 
  
 /* 체크박스 */
  
@@ -267,7 +355,7 @@ function del(){
 		
 		$.ajax({
 			type:'get',
-			url:'clientdelete.ajax',
+			url:'clidelete.ajax',
 			data:{delList:chkArr},
 			dataType:'JSON',
 			success:function(data){
@@ -283,13 +371,42 @@ function del(){
 }
 
 
-
+// ----------------new-----------
 $("#regOpenBtn").click(function(){
 	        $("#myModal").modal();
-	    });
+		
+		$.ajax({
+			type:'get',
+			url:'cliregSub.ajax', 
+			data:{}, 
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				 subList(data);
+				
+			},
+			error:function(e){console.log(e);}	
+			}); 	
+	   });
+	
+	function subList(data){
+		
+		let content = ''; 
+		data.forEach(function(item){
+			content += '<label>';
+			content += '<input type="checkbox" value='+item.sub_no+'>';		
+			content += item.sub_name+'</label>';
+			content +="&nbsp&nbsp";
+			
+		
+		});
+		$('#req_course').empty();
+		$('#req_course').append(content);
+		
+	}
 	
 
-
+//-------------------------------
 $('#regBtn').on('click',function(){
 	let cli_name=$('#cli_name').val();
 	let cli_phone=$('#cli_phone').val();

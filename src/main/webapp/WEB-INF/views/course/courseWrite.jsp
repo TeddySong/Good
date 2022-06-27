@@ -29,36 +29,18 @@
             <th>과정명</th>
             <td colspan="3">
             	<input type="text" id="co_name" value=""/>
-            	<button onclick="overlay()">중복</button>
+            	<button onclick="courOverlay()">중복</button>
             </td>
         </tr>
         <tr>
             <th>과목</th>
             <td colspan="3">
-            	<%-- <select id="sub_name">
-		            <option>과목명</option>
-		            <c:forEach items="${subNameList}" var="subNameList">
-		            	<option value="${dto.sub_name}">${dto.sub_name}</option>
-		            </c:forEach>
-		            <!-- <option value="C언어">C언어</option>
-		            <option value="Python">Python</option>
-		            <option value="프론트엔드">프론트엔드</option>
-		            <option value="백엔드">백엔드</option> -->
-		        </select> --%>
-		        <%-- <c:if test="${!empty courseDTO}">
-		        	<select id="sub_name">
-		        		<c:forEach var="list" items="${courseDTO}" varStatus="i">
-		        			<option value="${list.sub_name}">${list.sub_name}</option>
-		        		</c:forEach>
-		        	</select>
-		        </c:if> --%>
-		        
-		        <select id="sub_name">
-	        		<option>과목명</option>
-	            	<c:forEach items="${subjectList}" var="subjectList">
-		            	<option value="${subjectList.sub_name}">${subjectList.sub_name}</option>
-		            </c:forEach>
-	        	</select>
+				<select id="sub_name" name="selectedSubName">
+			         <option>과목명</option>
+			         <c:forEach items="${subName}" var="subName">
+			         		<option id="subName" value="${subName.sub_no}">${subName.sub_name}</option>
+			         </c:forEach>
+		        </select> 
             </td>
         </tr>
         <tr>
@@ -110,7 +92,7 @@
             </td>
         </tr>
 	</table>
-    <input type="button" id="button1" value="등록완료" onclick="save()"/>
+    <input type="submit" id="button1" value="등록완료" onclick="courSave()"/>
     <input type="button" id="button2" value="취소" onclick="location.href='courList.go'"/>
 </body>
 <script>
@@ -118,12 +100,12 @@
 //과정명 중복체크
 var overChk = false; //중복체크 여부
 
-function overlay(){
+function courOverlay(){
 	var co_name = $("#co_name").val();
 	console.log('과정명 중복 체크 : '+co_name);
 	$.ajax({
 		type:'get',
-		url:'overlay.ajax',
+		url:'courOverlay.ajax',
 		data:{chkCo:co_name},
 		dataType:'json',
 		success:function(data){
@@ -144,8 +126,9 @@ function overlay(){
 
 //등록
 
-function save(){
+function courSave(){
 	var $co_name = $('#co_name');
+	var $sub_no = $('#sub_no');
 	var $sub_name = $('#sub_name');
 	var $co_startDate = $('#co_startDate');
 	var $co_endDate = $('#co_endDate');
@@ -187,13 +170,10 @@ function save(){
 			console.log(co_name);
 			
 			//var $sub_name = $("#sub_name").val();
-			var sub_name = $("#sub_name option:selected").val();
-			/*
-			var $sub_name = $("#sub_name").change(function(){
-				  //console.log($(this).val()); //value값 가져오기
-				  $(this).val()
-				}); */ 
+			var sub_no = $("select[name=selectedSubName]").val();
 			console.log(sub_name);
+		
+			//var sub_no = $("sub_no").val();
 			
 			var co_startDate = $("#co_startDate").val();
 			console.log(co_startDate);
@@ -231,10 +211,11 @@ function save(){
 			
 			$.ajax({
 				type:'post',
-				url:'write.ajax',
+				url:'courWrite.ajax',
 				data:{
 					co_name : co_name,
-					sub_name : sub_name,
+					sub_no : sub_no,
+					//sub_name : sub_name,
 					co_startDate : co_startDate,
 					co_endDate : co_endDate,
 					co_startTime : co_startTime,

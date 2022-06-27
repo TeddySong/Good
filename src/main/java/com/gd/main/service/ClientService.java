@@ -38,6 +38,7 @@ public class ClientService {
 	public ArrayList<HashMap<String, Object>> list_Client2() {
 		return dao.list_Client2();
 	}
+	/*
 	public int listsearchCount(String searchType, String keyword) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		data.put("keyword", keyword);
@@ -53,35 +54,9 @@ public class ClientService {
 		data.put("searchType", searchType);
 		return dao.listPageSearch(data);
 	}
+	*/
+	/*
 	public HashMap<String, Object> ajaxlist(HashMap<String, String> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int cnt = Integer.parseInt(params.get("cnt"));
-		int page = Integer.parseInt(params.get("page"));
-		logger.info("보여줄 페이지 : "+page);		
-		
-		//총갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-		int allCnt = dao.allCount();
-		logger.info("allCnt : "+allCnt);
-		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
-		logger.info("pages : "+pages);
-		
-		if(page > pages) {
-			page = pages;
-		}
-		
-		
-		map.put("pages", pages);	//만들 수 있는 최대 페이지 수
-		map.put("currPage", page);//현재 페이지
-		
-		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset);
-		
-		ArrayList<Client_Dto> list = dao.ajaxlist(cnt, offset);
-		map.put("list", list);		
-		return map;
-	}
-	public HashMap<String, Object> ajaxSearch(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int cnt =Integer.parseInt(params.get("cnt"));
 		int page =Integer.parseInt(params.get("page"));
@@ -96,17 +71,51 @@ public class ClientService {
 		
 		
 		int allCnt = dao.ajaxSearchCnt(data);
-		logger.info("allCnt : "+allCnt);
+		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
+		//logger.info("pages : "+pages);
+		
+		if(page > pages) {
+			page = pages;
+		}
+		
+		
+		map.put("pages", pages);	//만들 수 있는 최대 페이지 수
+		map.put("currPage", page);//현재 페이지
+		
+		int offset = (page-1) * cnt;
+		//logger.info("offset : "+offset);
+		
+		ArrayList<Client_Dto> list = dao.ajaxlist(cnt, offset);
+		map.put("list", list);		
+		return map;
+	}
+	*/
+	public HashMap<String, Object> ajaxSearch(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int cnt =Integer.parseInt(params.get("cnt"));
+		int page =Integer.parseInt(params.get("page"));
+		
+		String searchType=params.get("searchType");
+		String keyword = params.get("keyword");
+		
+		
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		data.put("searchType", searchType);
+		data.put("keyword", keyword);
+		
+		
+		int allCnt = dao.ajaxSearchCnt(data);
+		logger.info("allCnt44 : "+allCnt);
 		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
 		
 		
 		logger.info("pages : "+pages);
 		
+		if(pages==0) {pages=1;}
+		
 		if(page > pages) {
-			page = pages;
-			if(allCnt==0) {
-				page=1;
-			}
+			page = pages; 
 		}
 		
 		
@@ -123,8 +132,12 @@ public class ClientService {
 		
 		ArrayList<Client_Dto> list = dao.ajaxSearch(data);
 		map.put("list", list);		
+		
+		
+		
 		return map;
 	}
+	
 	
 	public int ajaxDelete(ArrayList<String> delList) {
 		int cnt = 0; 
@@ -134,8 +147,7 @@ public class ClientService {
 		
 		return cnt;
 		}
-
-//6/24 추가
+	
 	public int cliReg(HashMap<String, Object> params) {
 		String 	cli_name =(String) params.get("cli_name");
 		String cli_phone = (String) params.get("cli_phone");
@@ -146,17 +158,6 @@ public class ClientService {
 		int cnt = dao.cliReg(cli_name,cli_phone,cli_req);
 		map.put("cnt", cnt);
 		return cnt;
-	}
-
-	public void cliRegCo(ArrayList<Integer> sub_no) {
-		for (Integer string : sub_no) {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			Integer cli_no=null;
-			map.put("string", string);
-			map.put("cli_no", cli_no);
-			dao.cliRegCo(map);
-		}
-		
 	}
 	
 	public int cliUpdate(HashMap<String, Object> map) {
@@ -173,6 +174,52 @@ public class ClientService {
 
 		return dao.empUp(map);
 	}
+
+	public void cliRegCo(ArrayList<Integer> sub_no) {
+		for (Integer string : sub_no) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			Integer cli_no=null;
+			map.put("string", string);
+			map.put("cli_no", cli_no);
+			dao.cliRegCo(map);
+		}
+		
+	}
+	public HashMap<String, Object> ajaxSubSearch(ArrayList<Object> cli_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//String sub = new HashMap<String, Object>();
+		Integer cnt = 0; 
+		
+		ArrayList<String> list = new ArrayList<String>();
+		for (Object idx : cli_no) {
+		
+			Integer inxx= Integer.parseInt(idx.toString());
+	//		System.out.println(inxx);
+			
+			String	list2 =dao.ajaxSubSearch(inxx); 
+	//	System.out.println(list2);
+		//	System.out.println("---");
+			list.add(list2);
+			
+		}
+
+		map.put("list", list);
+		return map ;
+		
+	}
+
+	public ArrayList<HashMap<String, Object>> regSub() {
+		ArrayList<HashMap<String, Object>> list = dao.regSub();
+		
+		return dao.regSub();
+	}
+	public ArrayList<Integer> cli_no() {
+		return dao.cli_no();
+	}
+	
+	
+
+
 
 	
 	

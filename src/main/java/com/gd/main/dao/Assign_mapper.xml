@@ -3,31 +3,39 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.AssignDAO">
 
+<!-- 과정전체 배정리스트 -->
 <select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
 
-		select sub_name, co_name, co_startTime,co_startDate, cli_name, cli_phone, emp_name, co_condition 
-			from assign a join student s3
-			left outer join subject s on s.sub_no = a.sub_no
-			left outer join course c on c.co_no = a.co_no 
-			left outer join client c2 on c2.cli_no = s3.cli_no 
-			left outer join employee e on e.emp_no = s3.emp_no
+		select sub_name,co_name,co_startTime,co_startDate,cli_name,cli_phone,emp_name,co_condition from assign a
+		left outer join client c on c.cli_no = stu_no
+		left outer join course c2 on c2.co_no = a.co_no
+		left outer join subject s on s.sub_no = a.sub_no
+		left outer join employee e on e.emp_no = stu_no
 			<where>
 				<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
 					<if test="assSearchTarget.equals('sub_name')">
 						s.sub_name = #{search};
 					</if>
 					<if test="assSearchTarget.equals('co_name')">
-						c.co_name = #{search};
+						c2.co_name = #{search};
 					</if>
 					<if test="assSearchTarget.equals('emp_name')">
 						e.emp_name = #{search};
 					</if>
 					<if test="assSearchTarget.equals('co_condition')">
-						c.co_condition = #{search};
+						c2.co_condition = #{search};
 					</if>
 			</if>
 			</where>
 </select>
-	
-	
+<!-- 선택된 과정에 대한 배정 리스트 -->
+<select id ="assCoList" resultType="com.gd.main.dto.AssListDTO"  parameterType="hashmap">
+select co_name,stu_no,cli_name,cli_phone,emp_name,ass_condition from assign a
+		left outer join client c on c.cli_no = stu_no
+		left outer join course c2 on c2.co_no = a.co_no
+		left outer join subject s on s.sub_no = a.sub_no
+		left outer join employee e on e.emp_no = stu_no
+		where c2.co_no =#{parma1};
+
+</select>
 </mapper>

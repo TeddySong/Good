@@ -242,7 +242,7 @@ function listCall(page){
 	
 	$.ajax({
 		type:'get',
-		url:'assList.ajax',
+		url:'assignList.ajax',
 		data:{
 			cnt : pagePerNum,
 			page : page
@@ -282,7 +282,7 @@ function listCall(page){
 		
 		$.ajax({
 			type:'get',
-			url:'assSearch.ajax',
+			url:'assignSearch.ajax',
 			data:{
 				cnt : pagePerNum,
 				page : page,
@@ -316,7 +316,8 @@ function listCall(page){
 }
 	function drawList(assList){
 		var content="";
-		assList.forEach(function(item){
+		assList.forEach(function(item,co_no){
+			
 				content +='<tr>';
 				content +='<td>'+item.sub_name+'</td>';
 				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</td>';

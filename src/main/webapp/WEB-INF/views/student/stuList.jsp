@@ -17,10 +17,11 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#goodList {                
+	#goodList {  
+			            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 100%;
+			  width: 80%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
@@ -29,13 +30,13 @@
             
    #goodList th {
 			background-color:#505050;
-			color:#FFFFFF
+			color:#FFFFFF;
+			text-align:center;
 		}
 		
 	#goodList,#goodList th,#goodList td
 	{
-		font-size:20px;
-		text-align:center;
+		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
@@ -47,9 +48,13 @@
 		background-color:#fdfdfd;
 	}
 	
+	input[type='text']{
+	width : 100%;
+	}
+		
 	.goodRegister {
-		display: block;
-		margin: 20px auto;
+		position: relative;		
+		margin: 0 auto;
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
@@ -174,6 +179,20 @@
                                 수강생리스트
                             </div>
                             <div>
+                            	<table id="goodList">
+                            		<tr>
+                            			<td>
+                            				<select id="stuSearchCategory" style="width:100%;">
+                            					<option value="cli_name">이름</option>
+                            					<option value="cli_phone">연락처</option>
+                            					<option value="stu_age">나이</option>
+                            					<option value="emp_name">담당직원</option>
+                            				</select>
+                            			</td>
+                            			<td><input type="text" placeholder="검색어를 입력해주세요"/></td>
+                            			<td style="text-align:center"><button onclick="stuSearch()" class="goodRegister" style="width:100%;">검색</button></td>
+                            		</tr>
+                            	</table>
                                 <table id="goodList">
 									<thead>
 										<tr>
@@ -190,6 +209,11 @@
 										
 									</tbody>
 									<tr>
+										<td colspan="7" style="text-align:end; font-size:20px;">
+									<button class="goodRegister" onclick = "location.href='stuRegister.go'" >등록</button>
+										</td>
+									</tr>							
+									<tr>
 										<td colspan="7" id="paging">
 										<!-- twbspagination 플러그인 -->
 										<div class="container">
@@ -197,11 +221,12 @@
 												<ul class="pagination" id="pagination"></ul>
 											</nav>
 										</div>
+										
 										</td>
 									</tr>
 								</table>								
                             </div>
-                            <button class="goodRegister" onclick = "location.href='stuRegister.go'" >등록</button>
+                            
                         </div>
                     </div>
                 </main>
@@ -252,6 +277,51 @@ function listCall(page) {
 			console.log(e);
 		}
 	});
+	
+		function stuSearch(){
+		
+		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
+		console.log(stuSearchCategory);
+	
+		var stuSearchContent = $("#stuSearchContent").val();
+		console.log(stuSearchContent);
+		
+		$.ajax({
+			type:'get',
+			url:'stuSearch.ajax',
+			data:{
+				cnt : pagePerNum,
+				page : page,
+				stuSearchCategory:stuSearchCategory,
+				stuSearchContent:stuSearchContent
+				},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+				drawList(data.list);
+				currPage=data.currPage;
+				
+				//플러그인 사용 페이징
+				$("#pagination").twbsPagination({
+					startPage:data.currPage, //시작페이지
+					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+					visiblePages: 5, // 한번에 보여줄 페이지 수
+					onPageClick:function(e,page){
+						console.log(page);
+						currPage=page;
+						listCall(page);
+					}
+				});
+				
+			},
+			error:function(e){
+				console.log(e);
+			}
+		}); 
+	}
+	
+	
+	
 };
 
 //리스트 그리기

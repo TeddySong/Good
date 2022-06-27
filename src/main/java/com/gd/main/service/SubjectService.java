@@ -105,9 +105,32 @@ public class SubjectService {
 	}
 	
 
-	public ArrayList<SubDTO> scriptlist() {
-		logger.info("과목후기 리스트 요청");
-		return dao.scriptlist();
+	public HashMap<String, Object> scriptlist(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int cnt = Integer.parseInt(params.get("cnt"));
+		int page = Integer.parseInt(params.get("page"));
+		logger.info("보여줄 페이지 :" + page);
+		
+		int allCnt = dao.allCount();
+		logger.info("allCnt : " + allCnt);
+		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
+		logger.info("pages : " + pages);
+		
+		if(page > pages) {
+			page = pages;
+		}
+		
+		map.put("pages", pages);
+		map.put("currPage", page);
+		
+		int offset = (page-1) * cnt;
+		logger.info("offset : "+offset); 
+		
+		ArrayList<SubDTO> list = dao.scriptlist(cnt, offset);
+		map.put("list", list);
+
+		return map;
 	}
 
 	public SubDTO subDetail(String sub_no) {
@@ -146,6 +169,13 @@ public class SubjectService {
 		}
 		return cnt;
 	}
+
+	public ArrayList<SubDTO> scrSublist() {
+		logger.info("scr 과목 list 요청");
+		return dao.scrSublist();
+	}
+
+
 
 	
 }

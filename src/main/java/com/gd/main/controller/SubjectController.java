@@ -69,18 +69,23 @@ public class SubjectController {
 			@RequestParam(value = "sub_condition") String subCondition,
 			@RequestParam(value = "sub_time") String subTime,
 			@RequestParam(value = "sub_summary") String subSummary,
-			@RequestParam(value = "file") MultipartFile file) {
+			@RequestParam(value = "file") MultipartFile file, HttpSession session) {
 		logger.info("과목 등록");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> params = new HashMap<String, String>();
+		boolean login = false;
+		
 		params.put("sub_name", subName);
 		params.put("sub_condition", subCondition);
 		params.put("sub_time", subTime);
 		params.put("sub_summary", subSummary);
 		
-		boolean register = service.subRegister(params, file);
-		map.put("subRegister", register);
-		
+		if (session.getAttribute("loginId") != null) {
+			login = true;
+			boolean register = service.subRegister(params, file);
+			map.put("subRegister", register);
+		}
+		map.put("login", login);
 		return map;
 	}
 	
@@ -160,14 +165,17 @@ public class SubjectController {
 	
 	@RequestMapping("/scriptlist.ajax")
 	@ResponseBody
-	public HashMap<String, Object> scriptlist() {
-		logger.info("리스트 요청");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<SubDTO> list = service.scriptlist();
-		logger.info("list : " + list.size());
-		map.put("list", list);
-		return map;
+	public HashMap<String, Object> scriptlist(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("과목 후기 리스트 요청" + params);
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+		//ArrayList<SubDTO> list = service.scriptlist();
+		//logger.info("list : " + list.size());
+		//map.put("list", list);
+		
+		
+		return service.scriptlist(params);
 	}
+	
 	
 	@RequestMapping("/scrDel.ajax")
 	@ResponseBody
@@ -178,6 +186,22 @@ public class SubjectController {
 		int cnt = service.scrDel(scrDelList);
 		map.put("msg",cnt + " 개 삭제 완료됐습니다.");
 		
+		return map;
+	}
+	
+	@RequestMapping("/scrReg.go")
+	public String scrRegGo() {
+		logger.info("과목후기 등록 페이지");
+		return "./subject/scrRegister";
+	}
+	
+	@RequestMapping("/scrReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scrReg(){
+		logger.info("과목후기 과목리스트");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<SubDTO> list = service.scrSublist();
+		map.put("list", list);
 		return map;
 	}
 

@@ -47,6 +47,18 @@ public class AssignService {
 		return assMap;
 	}
 
+	public AssListDTO assCoDetail(String name) {
+		
+		logger.info("과정 배정 상세보기 요청 : " + name);
+		
+		return dao.assCoList(name);
+	}
+
+	
+
+
+
+	
 
 	
 }

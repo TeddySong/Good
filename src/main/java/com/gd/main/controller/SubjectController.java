@@ -69,18 +69,23 @@ public class SubjectController {
 			@RequestParam(value = "sub_condition") String subCondition,
 			@RequestParam(value = "sub_time") String subTime,
 			@RequestParam(value = "sub_summary") String subSummary,
-			@RequestParam(value = "file") MultipartFile file) {
+			@RequestParam(value = "file") MultipartFile file, HttpSession session) {
 		logger.info("과목 등록");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> params = new HashMap<String, String>();
+		boolean login = false;
+		
 		params.put("sub_name", subName);
 		params.put("sub_condition", subCondition);
 		params.put("sub_time", subTime);
 		params.put("sub_summary", subSummary);
 		
-		boolean register = service.subRegister(params, file);
-		map.put("subRegister", register);
-		
+		if (session.getAttribute("loginId") != null) {
+			login = true;
+			boolean register = service.subRegister(params, file);
+			map.put("subRegister", register);
+		}
+		map.put("login", login);
 		return map;
 	}
 	

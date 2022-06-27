@@ -195,7 +195,7 @@
 							<div style="width:70%; text-align:end;">
 							<button onclick="location.href='subRegister.go'" class="goodRegister">등록</button>
 							<button onclick="location.href='scriptlist.go'" class="goodRegister">과목후기</button>
-							<button onclick="location.href='/'" class="goodRegister">과정목록</button>
+							<button onclick="location.href='courList.go'" class="goodRegister">과정목록</button>
 							</div>
 								<table id="goodList">
 									<thead>

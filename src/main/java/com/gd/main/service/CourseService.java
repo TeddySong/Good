@@ -21,8 +21,8 @@ public class CourseService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired CourseDAO dao;
-/*	
-	public HashMap<String, Object> courList(HashMap<String, String> params) {
+	
+	public HashMap<String, Object> courList2(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//hashmap 을 반환하기위해 객체화
 		
@@ -54,39 +54,17 @@ public class CourseService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		
-		ArrayList<CourseDTO> courList = dao.courList(cnt,offset);
+		ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
 		map.put("courList", courList);
 		
 		return map;
-	}
-*/	
-	public CourseDTO courDetail(String co_no) {
-		return dao.courDetail(co_no);
-	}
-
+	}	
+/*
+ * public CourseDTO courDetail(String co_no) { return dao.courDetail(co_no); }
+ */
 	
 	public void courseUpdate(HashMap<String, String> params) {
-		/*
-		HashMap<String, Object> updateResult = new HashMap<String, Object>();
-		
-		CourseDTO dto = new CourseDTO();
-		String sub_name = (String) params.get("sub_name");
-		int sub_no = dto.getSub_no();
-		
-		int row = dao.courUpdate(params);
-		boolean success = false;
-		//int co_no = Integer.parseInt(params.get("co_no"));
-		logger.info("넘어온 값 : "+params);
-		logger.info("수정된 데이터 수 : "+row);
-		
-		if(row > 0) {
-			//dao.subTable(sub_name,sub_no);
-			success = true;
-		}
-		
-		updateResult.put("success", success);
-		return updateResult;
-		*/
+
 		logger.info("과정 update 요청");
 		int row = dao.courseUpdate(params);
 		logger.info("수정된 데이터 수 : "+row);
@@ -148,29 +126,10 @@ public class CourseService {
 		logger.info("과정 리스트 요청");
 		return dao.courList();
 	}
-
-	/*
-	public CourseDTO selectedSubName(String sub_no) {
-		//CourseDTO dto = new CourseDTO();
-		//int getSubNo = dto.getSub_no();
-		return dao.selectedSubName(sub_no);
-	}
-	*/
-	/*
-	public int courUpdate(HashMap<String, Object> map) {		
-		return dao.courUpdate(map);
-	}
-	*/
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);
 	}
 
-	/*
-	public CourseDTO callSubNo(int co_no) {
-		// TODO Auto-generated method stub
-		return dao.callSubNo(co_no);
-	}
-	*/
 	
 }

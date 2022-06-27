@@ -7,8 +7,6 @@ import com.gd.main.dto.CourseDTO;
 
 public interface CourseDAO {
 
-	//ArrayList<CourseDTO> courList(int cnt, int offset);
-
 	int allCount();
 
 	CourseDTO courDetail(String co_no);
@@ -16,8 +14,6 @@ public interface CourseDAO {
 	String courOverlay(String chkCo);
 
 	int courRegister(HashMap<String, Object> params);
-
-	//ArrayList<CourseDTO> subjectList();
 
 	ArrayList<CourseDTO> subName();
 
@@ -27,17 +23,13 @@ public interface CourseDAO {
 
 	void subTable(String sub_name, int sub_no);
 
-	//CourseDTO getSelectSubName(String sub_no);
-
-	//CourseDTO selectedSubName(String sub_no);
-
-	//int courUpdate(HashMap<String, Object> map);
-
 	CourseDTO courDetail2(String co_no);
 
 	CourseDTO callSubNo(int co_no);
 
 	int courseUpdate(HashMap<String, String> params);
+
+	ArrayList<CourseDTO> courList2(int cnt, int offset);
 
 	
 }

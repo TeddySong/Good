@@ -18,7 +18,7 @@ public interface SubjectDAO {
 
 	void subHome(String subtime, String subsum, int subno);
 
-	ArrayList<SubDTO> scriptlist();
+	ArrayList<SubDTO> scriptlist(int cnt, int offset);
 
 	SubDTO subDetail(String sub_no);
 
@@ -33,6 +33,10 @@ public interface SubjectDAO {
 	void fileUpdate(String oriFileName, String newFileName, int subno);
 
 	int scrDel(String scr_no);
+
+	int allCount();
+
+	ArrayList<SubDTO> scrSublist();
 
 
 

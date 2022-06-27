@@ -4,7 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
+
 <style>
 table,th,td{
 	border: 1px solid black;
@@ -22,16 +25,17 @@ th,td{
 <select id='sub_name'>
 	<option value='과목명' selected>과목명</option>
 </select>
-<input type="checkbox" name="sub_condition"/>단과
-<input type="checkbox" name="sub_condition"/>종합
-<input type="checkbox" name="sub_condition"/>숨김
-<button onclick="location.href='subRegister.go'">등록</button>
+<input type="radio" name="sub_condition"/>단과
+<input type="radio" name="sub_condition"/>종합
+<input type="radio" name="sub_condition"/>숨김
+<button onclick="scrDel()">삭제</button>
+<button  onclick="scrRegister_pop()">등록</button>
 </div>
 <br/>
 <table>
 	 	<thead>
 	 		<tr>
-	 			<th><input type="checkbox" id="all"/></th>
+	 			<th><input type="checkbox" id="all" class="check-all"/></th>
 	 			<th>과목명</th>
 	 			<th>노출상태</th>
 	 			<th>후기</th>
@@ -40,22 +44,50 @@ th,td{
 	 	<tbody id="list">
 	 		
 	 	</tbody>
+	 	<tr>
+			<td colspan="4" id="paging">
+			<!-- twbspagination 플러그인 -->
+			<div class="container">
+				<nav arial-label="Page navigation" style="text-align:center">
+					<ul class="pagination" id="pagination"></ul>
+				</nav>
+			</div>
+			</td>
+		</tr>
  	</table>
- 	<button onclick="scrDel()">삭제</button>
 </body>
 <script>
-listCall();
+var currPage = 1;
 
-function listCall(){
+listCall(currPage);
 
+function listCall(page){
+
+	var pagePerNum = 5;
+	
 	$.ajax({
 		type:'get',
 		url:'scriptlist.ajax',
-		data:{},
+		data:{
+			cnt:pagePerNum,
+			page:page
+		},
 		dataType:'JSON',
 		success:function(data){
 				console.log(data);
 				drawList(data.list);
+				currPage = data.currPage;
+				
+				$("#pagination").twbsPagination({
+					startPage: data.currPage, //시작 페이지
+					totalPages: data.pages, //총 페이지
+					visiblePages: 5, //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
+						console.log(page); //사용자가 클릭한 페이지
+						currPage = page;
+						listCall(page);
+					}
+				});
 		},
 		error:function(e){
 			console.log(e);
@@ -64,6 +96,7 @@ function listCall(){
 	});
 	
 }
+
 
 
 function drawList(list){
@@ -125,6 +158,10 @@ function scrDel() {
 		}
 			
 	
+}
+
+function scrRegister_pop(){
+	window.open("/scrReg.go","new","width=700, height=300, left=400 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 }
 
 

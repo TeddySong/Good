@@ -10,15 +10,15 @@
 		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(co_no) FROM course
+	<select id="courList2" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
+		co_startTime, co_condition FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
 	</select>
 	
-	<select id="courDetail" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, sub_name, co_startDate, co_endDate, 
-		co_startTime, co_endTime, co_condition,co_capacity FROM course
-		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		WHERE co_no = #{param1}
+	<select id="allCount" resultType="int">
+		SELECT COUNT(co_no) FROM course
 	</select>
 	
 	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">
@@ -68,13 +68,7 @@
 	
 	<!-- 과정 정보 불러오기 -->
 	<select id="courseName" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, co_startDate, co_endDate,
-		co_startTime, co_endTime, co_condition,co_capacity FROM course
+		SELECT co_no,co_name,sub_no FROM course
 	</select>
-	
-	<!-- 선택한 과정번호 가져오기 -->
-	<select id="selectedSubName" resultType="com.gd.main.dto.CourseDTO">
-		SELECT sub_no FROM subject
-		WHERE sub_no = #{param1}
-	</select>
+
 </mapper>

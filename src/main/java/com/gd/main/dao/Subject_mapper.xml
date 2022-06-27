@@ -72,7 +72,7 @@
 	
 	
 	
-	<select id="scriptlist" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	<select id="scriptlist" resultType="com.gd.main.dto.SubDTO">
 		SELECT
 	        sc.scr_no,
 	        s.sub_name,
@@ -80,13 +80,21 @@
 	        sc.scr_content
 		FROM
         	subject s
-        JOIN script sc on s.sub_no = sc.sub_no;
+        JOIN script sc on s.sub_no = sc.sub_no
+        ORDER BY scr_no DESC limit #{param1} OFFSET #{param2};
+	</select>
+	
+	<select id="allCount" resultType="int">
+		SELECT COUNT(scr_no) FROM script 
 	</select>
 	
 	<delete id="scrDel" parameterType="String">
 		DELETE FROM script WHERE scr_no = #{scr_no}
 	</delete>
 
+	<select id="scrSublist" resultType="com.gd.main.dto.SubDTO">
+	SELECT sub_no, sub_name FROM subject
+	</select>
 	
 	
 	

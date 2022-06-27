@@ -139,11 +139,16 @@ button {
 					success:function(data){
 						console.log(data);
 						
-						if(data.subRegister){
-							alert("과목등록 성공");
-							location.href='/subList.go';
+						if(!data.login){
+							alert("로그인이 필요한 서비스 입니다.");
+							location.href='/';
 						}else{
-							alert("과목등록 실패");
+							if(data.subRegister){
+								alert("과목등록 성공");
+								location.href='/subList.go';
+							}else{
+								alert("과목등록 실패");
+							}
 						}
 					},
 					error:function(e){

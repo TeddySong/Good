@@ -127,62 +127,46 @@ function subOverlay() {
 }
 
 function subUpdate(){
-	var $sub_name = $('#sub_name');
-	var $sub_condition = $('#sub_condition');
-	var $sub_time  = $('#sub_time');
-	var $sub_summary = $('#sub_summary');
-	
-	if(subOverChk){
-		if($sub_name.val() ==""){
-			alert("과목명을 입력해 주세요.");
-			$sub_name.focus();
+		var $sub_name = $('#sub_name');
+		var $sub_condition = $('#sub_condition');
+		var $sub_time  = $('#sub_time');
+		var $sub_summary = $('#sub_summary');
+		
+		
+			var formData = new FormData();
 			
-		}else if($sub_time.val() == ""){
-			alert("수강시간을 입력해 주세요.");
+			var file = $("#curri")[0].files[0];
+			var curriFileName = $("#curri_file_name").text();
 			
-		}else if($sub_summary.val() == ""){
-			alert("과목개요를 입력해 주세요.");
+			formData.append("file", $("#curri")[0].files[0]);
 			
-		} else {
+			formData.append("sub_no", $("#sub_no").val());
+			formData.append("sub_name", $sub_name.val());
+			formData.append("sub_condition", $sub_condition.val());
+			formData.append("sub_time", $sub_time.val());
+			formData.append("sub_summary", $sub_summary.val());
 			
-		}
-		
-	} else {
-		var formData = new FormData();
-		
-		var file = $("#curri")[0].files[0];
-		var curriFileName = $("#curri_file_name").text();
-		
-		formData.append("file", $("#curri")[0].files[0]);
-		
-		formData.append("sub_no", $("#sub_no").val());
-		formData.append("sub_name", $sub_name.val());
-		formData.append("sub_condition", $sub_condition.val());
-		formData.append("sub_time", $sub_time.val());
-		formData.append("sub_summary", $sub_summary.val());
-		
-		$.ajax({
-			type:'post',
-			url:'subUpdate.ajax',
-			data: formData,
-			contentType: false,
-			processData: false,
-			dataType:'JSON',
-			success:function(data){
-				if(data){
-					alert("과목수정 성공");
-					location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
-				}else{
-					alert("과목수정 실패");
+			$.ajax({
+				type:'post',
+				url:'subUpdate.ajax',
+				data: formData,
+				contentType: false,
+				processData: false,
+				dataType:'JSON',
+				success:function(data){
+					if(data){
+						alert("과목수정 성공");
+						location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+					}else{
+						alert("과목수정 실패");
+					}
+				},
+				error:function(e){
+					console.log(e);
 				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
-	}
+			});
+		}
 	
-}
 
 </script>
 </html>

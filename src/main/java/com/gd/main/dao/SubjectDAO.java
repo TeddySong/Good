@@ -32,6 +32,8 @@ public interface SubjectDAO {
 
 	void fileUpdate(String oriFileName, String newFileName, int subno);
 
+	int scrDel(String scr_no);
+
 
 
 

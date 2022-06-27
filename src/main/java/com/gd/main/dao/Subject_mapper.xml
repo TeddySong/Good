@@ -82,6 +82,10 @@
         	subject s
         JOIN script sc on s.sub_no = sc.sub_no;
 	</select>
+	
+	<delete id="scrDel" parameterType="String">
+		DELETE FROM script WHERE scr_no = #{scr_no}
+	</delete>
 
 	
 	

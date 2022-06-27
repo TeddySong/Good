@@ -230,7 +230,13 @@ function listCall(){
 		dataType:'JSON',
 		success:function(data){
 				console.log(data);
+				
+			if(data.login){
 				drawList(data.subList);
+			}else{
+				alert('로그인이 필요한 서비스 입니다.');
+				location.href='/';
+			}
 		},
 		error:function(e){
 			console.log(e);

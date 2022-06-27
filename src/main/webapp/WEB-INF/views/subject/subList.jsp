@@ -48,7 +48,7 @@
 	}
 	
 	input[type='text']{
-	width : 30%;
+	width : 100%;
 	}
 	
 	.goodRegister {
@@ -186,11 +186,17 @@
                                 과목리스트
                             </div>
                             <div>
-								<input type="text" placeholder="과목명 입력">
-								<button>검색</button>
-								<input type="checkbox" name="sub_condition"/>단과
-								<input type="checkbox" name="sub_condition"/>종합
-								<input type="checkbox" name="sub_condition"/>숨김
+                            	<table id="goodList">
+                            		<tr>
+										<td><input type="text" placeholder="과목명 입력"></td>
+										<td><button onclick="#" class="goodRegister" style="width:100%;">검색</button></td>
+										<td>
+										<input type="checkbox" name="sub_condition"/>단과
+										<input type="checkbox" name="sub_condition"/>종합
+										<input type="checkbox" name="sub_condition"/>숨김
+										</td>
+									</tr>
+								</table>
 							</div>							
 							<div style="width:70%; text-align:end;">
 							<button onclick="location.href='subRegister.go'" class="goodRegister">등록</button>

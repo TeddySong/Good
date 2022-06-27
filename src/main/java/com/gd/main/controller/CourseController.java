@@ -33,40 +33,44 @@ public class CourseController {
 	@RequestMapping(value = "/courList.go")
 	public String courListGo() {	
 		logger.info("과정 리스트 페이지 이동");
-		return "./course/courList";
+		//return "./course/courList";
+		return "redirect:/courList.do";
 	}
 	
 	
 	//과목,과정 리스트 호출
-	@RequestMapping(value = "/courseList.do")
-	public String searchList(Model model, @RequestParam String sub_no, @RequestParam String co_no){
-		logger.info("과목 리스트 호출");
-		//과목명
-		//CourseDTO dto = service.subNameList(sub_name);
-		//model.addAttribute("dto", dto);
+	@RequestMapping(value = "/courList.do")
+	public String courseList(Model model, HttpSession session){
+		
+		String page = "emp_login";
 		
 		//과목명 리스트
-		CourseDTO subName = service.selectSubName(sub_no);
+		ArrayList<CourseDTO> subName = service.subName();
+		logger.info("과목 갯수 : "+subName.size());
 		model.addAttribute("subName",subName);
 		
 		//과정명 리스트
-		
-		ArrayList<CourseDTO> courseName = service.selectCourseName(co_no);
-		
-		logger.info("courseName"+courseName);
-		
+		ArrayList<CourseDTO> courseName = service.courseName();
+		logger.info("과정 갯수 : "+courseName.size());
 		model.addAttribute("courseName",courseName);
 		
-		/*
-		ArrayList<CourseDTO> subjectList = service.subjectList(sub_name);
-		logger.info("등록된 과목 가져오기 : "+subjectList.size());
-		model.addAttribute("subjectList", subjectList);
-		*/
-		
-		return "./course/courList";
+		if(session.getAttribute("loginId") != null) {
+			
+			logger.info("과정 리스트 호출");
+			//전체적인 리스트
+			ArrayList<CourseDTO> courList = service.courList();
+			logger.info("리스트 갯수 : "+courList.size());
+			page = "./course/courList";
+			model.addAttribute("courList",courList);
+			
+		} else {
+			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
+		}
+
+		return page;
 	}
 	
-
+/*
 	//리스트 호출
 	@RequestMapping("courList.ajax")
 	@ResponseBody
@@ -77,7 +81,7 @@ public class CourseController {
 		ArrayList<CourseDTO> subjectList = service.subjectList();
 		logger.info("등록된 과목 가져오기 : "+subjectList.size());
 		model.addAttribute("subjectList", subjectList);	
-		*/
+		*
 		boolean login = false;
 		
 		if(session.getAttribute("loginId") != null){
@@ -86,13 +90,28 @@ public class CourseController {
 		
 		return service.courList(params);
 	}
-
+*/
 	
 	//과정 등록 페이지 이동
 	@RequestMapping("/courWrite.go")
 	public String writePage() {
 		logger.info("과정 등록 페이지 이동");
-		return "./course/courseWrite";
+		return "redirect:/courWrite.do";
+	}
+	
+	//과정 등록 페이지에 데이터 뿌려주기
+	@RequestMapping(value = "/courWrite.do")
+	public String courseWritePage(Model model){
+		String page = "emp_login";
+		
+		logger.info("과정등록 페이지에 과목 이름 호출");
+		//과목명 리스트
+		ArrayList<CourseDTO> subName = service.subName();
+		logger.info("과목 갯수 : "+subName.size());
+		page = "./course/courseWrite";
+		model.addAttribute("subName",subName);		
+		
+		return page;
 	}
 	
 	//과정명 중복체크
@@ -106,9 +125,8 @@ public class CourseController {
 	//과정 등록
 	@RequestMapping("/courWrite.ajax")
 	@ResponseBody
-	@GetMapping
 	public HashMap<String, Object> courWrite(
-			@RequestParam HashMap<String, Object> params,HttpServletRequest req,Model model){
+			@RequestParam HashMap<String, Object> params){
 		
 		logger.info("과정 등록하기 : "+params);
 		return service.courWrite(params);
@@ -117,13 +135,29 @@ public class CourseController {
 	
 	
 	//과정 상세 페이지 이동
-	@RequestMapping("/detail.go")
-	public String detailPage(@RequestParam String co_no, HttpSession session) {
+	@RequestMapping("/courDetail.go")
+	public String detailPage(int co_no, Model model) {
+		
+		//과정 상세보기 정보
+		CourseDTO dto = service.courDetail2(co_no);
+		//CourseDTO dto2 = service.callSubNo(co_no);
+		
+		logger.info("과정 상세 페이지 이동 : "+dto);
+		model.addAttribute("dto", dto);
+		//model.addAttribute("dto2",dto2);
+		return "./course/courseDetail";
+	}
+
+	/*
+	//과정 상세 페이지 이동
+	@RequestMapping("/courDetail.go")
+	public String detailPage(@RequestParam String co_no, 
+			HttpSession session) {
 		logger.info("과정 상세 페이지 이동 : "+co_no);
 		session.setAttribute("co_no", co_no);
 		return "./course/courseDetail";
 	}
-
+	*/
 	
 	//과정 상세 보기
 	@RequestMapping("/courDetail.ajax")
@@ -152,46 +186,108 @@ public class CourseController {
 	public String updatePage(@RequestParam String co_no, HttpSession session) {
 		logger.info("수정 페이지 이동 : "+co_no);
 		session.setAttribute("co_no", co_no);
-		return "./course/courseUpdate";
+		return "redirect:/courUpdate.do";
 	}
+	
+	
+	//과정 수정 페이지에 데이터 뿌려주기
+	@RequestMapping(value = "/courUpdate.do")
+	public String courseUpdatePage(Model model,HttpSession session){
+		String page = "emp_login";
+		
+		logger.info("과정수정 페이지에 과목 이름 호출");
+		//과목명 리스트
+		ArrayList<CourseDTO> subName = service.subName();
+		logger.info("과목 갯수 : "+subName.size());
+		page = "./course/courseUpdate";
+		model.addAttribute("subName",subName);		
+		
+		
+		//선택한 과목 뿌려주기
+		/*
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sub_no = (String) session.getAttribute("sub_no");
+		session.removeAttribute("sub_no");
+		CourseDTO selectedSubName = service.selectedSubName(sub_no);
+		map.put("selectedSubName", selectedSubName);
+		logger.info("선택한 과목 : "+selectedSubName);
+		model.addAttribute("selectedSubName",selectedSubName);
+		*/
+		return page;
+	}
+	
 	
 	//수정하기
 	@RequestMapping("/courUpdate.ajax")
 	@ResponseBody
 	public HashMap<String, Object> courUpdate(HttpSession session,
-			@RequestParam HashMap<String, String> params) {
-		logger.info("params : "+params);
+			@RequestParam HashMap<String, Object> params) {
+		logger.info("과정 수정 : "+params);
+		//return service.courUpdate(params);
+		/*
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		/*
+		HashMap<String, Object> success = service.courUpdate(params);
+		map.put("success", success);
+		*/
+		/*
+		String co_no = (String) session.getAttribute("co_no");
+		session.removeAttribute("co_no");
+		CourseDTO dto = service.courUpdate(params);
+		map.put("dto", dto);
+		*/
+		
+		
 		boolean login = false;
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//로그인 여부 확인
 		if(session.getAttribute("loginId") != null) {
+			String co_no = (String) session.getAttribute("co_no");
 			login = true;
-			
-			String co_name = params.get("co_name");
-			String co_startDate = params.get("co_startDate");
-			String co_endDate = params.get("co_endDate");
-			String co_startTime = params.get("co_startTime");
-			String co_endTime = params.get("co_endTime");
-			String co_condition = params.get("co_condition");
-			String co_capacity = params.get("co_capacity");
-			
-			map.put("co_name", co_name);
-			map.put("co_startDate", co_startDate);
-			map.put("co_endDate", co_endDate);
-			map.put("co_startTime", co_startTime);
-			map.put("co_endTime", co_endTime);
-			map.put("co_condition", co_condition);
-			map.put("co_capacity", co_capacity);
-			
-			int success = service.courUpdate(map);
-			map.put("success", success);
+			session.removeAttribute("co_no");
+			CourseDTO dto = service.courUpdate(params);
+			map.put("dto", dto);
 		}
 		
 		//map 에 로그인여부 넣어서 전송
 		map.put("login", login);
+		return map;
 		
-		return map;		
+		/*
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int co_no = Integer.parseInt((String) params.get("co_no"));
+		System.out.println("co_no : "+co_no);
+		int sub_no = Integer.parseInt((String) params.get("sub_no"));
+		System.out.println("sub_no : "+sub_no);
+		//String sub_no = request.getParameter("sub_no");
+		//if(sub_no == null || sub_no.trim().equals("")){sub_no = "0";}
+		
+		
+		String co_name = (String) params.get("co_name");
+		String co_startDate = (String) params.get("co_startDate");
+		String co_endDate = (String) params.get("co_endDate");
+		String co_startTime = (String) params.get("co_startTime");
+		String co_endTime = (String) params.get("co_endTime");
+		String co_condition = (String) params.get("co_condition");
+		String co_capacity = (String) params.get("co_capacity");
+		
+		map.put("co_no", co_no);
+		map.put("sub_no", sub_no);
+		map.put("co_name", co_name);
+		map.put("co_startDate", co_startDate);
+		map.put("co_endDate", co_endDate);
+		map.put("co_startTime", co_startTime);
+		map.put("co_endTime", co_endTime);
+		map.put("co_condition", co_condition);
+		map.put("co_capacity", co_capacity);
+		
+		int cnt = service.courUpdate(map);
+		map.put("cnt", cnt);
+		
+		return map;
+		*/		
 	}
 	
 }

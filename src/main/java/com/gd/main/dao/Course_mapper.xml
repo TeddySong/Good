@@ -21,7 +21,7 @@
 		WHERE co_no = #{param1}
 	</select>
 	
-	<select id="courDetail2" parameterType="integer" resultType="com.gd.main.dto.CourseDTO">
+	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, course.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_endTime, co_condition,co_capacity FROM course
 		LEFT JOIN subject ON subject.sub_no = course.sub_no
@@ -43,12 +43,12 @@
 		WHERE sub_no = #{param1}
 	</select>
 	
-	<insert id="courWrite" parameterType="hashmap">
+	<insert id="courRegister" parameterType="hashmap">
 		INSERT INTO course(co_name,co_startDate,co_endDate,co_startTime,co_endTime,co_capacity,co_condition,sub_no)
 		VALUES(#{co_name},#{co_startDate},#{co_endDate},#{co_startTime},#{co_endTime},#{co_capacity},#{co_condition},#{sub_no})
 	</insert>
 	
-	<update id="courUpdate" parameterType="hashmap">
+	<update id="courseUpdate" parameterType="hashmap">
 		UPDATE course SET
 			co_name = #{co_name}
 			,sub_no = #{sub_no}
@@ -59,18 +59,6 @@
 			,co_condition = #{co_condition}
 			,co_capacity = #{co_capacity}
 		WHERE co_no = #{co_no}
-	
-		<!-- UPDATE course JOIN subject ON course.sub_no = subject.sub_no SET
-			course.co_name = #{co_name}
-			,subject.sub_no = #{sub_no}
-			,subject.sub_name = #{sub_name}
-			,course.co_startDate = #{co_startDate}
-			,course.co_endDate = #{co_endDate}
-			,course.co_startTime = #{co_startTime}
-			,course.co_endTime = #{co_endTime}
-			,course.co_condition = #{co_condition}
-			,course.co_capacity = #{co_capacity}
-		WHERE course.co_no = #{co_no} -->
 	</update>
 	
 	<!-- 과목명 불러오기 -->
@@ -85,8 +73,8 @@
 	</select>
 	
 	<!-- 선택한 과정번호 가져오기 -->
-	<!-- <select id="selectedSubName" resultType="com.gd.main.dto.CourseDTO">
+	<select id="selectedSubName" resultType="com.gd.main.dto.CourseDTO">
 		SELECT sub_no FROM subject
 		WHERE sub_no = #{param1}
-	</select> -->
+	</select>
 </mapper>

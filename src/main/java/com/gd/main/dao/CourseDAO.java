@@ -15,7 +15,7 @@ public interface CourseDAO {
 
 	String courOverlay(String chkCo);
 
-	int courWrite(HashMap<String, Object> params);
+	int courRegister(HashMap<String, Object> params);
 
 	//ArrayList<CourseDTO> subjectList();
 
@@ -33,11 +33,11 @@ public interface CourseDAO {
 
 	//int courUpdate(HashMap<String, Object> map);
 
-	CourseDTO courDetail2(int co_no);
+	CourseDTO courDetail2(String co_no);
 
 	CourseDTO callSubNo(int co_no);
 
-	CourseDTO courUpdate(HashMap<String, Object> params);
+	int courseUpdate(HashMap<String, String> params);
 
 	
 }

@@ -42,7 +42,8 @@
       <input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/>
       ~
       <input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/>
-      <input type="button" value="검색"/>
+      <button type="button" id="searchCour">검색</button>
+      <!-- <input type="button" value="검색"/> -->
 	<br/>
     
     <!--표-->
@@ -71,7 +72,7 @@
 			<c:forEach items="${courList}" var="courList">
 				<tr>
 					<td>${courList.co_no}</td>
-					<td><a href="courDetail.go?co_no=${courList.co_no}">${courList.co_name}</a></td>
+					<td><a href="courDetail.do?co_no=${courList.co_no}">${courList.co_name}</a></td>
 					<%-- <td>${courList.sub_no}</td> --%>
 					<td>${courList.sub_name}</td>
 					<td>${courList.co_startDate}</td>

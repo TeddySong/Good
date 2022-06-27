@@ -26,6 +26,12 @@ public interface SubjectDAO {
 
 	int subUpdate(HashMap<String, String> params);
 
+	void fileWrite(String oriFileName, String newFileName, int subno);
+
+	ArrayList<SubDTO> subCurriDetail(String sub_no);
+
+	void fileUpdate(String oriFileName, String newFileName, int subno);
+
 
 
 

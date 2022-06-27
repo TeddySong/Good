@@ -69,7 +69,7 @@ function drawList(list){
 	list.forEach(function(item,sub_no){
 		console.log(item,sub_no);
 		content += '<tr>';
-		content += '<td><a href="subDetail.go?sub_no='+item.sub_no+'">'+item.sub_name+'</a></td>';
+		content += '<td><a href="subDetail.do?sub_no='+item.sub_no+'">'+item.sub_name+'</a></td>';
 		content += '<td>'+item.sub_condition+'</td>';
 		content += '</tr>';
 	});

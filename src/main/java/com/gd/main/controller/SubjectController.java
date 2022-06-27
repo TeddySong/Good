@@ -3,6 +3,8 @@ package com.gd.main.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -57,20 +59,37 @@ public class SubjectController {
 	
 	@RequestMapping("/subRegister.ajax")
 	@ResponseBody
-	public HashMap<String, Object> subRegister(@RequestParam HashMap<String, String> params) {
+	public HashMap<String, Object> subRegister(@RequestParam(value = "sub_name") String subName,
+			@RequestParam(value = "sub_condition") String subCondition,
+			@RequestParam(value = "sub_time") String subTime,
+			@RequestParam(value = "sub_summary") String subSummary,
+			@RequestParam(value = "file") MultipartFile file) {
 		logger.info("과목 등록");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean register = service.subRegister(params);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("sub_name", subName);
+		params.put("sub_condition", subCondition);
+		params.put("sub_time", subTime);
+		params.put("sub_summary", subSummary);
+		
+		boolean register = service.subRegister(params, file);
 		map.put("subRegister", register);
 		
 		return map;
 	}
 	
-	@RequestMapping("/subDetail.go")
-	public String detailPage(@RequestParam String sub_no, HttpSession session) {
+	@RequestMapping("/subDetail.do")
+	public String detailPage(@RequestParam String sub_no, HttpSession session, Model model) {
 		logger.info("상세보기 페이지 이동 : " +sub_no);
 		session.setAttribute("sub_no", sub_no);
 		
+		SubDTO subDetail = service.subDetail(sub_no);
+		ArrayList<SubDTO> srcList = service.subDetailsc(sub_no);
+		ArrayList<SubDTO> photoList = service.subCurriDetail(sub_no);
+		
+		model.addAttribute("subDetail", subDetail);
+		model.addAttribute("srcList", srcList);
+		model.addAttribute("photoList", photoList);
 		return "./subject/subDetail";
 	}
 	
@@ -79,14 +98,16 @@ public class SubjectController {
 	public HashMap<String, Object> subDetail(HttpSession session) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-			String sub_no = (String) session.getAttribute("sub_no");
-			logger.info("상세보기 요청 : " + sub_no);
-			session.removeAttribute("sub_no");
-			SubDTO dto = service.subDetail(sub_no);
-			ArrayList<SubDTO> list = service.subDetailsc(sub_no);
-			map.put("dto", dto);
-			map.put("list", list);
-		
+		String sub_no = (String) session.getAttribute("sub_no");
+		logger.info("상세보기 요청 : " + sub_no);
+		session.removeAttribute("sub_no");
+		SubDTO dto = service.subDetail(sub_no);
+		ArrayList<SubDTO> list = service.subDetailsc(sub_no);
+		ArrayList<SubDTO> photo = service.subCurriDetail(sub_no);
+		map.put("dto", dto);
+		map.put("list", list);
+		map.put("photo", photo);
+			
 		return map;
 	}
 	
@@ -101,10 +122,22 @@ public class SubjectController {
 	
 	@RequestMapping("/subUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> subUpdate(@RequestParam HashMap<String, String> params) {
-		logger.info("과목 수정 : " +  params);
+	public HashMap<String, Object> subUpdate(@RequestParam(value = "sub_no") String subNo,
+			@RequestParam(value = "sub_name") String subName,
+			@RequestParam(value = "sub_condition") String subCondition,
+			@RequestParam(value = "sub_time") String subTime,
+			@RequestParam(value = "sub_summary") String subSummary,
+			@RequestParam(value = "file", required = false) MultipartFile file) {
+		logger.info("과목 수정 : " +  subName + ", " + subCondition + ", " + subTime + ", " + subSummary);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean success = service.subUpdate(params);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("sub_no", subNo);
+		params.put("sub_name", subName);
+		params.put("sub_condition", subCondition);
+		params.put("sub_time", subTime);
+		params.put("sub_summary", subSummary);
+		
+		boolean success = service.subUpdate(params, file);
 		map.put("success", success);
 		
 		return map;

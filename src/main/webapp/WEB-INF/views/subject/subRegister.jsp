@@ -75,7 +75,6 @@ button {
 	</table>
 </body>
 <script>
-
 	var subOverChk = false; //과목중복체크 여부
 
 	function subOverlay() {
@@ -103,27 +102,12 @@ button {
 	}
 	
 	function writePage(){
-		//var $sub_no = $('#sub_no').html();
-		
-		//console.log($("#curris")[0].files[0]);
 		console.log('글쓰기');
 		var $sub_name = $('#sub_name');
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
 		
-	
-		
-		//if(($sub_name.val() == "" || $sub_name.val() == undefined || $sub_name.val() == null))
-		/*
-		1. 과목명이 입력됐는지 확인
-		2. 노출상태가 입력됐는지 확인
-		3. ... 입력됐는지 확인
-		4. subOverChk = true로 변환하는 작업 필요
-		*/
-		console.log($sub_time.val());
-		console.log($sub_summary.val());
-		// truthy vs falsy
 		if(subOverChk){
 			
 			if($sub_name.val() ==""){
@@ -136,15 +120,21 @@ button {
 			}else{
 				console.log("과목등록 요청");
 				
+				var formData = new FormData();
+				
+				formData.append("file", $("#curri")[0].files[0]);
+				
+				formData.append("sub_name", $sub_name.val());
+				formData.append("sub_condition", $sub_condition.val());
+				formData.append("sub_time", $sub_time.val());
+				formData.append("sub_summary", $sub_summary.val());
+				
 				$.ajax({
-					type:'get',
+					type:'post',
 					url:'subRegister.ajax',
-					data:{
-						sub_name:$sub_name.val(),
-						sub_condition:$sub_condition.val(),
-						sub_time: $sub_time.val(),
-						sub_summary: $sub_summary.val(),
-					},
+					data: formData,
+					contentType: false,
+					processData: false,
 					dataType:'JSON',
 					success:function(data){
 						console.log(data);

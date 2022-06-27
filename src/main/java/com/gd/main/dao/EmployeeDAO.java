@@ -13,11 +13,11 @@ public interface EmployeeDAO {
 
 	String empOverlay(String chkName);
 
-	int empUpdate(HashMap<String, String> params);
-
 	int empWrite(HashMap<String, Object> params);
 	
 	EmployeeDTO selectEmpMyInfo(int emp_no);
+
+	int empUpdate(HashMap<String, String> params);
 
 	
 	

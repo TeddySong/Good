@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.Model;import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,12 +35,18 @@ public class SubjectController {
 	
 	@RequestMapping(value = "/subList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> subList() {
+	public HashMap<String, Object> subList(HttpSession session) {
 		logger.info("리스트 요청");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<SubDTO> list = service.subList();
-		logger.info("subList : " + list.size());
-		map.put("subList", list);
+		boolean login = false;
+		
+		if (session.getAttribute("loginId") != null) {
+			login = true;
+			ArrayList<SubDTO> list = service.subList();
+			logger.info("subList : " + list.size());
+			map.put("subList", list);
+		}
+		map.put("login", login);
 		return map;
 	}
 	
@@ -163,6 +169,17 @@ public class SubjectController {
 		return map;
 	}
 	
+	@RequestMapping("/scrDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scrDel(@RequestParam (value="scrDelList[]") ArrayList<String> scrDelList) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("scrDelList : " + scrDelList);
+		
+		int cnt = service.scrDel(scrDelList);
+		map.put("msg",cnt + " 개 삭제 완료됐습니다.");
+		
+		return map;
+	}
 
 	
 	

@@ -211,7 +211,7 @@ function courSave(){
 			
 			$.ajax({
 				type:'post',
-				url:'courWrite.ajax',
+				url:'courRegister.ajax',
 				data:{
 					co_name : co_name,
 					sub_no : sub_no,

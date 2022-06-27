@@ -70,7 +70,7 @@ public class SubjectService {
 			
 			try {
 				byte[] arr = file.getBytes();
-				Path path = Paths.get("C:/upload/" + newFileName);
+				Path path = Paths.get("C:/STUDY/SPRING/Good/src/main/webapp/resources/curri/" + newFileName);
 				Files.write(path, arr);
 				logger.info(newFileName + " save ok");
 				dao.fileWrite(oriFileName,newFileName,subno);
@@ -89,7 +89,7 @@ public class SubjectService {
 			ArrayList<SubDTO> curriList = dao.subCurriDetail(Integer.toString(subno));
 			
 			byte[] arr = file.getBytes();
-			Path path = Paths.get("C:/upload/" + newFileName);
+			Path path = Paths.get("C:/STUDY/SPRING/Good/src/main/webapp/resources/curri/" + newFileName);
 			Files.write(path, arr);
 			
 			if(curriList.isEmpty())
@@ -136,6 +136,15 @@ public class SubjectService {
 		}
 		result.put("success", success);
 		return success;
+	}
+
+	public int scrDel(ArrayList<String> scrDelList) {
+		
+		int cnt = 0;
+		for (String scr_no : scrDelList) {
+			cnt += dao.scrDel(scr_no);
+		}
+		return cnt;
 	}
 
 	

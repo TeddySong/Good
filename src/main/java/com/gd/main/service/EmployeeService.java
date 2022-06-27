@@ -15,9 +15,7 @@ public class EmployeeService {
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@Autowired 
-	
-	EmployeeDAO dao;
+	@Autowired  EmployeeDAO dao;
 	
 	public EmployeeDTO getselectEmpMyInfo(int emp_no) {
 		
@@ -79,10 +77,23 @@ public class EmployeeService {
 	}
 
 	public boolean empUpdate(HashMap<String, String> params) {
-		HashMap<String, Object> result = new HashMap<String, Object>();
+		/* HashMap<String, Object> result = new HashMap<String, Object>(); */
 		System.out.println("서비스 ::::: " + params.toString());
 		
 		boolean success = false;
+		
+		int row=dao.empUpdate(params);
+		
+		if(row>0) {
+			success = true;
+		
+		}
+		logger.info("수정성공 : "+success);
+		/* result.put("success",success); */
+		return success;
+	}
+		
+/*		boolean success = false;
 		if(dao.empUpdate(params)>0) {
 			success = true;
 		
@@ -90,7 +101,7 @@ public class EmployeeService {
 		logger.info("수정성공 : "+success);
 		result.put("success",success);
 		return success;
-	}
+	}*/
 	
 	//0625 수정페이지 진행중..
 	

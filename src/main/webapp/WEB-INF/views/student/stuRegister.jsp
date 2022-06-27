@@ -17,7 +17,7 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#registerList {  
+	#goodList {  
 			  margin:0 auto;            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -28,23 +28,23 @@
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #registerList th {
+   #goodList th {
 			background-color:#505050;
 			color:#FFFFFF;
 			text-align:center;
 		}
 		
-	#registerList,#registerList th,#registerList td
+	#goodList,#goodList th,#goodList td
 	{
 		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#registerList tr:nth-child(odd){
+	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#registerList tr:nth-child(even){
+	#goodList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
@@ -186,7 +186,7 @@
                                 수강생등록
                             </div>
                             <div>
-                                <table id="registerList">
+                                <table id="goodList">
                                 	<tr class="hidden">
 										<th>고객번호</th>
 										<td><input type="text" id="cli_no"/></td>
@@ -220,8 +220,10 @@
 									<tr>
 										<th>성별</th>
 										<td>
-										<input type="radio" id="stu_gender" value="남"> 남
-      									<input type="radio" id="stu_gender" value="여"> 여
+										<label for="male">남</label>
+										<input type="radio" name="stu_gender" value="남"/>
+										<label for="female">여</label>
+      									<input type="radio" name="stu_gender" value="여"/>
 										</td>
 									</tr>
 									<tr>
@@ -265,10 +267,7 @@
 
 </body>
 <script>
-noHidden();
-function noHidden(){
-	$(".hidden").css("display", "none");	
-} 
+
 
 function cliSearch_pop(){	
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
@@ -298,7 +297,7 @@ function stuRegister(){
 	var $emp_no = $('#emp_no');
 	var $stu_birth = $('#stu_birth');
 	var $stu_age = $('#stu_age');
-	var $stu_gender = $('#stu_gender');
+	var $stu_gender = $('input[name="stu_gender"]:checked');
 	var $stu_condition = $('#stu_condition');
 
 	$.ajax({

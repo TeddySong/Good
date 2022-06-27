@@ -23,5 +23,7 @@ public interface StudentDAO {
 
 	int stuRegister(HashMap<String, String> params);
 
+	int stuUpdate(HashMap<String, String> params);
+
 
 }

@@ -17,91 +17,59 @@ th,td{
 </style>
 </head>
 <body>
+
 <h3>과목 상세보기</h3>
 	<table>
 		<tr>
 			<th>과목번호</th>
-			<td id="sub_no"/>
+			<td id="sub_no">${subDetail.sub_no}</td>
 		</tr>
 		<tr>
 			<th>과목명</th>
-			<td id="sub_name"/>
+			<td id="sub_name">${subDetail.sub_name}</td>
 		</tr>
 		<tr>
 			<th>노출상태</th>
-			<td id="sub_condition"/>
+			<td id="sub_condition">${subDetail.sub_condition}</td>
 		</tr>
 		<tr>
 	 		<th>수강시간</th>
-	 		<td id="sub_time"/>
+	 		<td id="sub_time">${subDetail.sub_time}</td>
 	 	</tr>
 		<tr>
 			<th>과목개요</th>
-			<td id="sub_summary"/>
+			<td id="sub_summary">${subDetail.sub_summary}</td>
 		</tr>
 			<tr>
 			<th>커리큘럼</th>
-			<td id="curri"/>
+			<td id="curri" >
+				<c:forEach items="${photoList}" var="path">
+					<p><img src="/photo/${path.curri_newName }" width="500"/></p>
+				</c:forEach>
+			</td>
 		</tr>
 		<tr>
 			<th>과목후기</th>
-			<td id="scr_content"/>
+			<td id="scr_content">
+			<ul>
+			<c:forEach items="${srcList}" var="scr">
+				<li>${scr.scr_content}</li>
+			</c:forEach>
+			</ul>
+			</td>
 		</tr>
 		<tr>
-				<th colspan="2">
-					<input type="button" value="수정" onclick="subUpdate()"/>
-					<input type="button" value="목록" onclick="location.href='subList.go'"/>
-				</th>
-			</tr>
+			<th colspan="2">
+				<input type="button" value="수정" onclick="subUpdate()"/>
+				<input type="button" value="목록" onclick="location.href='subList.go'"/>
+			</th>
+		</tr>
 	</table>
 </body>
 <script>
-	
-listCall();
-	
-
-	function listCall(){
-
-		$.ajax({
-			type:'get',
-			url:'subDetail.ajax',
-			data:{},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				$('#sub_no').html(data.dto.sub_no);
-				$('#sub_name').html(data.dto.sub_name);
-				$('#sub_condition').html(data.dto.sub_condition);
-				$('#sub_time').html(data.dto.sub_time);
-				$('#sub_summary').html(data.dto.sub_summary);
-				drawsc(data.list);
-			},
-			error:function(error){
-				console.log(error);
-			}
-			
-		});
-	}
-	
-	function drawsc(list) {
-		var content = '';
-		list.forEach(function(item){
-			console.log(item);
-			content += '<ul>';
-			content += '<li>'+ item.scr_content+'</li>';
-			content += '</ul>';
-		});
-		$('#scr_content').empty();
-		$('#scr_content').append(content);
-		
-		
-	}
-	
 	function subUpdate(){
 		var sub_no = $('#sub_no').html();
 		location.href='subUpdate.go?sub_no='+sub_no;
 	}
-	
-
 </script>
 </html>

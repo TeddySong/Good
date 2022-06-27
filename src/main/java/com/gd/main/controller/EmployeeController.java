@@ -35,14 +35,14 @@ public class EmployeeController {
 	
 	 @RequestMapping("/empUpdate.ajax")
 	 @ResponseBody
-	 public boolean empUpdate(
+	 public HashMap<String, Object> empUpdate(
 			 @RequestParam HashMap<String, String>params){
 		logger.info("직원 수정: " +params);
 		HashMap<String, Object> map= new HashMap<String, Object>();
 		boolean success=service.empUpdate(params);
 		map.put("success",success);
 		
-		 return service.empUpdate(params);
+		 return map;
 	 }
 	//직원 목록페이지 이동
 	@RequestMapping(value = "/empList.go")

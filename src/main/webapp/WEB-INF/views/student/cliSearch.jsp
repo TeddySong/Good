@@ -9,7 +9,7 @@
 <link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	#registerList {  
+	#goodList {  
 			  margin:0 auto;            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -20,23 +20,23 @@
 			  font-family: 'Do Hyeon', sans-serif;
             }
             
-   #registerList th {
+   #goodList th {
 			background-color:#505050;
 			color:#FFFFFF;
 			text-align:center;
 		}
 		
-	#registerList,#registerList th,#registerList td
+	#goodList,#goodList th,#goodList td
 	{
 		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
-	#registerList tr:nth-child(odd){
+	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
-	#registerList tr:nth-child(even){
+	#goodList tr:nth-child(even){
 		background-color:#fdfdfd;
 	}
 	
@@ -86,7 +86,7 @@
 <body>
 	<br/>
 		<form action="cliSearch.do" method="get">	
-		<table id="registerList">
+		<table id="goodList">
 			<tr><th colspan="3">고객검색창</th></tr>
 			<tr>
 				<td>
@@ -101,7 +101,7 @@
 		</table>
 		</form>
 		
-	<table id="registerList">
+	<table id="goodList">
 		<thead>
 			<tr>
 				<th></th>
@@ -110,7 +110,7 @@
 				<th>담당직원</th>
 			</tr>
 		</thead>
-		<tbody id="cliSearchList">
+		<tbody id="list">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
 			<tr id="cliSearch_${cliSearchList.cli_no}">
 				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>

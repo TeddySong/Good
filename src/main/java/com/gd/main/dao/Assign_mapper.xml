@@ -2,7 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.AssignDAO">
-	
+
+<select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
+
+		select sub_name, co_name, co_startTime,co_startDate, cli_name, cli_phone, emp_name, co_condition 
+			from assign a join student s3
+			left outer join subject s on s.sub_no = a.sub_no
+			left outer join course c on c.co_no = a.co_no 
+			left outer join client c2 on c2.cli_no = s3.cli_no 
+			left outer join employee e on e.emp_no = s3.emp_no
+			<where>
+				<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+					<if test="assSearchTarget.equals('sub_name')">
+						s.sub_name = #{search};
+					</if>
+					<if test="assSearchTarget.equals('co_name')">
+						c.co_name = #{search};
+					</if>
+					<if test="assSearchTarget.equals('emp_name')">
+						e.emp_name = #{search};
+					</if>
+					<if test="assSearchTarget.equals('co_condition')">
+						c.co_condition = #{search};
+					</if>
+			</if>
+			</where>
+</select>
 	
 	
 </mapper>

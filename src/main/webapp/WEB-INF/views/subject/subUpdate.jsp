@@ -65,11 +65,14 @@ button {
 	 		</tr>
 	 		<tr>
 				<th>커리큘럼</th>
-				<td><input type="file" id="curri" multiple="multiple"/></td>
+				<td>
+					<input type="file" id="curri" multiple="multiple"/>
+					<p id="curri_file_name"></p>
+				</td>
 			</tr>
 	 		<tr>
 				<th colspan="2">
-					<input type="button" value="등록 완료" onclick="subUpdate()"/>
+					<input type="button" value="수정 완료" onclick="subUpdate()"/>
 					<input type="button" value="취소" onclick="location.href='subList.go'"/>
 				</th>
 			</tr>
@@ -83,12 +86,13 @@ $.ajax({
 	data:{},
 	dataType:'JSON',
 	success:function(data){
-		console.log(data);
 		$('#sub_no').val(data.dto.sub_no);
 		$('#sub_name').val(data.dto.sub_name);
 		$('#sub_condition').val(data.dto.sub_condition);
 		$('#sub_time').val(data.dto.sub_time);
 		$('#sub_summary').val(data.dto.sub_summary);
+		if(data.photo[0])
+			$("#curri_file_name").text(data.photo[0].curri_oriName);
 	},
 	error:function(error){
 		console.log(error);
@@ -96,37 +100,73 @@ $.ajax({
 	
 });
 
-function subUpdate(){
-	
-	var params = {};
-	params.sub_no = $('#sub_no').val();
-	params.sub_name = $('#sub_name').val();
-	params.sub_condition = $('#sub_condition').val();
-	params.sub_time = $('#sub_time').val();
-	params.sub_summary = $('#sub_summary').val();
-	console.log(params);
-	
+var subOverChk = false; //과목중복체크 여부
+
+function subOverlay() {
+	var sub_name = $("#sub_name").val();
+	console.log('과목 중복 체크 : ' + sub_name);
 	$.ajax({
-		type:'post',
-		url:'subUpdate.ajax',
-		data:params,
+		type:'get',
+		url:'subOverlay.ajax',
+		data:{subname:sub_name},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data)
-			if(data.success){
-				alert("수정 성공");
-				location.href='subDetail.go?sub_no='+params.sub_no;
+			console.log(data);
+			if(data.suboverlay){
+				alert("중복된 과목명 입니다.");
 			}else{
-				alert("수정 실패");
+				alert("사용 가능한 과목명 입니다.")
+				subOverChk = true;
 			}
 		},
 		error:function(e){
-			console.log(e);
+			console.log(e)
 		}
 		
 	});
-	
 }
+
+function subUpdate(){
+		var $sub_name = $('#sub_name');
+		var $sub_condition = $('#sub_condition');
+		var $sub_time  = $('#sub_time');
+		var $sub_summary = $('#sub_summary');
+		
+		
+			var formData = new FormData();
+			
+			var file = $("#curri")[0].files[0];
+			var curriFileName = $("#curri_file_name").text();
+			
+			formData.append("file", $("#curri")[0].files[0]);
+			
+			formData.append("sub_no", $("#sub_no").val());
+			formData.append("sub_name", $sub_name.val());
+			formData.append("sub_condition", $sub_condition.val());
+			formData.append("sub_time", $sub_time.val());
+			formData.append("sub_summary", $sub_summary.val());
+			
+			$.ajax({
+				type:'post',
+				url:'subUpdate.ajax',
+				data: formData,
+				contentType: false,
+				processData: false,
+				dataType:'JSON',
+				success:function(data){
+					if(data){
+						alert("과목수정 성공");
+						location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+					}else{
+						alert("과목수정 실패");
+					}
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}
+	
 
 </script>
 </html>

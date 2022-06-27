@@ -94,6 +94,20 @@ public class StudentService {
 	      return result;
 	}
 
+	public boolean stuUpdate(HashMap<String, String> params) {
+		boolean success = false;
+		
+		int row = dao.stuUpdate(params);
+		
+		if(row>0) {
+			success = true;
+		}
+		
+		logger.info("update success : " + success);
+		
+		return success;
+	}
+
 	
 	
 	

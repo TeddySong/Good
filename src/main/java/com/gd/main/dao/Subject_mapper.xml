@@ -21,6 +21,16 @@
 		VALUES(#{param1}, #{param2}, #{param3})
 	</insert>
 	
+	<insert id="fileWrite">
+		INSERT INTO curriculm(curri_oriName, curri_newName, sub_no)
+		VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<update id="fileUpdate">
+		UPDATE curriculm SET curri_oriName = #{param1}, curri_newName = #{param2}
+		WHERE sub_no = #{param3}
+	</update>
+	
 	<select id="subDetail" parameterType="String" resultType="com.gd.main.dto.SubDTO">
 	SELECT 
 		s.sub_no,
@@ -53,6 +63,13 @@
 		script WHERE sub_no = #{sub_no};
 	</select>
 	
+	<select id="subCurriDetail" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	SELECT
+		*
+	FROM
+		curriculm WHERE sub_no =#{sub_no};
+	</select>
+	
 	
 	
 	<select id="scriptlist" parameterType="String" resultType="com.gd.main.dto.SubDTO">
@@ -65,6 +82,10 @@
         	subject s
         JOIN script sc on s.sub_no = sc.sub_no;
 	</select>
+	
+	<delete id="scrDel" parameterType="String">
+		DELETE FROM script WHERE scr_no = #{scr_no}
+	</delete>
 
 	
 	

@@ -47,12 +47,13 @@ public class AssignService {
 		return assMap;
 	}
 
-	public AssListDTO assCoDetail(String name) {
+	public AssListDTO assCoList(String co_name) {
+		logger.info("과정 배정요청 서비스 요청" + co_name);
 		
-		logger.info("과정 배정 상세보기 요청 : " + name);
-		
-		return dao.assCoList(name);
+		return dao.assCoList(co_name);
 	}
+
+
 
 	
 

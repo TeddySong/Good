@@ -15,6 +15,23 @@ public class AssListDTO {
 	private String cli_phone;
 	private String emp_name;
 	private String co_condition;
+	
+	//배정 과정상세보기 필요 컬럼
+	private String ass_condition;
+	private int stu_no;
+	
+	public String getAss_condition() {
+		return ass_condition;
+	}
+	public void setAss_condition(String ass_condition) {
+		this.ass_condition = ass_condition;
+	}
+	public int getStu_no() {
+		return stu_no;
+	}
+	public void setStu_no(int stu_no) {
+		this.stu_no = stu_no;
+	}
 	public String getSub_name() {
 		return sub_name;
 	}

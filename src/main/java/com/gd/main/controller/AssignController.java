@@ -50,33 +50,41 @@ public class AssignController {
 		return service.assList(params);
 	}
 	
-	// 과정배정 상세 페이지
-	@RequestMapping("/assCoList.go")
-	public String assCoListGo(HttpSession session, @RequestParam String co_no) {
-	
-		logger.info("과정에 대한 상세보기 요청" + co_no);
+	//과정배정 리스트 페이지 이동
+	@RequestMapping(value = "/assCoList.go", method = RequestMethod.GET)
+	public String assCoListGo(HttpSession session, @RequestParam String co_name) {
 		
-		session.setAttribute("co_no", co_no);
-		
-		return "./assign/assCoList";
+		 String page = "home";
+
+		 if(session.getAttribute("loginId") != null) {
+			logger.info("과정 배정 페이지 이동 : " + co_name);
+			session.setAttribute("co_name", co_name);
+			logger.info(co_name);
+			 
+			 page = "./assign/assCoList";
+			 
+		} 
+		return page;
 	}
 	
-	
-	@RequestMapping("/assCoDetail.ajax")
+	@RequestMapping("/assCoList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> assCoDetail(HttpSession session) {
-		
+	public HashMap<String, Object> assCoListDo(HttpSession session){
+	
+		logger.info("과정 배정 페이지 이동 중");
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		String co_name = (String) session.getAttribute("co_name");
+		AssListDTO dto = service.assCoList(co_name);
 		
-		String co_no = (String) session.getAttribute("co_no");
-		logger.info("과정 배정정보 요청 : " + co_no);
-		session.removeAttribute("name");
-		AssListDTO dto = service.assCoDetail(co_no);	
-		map.put("dto",dto);
+		map.put("dto", dto);
 		logger.info("클라이언트 : " + dto);
 		
 		return map;
 	}
+	
+	
+	
+
 
 }

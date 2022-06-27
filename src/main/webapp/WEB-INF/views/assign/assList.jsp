@@ -316,11 +316,11 @@ function listCall(page){
 }
 	function drawList(assList){
 		var content="";
-		assList.forEach(function(item,co_no){
+		assList.forEach(function(item){
 			
 				content +='<tr>';
 				content +='<td>'+item.sub_name+'</td>';
-				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</td>';
+				content +='<td><a href="assCoList.go?co_name='+item.co_name+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
 				content +='<td>'+item.co_startDate+'</td>';
 				content +='<td>'+item.cli_name+'</td>';

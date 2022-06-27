@@ -29,13 +29,13 @@
 			</where>
 </select>
 <!-- 선택된 과정에 대한 배정 리스트 -->
-<select id ="assCoList" resultType="com.gd.main.dto.AssListDTO"  parameterType="hashmap">
+<select id ="assCoList" resultType="com.gd.main.dto.AssListDTO">
 select co_name,stu_no,cli_name,cli_phone,emp_name,ass_condition from assign a
 		left outer join client c on c.cli_no = stu_no
 		left outer join course c2 on c2.co_no = a.co_no
 		left outer join subject s on s.sub_no = a.sub_no
 		left outer join employee e on e.emp_no = stu_no
-		where c2.co_no =#{parma1};
+		where c2.co_name =#{parma1};
 
 </select>
 </mapper>

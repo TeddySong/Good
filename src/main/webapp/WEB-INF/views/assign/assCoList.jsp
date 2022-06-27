@@ -195,20 +195,22 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>					
-											<th>과목명</th>
-												<td id ="co_name"></td>										
-											<th>학번</th>
-												<td id ="stu_no"></td>									
-											<th>학생명</th>
-												<td id =cli_name"></td>										
-											<th>연락처</th>
-												<td id ="cli_phone"></td>									
-											<th>담당자</th>
-												<td id ="emp_name"></td>								
+											<th>과정명</th>																					
+											<th>학번</th>																				
+											<th>학생명</th>																				
+											<th>연락처</th>																				
+											<th>담당자</th>																
 											<th>수강상태</th>
-												<td id ="ass_condition"></td>
 										</tr>
 									</thead>
+									<tbody id="assCoList">
+										<td id ="co_name"></td>
+										<td id ="stu_no"></td>
+										<td id = "cli_name"></td>	
+										<td id ="cli_phone"></td>
+										<td id ="emp_name"></td>
+										<td id ="ass_condition"></td>
+									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
 										<td colspan="8" id ="paging">
@@ -232,7 +234,7 @@
 </body>
 <script>
 
-$.ajax({
+/* $.ajax({
 	type:'get',
 	url:'assCoDetail.ajax',
 	data:{},
@@ -249,6 +251,23 @@ $.ajax({
 	error:function(e){
 		console.log(e);
 	}
+}); */
+
+$.ajax({
+	type:'get',
+	url:'assCoList.ajax',
+	data:{},
+	dataType:'JSON',
+	success:function(data){
+		console.log(data);
+		$('#co_name').html(data.dto.co_name);
+		$('#stu_no').html(data.dto.stu_no);
+		$('#cli_name').html(data.dto.cli_name);
+		$('#cli_phone').html(data.dto.cli_phone);
+		$('#emp_name').html(data.dto.emp_name);
+		$('#ass_condition').html(data.dto.ass_condition);
+	},
+	error:function(error){}
 });
 
 	

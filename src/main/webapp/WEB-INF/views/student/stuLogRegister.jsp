@@ -8,8 +8,93 @@
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 	<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style></style>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
+<style>
+	body{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+
+	#goodList {  
+			  margin:0 auto;
+              border: 1px #a39485 solid;
+			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+			  width: 80%;
+			  border-collapse: collapse;
+			  border-radius: 5px;
+			  overflow: hidden;
+			  font-family: 'Do Hyeon', sans-serif;
+            }
+            
+   #goodList th {
+			background-color:#505050;
+			color:#FFFFFF;
+			text-align:center;
+		}
+		
+	#goodList,#goodList th,#goodList td
+	{
+		font-size:20px;		
+		padding:4px;
+		border:1px solid #dddddd;
+		border-collapse:collapse;
+		text-align:center;
+	}
+	#goodList tr:nth-child(odd){
+		background-color:#c4c4c4;
+	}
+	#goodList tr:nth-child(even){
+		background-color:#fdfdfd;
+	}
+	
+	input[type='text']{
+	width : 80%;
+	}
+	input[type='date']{
+		width : 80%;
+	}
+	
+	.goodRegister {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+	
+	.goodRegister:hover{
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+	
+	input[type='button'] {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+
+	input[type='button']:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+		
+</style>
 </head>
 <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -98,77 +183,88 @@
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as: </div>
-                        ${sessionScope.empName}
+                        <div class="small">Logged in as:</div>
+                        ${sessionScope.loginId}
                     </div>
                 </nav>
             </div>
-
             <div id="layoutSidenav_content">
+                <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">굳이IT아카데미 직원전용페이지</h1>
-                        <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">원하는 업무를 선택해주세요</li>
-                        </ol>
-                        <div class="row">
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">학생 관리 업무</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="stuList.go">이동하기</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
+                        <h1 class="mt-4">학사일지</h1>                        
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                학사일지
                             </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">직원 관리 업무</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="empList.go">이동하기</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">수업 관리 업무</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="class_main.go">이동하기</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-6">
-                                <div class="card bg-danger text-white mb-4">
-                                    <div class="card-body">배정 관리 업무</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="assList.go">이동하기</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-md-6">
-                                <div class="card bg-secondary text-white mb-4">
-                                    <div class="card-body">고객 정보 페이지</div>
-                                    <div class="card-footer d-flex align-items-center justify-content-between">
-                                        <a class="small text-white stretched-link" href="cliList.go">이동하기</a>
-                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-md-3">
-                                <img src="../resources/img/YARz.gif" style="margin-left : 20%;">
-                            </div>                          
-                        </div>                        
+                            <br/>
+                            <div id="student_no">${stu_no}</div>
+                            <div id="student_name">이름</div>
+                            <br/>
+							<table id="goodList">
+								<tr>
+									<th>작성자</th>
+									<td id="empName">${sessionScope.empName}</td>
+								</tr>
+								<tr class="hidden">
+									<th>사번</th>
+									<td id="empNo">${sessionScope.empNo}</td>
+								</tr>								
+								<tr>
+									<th>내용</th>
+									<td><textarea id="stu_log_content" style="width:100%;"></textarea></td>
+								</tr>
+								
+							</table>
+							<br/><br/>
+							<button onclick="stuLogRegisterDo()" class="goodRegister">완료</button>
+							<button onclick="stuLogGo()'" style="position:relative;" class="goodRegister">취소</button>
+                        </div>
                     </div>
-            </div>
+                </main>
+            </div>            
         </div>
-        
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="../resources/JS/emp/empScripts.js"></script>
-    <script src="../resources/JS/empDatatables-simple-demo.js"></script>
+                
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	    <script src="../resources/JS/emp/empScripts.js"></script>
+	    
 
 </body>
-<script></script>
+<script>
+
+function stuLogRegisterDo(){
+	var $stu_no = $('#student_no');
+	var $emp_no = $('#empNo');
+	var $stu_log_content = $('#stu_log_content');
+	
+	$.ajax({
+		type:'get',
+		url:'stuLogRegister.ajax',
+		data:{
+			stu_no:$stu_no.html(),
+			emp_no:$emp_no.html(),
+			stu_log_content:$stu_log_content.val()			
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			location.href='stuLog.go';		
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+	
+	
+	
+}
+
+function stuLogGo(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuLog.go?stu_no='+stu_no;
+}
+
+	
+	
+</script>
 </html>

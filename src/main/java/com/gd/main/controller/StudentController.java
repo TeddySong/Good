@@ -82,7 +82,7 @@ public class StudentController {
 		
 		logger.info(cliSearchCondition + "/" + searchContent);
 		
-		ArrayList<StuDTO> cliSearchList = service.cliSearchList(searchContent);
+		ArrayList<StuDTO> cliSearchList = service.cliSearchList(cliSearchCondition, searchContent);
 		logger.info("list size : " + cliSearchList.size());
 		
 		model.addAttribute("cliSearchList", cliSearchList);
@@ -237,7 +237,7 @@ public class StudentController {
 	 * return map; }
 	 */
 	
-	@RequestMapping(value = "/stuLog.do")
+	@RequestMapping(value = "/stuLog.go")
 	public String stuLog(Model model, HttpSession session, @RequestParam String stu_no) {
 		
 		String page = "redirect:/stuList.go";
@@ -247,6 +247,7 @@ public class StudentController {
 			ArrayList<StuDTO> list = service.stuLog(stu_no);
 			if(list != null) {
 			model.addAttribute("list", list);
+			model.addAttribute("stu_no",stu_no);
 			page = "./student/stuLog";
 			}
 		} else {
@@ -255,6 +256,26 @@ public class StudentController {
 		
 		return page;
 	}
+	
+	
+	@RequestMapping(value="/stuLogRegister.go")
+	public String stuLogRegisterGo(@RequestParam String stu_no, HttpSession session) {
+		logger.info("학사일지 등록 페이지 이동 : " + stu_no);
+		session.setAttribute("stu_no", stu_no);
+		
+		
+		return "./student/stuLogRegister";
+	}
+	
+	@RequestMapping("/stuLogRegister.ajax")
+	   @ResponseBody
+	    public HashMap<String, Object> stuLogRegister(
+	          @RequestParam HashMap<String, String> params) {
+	       
+	       logger.info("학사일지쓰기");
+	       return service.stuLogRegister(params);
+	    }
+	
 	
 	
 }

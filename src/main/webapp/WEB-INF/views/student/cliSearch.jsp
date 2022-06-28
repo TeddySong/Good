@@ -135,24 +135,22 @@
 	}
 
 	function cliChoice(){
-	
-		var cliArr = new Array();
+		
+		console.log("함수");
 		
 	$('#cliSearchList input[type="radio"]:checked').each(function(idx){
 		var cliChoice = $(this).val();
-		console.log(cliChoice);
-		var cliObj = new Object();
-		
+		console.log(cliChoice);		
 		
 		$tr = $("#cliSearch_"+cliChoice);
-		console.log($tr.text());
+		console.log($tr.html());
 		
 		
-		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').text();
-		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
-		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
-		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').text();
-		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').text();
+		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').html();
+		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').html();
+		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').html();
+		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').html();
+		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').html();
 		
 		window.close()
 	});	

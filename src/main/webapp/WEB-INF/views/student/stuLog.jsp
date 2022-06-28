@@ -197,10 +197,14 @@
                                 <i class="fas fa-table me-1"></i>
                                 학사일지
                             </div>
-                            <br/><br/>
+                            <br/>
+                            <div id="student_no">${stu_no}</div>
+                            <div id="student_name">이름</div>
+                            <br/>
 							<table id="goodList">
 								<thead>
 									<tr>
+										<th class="hidden">학번</th>
 										<th>작성일</th>
 										<th>작성자</th>
 										<th>작성내용</th>
@@ -209,6 +213,7 @@
 								<tbody id="list">
 								<c:forEach items="${list}" var="dto">									
 										<tr>
+											<td class="hidden">${dto.stu_no}</td>
 											<td>${dto.stu_log_date}</td>
 											<td>${dto.emp_name}</td>
 											<td><textarea style="width:100%;">${dto.stu_log_content}</textarea></td>											
@@ -218,6 +223,7 @@
 								
 							</table>
 							<br/><br/>
+							<button onclick="stuLogRegister()" class="goodRegister">등록</button>
                         </div>
                     </div>
                 </main>
@@ -230,6 +236,14 @@
 
 </body>
 <script>
+
+function stuLogRegister(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuLogRegister.go?stu_no='+stu_no;
+}
+
+
+
 /* listCall();
 function listCall(){ //controller에 list를 요청
 	$.ajax({

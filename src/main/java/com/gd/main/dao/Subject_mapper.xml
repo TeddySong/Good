@@ -130,5 +130,10 @@
 		FROM subject WHERE sub_condition = #{subCo}
 	</select>
 	
+	<select id="sublistSearch" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+		SELECT sub_no, sub_name, sub_condition FROM subject
+		WHERE sub_name = #{subSe}
+	</select>
+	
 	
 </mapper>

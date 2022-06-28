@@ -239,6 +239,16 @@ public class SubjectService {
 		return map;
 	}
 
+	public HashMap<String, Object> sublistSearch(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subSe = params.get("subSe");
+		logger.info("과목 검색:::"+subSe);
+		ArrayList<SubDTO> sublistSearch = dao.sublistSearch(subSe);
+		map.put("sublistSearch", sublistSearch);
+		
+		return map;
+	}
+
 	
 
 

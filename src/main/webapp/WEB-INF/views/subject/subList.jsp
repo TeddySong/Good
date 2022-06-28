@@ -188,8 +188,8 @@
                             <div>
                             	<table id="goodList">
                             		<tr>
-										<td><input type="text" placeholder="과목명 입력"></td>
-										<td><button onclick="#" class="goodRegister" style="width:100%;">검색</button></td>
+										<td><input type="text" id="search" placeholder="과목명 입력"></td>
+										<td><button class="goodRegister" id="subSearch" style="width:100%">검색</button></td>
 										<td>
 										<input type="radio" name="sub_condition" value="단과"/>단과
 										<input type="radio" name="sub_condition" value="종합"/>종합
@@ -251,7 +251,7 @@ function listCall(){
 			
 	});
 	
-	
+	//radio 선택
 	$("input[name='sub_condition']").change(function(){
 		var subCo = $("input:radio[name='sub_condition']:checked").val();
 		console.log(subCo);
@@ -268,6 +268,27 @@ function listCall(){
 		    		console.log(e);
 		    	}
 		    });
+	});
+	
+	//과목 검색
+	$('#subSearch').on('click',function(){
+		
+		var subsearch = $("#search").val();
+		console.log(subsearch);
+		
+		$.ajax({
+			type:'get',
+			url:'sublistSearch.ajax',
+			data:{subSe:subsearch},
+			dataType:'JSON',
+	    	success:function(data){
+	    		drawList(data.sublistSearch);
+	    	},
+	    	error:function(e){
+	    		console.log(e);
+	    	}
+		});
+		
 	});
 	
 	

@@ -199,6 +199,12 @@ public class SubjectController {
 		logger.info("노출상태:::" + params);
 		return service.subCondition(params);
 	}
+	@RequestMapping("/sublistSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> sublistSearch(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("과목명:::" + params);
+		return service.sublistSearch(params);
+	}
 	
 	
 	

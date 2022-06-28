@@ -47,6 +47,8 @@ public interface SubjectDAO {
 
 	ArrayList<SubDTO> subCondition(String subCo);
 
+	ArrayList<SubDTO> sublistSearch(String subSe);
+
 
 
 

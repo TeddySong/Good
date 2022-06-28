@@ -314,7 +314,7 @@
 	
 	function stuLog(){
 		var stu_no = $("#stu_no").html();
-		location.href='/stuLog.do?stu_no='+stu_no;
+		location.href='/stuLog.go?stu_no='+stu_no;
 	}
 	
 	

@@ -9,9 +9,9 @@ public interface StudentDAO {
 
 	ArrayList<StuDTO> stuList(HashMap<String, Object> map);
 
-	int allCount();
+	ArrayList<StuDTO> allCount(HashMap<String, Object> map);
 
-	ArrayList<StuDTO> cliSearchList(String searchContent);
+	ArrayList<StuDTO> cliSearchList(HashMap<String, Object> map);
 
 	ArrayList<StuDTO> cliChoice(int result);
 
@@ -26,6 +26,16 @@ public interface StudentDAO {
 	int stuUpdate(HashMap<String, String> params);
 
 	ArrayList<StuDTO> stuLog(String stu_no);
+
+	int stuLogRegister(HashMap<String, String> params);
+
+	String stuName(String stu_no);
+
+	
+
+	
+
+	
 
 	
 

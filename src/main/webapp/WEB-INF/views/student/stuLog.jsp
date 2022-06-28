@@ -16,6 +16,30 @@
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
 	}
+	
+	#noNameTag{			
+              border: 1px #a39485 solid;
+			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+			  width: 50%;
+			  border-collapse: collapse;
+			  border-radius: 5px;
+			  overflow: hidden;
+			  font-family: 'Do Hyeon', sans-serif;
+	}
+	
+	 #noNameTag th {
+			background-color:#505050;
+			color:#FFFFFF;
+			text-align:center;
+		}
+		
+	#noNameTag,#noNameTag th,#noNameTag td	{
+		font-size:20px;		
+		padding:4px;
+		border:1px solid #dddddd;
+		border-collapse:collapse;
+		text-align:center;
+	}
 
 	#goodList {  
 			  margin:0 auto;
@@ -197,27 +221,43 @@
                                 <i class="fas fa-table me-1"></i>
                                 학사일지
                             </div>
-                            <br/><br/>
+                            <br/>
+                            <table id="noNameTag">
+                            	<tr>
+                            		<th>학번</th>
+                            		<td id="student_no">${stu_no}</td>
+                            		<th>이름</th>
+                            		<td id="student_name">${stuName}</td>
+                            	</tr>
+                            </table>
+                            
+                            <br/>
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th>작성일</th>
-										<th>작성자</th>
-										<th>작성내용</th>
+										<th class="hidden">학번</th>
+										<th width="20%">작성일</th>
+										<th width="20%">작성자</th>
+										<th width="60%">작성내용</th>
 									</tr>
 								</thead>
 								<tbody id="list">
 								<c:forEach items="${list}" var="dto">									
 										<tr>
+											<td class="hidden">${dto.stu_no}</td>
 											<td>${dto.stu_log_date}</td>
 											<td>${dto.emp_name}</td>
-											<td><textarea style="width:100%;">${dto.stu_log_content}</textarea></td>											
+											<td style="text-align:start;">${dto.stu_log_content}</td>											
 										</tr>									
 								</c:forEach>
 								</tbody>
 								
 							</table>
 							<br/><br/>
+							<div style="text-align:center;">
+							<button onclick="stuLogRegister()" class="goodRegister">등록</button>
+							<button onclick="stuLogBack()" class="goodRegister">돌아가기</button>
+							</div>
                         </div>
                     </div>
                 </main>
@@ -230,6 +270,25 @@
 
 </body>
 <script>
+
+function stuLogRegister(){
+	var stu_no = $("#student_no").html();
+	 window.open("stuLogRegister.go?stu_no="+stu_no,"new","width=800, height=400, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	 
+	 }
+
+/* function stuLogRegister(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuLogRegister.go?stu_no='+stu_no;
+} */
+
+function stuLogBack(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuDetail.go?stu_no='+stu_no;
+}
+
+
+
 /* listCall();
 function listCall(){ //controller에 list를 요청
 	$.ajax({

@@ -5,7 +5,11 @@ import java.util.HashMap;
 import com.gd.main.dto.EmployeeDTO;
 public interface EmployeeDAO {
 	
-	
+	//
+	ArrayList<EmployeeDTO> employeeLoglist();
+	//
+	//
+	//
 	
 	int allCount();
 

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -175,6 +176,80 @@ public class SubjectService {
 		return dao.scrSublist();
 	}
 
+	public boolean scrReg(HashMap<String, String> params) {
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		boolean success = false;
+		
+		if(dao.scrReg(params)>0) {
+			success = true;
+		}
+		
+		result.put("success", success);
+		return success;
+	}
+
+	public HashMap<String, Object> scrSubSearch(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String sub_no = params.get("sub_no");
+		logger.info("선택 과목번호:::"+sub_no);
+		/*
+		int cnt = Integer.parseInt(params.get("cnt"));
+		int page = Integer.parseInt(params.get("page"));
+		logger.info("보여줄 페이지 :" + page);
+		
+		int allCnt = dao.allCount();
+		logger.info("allCnt : " + allCnt);
+		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
+		logger.info("pages : " + pages);
+		
+		if(page > pages) {
+			page = pages;
+		}
+		
+		map.put("pages", pages);
+		map.put("currPage", page);
+		
+		int offset = (page-1) * cnt;
+		logger.info("offset : "+offset);
+		logger.info("과목번호 나오나:::" + sub_no);
+		*/
+		ArrayList<SubDTO> scrSubSearch = dao.scrSubSearch(sub_no);
+		map.put("scrSublist", scrSubSearch);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> scSubCondition(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subCo = params.get("subCo");
+		logger.info("선택 노출상태:::"+subCo);
+		ArrayList<SubDTO> scSubCondition = dao.scSubCondition(subCo);
+		map.put("scSubCondition", scSubCondition);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> subCondition(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subCo = params.get("subCo");
+		logger.info("선택 노출상태:::"+subCo);
+		ArrayList<SubDTO> subCondition = dao.subCondition(subCo);
+		map.put("subCondition", subCondition);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> sublistSearch(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subSe = params.get("subSe");
+		logger.info("과목 검색:::"+subSe);
+		ArrayList<SubDTO> sublistSearch = dao.sublistSearch(subSe);
+		map.put("sublistSearch", sublistSearch);
+		
+		return map;
+	}
+
+	
 
 
 	

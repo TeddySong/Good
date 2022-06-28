@@ -15,28 +15,22 @@
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<where>
-				<!-- <if test="name == 'subNameSearch'.toString()"> -->
-				<if test="subNameSearch.equals('sub_name')">
-					subject.sub_name = #{subNameSearch}
-				</if>
-				<if test="courseNameSearch.equals('과정명') or
-				courseNameSearch.equals('과정 진행상황')">
-					AND co_name LIKE concat('%',#{keyword},'%') OR
-					co_condition LIKE concat('%',#{keyword},'%')
-				</if>
-				<if test="startSearch.equals('co_startDate') or
-				endSearch.equals('co_endDate')">
-					<![CDATA[
-					AND co_startDate <= #{startSearch}
-					OR co_endDate >= #{endSearch}
-					]]>
-				</if>
-				<!-- <if test="startSearch != null">
-					<![CDATA[
-					AND co_startDate >= to_date(#{startSearch},'YYYY-MM-DD')
-					]]>
-					
-				</if> -->
+			<!-- <if test="name == 'subNameSearch'.toString()"> -->
+			<if test="subNameSearch.equals('sub_name')">
+				subject.sub_name = #{subNameSearch}
+			</if>
+			<if test="courseNameSearch.equals('과정명') or
+			courseNameSearch.equals('과정 진행상황')">
+				AND co_name LIKE concat('%',#{keyword},'%') OR
+				co_condition LIKE concat('%',#{keyword},'%')
+			</if>
+			<if test="startSearch.equals('co_startDate') or
+			endSearch.equals('co_endDate')">
+				<![CDATA[
+				AND co_startDate <= #{startSearch}
+				OR co_endDate >= #{endSearch}
+				]]>
+			</if>
 		</where>
 
 		<!-- <trim prefix="where (" suffix=")" prefixOverrides="AND">

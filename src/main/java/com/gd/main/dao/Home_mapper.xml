@@ -4,7 +4,15 @@
 <mapper namespace="com.gd.main.dao.HomeDAO">
 	
 	<select id="empLogin" resultType="String">
-		SELECT emp_id FROM employee WHERE emp_id = #{param1} AND emp_pw=#{param2}
+		SELECT emp_id, emp_name FROM employee WHERE emp_id = #{param1} AND emp_pw=#{param2}
+	</select>
+	
+	<select id="empLoginName" resultType="String">
+		SELECT emp_name FROM employee WHERE emp_id = #{param1}
+	</select>
+	
+	<select id="empNo" resultType="int">
+		SELECT emp_no FROM employee WHERE emp_id = #{param1}
 	</select>
 	
 </mapper>

@@ -23,5 +23,15 @@ public class HomeService {
 	
 		return success;
 	}
+
+	public String empLoginName(String emp_id) {
+		
+		return dao.empLoginName(emp_id);
+		
+	}
+
+	public int empNo(String emp_id) {
+		return dao.empNo(emp_id);
+	}
 	
 }

@@ -42,6 +42,7 @@ textarea{
 	<tbody id="list">
 		<tr>
 			<td>
+			<input type="hidden" id="sub_no"  value=""/>
 			<select id="sub_name">
 			</select>
 			</td>
@@ -63,12 +64,12 @@ function listCall() {
 	
 	$.ajax({
 		type:'get',
-		url:'scrReg.ajax',
+		url:'scrSubReg.ajax',
 		data : {},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			darwName(data.list);
+			darwName(data.scrSublist);
 		},
 		error:function(e){
 			console.log(e);
@@ -81,12 +82,43 @@ function listCall() {
 function darwName(list) {
 	var content = '';
 	list.forEach(function(item){
-		console.log(item);
-		content += '<option>'+item.sub_name+'</option>';
+		content += '<option value="'+item.sub_no+'">'+item.sub_name+'</option>';
 	});
 	$('#sub_name').empty();
 	$('#sub_name').append(content);
 	
+}
+
+function scrReg(subno) {
+	
+	var $scr_content = $('#scr_content');
+	var $sub_no = $('#sub_name option:selected');
+	
+	console.log($('#sub_name option:selected').val());
+	
+	
+	$.ajax({
+		type:'get',
+		url:'scrReg.ajax',
+		data:{
+			sub_no:$sub_no.val(),
+			scr_content:$scr_content.val()
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			if(data.scrReg){
+				opener.parent.location.reload();
+				window.close();
+			}else{
+				alert("등록 실패");
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+
 }
 
 </script>

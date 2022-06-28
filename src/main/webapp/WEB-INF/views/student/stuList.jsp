@@ -281,11 +281,11 @@ function listCall(page) {
 		$('#stuSearch').on('click',function(){
 		
 		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
-		console.log(stuSearchCategory);
-	
+			
 		var stuSearchContent = $("#stuSearchContent").val();
-		console.log(stuSearchContent);
 		
+		$("#pagination").twbsPagination('destroy');
+				
 		$.ajax({
 			type:'get',
 			url:'stuSearch.ajax',
@@ -300,7 +300,7 @@ function listCall(page) {
 				console.log(data);
 				drawList(data.list);
 				currPage=data.currPage;
-				
+
 				//플러그인 사용 페이징
 				$("#pagination").twbsPagination({
 					startPage:data.currPage, //시작페이지

@@ -86,17 +86,17 @@
 <body>
 	<br/>
 		<form action="subSearch.do" method="get">	
-		<table id="registerList">
+		<table id="goodList">
 			<tr><th colspan="3">과목검색창</th></tr>
 			<tr>
 			<td style="text-align:center;">과목명</td>
 			<td><input type="text" name="searchContent" placeholder="검색어를 입력해주세요"/></td>
-			<td><input type="submit" value="검색"></button></td>
+			<td><input type="submit" value="검색"></td>
 			</tr>
 		</table>
 		</form>
 		
-	<table id="registerList">
+	<table id="goodList">
 		<thead>
 			<tr>
 				<th></th>

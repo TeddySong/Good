@@ -23,21 +23,14 @@ public class EmployeeController {
 
 	//직원일지 페이지 
 	@RequestMapping(value = "/emplogList.go")
-	public String emplogListGo() {
-	logger.info("직원일지 페이지!"); 
+	public String emplogListGo(Model model, @RequestParam int emp_no) {
+	logger.info("직원일지 페이지! : " + emp_no); 
+	ArrayList<EmployeeDTO> dto = service.emplogList(emp_no);
+	logger.info("리스트 사이즈:"+dto.size());
+	model.addAttribute("dto",dto);
+		
 	return "./employee/emplogList";
-	}
- 
-@RequestMapping("/emplogList.do")
-	public ArrayList<EmployeeDTO> emplogList(
-		@RequestParam HashMap<String, Object> params, HttpSession session) {
-	
-	logger.info("session loginId" + session.getAttribute("loginId"));
-
-	logger.info("params  : {}" + params);
-	
-	return service.emplogList(params);
-}
+	} 
 	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")

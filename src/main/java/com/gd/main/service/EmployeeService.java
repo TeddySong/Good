@@ -19,13 +19,11 @@ public class EmployeeService {
 	
 	
 	//직원일지 리스트
-	public ArrayList<EmployeeDTO> emplogList(HashMap<String, Object> params) {
+	public ArrayList<EmployeeDTO> emplogList(int emp_no) {
 		logger.info("리스트 서비스 요청");
-		return dao.emplogList();
+		logger.info("받아온 넘버 : " + emp_no);
+		return dao.emplogList(emp_no);
 	}
-	//
-	//
-	//
 	
 	
 	public EmployeeDTO getselectEmpMyInfo(int emp_no) {

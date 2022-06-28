@@ -33,6 +33,8 @@ public class StudentService {
 		// 4페이지 -> 15
 		// 5페이지 -> 20
 		
+		map.put("cnt", cnt);
+		
 		map.put("stuSearchCategory", stuSearchCategory);
 		map.put("stuSearchContent", stuSearchContent);
 		
@@ -52,6 +54,8 @@ public class StudentService {
 		
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
+		
+		map.put("offset", offset);
 		
 		ArrayList<StuDTO> list = dao.stuList(map);
 		map.put("list", list);
@@ -114,7 +118,21 @@ public class StudentService {
 		return success;
 	}
 
-	
+	/*
+	 * public StuDTO stuLog(String stu_no) {
+	 * 
+	 * return dao.stuLog(stu_no);
+	 * 
+	 * }
+	 */
+
+	public ArrayList<StuDTO> stuLog(String stu_no) {
+		
+		
+		logger.info("학사일지 서비스");	
+		
+		return dao.stuLog(stu_no);
+	}
 	
 	
 }

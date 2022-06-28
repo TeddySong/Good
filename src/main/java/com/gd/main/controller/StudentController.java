@@ -214,6 +214,47 @@ public class StudentController {
 		return map;
 	}
 	
+	/*
+	 * @RequestMapping(value = "/stuLog.go") public String stuLogGo(@RequestParam
+	 * String stu_no, HttpSession session) { logger.info("학사일지 페이지 이동:" + stu_no);
+	 * session.setAttribute("stu_no", stu_no); return "./student/stuLog"; }
+	 */
+	
+	/*
+	 * @RequestMapping(value="/stuLog.ajax")
+	 * 
+	 * @ResponseBody public HashMap<String, Object> stuLog(HttpSession session,
+	 * 
+	 * @RequestParam HashMap<String, String> params) { HashMap<String, Object> map =
+	 * new HashMap<String, Object>();
+	 * 
+	 * String stu_no = (String) session.getAttribute("stu_no");
+	 * logger.info("상세 데이터 요청 : " + stu_no); session.removeAttribute("stu_no"); //
+	 * 사용한 idx는 삭제 StuDTO dto = service.stuLog(stu_no); map.put("dto", dto);
+	 * logger.info("클라이언트 : {}", dto );
+	 * 
+	 * 
+	 * return map; }
+	 */
+	
+	@RequestMapping(value = "/stuLog.do")
+	public String stuLog(Model model, HttpSession session, @RequestParam String stu_no) {
+		
+		String page = "redirect:/stuList.go";
+		logger.info("상세보기 요청 글 번호: " + stu_no);
+		
+		if(session.getAttribute("loginId") != null) {			
+			ArrayList<StuDTO> list = service.stuLog(stu_no);
+			if(list != null) {
+			model.addAttribute("list", list);
+			page = "./student/stuLog";
+			}
+		} else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
+	}
 	
 	
 }

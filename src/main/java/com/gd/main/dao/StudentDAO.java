@@ -25,6 +25,8 @@ public interface StudentDAO {
 
 	int stuUpdate(HashMap<String, String> params);
 
+	ArrayList<StuDTO> stuLog(String stu_no);
+
 	
 
 

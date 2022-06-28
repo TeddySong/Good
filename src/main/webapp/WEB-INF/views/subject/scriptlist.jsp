@@ -22,12 +22,14 @@ th,td{
 <body>
 <h3>과목후기 리스트</h3>
 <div>
+<input type="hidden" id="sub_no"  value=""/>
 <select id='sub_name'>
 	<option value='과목명' selected>과목명</option>
 </select>
-<input type="radio" name="sub_condition"/>단과
-<input type="radio" name="sub_condition"/>종합
-<input type="radio" name="sub_condition"/>숨김
+<input type="radio" name="sub_condition" value="단과"/>단과
+<input type="radio" name="sub_condition" value="종합"/>종합
+<input type="radio" name="sub_condition" value="숨김"/>숨김
+<button onclick="location.href='scriptlist.go'">초기화</button>
 <button onclick="scrDel()">삭제</button>
 <button  onclick="scrRegister_pop()">등록</button>
 </div>
@@ -61,9 +63,9 @@ var currPage = 1;
 
 listCall(currPage);
 
-function listCall(page){
 
-	var pagePerNum = 5;
+function listCall(page){
+	var pagePerNum = 5;	
 	
 	$.ajax({
 		type:'get',
@@ -95,8 +97,46 @@ function listCall(page){
 			
 	});
 	
+	$('#sub_name').on('change', function () {
+	    var subSelect = $("#sub_name option:selected").val();
+	    
+	    $.ajax({
+	    	type:'get',
+	    	url:'scrSubSearch.ajax',
+	    	data:{sub_no:subSelect},
+	    	dataType:'JSON',
+	    	success:function(data){
+	    		drawList(data.scrSublist)
+	    	},
+	    	error:function(e){
+	    		console.log(e);
+	    	}
+	    });
+	 	    
+	});
+	
+	
+	$("input[name='sub_condition']").change(function(){
+		var subCo = $("input:radio[name='sub_condition']:checked").val();
+		console.log(subCo);
+		
+		 $.ajax({
+		    	type:'get',
+		    	url:'scSubCondition.ajax',
+		    	data:{subCo:subCo},
+		    	dataType:'JSON',
+		    	success:function(data){
+		    		drawList(data.scSubCondition);
+		    	},
+		    	error:function(e){
+		    		console.log(e);
+		    	}
+		    });
+});
+	
+	
+	
 }
-
 
 
 function drawList(list){
@@ -162,7 +202,43 @@ function scrDel() {
 
 function scrRegister_pop(){
 	window.open("/scrReg.go","new","width=700, height=300, left=400 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+
 }
+
+
+
+function darwName(sub_name) {
+	var content = '';
+	sub_name.forEach(function(item){
+		content += '<option value="'+item.sub_no+'">'+item.sub_name+'</option>';
+	});
+	$('#sub_name').empty();
+	$('#sub_name').append(content);
+	
+}
+
+
+sub_nameCall();
+
+function sub_nameCall() {
+	
+	$.ajax({
+		type:'get',
+		url:'scrSubReg.ajax',
+		data : {},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			darwName(data.scrSublist);
+		},
+		error:function(e){
+			console.log(e);
+		}
+		
+	});
+
+}
+
 
 
 

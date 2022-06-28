@@ -176,6 +176,32 @@ public class SubjectController {
 		return service.scriptlist(params);
 	}
 	
+	@RequestMapping("/scSubCondition.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scSubCondition(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("노출상태:::" + params);
+		return service.scSubCondition(params);
+	}
+	
+	@RequestMapping("/scrSubSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scrSubSearch(@RequestParam HashMap<String, String> params, HttpSession session) {
+		//logger.info("과목번호 나오나요?" + params);
+		//logger.info("과목후기 리스트" + params.get("sub_no"));
+		//String sub_no = params.get("sub_no");
+		//logger.info("과목번호: " + sub_no);
+		return service.scrSubSearch(params);
+	}
+	
+	@RequestMapping("/subCondition.ajax")
+	@ResponseBody
+	public HashMap<String, Object> subCondition(@RequestParam HashMap<String, String> params, HttpSession session) {
+		logger.info("노출상태:::" + params);
+		return service.subCondition(params);
+	}
+	
+	
+	
 	
 	@RequestMapping("/scrDel.ajax")
 	@ResponseBody
@@ -195,15 +221,29 @@ public class SubjectController {
 		return "./subject/scrRegister";
 	}
 	
-	@RequestMapping("/scrReg.ajax")
+	@RequestMapping("/scrSubReg.ajax")
 	@ResponseBody
-	public HashMap<String, Object> scrReg(){
+	public HashMap<String, Object> scrSubReg(){
 		logger.info("과목후기 과목리스트");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<SubDTO> list = service.scrSublist();
-		map.put("list", list);
+		ArrayList<SubDTO> scrSublist = service.scrSublist();
+		map.put("scrSublist", scrSublist);
 		return map;
 	}
+	
+	@RequestMapping("/scrReg.ajax")
+	@ResponseBody
+	public HashMap<String, Object> scrReg(@RequestParam HashMap<String, String> params){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean scrReg = service.scrReg(params);
+		map.put("scrReg", scrReg);
+		
+		return map;
+	}
+	
+
+	
+	
 
 	
 	

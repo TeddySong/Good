@@ -96,6 +96,39 @@
 	SELECT sub_no, sub_name FROM subject
 	</select>
 	
+	<insert id="scrReg" parameterType="hashmap">
+	INSERT INTO script (scr_content, sub_no) 
+	VALUES (#{scr_content}, #{sub_no})
+	</insert>
+	
+	<select id="scrSubSearch" resultType="com.gd.main.dto.SubDTO">
+	SELECT
+	        sc.scr_no,
+	        s.sub_name,
+	        s.sub_condition,
+	        sc.scr_content
+		FROM
+        	subject s
+        JOIN script sc on s.sub_no = sc.sub_no
+        WHERE s.sub_no = #{param1}
+	</select>
+	
+	<select id="scSubCondition" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	SELECT
+	        sc.scr_no,
+	        s.sub_name,
+	        s.sub_condition,
+	        sc.scr_content
+		FROM
+        	subject s
+        JOIN script sc on s.sub_no = sc.sub_no
+        WHERE s.sub_condition = #{subCo}
+	</select>
+	
+	<select id="subCondition" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+		SELECT sub_no, sub_name, sub_condition 
+		FROM subject WHERE sub_condition = #{subCo}
+	</select>
 	
 	
 </mapper>

@@ -191,9 +191,9 @@
 										<td><input type="text" placeholder="과목명 입력"></td>
 										<td><button onclick="#" class="goodRegister" style="width:100%;">검색</button></td>
 										<td>
-										<input type="checkbox" name="sub_condition"/>단과
-										<input type="checkbox" name="sub_condition"/>종합
-										<input type="checkbox" name="sub_condition"/>숨김
+										<input type="radio" name="sub_condition" value="단과"/>단과
+										<input type="radio" name="sub_condition" value="종합"/>종합
+										<input type="radio" name="sub_condition" value="숨김"/>숨김
 										</td>
 									</tr>
 								</table>
@@ -202,6 +202,7 @@
 							<button onclick="location.href='subRegister.go'" class="goodRegister">등록</button>
 							<button onclick="location.href='scriptlist.go'" class="goodRegister">과목후기</button>
 							<button onclick="location.href='courList.go'" class="goodRegister">과정목록</button>
+							<button onclick="location.href='subList.go'" class="goodRegister">초기화</button>
 							</div>
 								<table id="goodList">
 									<thead>
@@ -249,6 +250,27 @@ function listCall(){
 		}
 			
 	});
+	
+	
+	$("input[name='sub_condition']").change(function(){
+		var subCo = $("input:radio[name='sub_condition']:checked").val();
+		console.log(subCo);
+		
+		 $.ajax({
+		    	type:'get',
+		    	url:'subCondition.ajax',
+		    	data:{subCo:subCo},
+		    	dataType:'JSON',
+		    	success:function(data){
+		    		drawList(data.subCondition);
+		    	},
+		    	error:function(e){
+		    		console.log(e);
+		    	}
+		    });
+	});
+	
+	
 }
 
 function drawList(list){

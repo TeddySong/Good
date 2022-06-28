@@ -23,6 +23,8 @@ public interface EmployeeDAO {
 
 	int empUpdate(HashMap<String, String> params);
 
+	ArrayList<EmployeeDTO> emplogList();
+
 	
 	
 }

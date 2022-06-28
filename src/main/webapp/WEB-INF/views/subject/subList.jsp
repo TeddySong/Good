@@ -258,7 +258,7 @@ function listCall(){
 		
 		 $.ajax({
 		    	type:'get',
-		    	url:'subCondition.ajax',
+		    	url:'subList.ajax',
 		    	data:{subCo:subCo},
 		    	dataType:'JSON',
 		    	success:function(data){
@@ -278,7 +278,7 @@ function listCall(){
 		
 		$.ajax({
 			type:'get',
-			url:'sublistSearch.ajax',
+			url:'subList.ajax',
 			data:{subSe:subsearch},
 			dataType:'JSON',
 	    	success:function(data){

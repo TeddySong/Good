@@ -60,7 +60,6 @@ th,td{
 </body>
 <script>
 var currPage = 1;
-
 listCall(currPage);
 
 
@@ -102,11 +101,27 @@ function listCall(page){
 	    
 	    $.ajax({
 	    	type:'get',
-	    	url:'scrSubSearch.ajax',
-	    	data:{sub_no:subSelect},
+	    	url:'scriptlist.ajax',
+	    	data:{
+	    		sub_no:subSelect,
+	    		cnt:pagePerNum,
+				page:page	
+	    	},
 	    	dataType:'JSON',
 	    	success:function(data){
 	    		drawList(data.scrSublist)
+				currPage = data.currPage;
+				
+				$("#pagination").twbsPagination({
+					startPage: data.currPage, //시작 페이지
+					totalPages: data.pages, //총 페이지
+					visiblePages: 5, //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
+						console.log(page); //사용자가 클릭한 페이지
+						currPage = page;
+						listCall(page);
+					}
+				});
 	    	},
 	    	error:function(e){
 	    		console.log(e);
@@ -122,19 +137,33 @@ function listCall(page){
 		
 		 $.ajax({
 		    	type:'get',
-		    	url:'scSubCondition.ajax',
-		    	data:{subCo:subCo},
+		    	url:'scriptlist.ajax',
+		    	data:{
+		    		subCo:subCo,
+		    		cnt:pagePerNum,
+					page:page	
+		    	},
 		    	dataType:'JSON',
 		    	success:function(data){
 		    		drawList(data.scSubCondition);
+		    		currPage = data.currPage;
+					
+					$("#pagination").twbsPagination({
+						startPage: data.currPage, //시작 페이지
+						totalPages: data.pages, //총 페이지
+						visiblePages: 5, //한번에 보여줄 페이지 수
+						onPageClick: function(e,page){
+							console.log(page); //사용자가 클릭한 페이지
+							currPage = page;
+							listCall(page);
+						}
+					});
 		    	},
 		    	error:function(e){
 		    		console.log(e);
 		    	}
 		    });
-});
-	
-	
+	});
 	
 }
 

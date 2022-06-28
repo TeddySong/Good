@@ -41,9 +41,9 @@ public interface SubjectDAO {
 
 	int scrReg(HashMap<String, String> params);
 
-	ArrayList<SubDTO> scrSubSearch(String sub_no);
+	ArrayList<SubDTO> scrSubSearch(String sub_no, int cnt, int offset);
 
-	ArrayList<SubDTO> scSubCondition(String subCo);
+	ArrayList<SubDTO> scSubCondition(String subCo, int cnt, int offset);
 
 	ArrayList<SubDTO> subCondition(String subCo);
 

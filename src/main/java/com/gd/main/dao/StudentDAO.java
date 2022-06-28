@@ -29,6 +29,8 @@ public interface StudentDAO {
 
 	int stuLogRegister(HashMap<String, String> params);
 
+	String stuName(String stu_no);
+
 	
 
 	

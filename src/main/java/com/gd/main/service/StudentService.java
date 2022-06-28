@@ -145,7 +145,7 @@ public class StudentService {
 	      int row=dao.stuLogRegister(params);
 	      
 	      String stuNo=params.get("stu_no");
-	      logger.info("확인"+stuNo);
+	      logger.info("확인"+stuNo);	      
 	      
 	      boolean cnt=false;
 	      if(row>0) {
@@ -156,6 +156,11 @@ public class StudentService {
 	      return result;
 	      
 	      
+	}
+
+	public String stuName(String stu_no) {
+		return dao.stuName(stu_no);
+		
 	}
 
 	

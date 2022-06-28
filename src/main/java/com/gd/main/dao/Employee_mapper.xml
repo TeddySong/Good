@@ -3,6 +3,17 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
 
+<select id="emplogList" resultType="com.gd.main.dto.EmployeeDTO">
+	<!-- 직원일지 호출 -->
+	SELECT e.emp_name,
+		el.emp_log_date,
+		el.emp_log_condition,
+		el.emp_log_content
+FROM employee_log el 
+INNER JOIN  
+		employee e ON el.emp_no =#{param1}
+</select>
+
 	 <!--  직원정보 등록 -->
 	<insert id="empWrite" parameterType="hashmap" >
 		INSERT INTO employee(

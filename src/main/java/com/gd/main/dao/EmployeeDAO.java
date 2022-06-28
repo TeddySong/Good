@@ -5,11 +5,9 @@ import java.util.HashMap;
 import com.gd.main.dto.EmployeeDTO;
 public interface EmployeeDAO {
 	
-	//
-	ArrayList<EmployeeDTO> employeeLoglist();
-	//
-	//
-	//
+	
+
+	ArrayList<EmployeeDTO> emplogList(int emp_no);
 	
 	int allCount();
 
@@ -22,6 +20,8 @@ public interface EmployeeDAO {
 	EmployeeDTO selectEmpMyInfo(int emp_no);
 
 	int empUpdate(HashMap<String, String> params);
+
+
 
 	
 	

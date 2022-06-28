@@ -1,5 +1,6 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -20,6 +21,24 @@ public class EmployeeController {
 	EmployeeService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	//직원일지 페이지 
+	@RequestMapping(value = "/emplogList.go")
+	public String emplogListGo() {
+	logger.info("직원일지 페이지!"); 
+	return "./employee/emplogList";
+	}
+ 
+@RequestMapping("/emplogList.do")
+	public ArrayList<EmployeeDTO> emplogList(
+		@RequestParam HashMap<String, Object> params, HttpSession session) {
+	
+	logger.info("session loginId" + session.getAttribute("loginId"));
+
+	logger.info("params  : {}" + params);
+	
+	return service.emplogList(params);
+}
+	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
 	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {

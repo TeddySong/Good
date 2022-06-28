@@ -17,6 +17,17 @@ public class EmployeeService {
 	
 	@Autowired  EmployeeDAO dao;
 	
+	
+	//직원일지 리스트
+	public ArrayList<EmployeeDTO> emplogList(HashMap<String, Object> params) {
+		logger.info("리스트 서비스 요청");
+		return dao.emplogList();
+	}
+	//
+	//
+	//
+	
+	
 	public EmployeeDTO getselectEmpMyInfo(int emp_no) {
 		
 		return dao.selectEmpMyInfo(emp_no);

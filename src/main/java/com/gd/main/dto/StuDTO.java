@@ -20,6 +20,21 @@ public class StuDTO {
 	private String stu_condition;
 	private String sub_name;
 	
+	private Date stu_log_date;
+	private String stu_log_content;
+	
+	public Date getStu_log_date() {
+		return stu_log_date;
+	}
+	public void setStu_log_date(Date stu_log_date) {
+		this.stu_log_date = stu_log_date;
+	}
+	public String getStu_log_content() {
+		return stu_log_content;
+	}
+	public void setStu_log_content(String stu_log_content) {
+		this.stu_log_content = stu_log_content;
+	}
 	public String getStu_gender() {
 		return stu_gender;
 	}

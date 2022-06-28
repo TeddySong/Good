@@ -17,10 +17,11 @@
 		font-family: 'Noto Sans KR', sans-serif;
 	}
 
-	#goodList {                
+	#goodList {  
+			  margin:0 auto;
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 70%;
+			  width: 80%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
@@ -29,16 +30,17 @@
             
    #goodList th {
 			background-color:#505050;
-			color:#FFFFFF
+			color:#FFFFFF;
+			text-align:center;
 		}
 		
 	#goodList,#goodList th,#goodList td
 	{
-		font-size:20px;
-		text-align:center;
+		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
-		border-collapse:collapse
+		border-collapse:collapse;
+		text-align:center;
 	}
 	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
@@ -48,12 +50,35 @@
 	}
 	
 	input[type='text']{
-	width : 100%;
+	width : 80%;
+	}
+	input[type='date']{
+		width : 80%;
 	}
 	
 	.goodRegister {
-		display: inline;
-		margin: 20px 20px 0 20px auto;
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+	
+	.goodRegister:hover{
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+	
+	input[type='button'] {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
@@ -64,18 +89,10 @@
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
 
-	.goodRegister:hover {
+	input[type='button']:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
-	
-	input[type="checkbox"] + label{
-        display: inline-block;
-        width: 30px;
-        height: 30px;
-        border:3px solid #707070;
-        position: relative;
-      }
 		
 </style>
 </head>
@@ -174,227 +191,81 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">과정 목록</h1>                        
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                GOOD2 IT 과정 리스트 입니다.                                
-                            </div>
-                        </div>
+                        <h1 class="mt-4">학사일지</h1>                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                과정리스트
+                                학사일지
                             </div>
-                            <div>
-                            <table id="goodList">
-                            	<tr>
-                            		<td>
-                            			<select id="subNameSearch" name="subNameSearch">
-									         <option>과목명</option>
-									         <c:forEach items="${subName}" var="subName">
-									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
-									         </c:forEach>
-									      </select>
-                            		</td>
-                            		<td><select id="courseNameSearch" name="">
-									          <option>과정명</option>
-									          <option>과정 진행상황</option>
-									      </select>
-									</td>
-                            		<%-- <td><select id="courseNameSearch" name="">
-									          <option>과정명</option>
-									          <c:forEach items="${courseName}" var="courseName">
-									         		<option value="${courseName.co_no}">${courseName.co_name}</option>
-									         </c:forEach>
-									      </select>
-									</td> --%>
-                            		<td><input id="keyword" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
-                            		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td>~</td>
-                            		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
-                            	</tr>
-                            </table>
-							<br/>
-						    
-						    <!--표-->
-						    <button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
+                            <br/><br/>
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th>과목번호</th>
-										<th>과정명</th>
-										<th>과목명</th>
-										<th>개강일</th>
-										<th>종강일</th>
-										<th>수업시작시간</th>
-										<th>진행상황</th>
+										<th>작성일</th>
+										<th>작성자</th>
+										<th>작성내용</th>
 									</tr>
 								</thead>
-								<%-- <tbody id="list">
-									 <c:forEach items="${courList}" var="courList">
-										<tr>
-											<td>${courList.co_no}</td>
-											<td><a href="courDetail.do?co_no=${courList.co_no}">${courList.co_name}</a></td>
-											<td>${courList.sub_no}</td>
-											<td>${courList.sub_name}</td>
-											<td>${courList.co_startDate}</td>
-											<td>${courList.co_endDate}</td>
-											<td>${courList.co_startTime}</td>
-											<td>${courList.co_condition}</td>
-										</tr>
-									</c:forEach>
-								</tbody> --%>
-								
 								<tbody id="list">
-									
+								<c:forEach items="${list}" var="dto">									
+										<tr>
+											<td>${dto.stu_log_date}</td>
+											<td>${dto.emp_name}</td>
+											<td><textarea style="width:100%;">${dto.stu_log_content}</textarea></td>											
+										</tr>									
+								</c:forEach>
 								</tbody>
-								<tr>
-									<td colspan="7" id="paging">
-									<!-- twbspagination 플러그인 -->
-									<div class="container">
-										<nav arial-label="Page navigation" style="text-align:center">
-											<ul class="pagination" id="pagination"></ul>
-										</nav>
-									</div>
-									</td>
-								</tr>
+								
 							</table>
+							<br/><br/>
+                        </div>
                     </div>
                 </main>
             </div>            
         </div>
-        
                 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>  
+	    
 
 </body>
 <script>
-var currPage = 1;
-
-listCall(currPage);
-
-function listCall(page){
-	
-	var pagePerNum = 10;
-	console.log("param page : " + page);
-	
+/* listCall();
+function listCall(){ //controller에 list를 요청
 	$.ajax({
 		type:'get',
-		url:'courList.ajax',
-		data:{
-			cnt : pagePerNum,
-			page : page
-		},
+		url:'stuLog.ajax',
+		data:{},
 		dataType:'JSON',
 		success:function(data){
-			//console.log(data);
-			drawList(data.courList);
-			currPage=data.currPage;
+			// console.log(data);
 			
-			//플러그인 사용 페이징
-			$("#pagination").twbsPagination({
-				startPage:data.currPage, //시작페이지
-				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: data.cnt, // 한번에 보여줄 페이지 수
-				onPageClick:function(e,page){
-					console.log(page);
-					currPage=page;
-					listCall(page);
-				}
-			});
-			
+				console.log('테이블 그리기');
+				drawList(data.list);
+							
 		},
-		error:function(e){
-			console.log(e);
+		error:function(error){
+			console.log(error);
 		}
 	});
-	
-	
-//검색
-$('#courSearch').on('click',function(){
-	
-	 var subNameSearch = $("#subNameSearch option:selected").val();
-	 console.log(subNameSearch);
-	 
-	 var courseNameSearch = $("#courseNameSearch option:selected").val();
-	 console.log(courseNameSearch);
-	 
-	 var keyword = $("#keyword").val();
-	 console.log(keyword);
-	 
-	 var startSearch = $("#startSearch").val();
-	 console.log(startSearch);
-	 
-	 var endSearch = $("#endSearch").val();
-	 console.log(endSearch);
-	 
-	 $.ajax({
-		 type:'get',
-		 url:'courSearch.ajax',
-		 data:{
-			 cnt : pagePerNum,
-			 page : page,
-			 subNameSearch : subNameSearch,
-			 courseNameSearch : courseNameSearch,
-			 keyword : keyword,
-			 startSearch : startSearch,
-			 endSearch : endSearch 
-		 },
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			//drawList(data.list);
-			drawList(data.courList);
-			currPage = data.currPage;
-			
-			//플러그인 사용 페이징
-			$("#pagination").twbsPagination({
-				startPage:data.currPage, //시작페이지
-				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, // 한번에 보여줄 페이지 수
-				onPageClick:function(e,page){
-					console.log(page);
-					currPage=page;
-					listCall(page);
-				}
-			});
-		},
-		error:function(e){
-			console.log(e);
-		}
-	 });
-});
+};
 
-
-
-}
-
-
-//리스트 그리기
-function drawList(courList){
-	
-	var content="";
-	
-	courList.forEach(function(item){
-		//console.log(item);
+function drawList(list){
+	var content ='';
+	list.forEach(function(item){
+		console.log(item);
 		content += '<tr>';
-		content += '<td>'+item.co_no+'</td>';
-		content += '<td><a href="courDetail.do?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
-		content += '<td>'+item.sub_name+'</td>';
-		content += '<td>'+item.co_startDate+'</td>';
-		content += '<td>'+item.co_endDate+'</td>';
-		content += '<td>'+item.co_startTime+'</td>';
-		content += '<td>'+item.co_condition+'</td>';
+		content += '<td>'+item.stu_log_date+'</td>';		
+		content += '<td>'+item.emp_name+'</td>';
+		content += '<td>'+item.stu_log_content+'</td>';		
 		content += '</tr>';
 	});
-	
 	$('#list').empty();
 	$('#list').append(content);
-}
+} */
 
 
+	
+	
 </script>
 </html>

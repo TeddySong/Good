@@ -24,12 +24,20 @@ public class StudentService {
 		
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
+		String stuSearchCategory = params.get("stuSearchCategory");
+		String stuSearchContent = params.get("stuSearchContent");
 		logger.info("보여줄 페이지 : "+page);
 		// 1페이지 -> 0(offset:게시글 시작 번호)
 		// 2페이지 -> 5
 		// 3페이지 -> 10
 		// 4페이지 -> 15
 		// 5페이지 -> 20
+		
+		map.put("cnt", cnt);
+		
+		map.put("stuSearchCategory", stuSearchCategory);
+		map.put("stuSearchContent", stuSearchContent);
+		
 		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		int allCnt = dao.allCount();
@@ -47,7 +55,9 @@ public class StudentService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		
-		ArrayList<StuDTO> list = dao.list(cnt,offset);
+		map.put("offset", offset);
+		
+		ArrayList<StuDTO> list = dao.stuList(map);
 		map.put("list", list);
 		
 		return map;
@@ -108,7 +118,21 @@ public class StudentService {
 		return success;
 	}
 
-	
+	/*
+	 * public StuDTO stuLog(String stu_no) {
+	 * 
+	 * return dao.stuLog(stu_no);
+	 * 
+	 * }
+	 */
+
+	public ArrayList<StuDTO> stuLog(String stu_no) {
+		
+		
+		logger.info("학사일지 서비스");	
+		
+		return dao.stuLog(stu_no);
+	}
 	
 	
 }

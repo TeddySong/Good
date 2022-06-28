@@ -3,11 +3,28 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.StudentDAO">
 	
-	<select id="list" resultType="com.gd.main.dto.StuDTO">
+	<select id="stuList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
 		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, emp_name FROM student s 
 		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
-		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no
-		ORDER BY stu_no DESC limit #{param1} OFFSET #{param2}
+		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no		
+		<where>
+				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
+					<if test="stuSearchCategory.equals('cli_name')">
+						c.cli_name = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('cli_phone')">
+						c.cli_phone = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('stu_age')">
+						s.stu_age = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('emp_name')">
+						e.emp_name = #{stuSearchContent}
+					</if>
+			</if>
+			</where>
+		ORDER BY stu_no DESC limit #{cnt} OFFSET #{offset}
+			
 	</select>
 	
 	<select id="allCount" resultType="int">
@@ -55,5 +72,13 @@
 			stu_condition = #{stu_condition}
 		WHERE stu_no = #{stu_no}
 	</update>
+	
+	<select id="stuLog" resultType="com.gd.main.dto.StuDTO">
+		select sl.stu_no, cli_name, stu_log_date, stu_log_content, emp_name  from student_log sl 
+		left outer join employee e on sl.emp_no = e.emp_no 
+		left outer join student s on sl.stu_no = s.stu_no 
+		left outer join client c on s.cli_no = c.cli_no
+		WHERE sl.stu_no = #{param1}
+	</select>
 	
 </mapper>

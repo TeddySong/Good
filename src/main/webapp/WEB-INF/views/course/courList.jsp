@@ -197,8 +197,8 @@
 									      </select>
                             		</td>
                             		<td><select id="courseNameSearch" name="">
-									          <option>과정명</option>
-									          <option>과정 진행상황</option>
+									          <option value="과정명">과정명</option>
+									          <option value="과정 진행상황">과정 진행상황</option>
 									      </select>
 									</td>
                             		<%-- <td><select id="courseNameSearch" name="">
@@ -279,7 +279,7 @@ listCall(currPage);
 function listCall(page){
 	
 	var pagePerNum = 10;
-	console.log("param page : " + page);
+	//console.log("param page : " + page);
 	
 	$.ajax({
 		type:'get',
@@ -298,7 +298,7 @@ function listCall(page){
 			$("#pagination").twbsPagination({
 				startPage:data.currPage, //시작페이지
 				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: data.cnt, // 한번에 보여줄 페이지 수
+				visiblePages: 5, // 한번에 보여줄 페이지 수
 				onPageClick:function(e,page){
 					console.log(page);
 					currPage=page;
@@ -345,8 +345,7 @@ $('#courSearch').on('click',function(){
 		 },
 		dataType:'json',
 		success:function(data){
-			console.log(data);
-			//drawList(data.list);
+			//console.log(data);
 			drawList(data.courList);
 			currPage = data.currPage;
 			

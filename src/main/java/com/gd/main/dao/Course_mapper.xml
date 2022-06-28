@@ -10,45 +10,132 @@
 		ORDER BY co_no DESC limit #{param1} offset #{param2}
 	</select> -->
 	
-	<select id="courList2" resultType="com.gd.main.dto.CourseDTO">
+	<select id="courList2" parameterType="hashmap" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-			<where>
-				<if test="subNameSearch != null and subNameSearch !='' 
-				and courseNameSearch != null and courseNameSearch !='' 
-				and keyword != null and keyword !='' 
-				and startSearch != null and startSearch !='' 
-				and endSearch != null and endSearch !=''">
-					<if test="subNameSearch.equals('sub_name')">
-						subject.sub_name LIKE concat('%',#{subNameSearch},'%')
-					</if>
-					
-					<if test="courseNameSearch.equals('co_name')">
-						co_name LIKE concat('%',#{keyword},'%')
-					</if>
-					
-					<if test="courseNameSearch.equals('co_condition')">
-						co_condition LIKE concat('%',#{keyword},'%')
-					</if>
-					
-					<if test="startSearch.equals('co_startDate') 
-					and endSearch.equals('co_endDate')">
-					<![CDATA[
-						co_startDate >= #{startSearch} AND 
-						co_endDate <= #{endSearch}
-					 ]]>
-					</if>
-				</if>
+		<where>
+			<choose>
+				<!-- subNameSearch : 과목명 / courseNameSearch : 과정명 or 과정 진행상황
+				 startSearch : 개강일 / endSearch : 종강일 / keyword : 검색창-->
 				
-				<if test="subNameSearch != null and subNameSearch !='' 
-				and startSearch != null and startSearch !='' 
-				and endSearch != null and endSearch !=''">
-				<![CDATA[
-					co_name ="test_course" and co_startDate >= '2022-01-01' and co_endDate <='2022-12-31'
-				]]>
-				</if>
-			</where>
+				<!-- 하나씩 선택 -->
+				<when test="courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') or
+				startSearch.equals('startSearch') or 
+				endSearch.equals('endSearch') or
+				subNameSearch.equals('subNameSearch')">
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') OR
+					<![CDATA[
+					co_startDate >= #{startSearch} OR
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+				
+				<!-- 두개씩 선택 -->
+				<when test="endSearch.equals('subNameSearch') and
+				courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황')">
+					subject.sub_name = #{subNameSearch} AND
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%')
+				</when>
+				<when test="startSearch.equals('startSearch') and 
+				endSearch.equals('endSearch')">
+					<![CDATA[
+					co_startDate >= #{startSearch} AND
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+				<when test="courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') and
+				startSearch.equals('startSearch') or 
+				endSearch.equals('endSearch')">
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') AND
+					<![CDATA[
+					co_startDate >= #{startSearch} OR
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+				
+				<!-- 세개씩 선택 -->
+				<when test="endSearch.equals('subNameSearch') and
+				courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') and
+				startSearch.equals('startSearch')">
+					subject.sub_name = #{subNameSearch} AND
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') AND
+					<![CDATA[
+					co_startDate >= #{startSearch}
+					]]>
+				</when>
+				<when test="endSearch.equals('subNameSearch') and
+				courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') and
+				endSearch.equals('endSearch')">
+					subject.sub_name = #{subNameSearch} AND
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') AND
+					<![CDATA[
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+				<when test="courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') and
+				startSearch.equals('startSearch') and 
+				endSearch.equals('endSearch')">
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') AND
+					<![CDATA[
+					co_startDate >= #{startSearch} AND
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+				
+				<!-- 전부 선택 -->
+				<when test="courseNameSearch.equals('과정명') or
+				courseNameSearch.equals('과정 진행상황') and
+				startSearch.equals('startSearch') and 
+				endSearch.equals('endSearch') and
+				subNameSearch.equals('subNameSearch')">
+					subject.sub_name = #{subNameSearch} AND
+					co_name LIKE concat('%',#{keyword},'%') OR
+					co_condition LIKE concat('%',#{keyword},'%') AND
+					<![CDATA[
+					co_startDate >= #{startSearch} AND
+					co_endDate <= #{endSearch}
+					]]>
+				</when>
+			</choose>
+			
+		</where>
+		
+			<!-- <trim prefix="(" suffix=") AND">
+				<foreach collection="courList2" item="name">
+					<choose>
+						<when test="name == 'subNameSearch'.toString()">
+							subject.sub_name = #{subNameSearch}
+						</when>
+						<when test="name == 'courseNameSearch'.toString()">
+							co_name LIKE concat('%',#{keyword},'%')
+						</when>
+						<when test="name == 'courseNameSearch'.toString()">
+							co_condition LIKE concat('%',#{keyword},'%')
+						</when>
+						<when test="name == 'startSearch'.toString()">
+							co_startDate >= #{startSearch}
+						</when>
+						<when test="name == 'endSearch'.toString()">
+							co_endDate <= #{endSearch}
+						</when>
+					</choose>
+				</foreach>
+			</trim> -->
+
+		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
 	<select id="allCount" resultType="int">

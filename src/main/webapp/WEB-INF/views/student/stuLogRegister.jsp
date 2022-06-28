@@ -248,7 +248,7 @@ function stuLogRegisterDo(){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			location.href='stuLog.go';		
+			location.href='stuLog.go?stu_no='+(data.stuNo);		
 		},
 		error:function(error){
 			console.log(error);
@@ -260,8 +260,9 @@ function stuLogRegisterDo(){
 }
 
 function stuLogGo(){
-	var stu_no = $("#student_no").html();
-	location.href='/stuLog.go?stu_no='+stu_no;
+	var stu_no = $("#student_no").text();
+	var stuNo = parseInt(stu_no);
+	location.href='/stuLog.go?stu_no='+stuNo;
 }
 
 	

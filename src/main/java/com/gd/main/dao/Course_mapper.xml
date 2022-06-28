@@ -3,18 +3,52 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.CourseDAO">
 
-	<select id="courList" resultType="com.gd.main.dto.CourseDTO">
+	<!-- <select id="courList" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
-	</select>
+		ORDER BY co_no DESC limit #{param1} offset #{param2}
+	</select> -->
 	
 	<select id="courList2" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
+		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		<!-- ORDER BY co_no DESC limit #{param1} offset #{param2} -->
+			<where>
+				<if test="subNameSearch != null and subNameSearch !='' 
+				and courseNameSearch != null and courseNameSearch !='' 
+				and keyword != null and keyword !='' 
+				and startSearch != null and startSearch !='' 
+				and endSearch != null and endSearch !=''">
+					<if test="subNameSearch.equals('sub_name')">
+						subject.sub_name LIKE concat('%',#{subNameSearch},'%')
+					</if>
+					
+					<if test="courseNameSearch.equals('co_name')">
+						co_name LIKE concat('%',#{keyword},'%')
+					</if>
+					
+					<if test="courseNameSearch.equals('co_condition')">
+						co_condition LIKE concat('%',#{keyword},'%')
+					</if>
+					
+					<if test="startSearch.equals('co_startDate') 
+					and endSearch.equals('co_endDate')">
+					<![CDATA[
+						co_startDate >= #{startSearch} AND 
+						co_endDate <= #{endSearch}
+					 ]]>
+					</if>
+				</if>
+				
+				<if test="subNameSearch != null and subNameSearch !='' 
+				and startSearch != null and startSearch !='' 
+				and endSearch != null and endSearch !=''">
+				<![CDATA[
+					co_name ="test_course" and co_startDate >= '2022-01-01' and co_endDate <='2022-12-31'
+				]]>
+				</if>
+			</where>
 	</select>
 	
 	<select id="allCount" resultType="int">

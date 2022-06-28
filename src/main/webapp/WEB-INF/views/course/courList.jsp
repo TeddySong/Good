@@ -174,16 +174,16 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">과목 목록</h1>                        
+                        <h1 class="mt-4">과정 목록</h1>                        
                         <div class="card mb-4">
                             <div class="card-body">
-                                GOOD2 IT 과목 리스트 입니다.                                
+                                GOOD2 IT 과정 리스트 입니다.                                
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                과목리스트
+                                과정리스트
                             </div>
                             <div>
                             <table id="goodList">
@@ -208,7 +208,7 @@
 									         </c:forEach>
 									      </select>
 									</td> --%>
-                            		<td><input id="textSearch" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
+                            		<td><input id="keyword" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
                             		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td>~</td>
                             		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
@@ -290,7 +290,7 @@ function listCall(page){
 		},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
+			//console.log(data);
 			drawList(data.courList);
 			currPage=data.currPage;
 			
@@ -298,7 +298,7 @@ function listCall(page){
 			$("#pagination").twbsPagination({
 				startPage:data.currPage, //시작페이지
 				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, // 한번에 보여줄 페이지 수
+				visiblePages: data.cnt, // 한번에 보여줄 페이지 수
 				onPageClick:function(e,page){
 					console.log(page);
 					currPage=page;
@@ -322,14 +322,14 @@ $('#courSearch').on('click',function(){
 	 var courseNameSearch = $("#courseNameSearch option:selected").val();
 	 console.log(courseNameSearch);
 	 
-	 var textSearch = $("#textSearch").val();
-	 console.log(textSearch);
+	 var keyword = $("#keyword").val();
+	 console.log(keyword);
 	 
 	 var startSearch = $("#startSearch").val();
-	 console.log(textSearch);
+	 console.log(startSearch);
 	 
 	 var endSearch = $("#endSearch").val();
-	 console.log(textSearch);
+	 console.log(endSearch);
 	 
 	 $.ajax({
 		 type:'get',
@@ -339,7 +339,7 @@ $('#courSearch').on('click',function(){
 			 page : page,
 			 subNameSearch : subNameSearch,
 			 courseNameSearch : courseNameSearch,
-			 textSearch : textSearch,
+			 keyword : keyword,
 			 startSearch : startSearch,
 			 endSearch : endSearch 
 		 },

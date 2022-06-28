@@ -11,29 +11,25 @@
 	</select> -->
 	
 	<select id="courList2" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
+		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 			<where>
 				<if test="subNameSearch != null and subNameSearch !='' 
 				and courseNameSearch != null and courseNameSearch !='' 
-				and textSearch != null and textSearch !='' 
+				and keyword != null and keyword !='' 
 				and startSearch != null and startSearch !='' 
 				and endSearch != null and endSearch !=''">
 					<if test="subNameSearch.equals('sub_name')">
-						AND s.sub_name LIKE concat('%',#{textSearch},'%')
+						subject.sub_name LIKE concat('%',#{subNameSearch},'%')
 					</if>
 					
 					<if test="courseNameSearch.equals('co_name')">
-						AND co_name LIKE concat('%',#{textSearch},'%')
+						co_name LIKE concat('%',#{keyword},'%')
 					</if>
 					
 					<if test="courseNameSearch.equals('co_condition')">
-						AND co_condition LIKE concat('%',#{textSearch},'%')
-					</if>
-					
-					<if test="courseNameSearch.equals('co_condition')">
-						AND co_condition LIKE concat('%',#{textSearch},'%')
+						co_condition LIKE concat('%',#{keyword},'%')
 					</if>
 					
 					<if test="startSearch.equals('co_startDate') 
@@ -45,7 +41,12 @@
 					</if>
 				</if>
 				
-				<if test="subNameSearch != null and subNameSearch !=''">
+				<if test="subNameSearch != null and subNameSearch !='' 
+				and startSearch != null and startSearch !='' 
+				and endSearch != null and endSearch !=''">
+				<![CDATA[
+					co_name ="test_course" and co_startDate >= '2022-01-01' and co_endDate <='2022-12-31'
+				]]>
 				</if>
 			</where>
 	</select>

@@ -33,18 +33,18 @@ public class CourseService {
 		
 		String subNameSearch = params.get("subNameSearch");
 		String courseNameSearch = params.get("courseNameSearch");
-		String textSearch = params.get("textSearch");
+		String keyword = params.get("keyword");
 		String startSearch = params.get("startSearch");
 		String endSearch = params.get("endSearch");
 		
 		HashMap<String, Object> searchResult = new HashMap<String, Object>();
 		searchResult.put("subNameSearch", subNameSearch);
 		searchResult.put("courseNameSearch", courseNameSearch);
-		searchResult.put("textSearch", textSearch);
+		searchResult.put("keyword", keyword);
 		searchResult.put("startSearch", startSearch);
 		searchResult.put("endSearch", endSearch);
 		
-		/*
+		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		int allCnt = dao.allCount();
 		logger.info("allCnt : "+allCnt);
@@ -56,7 +56,7 @@ public class CourseService {
 		}
 		
 		map.put("pages", pages); //만들 수 있는 최대 페이지 수
-		*/
+		
 		map.put("currPage", page); //현재 페이지
 		
 		int offset = (page-1) * cnt;

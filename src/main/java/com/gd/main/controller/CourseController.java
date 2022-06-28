@@ -138,7 +138,7 @@ public class CourseController {
 	@RequestMapping(value = "/courUpdateForm.do")
 	public String courseUpdatePage(Model model,HttpSession session,
 			@RequestParam String co_no){
-		String page = "redirect:/courList.do";
+		String page = "redirect:/courUpdateForm.do";
 		logger.info("수정 상세보기 요청 : "+co_no);
 		
 		logger.info("과정수정 페이지에 과목 이름 호출");
@@ -165,7 +165,7 @@ public class CourseController {
 	//과정 수정(ajax 없이)
 	@RequestMapping(value = "/courseUpdate.do")
 	public String courseUpdate(HttpSession session, Model model,
-			@RequestParam HashMap<String, String> params) {
+			@RequestParam HashMap<String, String> params, String co_no) {
 		logger.info("params : {}",params);
 		String page = "redirect:/courDetail.do?co_no="+params.get("co_no");
 		logger.info(page);

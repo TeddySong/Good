@@ -248,6 +248,8 @@ public class StudentController {
 			if(list != null) {
 			model.addAttribute("list", list);
 			model.addAttribute("stu_no",stu_no);
+			String stuName = service.stuName(stu_no);
+			model.addAttribute("stuName",stuName);
 			page = "./student/stuLog";
 			}
 		} else {

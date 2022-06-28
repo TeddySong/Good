@@ -113,4 +113,10 @@
 		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
 	</insert>
 	
+	<select id="stuName" resultType="String">
+		SELECT cli_name FROM client c
+		left outer join student s on c.cli_no = s.cli_no
+		WHERE stu_no = #{param1}
+	</select>
+	
 </mapper>

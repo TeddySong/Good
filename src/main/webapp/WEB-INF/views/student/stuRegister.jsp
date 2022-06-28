@@ -190,7 +190,11 @@
                                 	<tr class="hidden">
 										<th>고객번호</th>
 										<td><input type="text" id="cli_no"/></td>
-									</tr>									
+									</tr>	
+									<tr class="hidden">
+										<th>직원번호</th>
+										<td><input type="text" id="emp_no"/></td>
+									</tr>								
 									<tr>
 										<th>이름</th>
 										<td><input type="text" id="cli_name"/>
@@ -201,10 +205,7 @@
 										<th>연락처</th>
 										<td><input type="text" id="cli_phone"/></td>
 									</tr>
-									<tr class="hidden">
-										<th>직원번호</th>
-										<td><input type="text" id="emp_no"/></td>
-									</tr>
+									
 									<tr>
 										<th>담당직원</th>
 										<td><input type="text" id="emp_name"/></td>
@@ -267,7 +268,10 @@
 
 </body>
 <script>
-
+noHidden();
+function noHidden(){
+	$(".hidden").css("display", "none");
+}
 
 function cliSearch_pop(){	
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");

@@ -144,12 +144,23 @@ public class StudentService {
 	      HashMap<String, Object> result=new HashMap<String, Object>();
 	      int row=dao.stuLogRegister(params);
 	      
+	      String stuNo=params.get("stu_no");
+	      logger.info("확인"+stuNo);	      
+	      
 	      boolean cnt=false;
 	      if(row>0) {
 	         cnt=true;
 	      }
 	      result.put("success",cnt);
+	      result.put("stuNo", stuNo);
 	      return result;
+	      
+	      
+	}
+
+	public String stuName(String stu_no) {
+		return dao.stuName(stu_no);
+		
 	}
 
 	

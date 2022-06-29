@@ -228,6 +228,16 @@
 <script>
 listCall();
 
+//과목 검색
+$('#subSearch').on('click',function(){
+	subSearchCall();
+});
+
+//노출상태 선택
+$("input[name='sub_condition']").change(function(){
+	SubConditionCall();
+});
+
 function listCall(){
 	
 	$.ajax({
@@ -251,49 +261,47 @@ function listCall(){
 			
 	});
 	
-	//radio 선택
-	$("input[name='sub_condition']").change(function(){
-		var subCo = $("input:radio[name='sub_condition']:checked").val();
-		console.log(subCo);
-		
-		 $.ajax({
-		    	type:'get',
-		    	url:'subList.ajax',
-		    	data:{subCo:subCo},
-		    	dataType:'JSON',
-		    	success:function(data){
-		    		drawList(data.subCondition);
-		    	},
-		    	error:function(e){
-		    		console.log(e);
-		    	}
-		    });
-	});
+}
 	
-	//과목 검색
-	$('#subSearch').on('click',function(){
-		
-		var subsearch = $("#search").val();
-		console.log(subsearch);
-		
-		$.ajax({
-			type:'get',
-			url:'subList.ajax',
-			data:{subSe:subsearch},
-			dataType:'JSON',
+	//radio 선택
+	function SubConditionCall(){
+	var subCo = $("input:radio[name='sub_condition']:checked").val();
+	console.log(subCo);
+	
+	 $.ajax({
+	    	type:'get',
+	    	url:'subList.ajax',
+	    	data:{subCo:subCo},
+	    	dataType:'JSON',
 	    	success:function(data){
-	    		drawList(data.sublistSearch);
+	    		drawList(data.subCondition);
 	    	},
 	    	error:function(e){
 	    		console.log(e);
 	    	}
-		});
-		
+	    });
+	}
+	
+	//과목검색
+	function subSearchCall(){
+	var subsearch = $("#search").val();
+	console.log(subsearch);
+	
+	$.ajax({
+		type:'get',
+		url:'subList.ajax',
+		data:{subSe:subsearch},
+		dataType:'JSON',
+    	success:function(data){
+    		drawList(data.sublistSearch);
+    	},
+    	error:function(e){
+    		console.log(e);
+    	}
 	});
-	
-	
 }
-
+	
+	
 function drawList(list){
 	var content = '';
 	list.forEach(function(item,sub_no){

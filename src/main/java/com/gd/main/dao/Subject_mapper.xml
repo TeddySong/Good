@@ -84,9 +84,21 @@
         ORDER BY scr_no DESC limit #{param1} OFFSET #{param2};
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(scr_no) FROM script 
-	</select>
+	<select id="allCount" parameterType="hashmap" resultType="int">
+		SELECT
+			COUNT(scr_no)
+		FROM
+			subject s
+			INNER JOIN script sc on s.sub_no = sc.sub_no
+        WHERE
+        	1=1
+        	<if test="searchSubNo != null and searchSubNo != ''">
+	        	AND s.sub_no = #{searchSubNo}
+        	</if>
+        	<if test="searchSubCo != null and searchSubCo != ''">
+	        	AND s.sub_condition = #{searchSubCo}
+        	</if>
+       </select>
 	
 	<delete id="scrDel" parameterType="String">
 		DELETE FROM script WHERE scr_no = #{scr_no}

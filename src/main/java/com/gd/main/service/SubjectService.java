@@ -127,14 +127,19 @@ public class SubjectService {
 
 	public HashMap<String, Object> scriptlist(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> param = new HashMap<String, Object>();
 		String sub_no = params.get("sub_no");
 		String subCo = params.get("subCo");
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 :" + page);
 		
-		int allCnt = dao.allCount();
+		param.put("searchSubNo", sub_no);
+		param.put("searchSubCo", subCo);
+		
+		int allCnt = dao.allCount(param);
 		logger.info("allCnt : " + allCnt);
+		
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : " + pages);
 		
@@ -152,7 +157,7 @@ public class SubjectService {
 		ArrayList<SubDTO> scrSubSearch = dao.scrSubSearch(sub_no, cnt, offset);
 		ArrayList<SubDTO> scSubCondition = dao.scSubCondition(subCo, cnt, offset);
 		map.put("list", list);
-		map.put("scrSublist", scrSubSearch);
+		map.put("scrSubSearch", scrSubSearch);
 		map.put("scSubCondition", scSubCondition);
 
 		return map;

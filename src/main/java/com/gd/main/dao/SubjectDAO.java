@@ -37,6 +37,8 @@ public interface SubjectDAO {
 
 	int allCount();
 
+	int allCount(HashMap<String, Object> params);
+
 	ArrayList<SubDTO> scrSublist();
 
 	int scrReg(HashMap<String, String> params);

@@ -131,4 +131,12 @@
 			WHERE sub_condition = '종합'
 		</if>
 	</select>
+	
+	<select id="selectSubjectCall" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
+		co_startTime, co_condition FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+		WHERE subject.sub_name = #{param1}
+		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
 </mapper>

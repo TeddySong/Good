@@ -26,6 +26,8 @@ public class CourseService {
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		
+		//String sub_no = params.get("sub_no");
+		//String sub_name = params.get("sub_name");
 		
 		String subName = params.get("subName");
 		String courseNameSearch = params.get("courseNameSearch");
@@ -38,6 +40,8 @@ public class CourseService {
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
+		//searchResult.put("sub_no", sub_no);
+		//searchResult.put("sub_name", sub_name);
 		
 		//입력된 날짜가 빈값일 때
 		if(startSearch == "") {
@@ -79,7 +83,8 @@ public class CourseService {
 		searchResult.put("offset", offset);
 		
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
-		//ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
+		//ArrayList<CourseDTO> selectSubjectCall = dao.selectSubjectCall(sub_no,sub_name,cnt,offset);
+		//map.put("selectSubjectCall", selectSubjectCall);
 		map.put("courList", courList);
 		
 		return map;

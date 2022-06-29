@@ -2,6 +2,8 @@ package com.gd.main.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class AssListDTO {
@@ -9,7 +11,9 @@ public class AssListDTO {
 	private String sub_name;
 	private String co_name;
 	private String co_startTime;
+	
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date co_startDate;
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date co_endDate;

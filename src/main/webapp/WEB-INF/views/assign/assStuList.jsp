@@ -196,12 +196,14 @@
 										</tr> -->
 										<tr>
 											<h3>과정 상세정보</h3>
-											<th>학생명</th>
+											<tr>
+										<th>학생명</th>
 											<td id="cli_name"><input type="text"  />${cli_name}</td>
 											<td>
 												<button id="cli_nameSearch">검색</button>
 												<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
 											</td>
+										</tr>
 										</tr>
 										<tr>
 											<th>과목명</th>
@@ -214,7 +216,8 @@
 										</tr>
 									</thead>
 									<tbody id="assStuCoList">
-										<tr>
+										
+									<!-- 	<tr>
 											<td id ="sub_name"></td>
 											<td id ="co_name"></td>
 											<td id ="co_startDate"></td>	
@@ -229,7 +232,7 @@
 												</select>
 											</td>
 											<td id = "coSearch"><button>검색</button></td>
-										</tr>
+										</tr> -->
 									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
@@ -254,27 +257,84 @@
 </body>
 <script>
 
-$.ajax({
-	type:'get',
-	url:'assStuList.ajax',
-	data:{},
-	dataType:'JSON',
-	success:function(data){
-		console.log(data);
-		//drawList(data.list);
-		$('#cli_name').html(data.dto.cli_name);
-		$('#sub_name').html(data.dto.sub_name);
-		$('#co_name').html(data.dto.co_name);
-		$('#co_startDate').html(data.dto.co_startDate);
-		$('#co_endDate').html(data.dto.co_endDate);
-		$('#co_startTime').html(data.dto.co_startTime);
-		$('#ass_condition').html(data.dto.ass_condition);
-		 
-		
-	},
-	error:function(error){}
-});
+var currPage = 1;
 
+listCall(currPage);
+
+function listCall(page){
+	
+	var pagePerNum = 10;
+	console.log("param page : " + page);
+
+
+	$.ajax({
+		type:'get',
+		url:'assStuList.ajax',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.assStuCoList);
+		/* 	$('#cli_name').html(data.dto.cli_name);
+			$('#sub_name').html(data.dto.sub_name);
+			$('#co_name').html(data.dto.co_name);
+			$('#co_startDate').html(data.dto.co_startDate);
+			$('#co_endDate').html(data.dto.co_endDate);
+			$('#co_startTime').html(data.dto.co_startTime);
+			$('#ass_condition').html(data.dto.ass_condition); */
+			 
+			
+		},
+		error:function(error){
+			console.log(error);
+			
+		}
+	});
+}
+/* function drawList(assStuCoList){
+	var content="";
+	assStuCoList.forEach(function(item){
+		
+		content += '<tr>';
+		content += '<td>'+item.cli_name+'</td>';
+		content += '<td>'+item.sub_name+'</td>';
+		content += '<td>'+item.co_name+'</td>';		
+		content += '<td>'+item.co_startDate+'</td>';
+		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+item.ass_condition+'</td>';
+		content += '</tr>'; 
+	});
+	$('#assStuCoList').empty();
+	$('#assStuCoList').append(content);
+	
+} */
+
+
+
+ function drawList(assStuCoList){
+	var content="";
+	assStuCoList.forEach(function(item){
+		content += '<tr>';
+		content += '<td>'+item.sub_name+'</td>';
+		content += '<td>'+item.co_name+'</a></td>';		
+		content += '<td>'+item.co_startDate+'</td>';
+		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+item.co_startTime+'</td>';
+		content += '<td>'+item.ass_condition+'<select id=\"coCondition\">';
+		content +=	'<option value='+item.ass_condition+'>재학</option>';
+		content +=	'<option value='+item.ass_condition+'>대기</option>';
+		content +=	'<option value='+item.ass_condition+'>철회</option>';
+		content +=	'<option value='+item.ass_condition+'>수료</option>';
+		content +='</td>';
+		content +='<td id = \"coSearch\"><button>검색</button></td>'
+		content += '</tr>'; 
+	});
+	$('#assStuCoList').empty();
+	$('#assStuCoList').append(content);
+	
+} 
+	
+	
 	
 </script>
 </html>

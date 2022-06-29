@@ -317,7 +317,7 @@ function listCall(page){
 	function drawList(assList){
 		var content="";
 		assList.forEach(function(item,co_no){
-			
+			console.log("what"+item.co_no);
 				content +='<tr>';
 				content +='<td>'+item.sub_name+'</td>';
 				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</td>';

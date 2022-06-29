@@ -42,6 +42,9 @@ public class AssignService {
 		data.put("offset", offset);
 		
 		ArrayList<AssListDTO> assList = dao.assList(data);
+		for (AssListDTO assListDTO : assList) {
+			
+		}
 		assMap.put("assList",assList);
 		
 		return assMap;

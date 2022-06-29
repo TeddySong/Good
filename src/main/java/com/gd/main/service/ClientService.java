@@ -16,28 +16,36 @@ import com.gd.main.dto.Client_Dto;
 public class ClientService {
 	 Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ClientDAO dao;
-	public ArrayList<Client_Dto> list_Client() {
-		return dao.list_Client();
-		
-	}
-	public ArrayList<Client_Dto> client_search(String searchType, String keyword) {
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put("searchType", searchType); 
-		data.put("keyword", keyword);
-		
-		
-		return dao.client_searh(data);
-	}
+	
+	
+//	public ArrayList<Client_Dto> W() {
+//		return dao.list_Client();
+//		
+//	}
+//	
+//	public ArrayList<Client_Dto> client_search(String searchType, String keyword) {
+//		HashMap<String, Object> data = new HashMap<String, Object>();
+//		data.put("searchType", searchType); 
+//		data.put("keyword", keyword);
+//		
+//		
+//		return dao.client_searh(data);
+//	}
+	
 	public Client_Dto detail_Client(int cli_no) {
 		// TODO Auto-generated method stub
 		return dao.detail_Client(cli_no);
 	}
+	
 	public ArrayList<Client_Dto> clientLog(int cli_no) {
 		return dao.clientLog(cli_no);
 	}
-	public ArrayList<HashMap<String, Object>> list_Client2() {
-		return dao.list_Client2();
-	}
+	
+//	public ArrayList<HashMap<String, Object>> list_Client2() {
+//		return dao.list_Client2();
+//	}
+	
+	
 	/*
 	public int listsearchCount(String searchType, String keyword) {
 		HashMap<String, Object> data = new HashMap<String, Object>();
@@ -90,6 +98,7 @@ public class ClientService {
 		return map;
 	}
 	*/
+	
 	public HashMap<String, Object> ajaxSearch(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int cnt =Integer.parseInt(params.get("cnt"));
@@ -117,6 +126,8 @@ public class ClientService {
 		if(page > pages) {
 			page = pages; 
 		}
+		
+		
 		
 		
 		map.put("pages", pages);	//만들 수 있는 최대 페이지 수
@@ -164,12 +175,15 @@ public class ClientService {
 		// TODO Auto-generated method stub
 		 return dao.cliUpdate(map);
 	}
+	
 	public ArrayList<Client_Dto> empList() {
 		return dao.empList();
 	}
+	
 	public ArrayList<Client_Dto> empSearch(String empkeyword) {
 		return dao.empSearch(empkeyword);
 	}
+	
 	public int empUp(HashMap<String, Object> map) {
 
 		return dao.empUp(map);
@@ -185,6 +199,7 @@ public class ClientService {
 		}
 		
 	}
+	
 	public HashMap<String, Object> ajaxSubSearch(ArrayList<Object> cli_no) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//String sub = new HashMap<String, Object>();
@@ -218,6 +233,62 @@ public class ClientService {
 	}
 	
 	
+	public Client_Dto cliManager(int cli_no) {
+		return dao.cliManager(cli_no) ;
+	}
+	
+	public String scheRegister(HashMap<String, Object> map) {
+			String msg = "등록에 실패했습니다.";
+		if( dao.scheRegister(map)>0) {
+			msg ="등록에 성공했습니다";
+			}
+		
+		return msg;
+	}
+
+	public HashMap<String, Object> checkListDo(HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+	int cnt=Integer.parseInt(params.get("cnt"));  // 1페이지의 게시물 수
+	int page=Integer.parseInt(params.get("page")); // 현재 페이지 . 
+	
+	
+	String keyword = params.get("keyword");
+	String searchType = params.get("searchType");
+	String cli_log_Dday =params.get("cli_log_Dday");
+	
+	
+	map.put("keyword",keyword);
+	map.put("searchType",searchType);
+	map.put("cli_log_Dday",cli_log_Dday);
+	
+
+//	System.out.println("상담결과"+logResult);
+//	System.out.println(cli_log_Dday);
+	
+	/*
+	 * ArrayList<Integer> chkendCnt=dao.chkEndCnt();
+	 * 
+	 * map.put("chkendCnt", chkendCnt);
+	 */
+	int allCnt= dao.checkCnt(map);
+	
+	System.out.println("allcnt: "+allCnt);
+	int pages = allCnt%cnt>0 ? (allCnt/cnt)+1 : (allCnt/cnt);
+	if(pages==0) {pages=1;}
+	if(page>pages) {page=pages;}
+	map.put("pages", pages);	
+	map.put("currPage", page);
+	
+	int offset = (page-1)*cnt;
+	
+	map.put("offset", offset);
+	map.put("cnt", cnt);
+	
+	
+	ArrayList<Client_Dto> list = dao.shcekList(map);
+	map.put("list", list);
+	return map;
+	}
 
 
 

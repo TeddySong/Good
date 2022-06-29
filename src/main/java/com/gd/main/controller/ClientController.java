@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.main.dto.Client_Dto;
 
@@ -85,6 +86,13 @@ public class ClientController {
 	
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//service.ajaxSubSearch(cli_no);
+		
+		/*
+		 * if(cli_no==null) { ArrayList<Object> li = new ArrayList<Object>(); cli_no= li
+		 * ; map.put("li", li); return map;}
+		 */
+		
+		
 		return service.ajaxSubSearch(cli_no);
 	}
 	
@@ -200,4 +208,65 @@ public class ClientController {
 		return service.ajaxSearch(params);
 		
 	} 
+	
+	@RequestMapping("/scheRegister.go")
+	public String scheRegister(Integer cli_no,Model model) {
+		// 고객
+		//Integer cli_no=Integer.parseInt(cli_noo);
+		Client_Dto data = service.detail_Client(cli_no);
+		// 고객 한명에 대한 담당자 
+		Client_Dto data2 = service.cliManager(cli_no);
+		
+		
+		//System.out.println("이름"+data2.getEmp_name());
+		model.addAttribute("data",data);
+		model.addAttribute("data2",data2);
+		return "client/scheRegister"; 
+	}
+	
+	@RequestMapping("/scheRegister.do")
+	public String scheRegisterDo(RedirectAttributes re,@RequestParam HashMap<String, String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		System.out.println("params:"+params);
+		// 넘어온 값들 저장 
+		
+	
+		String cli_log_content =params.get("cli_log_content");
+		int cli_no=Integer.parseInt(params.get("cli_no"));
+		int emp_no=Integer.parseInt(params.get("emp_no"));
+		String cli_log_Dday = params.get("cli_log_Dday");
+		String cli_log_Dtime = params.get("cli_log_Dtime");
+		String cli_log_result = params.get("result");
+		
+		
+		
+		map.put("cli_log_result", cli_log_result);
+		map.put("cli_no", cli_no);
+		map.put("emp_no", emp_no);
+		map.put("cli_log_Dtime", cli_log_Dtime);
+		map.put("cli_log_Dday", cli_log_Dday);
+		map.put("cli_log_content", cli_log_content);
+		//성공 메시지 저장 
+		String msg = service.scheRegister(map);
+			re.addFlashAttribute("msg",msg);
+			re.addAttribute("cli_no", cli_no);
+		return "redirect:/clientDetail.go";
+	}
+	
+// 일정 리스트 이동 
+	@RequestMapping("/checkList.go")
+	public String checkListGo() {
+		return "client/checkList";
+	}
+	
+	
+	@RequestMapping("/checkList.do")
+	@ResponseBody
+	public HashMap<String, Object> checkListDo(@RequestParam HashMap<String,String> params) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String,Object>>();
+		
+		return service.checkListDo(params);
+	}
+	
 }

@@ -15,6 +15,13 @@ public class AssListDTO {
 	private String cli_phone;
 	private String emp_name;
 	private String co_condition;
+	public int getCo_no() {
+		return co_no;
+	}
+	public void setCo_no(int co_no) {
+		this.co_no = co_no;
+	}
+	private int co_no;
 	public String getSub_name() {
 		return sub_name;
 	}

@@ -6,7 +6,7 @@
 <!-- 과정전체 배정리스트 -->
 <select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
 
-		select sub_name,co_name,co_startTime,co_startDate,cli_name,cli_phone,emp_name,co_condition from assign a
+		select  sub_name,co_name,co_startTime,co_startDate,cli_name,cli_phone,emp_name,co_condition from assign a
 		left outer join client c on c.cli_no = stu_no
 		left outer join course c2 on c2.co_no = a.co_no
 		left outer join subject s on s.sub_no = a.sub_no

@@ -55,7 +55,7 @@ public class AssignController {
 	public String assCoListGo(HttpSession session, @RequestParam String co_no) {
 	
 		logger.info("과정에 대한 상세보기 요청" + co_no);
-		
+		System.out.println("과정에 대한 상세보기 요청" +co_no);
 		session.setAttribute("co_no", co_no);
 		
 		return "./assign/assCoList";

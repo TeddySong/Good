@@ -2,6 +2,7 @@ package com.gd.main.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,18 @@ public interface SubjectDAO {
 	int allCount();
 
 	ArrayList<SubDTO> scrSublist();
+
+	int scrReg(HashMap<String, String> params);
+
+	ArrayList<SubDTO> scrSubSearch(String sub_no);
+
+	ArrayList<SubDTO> scSubCondition(String subCo);
+
+	ArrayList<SubDTO> subCondition(String subCo);
+
+	ArrayList<SubDTO> sublistSearch(String subSe);
+
+
 
 
 

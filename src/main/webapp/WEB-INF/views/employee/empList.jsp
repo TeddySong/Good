@@ -314,7 +314,7 @@ function drawList(list){
 		content += '<tr>';
 		content += '<td><input type=\"radio\" name="emp"></td>';	
 		content += '<td>'+item.emp_no+'</td>';
-		content += '<td><a href="empWrite.go?emp_no="+'+item.emp_no+'">'+item.emp_name+'</a></td>';
+		content += '<td><a href="emplogList.go?emp_no='+item.emp_no+'">'+item.emp_name+'</a></td>';
 		content += '<td>'+item.emp_id+'</td>';
 		content += '<td>'+item.emp_phone+'</td>';
 		content += '<td>'+item.emp_position+'</td>';

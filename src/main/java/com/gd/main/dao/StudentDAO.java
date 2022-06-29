@@ -7,11 +7,11 @@ import com.gd.main.dto.StuDTO;
 
 public interface StudentDAO {
 
-	ArrayList<StuDTO> list(int cnt, int offset);
+	ArrayList<StuDTO> stuList(HashMap<String, Object> map);
 
-	int allCount();
+	ArrayList<StuDTO> allCount(HashMap<String, Object> map);
 
-	ArrayList<StuDTO> cliSearchList(String searchContent);
+	ArrayList<StuDTO> cliSearchList(HashMap<String, Object> map);
 
 	ArrayList<StuDTO> cliChoice(int result);
 
@@ -20,10 +20,30 @@ public interface StudentDAO {
 	ArrayList<StuDTO> subChoice(int result);
 
 	StuDTO stuDetail(String stu_no);
+	
+	ArrayList<StuDTO> subList(HashMap<String, Object> map);
 
 	int stuRegister(HashMap<String, String> params);
 
 	int stuUpdate(HashMap<String, String> params);
+
+	ArrayList<StuDTO> stuLog(String stu_no);
+
+	int stuLogRegister(HashMap<String, String> params);
+
+	String stuName(String stu_no);
+
+	
+
+	
+
+	
+
+	
+
+	
+
+	
 
 
 }

@@ -24,6 +24,8 @@ public class StudentService {
 		
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
+		String stuSearchCategory = params.get("stuSearchCategory");
+		String stuSearchContent = params.get("stuSearchContent");
 		logger.info("보여줄 페이지 : "+page);
 		// 1페이지 -> 0(offset:게시글 시작 번호)
 		// 2페이지 -> 5
@@ -31,8 +33,15 @@ public class StudentService {
 		// 4페이지 -> 15
 		// 5페이지 -> 20
 		
+		map.put("cnt", cnt);
+		
+		map.put("stuSearchCategory", stuSearchCategory);
+		map.put("stuSearchContent", stuSearchContent);
+		
+		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-		int allCnt = dao.allCount();
+		ArrayList<StuDTO> allCount = dao.allCount(map);
+		int allCnt=allCount.size();
 		logger.info("allCnt : "+allCnt);
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : "+pages);
@@ -47,15 +56,22 @@ public class StudentService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		
-		ArrayList<StuDTO> list = dao.list(cnt,offset);
+		map.put("offset", offset);
+		
+		ArrayList<StuDTO> list = dao.stuList(map);
+		logger.info("list : "+list.size());
 		map.put("list", list);
 		
 		return map;
 	}
 
-	public ArrayList<StuDTO> cliSearchList(String searchContent) {
-		logger.info("리스트 서비스 요청");
-		return dao.cliSearchList(searchContent);		
+	public ArrayList<StuDTO> cliSearchList(String cliSearchCondition, String searchContent) {	
+		logger.info("고객검색 서비스:" + cliSearchCondition +"/"+searchContent);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cliSearchCondition", cliSearchCondition);
+		map.put("searchContent", searchContent);
+		
+		return dao.cliSearchList(map);		
 	}
 
 	public ArrayList<StuDTO> cliChoice(int result) {
@@ -78,21 +94,33 @@ public class StudentService {
 		return dao.stuDetail(stu_no);
 
 	}
+	
+	public HashMap<String, Object> subList(String stu_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("stu_no", stu_no);
+		ArrayList<StuDTO> subList = dao.subList(map);
+		logger.info("list : " + subList.size());
+		
+		map.put("list", subList);
+		
+		return map;
+	}
 
 	public HashMap<String, Object> stuRegister(HashMap<String, String> params) {
 		logger.info("들어왔는지 확인");
 	      HashMap<String, Object> result=new HashMap<String, Object>();
-	      int row=dao.stuRegister(params);
 	      
-	      
+	      int row=dao.stuRegister(params);	      
 	      
 	      boolean cnt=false;
 	      if(row>0) {
-	         cnt=true;
+	         cnt=true;	         
 	      }
 	      result.put("success",cnt);
 	      return result;
 	}
+	
+	
 
 	public boolean stuUpdate(HashMap<String, String> params) {
 		boolean success = false;
@@ -108,7 +136,48 @@ public class StudentService {
 		return success;
 	}
 
+	/*
+	 * public StuDTO stuLog(String stu_no) {
+	 * 
+	 * return dao.stuLog(stu_no);
+	 * 
+	 * }
+	 */
+
+	public ArrayList<StuDTO> stuLog(String stu_no) {
+		
+		
+		logger.info("학사일지 서비스");	
+		
+		return dao.stuLog(stu_no);
+	}
+
+	public HashMap<String, Object> stuLogRegister(HashMap<String, String> params) {
+		logger.info("들어왔는지 확인 : {}" , params);
+	      HashMap<String, Object> result=new HashMap<String, Object>();
+	      int row=dao.stuLogRegister(params);
+	      
+	      String stuNo=params.get("stu_no");
+	      logger.info("확인"+stuNo);	      
+	      
+	      boolean cnt=false;
+	      if(row>0) {
+	         cnt=true;
+	      }
+	      result.put("success",cnt);
+	      result.put("stuNo", stuNo);
+	      return result;
+	      
+	      
+	}
+
+	public String stuName(String stu_no) {
+		return dao.stuName(stu_no);
+		
+	}
+
 	
+
 	
 	
 }

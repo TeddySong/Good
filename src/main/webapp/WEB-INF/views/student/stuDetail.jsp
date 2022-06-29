@@ -18,10 +18,10 @@
 	}
 
 	#goodList {  
-			  margin:0 auto;            
+			            
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 70%;
+			  width: 80%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
@@ -55,7 +55,24 @@
 		width : 80%;
 	}
 	
+	.goodRegister {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
 	
+	.goodRegister:hover{
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
 	
 	input[type='button'] {
 		position: relative;
@@ -180,7 +197,10 @@
                                 수강생등록
                             </div>
                             <div>
-                                <table id="goodList">
+                            <div style="width:80%; text-align:end;">
+                            <input type="button" value="학사일지" onclick="stuLog()"/>
+                            </div>
+                                <table id="goodList">                                	
                                 	<tr id="stu_no_tr">
 										<th>학번</th>
 										<td id="stu_no"></td>
@@ -212,17 +232,17 @@
 									<tr>
 										<th>학생상태</th>
 										<td id="stu_condition"></td>
-									</tr>
-									<tr>
-										<th colspan="2">과목정보</th>										
-									</tr>
-									<tr>
-										<td colspan="2"></td>				
-									</tr>
-									<tr id="subjectDetail">
-										<th>과목</th>
-										<td id="sub_name"></td>
-									</tr>
+									</tr>									
+									</table>
+									<table id="goodList">
+									<thead>
+										<tr>
+											<th style="font-size:30px;">등록 과목</th>
+										</tr>
+									</thead>
+									<tbody id="list">
+
+									</tbody>
 									<tr>
 										<th colspan="2">
 											<input type="button" value="수정" onclick="stuUpdate()"/>
@@ -270,7 +290,7 @@
 	});
 	
 	
-	$.ajax({
+	/* $.ajax({
 		type:'get',
 		url:'subDetail.ajax',
 		data:{},
@@ -282,9 +302,38 @@
 		error:function(error){
 			console.log(error);
 		}
-	});
+	}); */
 	
+	subListCall();
+	function subListCall(){ //controller에 list를 요청
+		$.ajax({
+			type:'get',
+			url:'stuSubDetail.ajax',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+					console.log(data);
+					console.log('테이블 그리기');
+					drawList(data.list);								
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	}
 	
+	function drawList(list){
+		var content ='';
+		console.log(Array.isArray(list));
+		list.forEach(function(item,idx){
+			console.log(item);
+			content += '<tr>';
+			content += '<td colspan="2" style="text-align:end; font-size:30px;">'+item.sub_name+'</td>';
+			content += '</tr>';
+		});
+		$('#list').empty();
+		$('#list').append(content);
+	}
 	
 	
 	function stuUpdate(){
@@ -292,7 +341,10 @@
 		location.href = 'stuUpdate.go?stu_no='+stu_no;
 	}
 	
-	
+	function stuLog(){
+		var stu_no = $("#stu_no").html();
+		location.href='/stuLog.go?stu_no='+stu_no;
+	}
 	
 	
 	

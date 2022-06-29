@@ -320,12 +320,12 @@ function stuUpdate(){
 		
 		// JavaScript Object에 데이터 넣는 방법
 		var params = {};
-		params['cli_no'] = $('#cli_no').val();
-		params['emp_no'] = $('#emp_no').val();
-		params['stu_no'] = $('#stu_no').val();
-		params['cli_name'] = $('#cli_name').val();
-		params['cli_phone'] = $('#cli_phone').val();
-		params['emp_name'] = $('#emp_name').val();
+		params['cli_no'] = $('#cli_no').html();
+		params['emp_no'] = $('#emp_no').html();
+		params['stu_no'] = $('#stu_no').html();
+		params['cli_name'] = $('#cli_name').html();
+		params['cli_phone'] = $('#cli_phone').html();
+		params['emp_name'] = $('#emp_name').html();
 		params['stu_birth'] = $('#stu_birth').val();
 		params['stu_age'] = $('#stu_age').val();
 		params['stu_gender'] = $('input[name="stu_gender"]:checked').val();

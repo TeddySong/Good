@@ -174,62 +174,56 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">과목 목록</h1>                        
+                        <h1 class="mt-4">과정 목록</h1>                        
                         <div class="card mb-4">
                             <div class="card-body">
-                                GOOD2 IT 과목 리스트 입니다.                                
+                                GOOD2 IT 과정 리스트 입니다.                                
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                과목리스트
+                                과정리스트
                             </div>
                             <div>
                             <table id="goodList">
                             	<tr>
                             		<td>
-                            			<select>
+                            			<select id="subNameSearch" name="subNameSearch">
 									         <option>과목명</option>
 									         <c:forEach items="${subName}" var="subName">
-									         		<option value="${subName.sub_no}">${subName.sub_name}</option>
+									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
 									         </c:forEach>
 									      </select>
                             		</td>
-                            		<td><select>
-									          <option>과정명</option>
-									          <option value=""></option>
-									          <option value=""></option>
-									          <option value=""></option>
-									          <option value=""></option>
-									          <option value=""></option>
+                            		<td><select id="courseNameSearch" name="">
+									          <option value="과정명">과정명</option>
+									          <option value="과정 진행상황">과정 진행상황</option>
 									      </select>
 									</td>
-                            		<td><input type="text" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
-                            		<td><input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/></td>
+                            		<%-- <td><select id="courseNameSearch" name="">
+									          <option>과정명</option>
+									          <c:forEach items="${courseName}" var="courseName">
+									         		<option value="${courseName.co_no}">${courseName.co_name}</option>
+									         </c:forEach>
+									      </select>
+									</td> --%>
+                            		<td><input id="keyword" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
+                            		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td>~</td>
-                            		<td><input type="date" id="" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td><button onclick="#" class="goodRegister">검색</button></td>
+                            		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
+                            		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
                             	</tr>
                             </table>
-                            <!-- <input type="button" value="검색"/> -->
 							<br/>
 						    
 						    <!--표-->
-						   <!--  게시물 갯수
-							<select id="pagePerNum">
-								<option value="5">5</option>
-								<option value="10">10</option>
-								<option value="15">15</option>
-								<option value="20">20</option>
-							</select> -->
-						    <button onclick="location.href='courWrite.go'" class="goodRegister">등록</button>
+						    <button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th></th>
+										<th>과목번호</th>
 										<th>과정명</th>
-										<!-- <th>과목번호</th> -->
 										<th>과목명</th>
 										<th>개강일</th>
 										<th>종강일</th>
@@ -237,12 +231,12 @@
 										<th>진행상황</th>
 									</tr>
 								</thead>
-								<tbody>
-									<c:forEach items="${courList}" var="courList">
+								<%-- <tbody id="list">
+									 <c:forEach items="${courList}" var="courList">
 										<tr>
 											<td>${courList.co_no}</td>
 											<td><a href="courDetail.do?co_no=${courList.co_no}">${courList.co_name}</a></td>
-											<%-- <td>${courList.sub_no}</td> --%>
+											<td>${courList.sub_no}</td>
 											<td>${courList.sub_name}</td>
 											<td>${courList.co_startDate}</td>
 											<td>${courList.co_endDate}</td>
@@ -250,21 +244,21 @@
 											<td>${courList.co_condition}</td>
 										</tr>
 									</c:forEach>
-								</tbody>
+								</tbody> --%>
 								
-								<!-- <tbody id="list">
+								<tbody id="list">
 									
-								</tbody> -->
-								<!-- <tr>
+								</tbody>
+								<tr>
 									<td colspan="7" id="paging">
-									twbspagination 플러그인
+									<!-- twbspagination 플러그인 -->
 									<div class="container">
 										<nav arial-label="Page navigation" style="text-align:center">
 											<ul class="pagination" id="pagination"></ul>
 										</nav>
 									</div>
 									</td>
-								</tr> -->
+								</tr>
 							</table>
                     </div>
                 </main>
@@ -278,43 +272,128 @@
 
 </body>
 <script>
-listCall();
+var currPage = 1;
 
-function listCall(){
+listCall(currPage);
+
+function listCall(page){
+	
+	var pagePerNum = 10;
+	//console.log("param page : " + page);
 	
 	$.ajax({
 		type:'get',
-		url:'subList.ajax',
-		data:{},
+		url:'courList.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page
+		},
 		dataType:'JSON',
 		success:function(data){
-				console.log(data);
-				
-			if(data.login){
-				drawList(data.subList);
-			}else{
-				alert('로그인이 필요한 서비스 입니다.');
-				location.href='/';
-			}
+			//console.log(data);
+			drawList(data.courList);
+			currPage=data.currPage;
+			
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					listCall(page);
+				}
+			});
+			
 		},
 		error:function(e){
 			console.log(e);
 		}
-			
 	});
+	
+	
+//검색
+$('#courSearch').on('click',function(){
+	
+	 var subNameSearch = $("#subNameSearch option:selected").val();
+	 console.log(subNameSearch);
+	 
+	 var courseNameSearch = $("#courseNameSearch option:selected").val();
+	 console.log(courseNameSearch);
+	 
+	 var keyword = $("#keyword").val();
+	 console.log(keyword);
+	 
+	 var startSearch = $("#startSearch").val();
+	 console.log(startSearch);
+	 
+	 var endSearch = $("#endSearch").val();
+	 console.log(endSearch);
+	 
+	 $.ajax({
+		 type:'get',
+		 url:'courSearch.ajax',
+		 data:{
+			 cnt : pagePerNum,
+			 page : page,
+			 subNameSearch : subNameSearch,
+			 courseNameSearch : courseNameSearch,
+			 keyword : keyword,
+			 startSearch : startSearch,
+			 endSearch : endSearch 
+		 },
+		dataType:'json',
+		success:function(data){
+			//console.log(data);
+			drawList(data.courList);
+			currPage = data.currPage;
+			
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					listCall(page);
+				}
+			});
+		},
+		error:function(e){
+			console.log(e);
+		}
+	 });
+});
+
+
+
 }
 
-function drawList(list){
-	var content = '';
-	list.forEach(function(item,sub_no){
-		console.log(item,sub_no);
+
+//리스트 그리기
+function drawList(courList){
+	
+	var content="";
+	
+	courList.forEach(function(item){
+		//console.log(item);
 		content += '<tr>';
-		content += '<td><a href="subDetail.do?sub_no='+item.sub_no+'">'+item.sub_name+'</a></td>';
-		content += '<td>'+item.sub_condition+'</td>';
+		content += '<td>'+item.co_no+'</td>';
+		content += '<td><a href="courDetail.do?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
+		content += '<td>'+item.sub_name+'</td>';
+		content += '<td>'+item.co_startDate+'</td>';
+		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+item.co_startTime+'</td>';
+		content += '<td>'+item.co_condition+'</td>';
 		content += '</tr>';
 	});
+	
 	$('#list').empty();
 	$('#list').append(content);
 }
+
+
 </script>
 </html>

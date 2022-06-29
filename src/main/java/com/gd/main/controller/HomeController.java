@@ -48,6 +48,11 @@ public class HomeController {
 		
 		if(success){
 			session.setAttribute("loginId", emp_id);
+			String empName = service.empLoginName(emp_id);
+			logger.info(empName);
+			session.setAttribute("empName", empName);
+			int empNo = service.empNo(emp_id);
+			session.setAttribute("empNo", empNo);
 		}
 		
 		return map;

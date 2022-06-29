@@ -3,21 +3,65 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.StudentDAO">
 	
-	<select id="list" resultType="com.gd.main.dto.StuDTO">
+	<select id="stuList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
 		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, emp_name FROM student s 
 		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
-		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no
-		ORDER BY stu_no DESC limit #{param1} OFFSET #{param2}
+		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no		
+		<where>
+				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
+					<if test="stuSearchCategory.equals('cli_name')">
+						c.cli_name = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('cli_phone')">
+						c.cli_phone = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('stu_age')">
+						s.stu_age = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('emp_name')">
+						e.emp_name = #{stuSearchContent}
+					</if>
+			</if>
+			</where>
+		ORDER BY stu_no DESC limit #{cnt} OFFSET #{offset}
+			
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(stu_no) FROM student s
+	<select id="allCount" resultType="com.gd.main.dto.StuDTO">
+		SELECT stu_no FROM student s
+		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
+		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no		
+		<where>
+				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
+					<if test="stuSearchCategory.equals('cli_name')">
+						c.cli_name = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('cli_phone')">
+						c.cli_phone = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('stu_age')">
+						s.stu_age = #{stuSearchContent}
+					</if>
+					<if test="stuSearchCategory.equals('emp_name')">
+						e.emp_name = #{stuSearchContent}
+					</if>
+			</if>
+			</where>
 	</select>
 	
-	<select id="cliSearchList" resultType="com.gd.main.dto.StuDTO">
+	<select id="cliSearchList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
 		SELECT cli_no, cli_name, cli_phone, emp_name, c.emp_no FROM client c 
 		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no
-		WHERE cli_name=#{param1} OR cli_phone=#{param1}
+		<where>
+			<if test="cliSearchCondition != null and cliSearchCondition != '' and searchContent != null and searchContent != ''">
+					<if test="cliSearchCondition.equals('cli_name')">
+						c.cli_name = #{searchContent}
+					</if>
+					<if test="cliSearchCondition.equals('cli_phone')">
+						c.cli_phone = #{searchContent}
+					</if>
+				</if>
+		</where>
 	</select>
 	
 	<select id="cliChoice" resultType="com.gd.main.dto.StuDTO">
@@ -26,7 +70,7 @@
 		WHERE cli_no=#{param1}
 	</select>
 	
-	<select id="subSearchList" resultType="com.gd.main.dto.StuDTO">
+	<select id="subSearchList" resultType="com.gd.main.dto.StuDTO" >
 		SELECT sub_no, sub_name FROM subject		
 		WHERE sub_name=#{param1}
 	</select>
@@ -43,6 +87,13 @@
 		WHERE stu_no = #{param1}
 	</select>
 	
+	<select id="subList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
+		SELECT r.sub_no, r.stu_no, sub_name FROM rSub r
+		LEFT OUTER JOIN student s ON s.stu_no = r.stu_no
+		LEFT OUTER JOIN subject s2 ON s2.sub_no = r.sub_no		 
+		WHERE r.stu_no = #{stu_no}
+	</select>
+	
 	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>
 		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
 		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
@@ -55,5 +106,24 @@
 			stu_condition = #{stu_condition}
 		WHERE stu_no = #{stu_no}
 	</update>
+	
+	<select id="stuLog" resultType="com.gd.main.dto.StuDTO">
+		select sl.stu_no, cli_name, stu_log_date, stu_log_content, emp_name  from student_log sl 
+		left outer join employee e on sl.emp_no = e.emp_no 
+		left outer join student s on sl.stu_no = s.stu_no 
+		left outer join client c on s.cli_no = c.cli_no
+		WHERE sl.stu_no = #{param1}
+	</select>
+	
+	<insert id="stuLogRegister" parameterType='hashmap'>
+		INSERT INTO student_log (stu_no, emp_no, stu_log_content)
+		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
+	</insert>
+	
+	<select id="stuName" resultType="String">
+		SELECT cli_name FROM client c
+		left outer join student s on c.cli_no = s.cli_no
+		WHERE stu_no = #{param1}
+	</select>
 	
 </mapper>

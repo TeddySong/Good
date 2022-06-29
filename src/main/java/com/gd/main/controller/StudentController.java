@@ -34,7 +34,7 @@ public class StudentController {
 	
 	@RequestMapping("stuList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courseList(
+	public HashMap<String, Object> stuList(
 			@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("수강생 리스트 요청 : "+params);
 		//HashMap<String, Object> map = new HashMap<String, Object>();
@@ -50,6 +50,16 @@ public class StudentController {
 		
 		return service.stuList(params);
 	}
+	
+	@RequestMapping("/stuSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stuSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
+		
+		return service.stuList(params);
+	}
+	
+	
+	
 	
 	@RequestMapping(value = "/stuRegister.go")
 	public String stuRegisterGo() {	
@@ -72,7 +82,7 @@ public class StudentController {
 		
 		logger.info(cliSearchCondition + "/" + searchContent);
 		
-		ArrayList<StuDTO> cliSearchList = service.cliSearchList(searchContent);
+		ArrayList<StuDTO> cliSearchList = service.cliSearchList(cliSearchCondition, searchContent);
 		logger.info("list size : " + cliSearchList.size());
 		
 		model.addAttribute("cliSearchList", cliSearchList);
@@ -153,14 +163,25 @@ public class StudentController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 			String stu_no = (String) session.getAttribute("stu_no");
-			logger.info("상세 데이터 요청 : " + stu_no);
-			session.removeAttribute("stu_no"); // 사용한 idx는 삭제
+			logger.info("상세 데이터 요청 : " + stu_no);			
 			StuDTO dto = service.stuDetail(stu_no);
 			map.put("dto", dto);
 			logger.info("클라이언트 : {}", dto );
 		
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/stuSubDetail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stuSubDetail(HttpSession session) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+			String stu_no = (String) session.getAttribute("stu_no");
+			logger.info("상세 데이터 요청 : " + stu_no);
+			session.removeAttribute("stu_no"); // 사용한 idx는 삭제
+			return service.subList(stu_no);
 	}
 	
 	
@@ -203,6 +224,70 @@ public class StudentController {
 		
 		return map;
 	}
+	
+	/*
+	 * @RequestMapping(value = "/stuLog.go") public String stuLogGo(@RequestParam
+	 * String stu_no, HttpSession session) { logger.info("학사일지 페이지 이동:" + stu_no);
+	 * session.setAttribute("stu_no", stu_no); return "./student/stuLog"; }
+	 */
+	
+	/*
+	 * @RequestMapping(value="/stuLog.ajax")
+	 * 
+	 * @ResponseBody public HashMap<String, Object> stuLog(HttpSession session,
+	 * 
+	 * @RequestParam HashMap<String, String> params) { HashMap<String, Object> map =
+	 * new HashMap<String, Object>();
+	 * 
+	 * String stu_no = (String) session.getAttribute("stu_no");
+	 * logger.info("상세 데이터 요청 : " + stu_no); session.removeAttribute("stu_no"); //
+	 * 사용한 idx는 삭제 StuDTO dto = service.stuLog(stu_no); map.put("dto", dto);
+	 * logger.info("클라이언트 : {}", dto );
+	 * 
+	 * 
+	 * return map; }
+	 */
+	
+	@RequestMapping(value = "/stuLog.go")
+	public String stuLog(Model model, HttpSession session, @RequestParam String stu_no) {
+		
+		String page = "redirect:/stuList.go";
+		logger.info("상세보기 요청 글 번호: " + stu_no);
+		
+		if(session.getAttribute("loginId") != null) {			
+			ArrayList<StuDTO> list = service.stuLog(stu_no);
+			if(list != null) {
+			model.addAttribute("list", list);
+			model.addAttribute("stu_no",stu_no);
+			String stuName = service.stuName(stu_no);
+			model.addAttribute("stuName",stuName);
+			page = "./student/stuLog";
+			}
+		} else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
+	}
+	
+	
+	@RequestMapping(value="/stuLogRegister.go")
+	public String stuLogRegisterGo(@RequestParam String stu_no, HttpSession session) {
+		logger.info("학사일지 등록 페이지 이동 : " + stu_no);
+		session.setAttribute("stu_no", stu_no);
+		
+		
+		return "./student/stuLogRegister";
+	}
+	
+	@RequestMapping("/stuLogRegister.ajax")
+	   @ResponseBody
+	    public HashMap<String, Object> stuLogRegister(
+	          @RequestParam HashMap<String, String> params) {
+	       
+	       logger.info("학사일지쓰기");
+	       return service.stuLogRegister(params);
+	    }
 	
 	
 	

@@ -113,7 +113,7 @@ function save(){
 	
 	$.ajax({
 		type:'post',
-		url:'empWrite.ajax',
+		url:'empRegister.ajax',
 		data:{
 			emp_id:$emp_id,
 			emp_pw:$emp_pw,
@@ -127,6 +127,7 @@ function save(){
 		success:function(data){
 			console.log(data);
 			if(data.success){
+				alert("등록이 되었습니다!");
 				location.href="empList.go";
 			} else {
 				alert("로그인이 필요한 서비스입니다.");

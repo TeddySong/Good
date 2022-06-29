@@ -22,16 +22,16 @@ public class EmployeeController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	//직원일지 페이지 
-	@RequestMapping(value = "/emplogList.go")
+	@RequestMapping(value = "/empLogList.go")
 	public String emplogListGo(Model model, @RequestParam int emp_no) {
 	logger.info("직원일지 페이지! : " + emp_no); 
-	ArrayList<EmployeeDTO> dto = service.emplogList(emp_no);
+	ArrayList<EmployeeDTO> dto = service.empLogList(emp_no);
 	logger.info("리스트 사이즈:"+dto.size());
 	String empName=service.empName(emp_no);
 	model.addAttribute("dto",dto);
 	model.addAttribute("empName", empName);
 	
-	return "./employee/emplogList";
+	return "./employee/empLogList";
 	} 
 	
 	//직원 수정
@@ -80,10 +80,10 @@ public class EmployeeController {
 	}
 
 	// 직원 등록 페이지로 이동
-	@RequestMapping(value = "/empWrite.go")
-	public String empWrite() throws Exception {
+	@RequestMapping(value = "/empRegister.go")
+	public String empRegister() throws Exception {
 		logger.info("회원등록 페이지 이동");
-		return "./employee/empWrite";
+		return "./employee/empRegister";
 	}
 
 	// 직원명 중복체크
@@ -95,11 +95,11 @@ public class EmployeeController {
 	}
 
 	// 직원 등록
-	@RequestMapping(value = "/empWrite.ajax")
+	@RequestMapping(value = "/empRegister.ajax")
 	@ResponseBody
-	public HashMap<String, Object> empWrite(@RequestParam HashMap<String, Object> params) {
+	public HashMap<String, Object> empRegister(@RequestParam HashMap<String, Object> params) {
 		logger.info("직원 등록하기 : " + params);
-		return service.empWrite(params);
+		return service.empRegister(params);
 	}
 
 	/*

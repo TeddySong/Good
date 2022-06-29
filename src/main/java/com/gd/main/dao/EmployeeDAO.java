@@ -7,7 +7,7 @@ public interface EmployeeDAO {
 	
 	
 
-	ArrayList<EmployeeDTO> emplogList(int emp_no);
+	ArrayList<EmployeeDTO> empLogList(int emp_no);
 	
 	int allCount();
 
@@ -15,7 +15,7 @@ public interface EmployeeDAO {
 
 	String empOverlay(String chkName);
 
-	int empWrite(HashMap<String, Object> params);
+	int empRegister(HashMap<String, Object> params);
 	
 	EmployeeDTO selectEmpMyInfo(int emp_no);
 

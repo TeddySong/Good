@@ -20,10 +20,10 @@ public class EmployeeService {
 
 	
 	//직원일지 리스트
-	public ArrayList<EmployeeDTO> emplogList(int emp_no){
+	public ArrayList<EmployeeDTO> empLogList(int emp_no){
 		logger.info("리스트 서비스 요청");
 		logger.info("받아온 넘버 : " + emp_no);
-		return dao.emplogList(emp_no);
+		return dao.empLogList(emp_no);
 	}
 	
 	//직원일지 상단에 직원명 가져오기 
@@ -78,9 +78,9 @@ public class EmployeeService {
 		return map;
 	}
 
-	public HashMap<String, Object> empWrite(HashMap<String, Object> params) {
+	public HashMap<String, Object> empRegister(HashMap<String, Object> params) {
 		HashMap<String, Object> writeResult = new HashMap<String, Object>();
-		int row = dao.empWrite(params);
+		int row = dao.empRegister(params);
 		boolean success = false;
 		logger.info("넘어온 값 : "+params);
 		if(row>0) {

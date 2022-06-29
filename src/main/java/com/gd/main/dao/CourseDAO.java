@@ -39,5 +39,7 @@ public interface CourseDAO {
 
 	ArrayList<CourseDTO> jonghab();
 
+	ArrayList<CourseDTO> selectSubjectCall(String sub_no, String sub_name, int cnt, int offset);
+
 	
 }

@@ -19,7 +19,7 @@
 		el.emp_log_condition,
 		el.emp_log_content,
 		el.emp_no
-FROM employee_log el 
+FROM employee_log el
 LEFT OUTER JOIN 
 		employee e ON e.emp_no =#{param1}
 </select>

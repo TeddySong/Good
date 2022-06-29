@@ -101,10 +101,10 @@
 	
 	<update id="stuUpdate" parameterType='hashmap'>
 		UPDATE student SET 
-			stu_birth = #{params[stu_birth]},
-			stu_gender = #{params[stu_gender]},
-			stu_condition = #{params[stu_condition]}
-		WHERE stu_no = #{params[stu_no]}
+			stu_birth = #{stu_birth},
+			stu_gender = #{stu_gender},
+			stu_condition = #{stu_condition}
+		WHERE stu_no = #{stu_no}
 	</update>
 	
 	<insert id="stuSubUpdate" parameterType='hashmap'>

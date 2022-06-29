@@ -103,15 +103,16 @@ ${empName}
 			</tr>
 			</thead>
 		<tbody id="list">
-		<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
-			<tr>  
-			<td><fmt:formatDate value="${employee_log.emp_log_date}" pattern="yyyy/MM/dd" /></td> <!-- 작성일-->
-			<td>${employee_log.emp_name}</td> 			<!-- 작성자 -->
-			<td>${employee_log.emp_no}</td> 	 
-			<td>${employee_log.emp_log_condition}</td>	 <!--  작성사유 -->
-			<td>${employee_log.emp_log_content}</td> 	<!-- 히스토리(내용) -->
-			</tr>
-		</c:forEach> 
+			<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
+				<tr>  
+				<td>
+					<fmt:formatDate value="${employee_log.emp_log_date}" pattern="yyyy/MM/dd" /></td> <!-- 작성일-->
+					<td>${employee_log.emp_name}</td> 			<!-- 작성자 -->
+					<td>${employee_log.emp_no}</td> 	 
+					<td>${employee_log.emp_log_condition}</td>	 <!--  작성사유 -->
+					<td>${employee_log.emp_log_content}</td> 	<!-- 히스토리(내용) -->
+				</tr>
+			</c:forEach> 
 		</tbody>
 	</table>
 </body>

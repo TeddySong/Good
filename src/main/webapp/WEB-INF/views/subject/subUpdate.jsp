@@ -98,12 +98,18 @@ $.ajax({
 		$('#sub_condition').val(data.dto.sub_condition);
 		$('#sub_time').val(data.dto.sub_time);
 		$('#sub_summary').val(data.dto.sub_summary);
+		if(data.subimg[0]){
+			$("#sub_img_name").text(data.subimg[0].subimg_oriName)
+		}else{
+				
+		}
+		
 		if(data.photo[0]){
 			$("#curri_file_name").text(data.photo[0].curri_oriName);
-			if(data.subImg[0]){
-				$("#sub_img_name").text(data.subImg[0].subimg_oriName)
-			}
+		}else{
+			
 		}
+		
 	},
 	error:function(error){
 		console.log(error);
@@ -146,18 +152,19 @@ function subUpdate(){
 		
 			var formData = new FormData();
 	
-			var sub_img = $("#sub_img")[0].files[0];
+			var subimg = $("#sub_img")[0].files[0];
 			var file = $("#curri")[0].files[0];
 			var subImgName = $("#sub_img_name").text();
 			var curriFileName = $("#curri_file_name").text();
 			
-			formData.append("sub_img", $("#sub_img")[0].files[0]);
+			formData.append("subimg", $("#sub_img")[0].files[0]);
 			formData.append("file", $("#curri")[0].files[0]);
 			formData.append("sub_no", $("#sub_no").val());
 			formData.append("sub_name", $sub_name.val());
 			formData.append("sub_condition", $sub_condition.val());
 			formData.append("sub_time", $sub_time.val());
 			formData.append("sub_summary", $sub_summary.val());
+			console.log(subimg);
 			
 			$.ajax({
 				type:'post',

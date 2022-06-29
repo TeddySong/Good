@@ -111,6 +111,8 @@ button {
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
+		var subimg = $("#sub_img")[0].files[0];
+		var file = $("#curri")[0].files[0];
 		
 		if(subOverChk){
 			
@@ -121,6 +123,10 @@ button {
 				alert("수강시간을 입력해 주세요.");
 			}else if($sub_summary.val() == ""){
 				alert("과목개요를 입력해 주세요.");
+			}else if(subimg == null){
+				alert("과목이미지를 선택해주세요.");
+			}else if(file == null){
+				alert("커리큘럼을 선택해주세요.");
 			}else{
 				console.log("과목등록 요청");
 				

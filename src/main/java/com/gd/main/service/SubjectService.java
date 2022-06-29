@@ -64,6 +64,8 @@ public class SubjectService {
 		dto.setSub_condition(params.get("sub_condition"));
 		String subtime = params.get("sub_time");
 		String subsum = params.get("sub_summary");
+		logger.info("커리큘럼!:::" + file.getOriginalFilename());
+		logger.info("이미지!:::" + subimg.getOriginalFilename());
 		
 		int row = dao.subRegister(dto);
 		int subno = dto.getSub_no();
@@ -73,7 +75,6 @@ public class SubjectService {
 			dao.subHome(subtime, subsum, subno);
 			subImgSave(subimg, subno);
 			fileSave(file, subno);
-			
 			System.out.println("DATA ::: " + dto.getSub_no());
 			success = true;
 		}
@@ -121,17 +122,17 @@ public class SubjectService {
 	}
 	
 	
-	/* 과목 이미지를 업데이트하면 커리큘럼과 바뀌는 현상
+	// 과목 이미지를 업데이트하면 커리큘럼과 바뀌는 현상
 	
-	public void subImgUpdate(MultipartFile sub_img, int subno) {
-		String oriFileName = sub_img.getOriginalFilename(); //파일명
+	public void subImgUpdate(MultipartFile subimg, int subno) {
+		String oriFileName = subimg.getOriginalFilename(); //파일명
 		String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
 		String newFileName = System.currentTimeMillis()+ext;
-		
+		logger.info("과목이미지:::" + subimg);
 		try {
 			ArrayList<SubDTO> subImglist = dao.subImgDetail(Integer.toString(subno));
 			
-			byte[] arr = sub_img.getBytes();
+			byte[] arr = subimg.getBytes();
 			Path path = Paths.get("C:/STUDY/SPRING/Good/src/main/webapp/resources/curri/" + newFileName);
 			Files.write(path, arr);
 			
@@ -146,7 +147,7 @@ public class SubjectService {
 			e.printStackTrace();
 		}
 	}
-	*/
+	
 	public void fileUpdate(MultipartFile file, int subno) {
 		String oriFileName = file.getOriginalFilename(); //파일명
 		String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
@@ -226,18 +227,27 @@ public class SubjectService {
 		return dao.subImgDetail(sub_no);
 	}
 
-	public boolean subUpdate(HashMap<String, String> params, MultipartFile file, MultipartFile sub_img) {
+	public boolean subUpdate(HashMap<String, String> params, MultipartFile subimg, MultipartFile file) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		System.out.println("DATA ::: " + params.toString());
+		logger.info("커리큘럼:::"+ file);
+		logger.info("과목이미지:::"+ subimg);
 		
 		boolean success = false;
 		int subno = Integer.parseInt(params.get("sub_no"));
 		
 		if(dao.subUpdate(params) >0) {
 			success = true;
-			if(file != null) {
-				//subImgUpdate(sub_img, subno);
+			if(subimg != null) {
+				subImgUpdate(subimg, subno);
+			}else {
+				
+			}
+			
+			if(file !=null) {
 				fileUpdate(file, subno);
+			}else {
+				
 			}
 		}
 		result.put("success", success);

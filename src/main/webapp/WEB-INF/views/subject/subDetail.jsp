@@ -40,7 +40,16 @@ th,td{
 			<th>과목개요</th>
 			<td id="sub_summary">${subDetail.sub_summary}</td>
 		</tr>
-			<tr>
+		<tr>
+			<th>과목이미지</th>
+			<td id="sub_img" >
+				<c:forEach items="${subImgList}" var="subimg">
+					<p><img src="/photo/${subimg.subimg_newName }" width="250"/></p>
+				</c:forEach>
+			</td>
+		</tr>
+		
+		<tr>
 			<th>커리큘럼</th>
 			<td id="curri" >
 				<c:forEach items="${photoList}" var="path">

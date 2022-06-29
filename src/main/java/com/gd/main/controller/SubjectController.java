@@ -59,6 +59,7 @@ public class SubjectController {
 			@RequestParam(value = "sub_condition") String subCondition,
 			@RequestParam(value = "sub_time") String subTime,
 			@RequestParam(value = "sub_summary") String subSummary,
+			@RequestParam(value = "sub_img") MultipartFile sub_img,
 			@RequestParam(value = "file") MultipartFile file, HttpSession session) {
 		logger.info("과목 등록");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -72,7 +73,7 @@ public class SubjectController {
 		
 		if (session.getAttribute("loginId") != null) {
 			login = true;
-			boolean register = service.subRegister(params, file);
+			boolean register = service.subRegister(params, sub_img, file);
 			map.put("subRegister", register);
 		}
 		map.put("login", login);
@@ -87,10 +88,12 @@ public class SubjectController {
 		SubDTO subDetail = service.subDetail(sub_no);
 		ArrayList<SubDTO> srcList = service.subDetailsc(sub_no);
 		ArrayList<SubDTO> photoList = service.subCurriDetail(sub_no);
+		ArrayList<SubDTO> subImgList = service.subImgDetail(sub_no);
 		
 		model.addAttribute("subDetail", subDetail);
 		model.addAttribute("srcList", srcList);
 		model.addAttribute("photoList", photoList);
+		model.addAttribute("subImgList", subImgList);
 		return "./subject/subDetail";
 	}
 	
@@ -105,9 +108,11 @@ public class SubjectController {
 		SubDTO dto = service.subDetail(sub_no);
 		ArrayList<SubDTO> list = service.subDetailsc(sub_no);
 		ArrayList<SubDTO> photo = service.subCurriDetail(sub_no);
+		ArrayList<SubDTO> subImg = service.subImgDetail(sub_no);
 		map.put("dto", dto);
 		map.put("list", list);
 		map.put("photo", photo);
+		map.put("subImg", subImg);
 			
 		return map;
 	}
@@ -128,6 +133,7 @@ public class SubjectController {
 			@RequestParam(value = "sub_condition") String subCondition,
 			@RequestParam(value = "sub_time") String subTime,
 			@RequestParam(value = "sub_summary") String subSummary,
+			@RequestParam(value = "sub_img", required = false) MultipartFile sub_img,
 			@RequestParam(value = "file", required = false) MultipartFile file) {
 		logger.info("과목 수정 : " +  subName + ", " + subCondition + ", " + subTime + ", " + subSummary);
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -138,7 +144,7 @@ public class SubjectController {
 		params.put("sub_time", subTime);
 		params.put("sub_summary", subSummary);
 		
-		boolean success = service.subUpdate(params, file);
+		boolean success = service.subUpdate(params, sub_img, file);
 		map.put("success", success);
 		
 		return map;

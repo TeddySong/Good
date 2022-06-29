@@ -56,7 +56,7 @@ public class SubjectService {
 		return map;
 	}
 
-	public boolean subRegister(HashMap<String, String> params, MultipartFile file) {
+	public boolean subRegister(HashMap<String, String> params, MultipartFile subimg, MultipartFile file) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		SubDTO dto = new SubDTO();
@@ -71,6 +71,7 @@ public class SubjectService {
 		boolean success = false;
 		if(row >0) {
 			dao.subHome(subtime, subsum, subno);
+			subImgSave(subimg, subno);
 			fileSave(file, subno);
 			
 			System.out.println("DATA ::: " + dto.getSub_no());
@@ -80,6 +81,25 @@ public class SubjectService {
 		return success;
 	}
 	
+	
+	public void subImgSave(MultipartFile subimg, int subno) {
+		
+		String oriFileName = subimg.getOriginalFilename(); //파일명
+		if(!oriFileName.equals("")) {
+			String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
+			String newFileName = System.currentTimeMillis()+ext;
+			
+			try {
+				byte[] arr = subimg.getBytes();
+				Path path = Paths.get("C:/STUDY/SPRING/Good/src/main/webapp/resources/curri/" + newFileName);
+				Files.write(path, arr);
+				logger.info(newFileName + " 과목 img save ok");
+				dao.subImgWrite(oriFileName,newFileName,subno);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	public void fileSave(MultipartFile file, int subno) {
 		
@@ -100,6 +120,33 @@ public class SubjectService {
 		}
 	}
 	
+	
+	/* 과목 이미지를 업데이트하면 커리큘럼과 바뀌는 현상
+	
+	public void subImgUpdate(MultipartFile sub_img, int subno) {
+		String oriFileName = sub_img.getOriginalFilename(); //파일명
+		String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
+		String newFileName = System.currentTimeMillis()+ext;
+		
+		try {
+			ArrayList<SubDTO> subImglist = dao.subImgDetail(Integer.toString(subno));
+			
+			byte[] arr = sub_img.getBytes();
+			Path path = Paths.get("C:/STUDY/SPRING/Good/src/main/webapp/resources/curri/" + newFileName);
+			Files.write(path, arr);
+			
+			if(subImglist.isEmpty())
+				dao.subImgWrite(oriFileName, newFileName, subno);
+			else
+				dao.subImgUpdate(oriFileName,newFileName,subno);
+			
+			
+			logger.info(newFileName + " 과목이미지 save ok");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	*/
 	public void fileUpdate(MultipartFile file, int subno) {
 		String oriFileName = file.getOriginalFilename(); //파일명
 		String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
@@ -174,8 +221,12 @@ public class SubjectService {
 	public ArrayList<SubDTO> subCurriDetail(String sub_no) {
 		return dao.subCurriDetail(sub_no);
 	}
+	
+	public ArrayList<SubDTO> subImgDetail(String sub_no) {
+		return dao.subImgDetail(sub_no);
+	}
 
-	public boolean subUpdate(HashMap<String, String> params, MultipartFile file) {
+	public boolean subUpdate(HashMap<String, String> params, MultipartFile file, MultipartFile sub_img) {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		System.out.println("DATA ::: " + params.toString());
 		
@@ -184,8 +235,10 @@ public class SubjectService {
 		
 		if(dao.subUpdate(params) >0) {
 			success = true;
-			if(file != null) 
+			if(file != null) {
+				//subImgUpdate(sub_img, subno);
 				fileUpdate(file, subno);
+			}
 		}
 		result.put("success", success);
 		return success;
@@ -216,6 +269,7 @@ public class SubjectService {
 		result.put("success", success);
 		return success;
 	}
+
 
 	/* 중복코드
 	public HashMap<String, Object> scrSubSearch(HashMap<String, String> params) {

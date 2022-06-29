@@ -63,6 +63,10 @@ button {
 	 			<td><textarea id="sub_summary"></textarea></td>
 	 		</tr>
 	 		<tr>
+				<th>과목이미지</th>
+				<td><input type="file" id="sub_img" multiple="multiple"/></td>
+			</tr>
+	 		<tr>
 				<th>커리큘럼</th>
 				<td><input type="file" id="curri" multiple="multiple"/></td>
 			</tr>
@@ -122,8 +126,8 @@ button {
 				
 				var formData = new FormData();
 				
+				formData.append("sub_img",$("#sub_img")[0].files[0]);
 				formData.append("file", $("#curri")[0].files[0]);
-				
 				formData.append("sub_name", $sub_name.val());
 				formData.append("sub_condition", $sub_condition.val());
 				formData.append("sub_time", $sub_time.val());

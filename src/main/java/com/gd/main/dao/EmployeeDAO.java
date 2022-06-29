@@ -21,6 +21,8 @@ public interface EmployeeDAO {
 
 	int empUpdate(HashMap<String, String> params);
 
+	String empName(int emp_no);
+
 
 
 	

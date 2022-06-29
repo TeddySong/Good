@@ -27,8 +27,10 @@ public class EmployeeController {
 	logger.info("직원일지 페이지! : " + emp_no); 
 	ArrayList<EmployeeDTO> dto = service.emplogList(emp_no);
 	logger.info("리스트 사이즈:"+dto.size());
+	String empName=service.empName(emp_no);
 	model.addAttribute("dto",dto);
-		
+	model.addAttribute("empName", empName);
+	
 	return "./employee/emplogList";
 	} 
 	

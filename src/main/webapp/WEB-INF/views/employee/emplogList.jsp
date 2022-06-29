@@ -47,11 +47,12 @@
 		
 	<input type="text" name="keyword" />
 	<button type="button" id="searchBtn">검색</button> -->
+
 <div style="border: 1px solid black; font-weight:bold; font-size:20px; float:left; width: 15%;">
 직원명
 </div>
-<div style="border: 1px solid black; font-size:20px; float:left; width: 15%;">
-@@ </a>
+<div style="border: 1px solid black; font-weight:bold; font-size:20px; float:left; width: 15%;">
+${empName}
 </div>
 <br>
 <br>
@@ -74,26 +75,31 @@
 			</form>
 		</div>
 		 -->
- 	<div style="float:right; font-size:20px; font-weitht:bold;">
- 		<!-- <input type="button" value="선택수정"  onclick="UpdateValue();"> -->
+ <!-- 	<div style="float:right; font-size:20px; font-weitht:bold;">
+ 		<input type="button" value="선택수정"  onclick="UpdateValue();">
     	<button onclick="location.href='/empList.go'">목록</button>
 	</div>
 	<div style="float:right; font-size:20px;">
 		<button onclick="location.href='/eeeeeeeeee.go'">등록</button>
+	</div> -->
+	<br></br>
+	<div style="text-align:center;">
+	<button onclick="empLogBack()">목록</button>
+	<button onclick="empLogRegister()">등록</button>
 	</div>
 	<br>
 	<br>
 	<br>
-	<table>
+	<table id="goodlist">
 		<thead>
 			<tr>
 				<th>작성일</th>
-				<th>작성자</th>
+				<th>작성자</th> <!-- 직원명 -->
 				<th>작성사유</th>
 				<th>히스토리</th>
 			</tr>
 			</thead>
-		<tbody>
+		<tbody id="list">
 		<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
 			<tr>  
 			<td><fmt:formatDate value="${employee_log.emp_log_date}" pattern="yyyy/MM/dd" /></td> <!-- 작성일-->
@@ -106,5 +112,14 @@
 	</table>
 </body>
 <script>
+function empLogRegister(){
+	var emp_name = $("#emp_name").html();
+	 window.open("empLogRegister.go?emp_name="+emp_name);
+	 }
+
+function empLogBack(){
+	var emp_name = $("#emp_name").html();
+	location.href='/empList.go?emp_name='+emp_name;
+}
 </script>
 </html>

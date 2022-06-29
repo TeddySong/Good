@@ -17,12 +17,19 @@ public class EmployeeService {
 	
 	@Autowired  EmployeeDAO dao;
 	
+
 	
 	//직원일지 리스트
-	public ArrayList<EmployeeDTO> emplogList(int emp_no) {
+	public ArrayList<EmployeeDTO> emplogList(int emp_no){
 		logger.info("리스트 서비스 요청");
 		logger.info("받아온 넘버 : " + emp_no);
 		return dao.emplogList(emp_no);
+	}
+	
+	//직원일지 상단에 직원명 가져오기 
+	public String empName(int emp_no) {
+		logger.info("받아온 넘버 : " + emp_no);
+		return dao.empName(emp_no);
 	}
 	
 	
@@ -101,6 +108,13 @@ public class EmployeeService {
 		/* result.put("success",success); */
 		return success;
 	}
+
+
+
+
+
+
+
 		
 /*		boolean success = false;
 		if(dao.empUpdate(params)>0) {

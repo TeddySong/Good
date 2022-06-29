@@ -10,8 +10,14 @@
 		el.emp_log_condition,
 		el.emp_log_content
 FROM employee_log el 
-INNER JOIN  
+LEFT OUTER JOIN 
 		employee e ON el.emp_no =#{param1}
+</select>
+		
+<select id="empName" resultType="String">
+		SELECT emp_name FROM employee e
+		left outer join employee_log el on e.emp_no=el.emp_no
+		WHERE e.emp_no= #{param1}
 </select>
 
 	 <!--  직원정보 등록 -->

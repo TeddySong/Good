@@ -1,19 +1,18 @@
 package com.gd.main.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.gd.main.dao.CourseDAO;
 import com.gd.main.dto.CourseDTO;
-import com.gd.main.dto.SubDTO;
 
 @Service
 public class CourseService {
@@ -41,10 +40,21 @@ public class CourseService {
 		searchResult.put("subNameSearch", subNameSearch);
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
+		
+		
+		//입력된 날짜가 빈값일 때
+		if(startSearch == "") {
+			startSearch = "0001-01-01";
+		}
+		if(endSearch == "") {
+			endSearch = "9999-12-31";
+		}
+		
 		searchResult.put("startSearch", startSearch);
 		searchResult.put("endSearch", endSearch);
 		logger.info("subNameSearch : "+subNameSearch+" / "+
 					"courseNameSearch : "+courseNameSearch+" / "+
+					"keyword : "+keyword+" / "+
 					"startSearch : "+startSearch+" / "+
 					"endSearch : "+endSearch);
 		

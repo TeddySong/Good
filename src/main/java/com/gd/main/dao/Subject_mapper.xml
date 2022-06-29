@@ -84,9 +84,21 @@
         ORDER BY scr_no DESC limit #{param1} OFFSET #{param2};
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(scr_no) FROM script 
-	</select>
+	<select id="allCount" parameterType="hashmap" resultType="int">
+		SELECT
+			COUNT(scr_no)
+		FROM
+			subject s
+			INNER JOIN script sc on s.sub_no = sc.sub_no
+        WHERE
+        	1=1
+        	<if test="searchSubNo != null and searchSubNo != ''">
+	        	AND s.sub_no = #{searchSubNo}
+        	</if>
+        	<if test="searchSubCo != null and searchSubCo != ''">
+	        	AND s.sub_condition = #{searchSubCo}
+        	</if>
+       </select>
 	
 	<delete id="scrDel" parameterType="String">
 		DELETE FROM script WHERE scr_no = #{scr_no}
@@ -111,9 +123,10 @@
         	subject s
         JOIN script sc on s.sub_no = sc.sub_no
         WHERE s.sub_no = #{param1}
+        ORDER BY scr_no DESC limit #{param2} OFFSET #{param3};
 	</select>
 	
-	<select id="scSubCondition" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	<select id="scSubCondition" resultType="com.gd.main.dto.SubDTO">
 	SELECT
 	        sc.scr_no,
 	        s.sub_name,
@@ -122,7 +135,8 @@
 		FROM
         	subject s
         JOIN script sc on s.sub_no = sc.sub_no
-        WHERE s.sub_condition = #{subCo}
+        WHERE s.sub_condition = #{param1}
+        ORDER BY scr_no DESC limit #{param2} OFFSET #{param3};
 	</select>
 	
 	<select id="subCondition" parameterType="String" resultType="com.gd.main.dto.SubDTO">
@@ -132,7 +146,7 @@
 	
 	<select id="sublistSearch" parameterType="String" resultType="com.gd.main.dto.SubDTO">
 		SELECT sub_no, sub_name, sub_condition FROM subject
-		WHERE sub_name = #{subSe}
+		WHERE sub_name LIKE CONCAT('%', #{subSe}, '%')
 	</select>
 	
 	

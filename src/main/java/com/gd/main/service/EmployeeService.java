@@ -16,7 +16,7 @@ public class EmployeeService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired  EmployeeDAO dao;
-	
+
 	
 	//직원일지 리스트
 	public ArrayList<EmployeeDTO> emplogList(int emp_no) {

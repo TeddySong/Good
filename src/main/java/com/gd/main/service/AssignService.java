@@ -48,18 +48,14 @@ public class AssignService {
 		return assMap;
 	}
 
-	/*
-	 * public ArrayList<AssListDTO> list() {
-	 * 
-	 * 
-	 * return dao.assList(); }
-	 */
 
 	
-	  public AssListDTO assCoList(String co_name) { 
-		  logger.info("과정 배정요청 서비스 요청 " +  co_name);
+	  public AssListDTO assCoList(HashMap<String, String> map) { 
+		  logger.info("과정 배정요청 서비스 요청 " +  map);
+		  
+		  
 	  
-	  return dao.assCoList(co_name);
+	  return dao.assCoList(map);
 	  }
 
 	public AssListDTO assStuCoList(String cli_name) {

@@ -11,7 +11,7 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> assList(HashMap<String, Object> assMap);
 
-	AssListDTO assCoList(String co_name);
+	AssListDTO assCoList(HashMap<String, String> map);
 
 	AssListDTO assStuCoList(String cli_name);
 

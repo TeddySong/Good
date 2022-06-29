@@ -195,20 +195,30 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>					
-											<th>과목명</th>
-												<td id ="co_name"></td>										
-											<th>학번</th>
-												<td id ="stu_no"></td>									
-											<th>학생명</th>
-												<td id =cli_name"></td>										
-											<th>연락처</th>
-												<td id ="cli_phone"></td>									
-											<th>담당자</th>
-												<td id ="emp_name"></td>								
+											<th>과정명</th>																					
+											<th>학번</th>																				
+											<th>학생명</th>																				
+											<th>연락처</th>																				
+											<th>담당자</th>																
 											<th>수강상태</th>
-												<td id ="ass_condition"></td>
 										</tr>
 									</thead>
+									<tbody id="list">
+										<%-- <c:forEach items= "${list}" var ="dto">
+											<td id ="co_name">${dto.co_name}</td>
+											<td id ="stu_no">${dto.stu_no}</td>
+											<td id = "cli_name"><a href="assStuList.go?cli_name=${dto.cli_name}">${dto.cli_name}</a></td>	
+											<td id ="cli_phone">${dto.cli_phone}</td>
+											<td id ="emp_name">${dto.emp_name}</td>
+											<td id ="ass_condition">${dto.ass_condition}</td>
+									</c:forEach> --%>
+											<td id ="co_name"></td>
+											<td id ="stu_no"></td>
+											<td ><a id = "cli_name" href="assStuList.go?cli_name=${dto.cli_name}"></a></td>	
+											<td id ="cli_phone"></td>
+											<td id ="emp_name"></td>
+											<td id ="ass_condition"></td>
+									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
 										<td colspan="8" id ="paging">
@@ -232,24 +242,52 @@
 </body>
 <script>
 
+ 
 $.ajax({
 	type:'get',
-	url:'assCoDetail.ajax',
+	url:'assCoList.ajax',
 	data:{},
 	dataType:'JSON',
 	success:function(data){
 		console.log(data);
-		$('#co_name').html(data.co_name);
-		$('#stu_no').html(data.stu_no);
-		$('#cli_name').html(data.cli_name);
-		$('#cli_phone').html(data.cli_phone);
-		$('#emp_name').html(data.emp_name);
-		$('#ass_condition').html(data.ass_condition);
+		//drawList(data.list);
+		$('#co_name').html(data.dto.co_name);
+		$('#stu_no').html(data.dto.stu_no);
+		$('#cli_name').html(data.dto.cli_name);
+		$('#cli_phone').html(data.dto.cli_phone);
+		$('#emp_name').html(data.dto.emp_name);
+		$('#ass_condition').html(data.dto.ass_condition);
+		 
+		
 	},
-	error:function(e){
-		console.log(e);
-	}
+	error:function(error){}
 });
+
+/* function drawList(list){
+	var content="";
+	
+		content += '<tr>';
+		content += '<td>${dto.co_name}</td>';
+		content += '<td>${dto.stu_no}</td>';
+		content += '<td>${dto.cli_name}<a href=\"assStuList.go?cli_name=${dto.cli_name}\"></a></td>';		
+		content += '<td>${cli_phone}</td>';
+		content += '<td>${emp_name}</td>';
+		content += '<td>${ass_condition}</td>';
+		content += '</tr>';
+		
+		 content += '<tr>';
+		content += '<td id="co_name"></td>';
+		content += '<td id="stu_no"></td>';
+		content += '<td id= "cli_name"><a href="assStuList.go?cli_name=${cli_name}"></a></td>';		
+		content += '<td id="cli_phone"></td>';
+		content += '<td id="emp_name"></td>';
+		content += '<td id="ass_condition"></td>';
+		content += '</tr>'; 
+
+	$('#list').empty();
+	$('#list').append(content);
+	
+}*/
 
 	
 </script>

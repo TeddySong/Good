@@ -18,8 +18,14 @@ public class CourseDTO {
 	private String co_endTime;
 	private int co_capacity;
 	private int sub_no;
+	private String sub_condition;
 	
-	
+	public String getSub_condition() {
+		return sub_condition;
+	}
+	public void setSub_condition(String sub_condition) {
+		this.sub_condition = sub_condition;
+	}
 	public int getCo_no() {
 		return co_no;
 	}

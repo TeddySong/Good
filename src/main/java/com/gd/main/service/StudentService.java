@@ -59,6 +59,7 @@ public class StudentService {
 		map.put("offset", offset);
 		
 		ArrayList<StuDTO> list = dao.stuList(map);
+		logger.info("list : "+list.size());
 		map.put("list", list);
 		
 		return map;
@@ -93,21 +94,33 @@ public class StudentService {
 		return dao.stuDetail(stu_no);
 
 	}
+	
+	public HashMap<String, Object> subList(String stu_no) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("stu_no", stu_no);
+		ArrayList<StuDTO> subList = dao.subList(map);
+		logger.info("list : " + subList.size());
+		
+		map.put("list", subList);
+		
+		return map;
+	}
 
 	public HashMap<String, Object> stuRegister(HashMap<String, String> params) {
 		logger.info("들어왔는지 확인");
 	      HashMap<String, Object> result=new HashMap<String, Object>();
-	      int row=dao.stuRegister(params);
 	      
-	      
+	      int row=dao.stuRegister(params);	      
 	      
 	      boolean cnt=false;
 	      if(row>0) {
-	         cnt=true;
+	         cnt=true;	         
 	      }
 	      result.put("success",cnt);
 	      return result;
 	}
+	
+	
 
 	public boolean stuUpdate(HashMap<String, String> params) {
 		boolean success = false;
@@ -162,6 +175,8 @@ public class StudentService {
 		return dao.stuName(stu_no);
 		
 	}
+
+	
 
 	
 	

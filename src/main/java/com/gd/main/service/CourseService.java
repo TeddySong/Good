@@ -1,14 +1,11 @@
 package com.gd.main.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Service;
 
 import com.gd.main.dao.CourseDAO;
@@ -30,14 +27,14 @@ public class CourseService {
 		logger.info("보여줄 페이지 : "+page);
 		
 		
-		String subNameSearch = params.get("subNameSearch");
+		String subName = params.get("subName");
 		String courseNameSearch = params.get("courseNameSearch");
 		String keyword = params.get("keyword");
 		String startSearch = params.get("startSearch");
 		String endSearch = params.get("endSearch");
 		
 		HashMap<String, Object> searchResult = new HashMap<String, Object>();
-		searchResult.put("subNameSearch", subNameSearch);
+		searchResult.put("subName", subName);
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
@@ -52,7 +49,7 @@ public class CourseService {
 		
 		searchResult.put("startSearch", startSearch);
 		searchResult.put("endSearch", endSearch);
-		logger.info("subNameSearch : "+subNameSearch+" / "+
+		logger.info("subName : "+subName+" / "+
 					"courseNameSearch : "+courseNameSearch+" / "+
 					"keyword : "+keyword+" / "+
 					"startSearch : "+startSearch+" / "+
@@ -151,6 +148,16 @@ public class CourseService {
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);
+	}
+
+	public ArrayList<CourseDTO> dangwa() {
+		// TODO Auto-generated method stub
+		return dao.dangwa();
+	}
+
+	public ArrayList<CourseDTO> jonghab() {
+		// TODO Auto-generated method stub
+		return dao.jonghab();
 	}
 
 

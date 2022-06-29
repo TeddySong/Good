@@ -17,6 +17,7 @@ public class EmployeeService {
 	
 	@Autowired  EmployeeDAO dao;
 
+<<<<<<< HEAD
 
 	//직원일지 추가하기
 	public HashMap<String, Object> empLogRegister(HashMap<String, String> params) {
@@ -42,6 +43,8 @@ public class EmployeeService {
 	//
 	//
 
+=======
+>>>>>>> origin/master
 	
 	//직원일지 리스트
 	public ArrayList<EmployeeDTO> empLogList(int emp_no){

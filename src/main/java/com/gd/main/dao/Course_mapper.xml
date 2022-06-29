@@ -62,8 +62,27 @@
 		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(co_no) FROM course
+	<select id="allCount" parameterType="hashmap" resultType="int">
+		SELECT COUNT(co_no) FROM course 
+		INNER JOIN subject on subject.sub_no = course.sub_no
+		WHERE 1=1
+		<!-- <if test="subName != null and subName !=''">
+			AND subject.sub_name = #{subName}
+		</if>
+		<if test="courseNameSearch != null and courseNameSearch !=''">
+			AND course.co_name = #{courseNameSearch}
+			OR course.co_condition = #{courseNameSearch}
+		</if>
+		<if test="startSearch != null and startSearch !=''">
+			AND course.co_startDate = #{startSearch}
+		</if>
+		<if test="endSearch != null and endSearch !=''">
+			AND course.co_endDate = #{endSearch}
+		</if>
+		<if test="keyword != null and keyword !=''">
+			AND course.co_name LIKE concat('%',#{keyword},'%')
+			OR co_condition LIKE concat('%',#{keyword},'%')
+		</if> -->
 	</select>
 	
 	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">

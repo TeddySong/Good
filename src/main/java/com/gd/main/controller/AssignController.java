@@ -1,5 +1,6 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -50,33 +51,95 @@ public class AssignController {
 		return service.assList(params);
 	}
 	
-	// 과정배정 상세 페이지
-	@RequestMapping("/assCoList.go")
-	public String assCoListGo(HttpSession session, @RequestParam String co_no) {
-	
-		logger.info("과정에 대한 상세보기 요청" + co_no);
-		System.out.println("과정에 대한 상세보기 요청" +co_no);
-		session.setAttribute("co_no", co_no);
+	//과정배정 리스트 페이지 이동
+	@RequestMapping(value = "/assCoList.go", method = RequestMethod.GET)
+	public String assCoListGo(HttpSession session,@RequestParam String co_name,Model model) {
 		
-		return "./assign/assCoList";
+		 String page = "home";
+
+		 if(session.getAttribute("loginId") != null) {
+			
+			session.setAttribute("co_name", co_name); 
+			page = "./assign/assCoList";
+			//model.addAttribute("list",list);		 
+		} 
+		return page;
 	}
 	
+	/*
+	 * //과정배정 리스트 페이지 이동
+	 * 
+	 * @RequestMapping(value = "/assCoList.go", method = RequestMethod.GET) public
+	 * String assCoListGo(HttpSession session,@RequestParam String co_name,Model
+	 * model) {
+	 * 
+	 * String page = "home";
+	 * 
+	 * if(session.getAttribute("loginId") != null) {
+	 * 
+	 * session.setAttribute("co_name", co_name); page = "./assign/assCoList";
+	 * //model.addAttribute("list",list); } return page; }
+	 */
 	
-	@RequestMapping("/assCoDetail.ajax")
-	@ResponseBody
-	public HashMap<String, Object> assCoDetail(HttpSession session) {
-		
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		String co_no = (String) session.getAttribute("co_no");
-		logger.info("과정 배정정보 요청 : " + co_no);
-		session.removeAttribute("name");
-		AssListDTO dto = service.assCoDetail(co_no);	
-		map.put("dto",dto);
-		logger.info("클라이언트 : " + dto);
-		
-		return map;
-	}
+	@RequestMapping("/assCoList.ajax")
+	  @ResponseBody public HashMap<String, Object> assCoListDo(HttpSession session, @RequestParam HashMap<String, String> co_name){
+	  
+	  logger.info("과정 배정 페이지 이동");
+	 
+	  HashMap<String, Object> map = new HashMap<String, Object>(); 
+	  map = session.getAttribute("co_name"); 
+	  //AssListDTO dto = service.assCoList(co_name);
+	  
+	  map.put("dto", dto); logger.info("클라이언트 : " + dto);
+	  
+	 return map;
+	 }
+	
+	
+	/*
+	 * @RequestMapping("/assCoList.ajax")
+	 * 
+	 * @ResponseBody public HashMap<String, Object> assCoListDo(HttpSession
+	 * session, @RequestParam HashMap<String, String> param){
+	 * 
+	 * logger.info("과정 배정 페이지 이동");
+	 * 
+	 * HashMap<String, Object> map = new HashMap<String, Object>(); String co_name
+	 * =(String) session.getAttribute("co_name"); AssListDTO dto =
+	 * service.assCoList(co_name);
+	 * 
+	 * map.put("dto", dto); logger.info("클라이언트 : " + dto);
+	 * 
+	 * return map; }
+	 */
+	 
+	  @RequestMapping("/assStuList.go")
+		public String assStuList(HttpSession session, @RequestParam String cli_name,Model model) {
+			 String page = "home";
+			 if(session.getAttribute("loginId") != null) {
+					
+				session.setAttribute("cli_name", cli_name); 
+				page = "./assign/assStuList";
+				//model.addAttribute("list",list);		 
+			} 
+			return page;
+		}
+	  
+	  @RequestMapping("/assStuList.ajax")
+	  @ResponseBody public HashMap<String, Object> assStuList(HttpSession session){
+	  
+	  logger.info("학생 배정 페이지 이동");
+	  
+	  HashMap<String, Object> map = new HashMap<String, Object>(); 
+	  String cli_name =(String) session.getAttribute("cli_name"); 
+	  AssListDTO dto = service.assStuCoList(cli_name);
+	  
+	  map.put("dto", dto); logger.info("클라이언트 : " + dto);
+	  
+	 return map;
+	 }
+	
+	
+
 
 }

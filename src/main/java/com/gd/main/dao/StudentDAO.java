@@ -20,6 +20,8 @@ public interface StudentDAO {
 	ArrayList<StuDTO> subChoice(int result);
 
 	StuDTO stuDetail(String stu_no);
+	
+	ArrayList<StuDTO> subList(HashMap<String, Object> map);
 
 	int stuRegister(HashMap<String, String> params);
 
@@ -30,6 +32,10 @@ public interface StudentDAO {
 	int stuLogRegister(HashMap<String, String> params);
 
 	String stuName(String stu_no);
+
+	
+
+	
 
 	
 

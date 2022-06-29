@@ -70,7 +70,7 @@
 		WHERE cli_no=#{param1}
 	</select>
 	
-	<select id="subSearchList" resultType="com.gd.main.dto.StuDTO">
+	<select id="subSearchList" resultType="com.gd.main.dto.StuDTO" >
 		SELECT sub_no, sub_name FROM subject		
 		WHERE sub_name=#{param1}
 	</select>
@@ -85,6 +85,13 @@
 		LEFT OUTER JOIN client c ON c.cli_no = s.cli_no 
 		LEFT OUTER JOIN employee e ON e.emp_no =s.emp_no 
 		WHERE stu_no = #{param1}
+	</select>
+	
+	<select id="subList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
+		SELECT r.sub_no, r.stu_no, sub_name FROM rSub r
+		LEFT OUTER JOIN student s ON s.stu_no = r.stu_no
+		LEFT OUTER JOIN subject s2 ON s2.sub_no = r.sub_no		 
+		WHERE r.stu_no = #{stu_no}
 	</select>
 	
 	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>

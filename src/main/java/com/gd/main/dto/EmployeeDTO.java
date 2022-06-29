@@ -20,8 +20,28 @@ public class EmployeeDTO{
 	private Date emp_startDate;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_endDate;
+	private Date emp_log_date;
+	private String emp_log_content;
+	private String emp_log_condition;
 	
-	
+	public Date getEmp_log_date() {
+		return emp_log_date;
+	}
+	public void setEmp_log_date(Date emp_log_date) {
+		this.emp_log_date = emp_log_date;
+	}
+	public String getEmp_log_content() {
+		return emp_log_content;
+	}
+	public void setEmp_log_content(String emp_log_content) {
+		this.emp_log_content = emp_log_content;
+	}
+	public String getEmp_log_condition() {
+		return emp_log_condition;
+	}
+	public void setEmp_log_condition(String emp_log_condition) {
+		this.emp_log_condition = emp_log_condition;
+	}
 	public int getEmp_no() {
 		return emp_no;
 	}

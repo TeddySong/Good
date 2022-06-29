@@ -110,7 +110,7 @@
 				<th>담당직원</th>
 			</tr>
 		</thead>
-		<tbody id="list">
+		<tbody id="cliSearchlist">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
 			<tr id="cliSearch_${cliSearchList.cli_no}">
 				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>
@@ -135,29 +135,29 @@
 	}
 
 	function cliChoice(){
-	
+		
 		var cliArr = new Array();
 		
-	$('#cliSearchList input[type="radio"]:checked').each(function(idx){
+		console.log("여기냐");
+		
+		$('#cliSearchList input[type="radio"]:checked').each(function(idx){
+		console.log("그럼여기냐");
 		var cliChoice = $(this).val();
 		console.log(cliChoice);
-		var cliObj = new Object();
-		
 		
 		$tr = $("#cliSearch_"+cliChoice);
-		console.log($tr.text());
-		
+		console.log($tr.text());	
 		
 		opener.document.getElementById("cli_name").value =$tr.find('#cli_name').text();
-		opener.document.getElementById("cli_phone").value = $tr.find('#cli_phone').text();
-		opener.document.getElementById("emp_name").value = $tr.find('#emp_name').text();
-		opener.document.getElementById("cli_no").value = $tr.find('#cli_no').text();
-		opener.document.getElementById("emp_no").value = $tr.find('#emp_no').text();
+		opener.document.getElementById("cli_phone").value =$tr.find('#cli_phone').text();
+		opener.document.getElementById("emp_name").value =$tr.find('#emp_name').text();
+		opener.document.getElementById("cli_no").value =$tr.find('#cli_no').text();
+		opener.document.getElementById("emp_no").value =$tr.find('#emp_no').text();
 		
 		window.close()
 	});	
 
-}
+	}
 
 
 </script>

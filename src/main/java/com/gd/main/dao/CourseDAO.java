@@ -33,5 +33,7 @@ public interface CourseDAO {
 
 	ArrayList<CourseDTO> courList2(HashMap<String, Object> searchResult);
 
+	int allCount(HashMap<String, Object> searchResult);
+
 	
 }

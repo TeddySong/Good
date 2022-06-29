@@ -16,9 +16,33 @@
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
 	}
+	
+	#noNameTag{			
+              border: 1px #a39485 solid;
+			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+			  width: 50%;
+			  border-collapse: collapse;
+			  border-radius: 5px;
+			  overflow: hidden;
+			  font-family: 'Do Hyeon', sans-serif;
+	}
+	
+	 #noNameTag th {
+			background-color:#505050;
+			color:#FFFFFF;
+			text-align:center;
+		}
+		
+	#noNameTag,#noNameTag th,#noNameTag td	{
+		font-size:20px;		
+		padding:4px;
+		border:1px solid #dddddd;
+		border-collapse:collapse;
+		text-align:center;
+	}
 
 	#goodList {  
-			            
+			  margin:0 auto;
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
 			  width: 80%;
@@ -39,7 +63,8 @@
 		font-size:20px;		
 		padding:4px;
 		border:1px solid #dddddd;
-		border-collapse:collapse
+		border-collapse:collapse;
+		text-align:center;
 	}
 	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
@@ -49,11 +74,34 @@
 	}
 	
 	input[type='text']{
-	width : 100%;
+	width : 80%;
 	}
-		
+	input[type='date']{
+		width : 80%;
+	}
+	
 	.goodRegister {
-		position: relative;		
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+	
+	.goodRegister:hover{
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+	
+	input[type='button'] {
+		position: relative;
+		margin: 20px auto;
 		margin: 0 auto;
 		max-width: 180px;
 		text-decoration: none;
@@ -65,7 +113,7 @@
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
 
-	.goodRegister:hover {
+	input[type='button']:hover {
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
@@ -167,66 +215,49 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">수강생 목록</h1>                        
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                GOOD2 IT 수강생 리스트 입니다.                                
-                            </div>
-                        </div>
+                        <h1 class="mt-4">학사일지</h1>                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                수강생리스트
+                                학사일지
                             </div>
-                            <div>
-                            	<table id="goodList">
-                            		<tr>
-                            			<td>
-                            				<select id="stuSearchCategory" style="width:100%;">
-                            					<option value="cli_name">이름</option>
-                            					<option value="cli_phone">연락처</option>
-                            					<option value="stu_age">나이</option>
-                            					<option value="emp_name">담당직원</option>
-                            				</select>
-                            			</td>
-                            			<td><input type="text" id="stuSearchContent" placeholder="검색어를 입력해주세요"/></td>
-                            			<td style="text-align:center"><button id="stuSearch" class="goodRegister" style="width:100%;">검색</button></td>
-                            		</tr>
-                            	</table>
-                                <table id="goodList">
-									<thead>
-										<tr>
-											<th>학번</th>
-											<th>이름</th>
-											<th>연락처</th>
-											<th>생년월일</th>
-											<th>나이</th>
-											<th>성별</th>
-											<th>담당직원</th>
-										</tr>
-									</thead>
-									<tbody id="list">
-										
-									</tbody>
-									<tr>
-										<td colspan="7" style="text-align:end; font-size:20px;">
-									<button class="goodRegister" onclick = "location.href='stuRegister.go'" >등록</button>
-										</td>
-									</tr>							
-									<tr>
-										<td colspan="7" id="paging">
-										<!-- twbspagination 플러그인 -->
-										<div class="container">
-											<nav arial-label="Page navigation" style="text-align:center">
-												<ul class="pagination" id="pagination"></ul>
-											</nav>
-										</div>
-										
-										</td>
-									</tr>
-								</table>								
-                            </div>
+                            <br/>
+                            <table id="noNameTag">
+                            	<tr>
+                            		<th>학번</th>
+                            		<td id="student_no">${stu_no}</td>
+                            		<th>이름</th>
+                            		<td id="student_name">${stuName}</td>
+                            	</tr>
+                            </table>
                             
+                            <br/>
+							<table id="goodList">
+								<thead>
+									<tr>
+										<th class="hidden">학번</th>
+										<th width="20%">작성일</th>
+										<th width="20%">작성자</th>
+										<th width="60%">작성내용</th>
+									</tr>
+								</thead>
+								<tbody id="list">
+								<c:forEach items="${list}" var="dto">									
+										<tr>
+											<td class="hidden">${dto.stu_no}</td>
+											<td>${dto.stu_log_date}</td>
+											<td>${dto.emp_name}</td>
+											<td style="text-align:start;">${dto.stu_log_content}</td>											
+										</tr>									
+								</c:forEach>
+								</tbody>
+								
+							</table>
+							<br/><br/>
+							<div style="text-align:center;">
+							<button onclick="stuLogRegister()" class="goodRegister">등록</button>
+							<button onclick="stuLogBack()" class="goodRegister">돌아가기</button>
+							</div>
                         </div>
                     </div>
                 </main>
@@ -235,114 +266,65 @@
                 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	    <script src="../resources/JS/emp/empScripts.js"></script>
-	    <script src="../resources/JS/empDatatables-simple-demo.js"></script>  
+	    
 
 </body>
 <script>
-var currPage = 1;
 
-//리스트 불러오기
-listCall(currPage);
+function stuLogRegister(){
+	var stu_no = $("#student_no").html();
+	 window.open("stuLogRegister.go?stu_no="+stu_no,"new","width=800, height=400, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	 
+	 }
 
-function listCall(page) {
-	
-	var pagePerNum = 10;
-	
+/* function stuLogRegister(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuLogRegister.go?stu_no='+stu_no;
+} */
+
+function stuLogBack(){
+	var stu_no = $("#student_no").html();
+	location.href='/stuDetail.go?stu_no='+stu_no;
+}
+
+
+
+/* listCall();
+function listCall(){ //controller에 list를 요청
 	$.ajax({
-		type: 'get',
-		url: 'stuList.ajax',
-		data:{
-			cnt:pagePerNum,
-			page:page
-		},
+		type:'get',
+		url:'stuLog.ajax',
+		data:{},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
-			drawList(data.list);
-			currPage = data.currPage;
+			// console.log(data);
 			
-			//불러오기 성공하면 플러그인 이용해서 페이징처리
-			$("#pagination").twbsPagination({
-				startPage: data.currPage, //시작 페이지
-				totalPages: data.pages, //총 페이지
-				visiblePages: 5, //한번에 보여줄 페이지 수
-				onPageClick: function(e,page){
-					console.log(page); //사용자가 클릭한 페이지
-					currPage = page;
-					listCall(page);
-				}
-			});
+				console.log('테이블 그리기');
+				drawList(data.list);
+							
 		},
-		error:function(e){
-			console.log(e);
+		error:function(error){
+			console.log(error);
 		}
 	});
-	
-		$('#stuSearch').on('click',function(){
-		
-		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
-			
-		var stuSearchContent = $("#stuSearchContent").val();
-		
-		$("#pagination").twbsPagination('destroy');
-				
-		$.ajax({
-			type:'get',
-			url:'stuSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				stuSearchCategory:stuSearchCategory,
-				stuSearchContent:stuSearchContent
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage=data.currPage;
+};
 
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-	
-	
-	
-}
-
-//리스트 그리기
 function drawList(list){
-	
-	var content="";
-	
+	var content ='';
 	list.forEach(function(item){
+		console.log(item);
 		content += '<tr>';
-		content += '<td>'+item.stu_no+'</td>';
-		content += '<td><a href="stuDetail.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';
-		content += '<td>'+item.cli_phone+'</td>';		
-		content += '<td>'+item.stu_birth+'</td>';
-		content += '<td>'+item.stu_age+'</td>';
-		content += '<td>'+item.stu_gender+'</td>';
+		content += '<td>'+item.stu_log_date+'</td>';		
 		content += '<td>'+item.emp_name+'</td>';
+		content += '<td>'+item.stu_log_content+'</td>';		
 		content += '</tr>';
 	});
-	
 	$('#list').empty();
 	$('#list').append(content);
-}
+} */
+
+
+	
+	
 </script>
 </html>

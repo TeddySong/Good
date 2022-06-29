@@ -17,6 +17,15 @@ public class EmployeeService {
 	
 	@Autowired  EmployeeDAO dao;
 	
+	
+	//직원일지 리스트
+	public ArrayList<EmployeeDTO> emplogList(int emp_no) {
+		logger.info("리스트 서비스 요청");
+		logger.info("받아온 넘버 : " + emp_no);
+		return dao.emplogList(emp_no);
+	}
+	
+	
 	public EmployeeDTO getselectEmpMyInfo(int emp_no) {
 		
 		return dao.selectEmpMyInfo(emp_no);

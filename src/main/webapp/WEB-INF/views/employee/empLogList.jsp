@@ -38,15 +38,6 @@
 <br>
 <br>
 <br>
-<!-- 	<select  name="searchType">
-		<option value="client">고객명</option>
-		<option value="phone">전화번호</option>
-		<option value="emp">담당자</option>
-		<option value="result">상담결과</option>
-	</select>
-		
-	<input type="text" name="keyword" />
-	<button type="button" id="searchBtn">검색</button> -->
 
 <div style="border: 1px solid black; font-weight:bold; font-size:20px; float:left; width: 15%;">
 직원명
@@ -87,7 +78,7 @@ ${empName}
 	<button onclick="empLogBack()">목록</button>
 	</div>
 	<div style="text-align:center; float:right;">
-	<input type="button" value="등록" onClick="location.href='/empLogRegister.go'" >
+	<input type="button" value="등록" onclick="location.href='/empLogRegister.go?emp_no=${emp_no}'" >
 <!-- 	<button onclick="empLogRegister()">등록</button> -->
 	</div>
 	<br>
@@ -98,6 +89,7 @@ ${empName}
 			<tr>
 				<th>작성일</th>
 				<th>작성자</th> <!-- 직원명 -->
+				<th>사번</th>
 				<th>작성사유</th>
 				<th>히스토리</th>
 			</tr>

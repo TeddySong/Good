@@ -313,9 +313,18 @@ function listCall(page){
 	});
 	
 	
+}
+
 //검색
 $('#courSearch').on('click',function(){
-	
+	$("#pagination").twbsPagination('destroy');
+	courseSearch(currPage);
+});
+
+
+function courseSearch(page){
+		
+	var pagePerNum = 10;
 	 var subName = $("#subName option:selected").val();
 	 console.log(subName);
 	 
@@ -357,7 +366,7 @@ $('#courSearch').on('click',function(){
 				onPageClick:function(e,page){
 					console.log(page);
 					currPage=page;
-					listCall(page);
+					courseSearch(page);
 				}
 			});
 		},
@@ -365,11 +374,9 @@ $('#courSearch').on('click',function(){
 			console.log(e);
 		}
 	 });
-});
 
+	}
 
-
-}
 
 
 //리스트 그리기

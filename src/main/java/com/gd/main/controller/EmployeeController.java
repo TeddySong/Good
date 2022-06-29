@@ -21,6 +21,31 @@ public class EmployeeController {
 	EmployeeService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	
+	//직원일지 등록
+	
+	@RequestMapping(value="/empLogRegister.go")
+	public String stuLogRegisterGo(@RequestParam int emp_no, HttpSession session) {
+		logger.info("emp_no: " + emp_no); //직원의 사번 가져오기
+		session.setAttribute("emp_no", emp_no);
+		
+		
+		return "./employee/empLogRegister";
+	}
+	
+	@RequestMapping("/empLogRegister.ajax")
+	   @ResponseBody
+	    public HashMap<String, Object> empLogRegister(
+	          @RequestParam HashMap<String, String> params) {
+	       
+	       logger.info("직원일지쓰기");
+	       return service.empLogRegister(params);
+	    }
+	
+	//
+	//
+	//
+	
 	//직원일지 페이지 
 	@RequestMapping(value = "/empLogList.go")
 	public String emplogListGo(Model model, @RequestParam int emp_no) {
@@ -59,10 +84,11 @@ public class EmployeeController {
 		 return map;
 	 }
 	//직원 목록페이지 이동
+	 
 	@RequestMapping(value = "/empList.go")
 	public String empListGo() {
-		logger.info("직원 목록 페이지!");
-		return "./employee/empList";
+	logger.info("직원 목록 페이지!");
+	return "./employee/empList";
 	}
 
 	// 직원 불러오기

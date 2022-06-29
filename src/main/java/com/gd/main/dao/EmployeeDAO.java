@@ -22,7 +22,10 @@ public interface EmployeeDAO {
 	int empUpdate(HashMap<String, String> params);
 
 	String empName(int emp_no);
-
+	
+	//직원일지 추가하기
+	int empLogRegister(HashMap<String, String> params);
+	
 
 
 	

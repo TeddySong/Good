@@ -16,7 +16,31 @@ public class EmployeeService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired  EmployeeDAO dao;
-	
+
+
+	//직원일지 추가하기
+	public HashMap<String, Object> empLogRegister(HashMap<String, String> params) {
+		logger.info("들어왔는지 확인 : {}" , params);
+	      HashMap<String, Object> result=new HashMap<String, Object>();
+	      int row=dao.empLogRegister(params);
+	      
+	      String empNo=params.get("emp_no");
+	      logger.info("확인"+empNo);	      
+	      
+	      boolean cnt=false;
+	      if(row>0) {
+	         cnt=true;
+	      }
+	      result.put("success",cnt);
+	      result.put("empNo", empNo);
+	      return result;
+	      
+	      
+	}
+
+	//
+	//
+	//
 
 	
 	//직원일지 리스트
@@ -108,6 +132,7 @@ public class EmployeeService {
 		/* result.put("success",success); */
 		return success;
 	}
+
 
 
 

@@ -83,9 +83,12 @@ ${empName}
 		<button onclick="location.href='/eeeeeeeeee.go'">등록</button>
 	</div> -->
 	<br></br>
-	<div style="text-align:center;">
+	<div style="text-align:center; float:right;">	
 	<button onclick="empLogBack()">목록</button>
-	<button onclick="empLogRegister()">등록</button>
+	</div>
+	<div style="text-align:center; float:right;">
+	<input type="button" value="등록" onClick="location.href='/empLogRegister.go'" >
+<!-- 	<button onclick="empLogRegister()">등록</button> -->
 	</div>
 	<br>
 	<br>
@@ -103,7 +106,8 @@ ${empName}
 		<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
 			<tr>  
 			<td><fmt:formatDate value="${employee_log.emp_log_date}" pattern="yyyy/MM/dd" /></td> <!-- 작성일-->
-			<td>${employee_log.emp_name}</td> 			<!-- 작성자 --> 
+			<td>${employee_log.emp_name}</td> 			<!-- 작성자 -->
+			<td>${employee_log.emp_no}</td> 	 
 			<td>${employee_log.emp_log_condition}</td>	 <!--  작성사유 -->
 			<td>${employee_log.emp_log_content}</td> 	<!-- 히스토리(내용) -->
 			</tr>
@@ -112,11 +116,11 @@ ${empName}
 	</table>
 </body>
 <script>
-function empLogRegister(){
+/* function empLogRegister(){
 	var emp_name = $("#emp_name").html();
-	 window.open("empLogRegister.go?emp_name="+emp_name);
-	 }
-
+	 window.open("empLogRegister.go?emp_no="+emp_no);
+	 } */
+<!--  '<td><a href="empLogList.go?emp_no='+item.emp_no+'">'+item.emp_name+'</a></td>'; -->
 function empLogBack(){
 	var emp_name = $("#emp_name").html();
 	location.href='/empList.go?emp_name='+emp_name;

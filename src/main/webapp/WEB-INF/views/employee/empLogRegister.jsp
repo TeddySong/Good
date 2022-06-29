@@ -8,7 +8,7 @@
 <style></style>
 </head>
 <body>
-
+<h1>직원일지 등록</h1>
 </body>
 <script></script>
 </html>

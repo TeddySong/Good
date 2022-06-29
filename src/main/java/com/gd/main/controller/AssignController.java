@@ -1,5 +1,6 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -52,37 +53,66 @@ public class AssignController {
 	
 	//과정배정 리스트 페이지 이동
 	@RequestMapping(value = "/assCoList.go", method = RequestMethod.GET)
-	public String assCoListGo(HttpSession session, @RequestParam String co_name) {
+	public String assCoListGo(HttpSession session, @RequestParam String co_name,Model model) {
 		
 		 String page = "home";
 
 		 if(session.getAttribute("loginId") != null) {
-			logger.info("과정 배정 페이지 이동 : " + co_name);
-			session.setAttribute("co_name", co_name);
-			logger.info(co_name);
-			 
-			 page = "./assign/assCoList";
-			 
+				/*
+				 * logger.info("과정 배정 페이지 이동 : " + co_name); ArrayList<AssListDTO> list =
+				 * service.list();
+				 * 
+				
+				 logger.info("list 갯수 : " +
+				 * list.size());
+				 */
+			session.setAttribute("co_name", co_name); 
+			page = "./assign/assCoList";
+			//model.addAttribute("list",list);		 
 		} 
 		return page;
 	}
 	
-	@RequestMapping("/assCoList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> assCoListDo(HttpSession session){
 	
-		logger.info("과정 배정 페이지 이동 중");
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		String co_name = (String) session.getAttribute("co_name");
-		AssListDTO dto = service.assCoList(co_name);
-		
-		map.put("dto", dto);
-		logger.info("클라이언트 : " + dto);
-		
-		return map;
-	}
-	
+	  @RequestMapping("/assCoList.ajax")
+	  @ResponseBody public HashMap<String, Object> assCoListDo(HttpSession session){
+	  
+	  logger.info("과정 배정 페이지 이동");
+	  
+	  HashMap<String, Object> map = new HashMap<String, Object>(); 
+	  String co_name =(String) session.getAttribute("co_name"); 
+	  AssListDTO dto = service.assCoList(co_name);
+	  
+	  map.put("dto", dto); logger.info("클라이언트 : " + dto);
+	  
+	 return map;
+	 }
+	 
+	  @RequestMapping("/assStuList.go")
+		public String assStuList(HttpSession session, @RequestParam String cli_name,Model model) {
+			 String page = "home";
+			 if(session.getAttribute("loginId") != null) {
+					
+				session.setAttribute("cli_name", cli_name); 
+				page = "./assign/assStuList";
+				//model.addAttribute("list",list);		 
+			} 
+			return page;
+		}
+	  
+	  @RequestMapping("/assStuList.ajax")
+	  @ResponseBody public HashMap<String, Object> assStuList(HttpSession session){
+	  
+	  logger.info("학생 배정 페이지 이동");
+	  
+	  HashMap<String, Object> map = new HashMap<String, Object>(); 
+	  String cli_name =(String) session.getAttribute("cli_name"); 
+	  AssListDTO dto = service.assStuCoList(cli_name);
+	  
+	  map.put("dto", dto); logger.info("클라이언트 : " + dto);
+	  
+	 return map;
+	 }
 	
 	
 

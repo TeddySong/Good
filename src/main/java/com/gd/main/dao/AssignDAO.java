@@ -13,8 +13,7 @@ public interface AssignDAO {
 
 	AssListDTO assCoList(String co_name);
 
-
-
+	AssListDTO assStuCoList(String cli_name);
 
 	
 }

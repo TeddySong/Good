@@ -342,10 +342,10 @@
 			content += '</tr>';
 		});
 		$('#subjectDetail').empty();
-		$('#subjectDetail').append(content);
+		$('#subjectDetail').after(content);
 	}	
 	
-	function subSearch_pop(){
+	/* function subSearch_pop(){
 		
 			var subtable = ""
 			subtable += '<tr>';
@@ -354,12 +354,12 @@
 			subtable +='<td class="hidden"><input type="text" id="sub_no" class="subPlusNo"/></td>';
 			subtable += '</tr>';
 			
-			$('#subjectDetail').append(subtable);
+			$('#subjectDetail').after(subtable);
 		
 		window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 		
 		
-	}
+	} */
 	
 	
 function stuUpdate(){
@@ -395,7 +395,7 @@ function stuUpdate(){
 		$.ajax({
 			type:'get',
 			url:'stuUpdate.ajax',
-			data:{params,subPlusList:subPlusList},
+			data:params,
 			dataType:'json',
 			success:function(data){		
 				console.log(data);

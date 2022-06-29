@@ -293,7 +293,7 @@ function subSearch_pop(){
 	subtable +='<td class="hidden"><input type="text" id="sub_no" class="subNo"/></td>';
 	subtable += '</tr>';
 	
-	$('#subtable').append(subtable);
+	$('#subtable').after(subtable);
 	
 	
 	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");

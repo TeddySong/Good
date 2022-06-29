@@ -34,7 +34,7 @@ public class StudentController {
 	
 	@RequestMapping("stuList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courseList(
+	public HashMap<String, Object> stuList(
 			@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("수강생 리스트 요청 : "+params);
 		//HashMap<String, Object> map = new HashMap<String, Object>();
@@ -53,7 +53,7 @@ public class StudentController {
 	
 	@RequestMapping("/stuSearch.ajax")
 	@ResponseBody
-	public HashMap<String, Object> assSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
+	public HashMap<String, Object> stuSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
 		
 		return service.stuList(params);
 	}
@@ -163,14 +163,25 @@ public class StudentController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 			String stu_no = (String) session.getAttribute("stu_no");
-			logger.info("상세 데이터 요청 : " + stu_no);
-			session.removeAttribute("stu_no"); // 사용한 idx는 삭제
+			logger.info("상세 데이터 요청 : " + stu_no);			
 			StuDTO dto = service.stuDetail(stu_no);
 			map.put("dto", dto);
 			logger.info("클라이언트 : {}", dto );
 		
 		
 		return map;
+	}
+	
+	@RequestMapping(value="/stuSubDetail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stuSubDetail(HttpSession session) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+			String stu_no = (String) session.getAttribute("stu_no");
+			logger.info("상세 데이터 요청 : " + stu_no);
+			session.removeAttribute("stu_no"); // 사용한 idx는 삭제
+			return service.subList(stu_no);
 	}
 	
 	

@@ -176,6 +176,7 @@
                                 GOOD2 IT 배정 리스트 입니다.                                
                             </div>
                         </div>
+                        </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -183,7 +184,7 @@
                             </div>
                             <div class="card-body">
                                 <table id="stuList">
-									<thead>
+                                	<thead>
 										<tr>
 											<select id="coName">
 												<option value="sub_name">과목</option>
@@ -316,11 +317,10 @@ function listCall(page){
 }
 	function drawList(assList){
 		var content="";
-		assList.forEach(function(item,co_no){
-			
+		assList.forEach(function(item){
 				content +='<tr>';
 				content +='<td>'+item.sub_name+'</td>';
-				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</td>';
+				content +='<td><a href="assCoList.go?co_name='+item.co_name+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
 				content +='<td>'+item.co_startDate+'</td>';
 				content +='<td>'+item.cli_name+'</td>';

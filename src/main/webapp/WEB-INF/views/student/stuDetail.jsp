@@ -232,17 +232,17 @@
 									<tr>
 										<th>학생상태</th>
 										<td id="stu_condition"></td>
-									</tr>
-									<tr>
-										<th colspan="2">과목정보</th>										
-									</tr>
-									<tr>
-										<td colspan="2"></td>				
-									</tr>
-									<tr id="subjectDetail">
-										<th>과목</th>
-										<td id="sub_name"></td>
-									</tr>
+									</tr>									
+									</table>
+									<table id="goodList">
+									<thead>
+										<tr>
+											<th style="font-size:30px;">등록 과목</th>
+										</tr>
+									</thead>
+									<tbody id="list">
+
+									</tbody>
 									<tr>
 										<th colspan="2">
 											<input type="button" value="수정" onclick="stuUpdate()"/>
@@ -290,7 +290,7 @@
 	});
 	
 	
-	$.ajax({
+	/* $.ajax({
 		type:'get',
 		url:'subDetail.ajax',
 		data:{},
@@ -302,9 +302,38 @@
 		error:function(error){
 			console.log(error);
 		}
-	});
+	}); */
 	
+	subListCall();
+	function subListCall(){ //controller에 list를 요청
+		$.ajax({
+			type:'get',
+			url:'stuSubDetail.ajax',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+					console.log(data);
+					console.log('테이블 그리기');
+					drawList(data.list);								
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	}
 	
+	function drawList(list){
+		var content ='';
+		console.log(Array.isArray(list));
+		list.forEach(function(item,idx){
+			console.log(item);
+			content += '<tr>';
+			content += '<td colspan="2" style="text-align:end; font-size:30px;">'+item.sub_name+'</td>';
+			content += '</tr>';
+		});
+		$('#list').empty();
+		$('#list').append(content);
+	}
 	
 	
 	function stuUpdate(){

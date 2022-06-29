@@ -276,6 +276,55 @@ var currPage = 1;
 
 listCall(currPage);
 
+
+//과목 select
+/*
+$('#subName').on('change',function(){
+	if($("#subName option:selected").val() == '과목명'){
+		$("#pagination").twbsPagination('destroy');
+		listCall(currPage);
+	} else {
+		$("#pagination").twbsPagination('destroy');
+		selectSubjectCall(currPage);
+	}
+});
+
+
+function selectSubjectCall(page){
+	var pagePerNum = 10;
+	var subSelect = $("#subName option:selected").val();
+	$({
+		type:'get',
+		url:'courSearch.ajax',
+		data:{
+			cnt:pagePerNum,
+			page:page,
+			sub_name:subSelect
+		},
+		dataType:'JSON',
+		success:function(data){
+			drawList(data.selectSubject)
+			currPage = data.currPage;
+			
+			$("#pagination").twbsPagination({
+				startPage: data.currPage, //시작 페이지
+				totalPages: data.pages, //총 페이지
+				visiblePages: 5, //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
+					console.log(page); //사용자가 클릭한 페이지
+					currPage = page;
+					selectSubjectCall(page);
+				}
+			});
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+*/
+
+
 function listCall(page){
 	
 	var pagePerNum = 10;
@@ -325,6 +374,7 @@ $('#courSearch').on('click',function(){
 function courseSearch(page){
 		
 	var pagePerNum = 10;
+	
 	 var subName = $("#subName option:selected").val();
 	 console.log(subName);
 	 

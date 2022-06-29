@@ -44,23 +44,34 @@ public class AssignService {
 
 		ArrayList<AssListDTO> assList = dao.assList(data);
 		assMap.put("assList", assList);
+		
 
 		return assMap;
 	}
 
 
 	
-	  public AssListDTO assCoList(HashMap<String, String> map) { 
-		  logger.info("과정 배정요청 서비스 요청 " +  map);
+	  public HashMap<String, Object> assCoList(HashMap<String, String> params) { 
+		 
+			/*
+			 * HashMap<String, Object> assMap = new HashMap<String, Object>(); int cnt =
+			 * Integer.parseInt(params.get("cnt")); int page =
+			 * Integer.parseInt(params.get("page"));
+			 */
+		  HashMap<String, Object> assMap = new HashMap<String, Object>();
+		  ArrayList<AssListDTO> assCoList = dao.assCoList(params);
+		  assMap.put("assCoList", assCoList);
 		  
-		  
-	  
-	  return dao.assCoList(map);
+		  return assMap;
 	  }
 
-	public AssListDTO assStuCoList(String cli_name) {
+	public HashMap<String, Object> assStuCoList(HashMap<String, String> params, String stu_no) {
 		
-		return dao.assStuCoList(cli_name);
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(params,stu_no);
+		assMap.put("assStuCoList", assStuCoList);
+		
+		return assMap;
 	}
 	 
 	 

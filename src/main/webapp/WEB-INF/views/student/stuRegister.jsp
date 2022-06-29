@@ -238,22 +238,28 @@
 									        </select>
 								        </td>
 									</tr>
+									</table>
+									<table id="goodList">
+									<thead>
 									<tr>
-										<th colspan="2" >과목정보</th>										
+										<th colspan="2">과목정보</th>										
 									</tr>
-									<tr id=subPlus>
-										<td colspan="2" style="text-align:end;">
-											<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-											<input type="button" value="과목삭제" onclick="#"/>
-										</td>				
+									<tr>																			
+											<td colspan="2" style="text-align:end;">
+												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
+												<input type="button" value="과목삭제" onclick="#"/>
+											</td>										
 									</tr>
-									<tr id="subtable"></tr>
+									</thead>
+									<tbody id="subtable">
+										
+									</tbody>									
 									<tr>
 										<th colspan="2">
-											<input type="button" value="등록완료" onclick="stuRegister()"/>
-											<input type="button" value="취소" onclick="location.href='/stuList.go'"/>
+											<input type="button" value="등록완료" onclick="stuUpdate()"/>
+											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
-									</tr>
+									</tr>									
 								</table>  				
                             </div>                            
                         </div>
@@ -283,7 +289,8 @@ function subSearch_pop(){
 	var subtable = ""
 	subtable += '<tr>';
 	subtable += '<th><input type="checkbox"></th>';
-	subtable += '<td><input type="text" id="sub_name"/><input type="text" id="sub_no" class="hidden"/></td>';
+	subtable += '<td><input type="text" id="sub_name"/></td>';
+	subtable +='<td class="hidden"><input type="text" id="sub_no" class="subNo"/></td>';
 	subtable += '</tr>';
 	
 	$('#subtable').after(subtable);
@@ -302,8 +309,12 @@ function stuRegister(){
 	var $stu_birth = $('#stu_birth');
 	var $stu_age = $('#stu_age');
 	var $stu_gender = $('input[name="stu_gender"]:checked');
-	var $stu_condition = $('#stu_condition');
-
+	var $stu_condition = $('#stu_condition');	
+	var subList = [];		
+	$('.subNo').each(function(idx,item){
+		subList.push($(this).val());		
+	});
+	
 	$.ajax({
 		type:'get',
 		url:'stuRegister.ajax',
@@ -313,24 +324,45 @@ function stuRegister(){
 			stu_birth:$stu_birth.val(),
 			stu_age:$stu_age.val(),
 			stu_gender:$stu_gender.val(),
-			stu_condition:$stu_condition.val()
+			stu_condition:$stu_condition.val(),
+			subList:subList
 		},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			location.href='stuList.go';		
+			/* stuSub(data.stu_no); */
+			location.href='stuList.go';	
 		},
 		error:function(error){
 			console.log(error);
 		}
-	});
-	
-	
-	
+	});	
 }
 
-	
-	
+	/* function stuSub(){
+		var subList = [];		
+		$('.subNo').each(function(idx,item){
+			subList.push($(this).val());		
+		});
+		console.log(subList);
+		$.ajax({
+			type:'get',
+			url:'stuSubRegister.ajax',
+			data:{				
+				subList:subList
+			},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+				location.href='stuList.go';		
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+		
+	}	 */
+
 	
 	
 </script>

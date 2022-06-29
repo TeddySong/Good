@@ -1,5 +1,6 @@
 package com.gd.main.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -187,12 +188,22 @@ public class StudentController {
 	
 	@RequestMapping("/stuRegister.ajax")
 	   @ResponseBody
-	    public HashMap<String, Object> write(
-	          @RequestParam HashMap<String, String> params) {
+	    public HashMap<String, Object>stuRegister(
+	          @RequestParam HashMap<String, String> params, @RequestParam(value = "subList[]") ArrayList<Integer> subList) throws ParseException {
 	       
-	       logger.info("글쓰기 확인");
-	       return service.stuRegister(params);
+	       logger.info("글쓰기 확인 : " + params + subList);
+	       return service.stuRegister(params, subList);
 	    }
+	
+		/*
+		 * @RequestMapping("/stuSubRegister.ajax")
+		 * 
+		 * @ResponseBody public ArrayList<Integer> stuSubRegister(
+		 * 
+		 * @RequestParam ArrayList<Integer> subList) {
+		 * 
+		 * logger.info("과목등록 : " + subList); return null; }
+		 */
 	
 	
 	@RequestMapping("/stuUpdate.go")
@@ -207,7 +218,7 @@ public class StudentController {
 	public HashMap<String, Object> stuUpdate(HttpSession session,
 			@RequestParam HashMap<String, String> params) {
 		
-		logger.info("params : " + params);
+		logger.info("params : " + params );
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		boolean login = false;

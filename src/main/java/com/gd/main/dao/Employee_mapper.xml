@@ -2,20 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
+							<!-- [emp_name, emp_log_condition, emp_log_content]-->
+<!-- 직원일지 등록 --> <!-- db에서 가져와야하는것:emp_no을 통해 직원테이블의 직원명,작성사유,히스토리-->
+	<insert id="empLogRegister" parameterType='hashmap'>
+		INSERT INTO student_log (stu_no, emp_no, stu_log_content)
+		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
+	</insert>
 
-<select id="emplogList" resultType="com.gd.main.dto.EmployeeDTO">
+
+
+
+<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO">
 	<!-- 직원일지 호출 -->
-	SELECT e.emp_name,
+	SELECT emp_name,
 		el.emp_log_date,
 		el.emp_log_condition,
-		el.emp_log_content
-FROM employee_log el 
-INNER JOIN  
-		employee e ON el.emp_no =#{param1}
+		el.emp_log_content,
+		el.emp_no
+FROM employee_log el
+LEFT OUTER JOIN 
+		employee e ON e.emp_no =#{param1}
+</select>
+		
+<select id="empName" resultType="String">
+		SELECT emp_name FROM employee e
+		left outer join employee_log el on e.emp_no=el.emp_no
+		WHERE e.emp_no= #{param1}
 </select>
 
 	 <!--  직원정보 등록 -->
-	<insert id="empWrite" parameterType="hashmap" >
+	<insert id="empRegister" parameterType="hashmap" >
 		INSERT INTO employee(
 												emp_id,
 												emp_pw,

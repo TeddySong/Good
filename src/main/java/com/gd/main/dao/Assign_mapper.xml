@@ -70,9 +70,18 @@
 
 </select>
 
-<select id="assStuCoList" resultType="com.gd.main.dto.AssListDTO">
+<select id="assStuCoList" resultType="hashmap" >
+select cli_name, sub_name, c2.co_name,c2.co_startDate ,c2.co_endDate ,c2.co_startTime, a.ass_condition 
+	from rsub r ,student s ,client c ,subject s2,course c2 ,assign a
+	where s.cli_no = c.cli_no 
+	 and s2.sub_no = r.sub_no 
+	 and r.stu_no = s.stu_no 
+	 and c2.co_no = a.co_no 
+	 and r.stu_no = #{param2}
+ 		
 
-	select cli_name 
+
+	<!-- select cli_name 
 		, s2.sub_name 
 		, c2.co_name 
 		, c2.co_startDate 
@@ -88,7 +97,7 @@
 	where s.stu_no = r.stu_no 
 		and s.cli_no = c.cli_no 
 		and s2.sub_no = r.sub_no 
-		and a.co_no = c2.co_no
+		and a.co_no = c2.co_no -->
 
 </select>
 </mapper>

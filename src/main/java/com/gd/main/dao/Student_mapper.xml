@@ -81,7 +81,7 @@
 	</select>
 	
 	<select id="stuDetail" resultType="com.gd.main.dto.StuDTO">
-		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, stu_condition, emp_name FROM student s
+		SELECT s.cli_no, s.emp_no, stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, stu_condition, emp_name FROM student s
 		LEFT OUTER JOIN client c ON c.cli_no = s.cli_no 
 		LEFT OUTER JOIN employee e ON e.emp_no =s.emp_no 
 		WHERE stu_no = #{param1}
@@ -94,7 +94,7 @@
 		WHERE r.stu_no = #{stu_no}
 	</select>
 	
-	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>
+	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='com.gd.main.dto.StuDTO'>
 		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
 		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
 	</insert>
@@ -106,6 +106,11 @@
 			stu_condition = #{stu_condition}
 		WHERE stu_no = #{stu_no}
 	</update>
+	
+	<insert id="stuSubUpdate" parameterType='hashmap'>
+		INSERT INTO rSub(stu_no, sub_no)
+		VALUES (#{stu_no}, #{sub_no})
+	</insert>
 	
 	<select id="stuLog" resultType="com.gd.main.dto.StuDTO">
 		select sl.stu_no, cli_name, stu_log_date, stu_log_content, emp_name  from student_log sl 
@@ -125,5 +130,10 @@
 		left outer join student s on c.cli_no = s.cli_no
 		WHERE stu_no = #{param1}
 	</select>
+	
+	<insert id="stuSubRegister" parameterType='hashmap'>
+		INSERT INTO rSub(stu_no, sub_no)
+		VALUES (#{stu_no}, #{sub_no})
+	</insert>
 	
 </mapper>

@@ -195,20 +195,30 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>					
-											<th>과목명</th>
-												<td id ="co_name"></td>										
-											<th>학번</th>
-												<td id ="stu_no"></td>									
-											<th>학생명</th>
-												<td id =cli_name"></td>										
-											<th>연락처</th>
-												<td id ="cli_phone"></td>									
-											<th>담당자</th>
-												<td id ="emp_name"></td>								
+											<th>과정명</th>																					
+											<th>학번</th>																				
+											<th>학생명</th>																				
+											<th>연락처</th>																				
+											<th>담당자</th>																
 											<th>수강상태</th>
-												<td id ="ass_condition"></td>
 										</tr>
 									</thead>
+									<tbody id="list">
+										<%-- <c:forEach items= "${list}" var ="dto">
+											<td id ="co_name">${dto.co_name}</td>
+											<td id ="stu_no">${dto.stu_no}</td>
+											<td id = "cli_name"><a href="assStuList.go?cli_name=${dto.cli_name}">${dto.cli_name}</a></td>	
+											<td id ="cli_phone">${dto.cli_phone}</td>
+											<td id ="emp_name">${dto.emp_name}</td>
+											<td id ="ass_condition">${dto.ass_condition}</td>
+									</c:forEach>  --%>
+										<%-- 	<td id ="co_name"></td>
+											<td id ="stu_no"></td>
+											<td ><a id = "cli_name" href="assStuList.go?cli_name=${dto.cli_name}"></a></td>	
+											<td id ="cli_phone"></td>
+											<td id ="emp_name"></td>
+											<td id ="ass_condition"></td> --%>
+									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
 										<td colspan="8" id ="paging">
@@ -231,25 +241,58 @@
 	    <!-- <script src="../resources/JS/empDatatables-simple-demo.js"></script> -->
 </body>
 <script>
+var currPage = 1;
 
-$.ajax({
-	type:'get',
-	url:'assCoDetail.ajax',
-	data:{},
-	dataType:'JSON',
-	success:function(data){
-		console.log(data);
-		$('#co_name').html(data.co_name);
-		$('#stu_no').html(data.stu_no);
-		$('#cli_name').html(data.cli_name);
-		$('#cli_phone').html(data.cli_phone);
-		$('#emp_name').html(data.emp_name);
-		$('#ass_condition').html(data.ass_condition);
-	},
-	error:function(e){
-		console.log(e);
-	}
-});
+listCall(currPage);
+
+function listCall(page){
+	
+	var pagePerNum = 10;
+	console.log("param page : " + page);
+	
+	$.ajax({
+		type:'get',
+		url:'assCoList.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.assCoList);
+			currPage=data.currPage;
+			/* $('#co_name').html(data.dto.co_name);
+			$('#stu_no').html(data.dto.stu_no);
+			$('#cli_name').html(data.dto.cli_name);
+			$('#cli_phone').html(data.dto.cli_phone);
+			$('#emp_name').html(data.dto.emp_name);
+			$('#ass_condition').html(data.dto.ass_condition); */
+			 
+			
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+}
+
+function drawList(assCoList){
+	var content="";
+	assCoList.forEach(function(item){
+		content += '<tr>';
+		content += '<td>'+item.co_name+'</td>';
+		content += '<td>'+item.stu_no+'</td>';
+		content += '<td><a href="assStuList.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';		
+		content += '<td>'+item.cli_phone+'</td>';
+		content += '<td>'+item.emp_name+'</td>';
+		content += '<td>'+item.ass_condition+'</td>';
+		content += '</tr>'; 
+	});
+	$('#list').empty();
+	$('#list').append(content);
+	
+}
 
 	
 </script>

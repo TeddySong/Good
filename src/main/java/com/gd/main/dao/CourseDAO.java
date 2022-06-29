@@ -35,5 +35,11 @@ public interface CourseDAO {
 
 	int allCount(HashMap<String, Object> searchResult);
 
+	ArrayList<CourseDTO> dangwa();
+
+	ArrayList<CourseDTO> jonghab();
+
+	ArrayList<CourseDTO> selectSubjectCall(String sub_no, String sub_name, int cnt, int offset);
+
 	
 }

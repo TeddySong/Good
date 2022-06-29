@@ -35,19 +35,9 @@ public class SubjectController {
 	
 	@RequestMapping(value = "/subList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> subList(HttpSession session) {
+	public HashMap<String, Object> subList(@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("리스트 요청");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean login = false;
-		
-		if (session.getAttribute("loginId") != null) {
-			login = true;
-			ArrayList<SubDTO> list = service.subList();
-			logger.info("subList : " + list.size());
-			map.put("subList", list);
-		}
-		map.put("login", login);
-		return map;
+		return service.subList(params, session);
 	}
 	
 	@RequestMapping(value = "/subRegister.go")
@@ -167,15 +157,11 @@ public class SubjectController {
 	@ResponseBody
 	public HashMap<String, Object> scriptlist(@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("과목 후기 리스트 요청" + params);
-		//HashMap<String, Object> map = new HashMap<String, Object>();
-		//ArrayList<SubDTO> list = service.scriptlist();
-		//logger.info("list : " + list.size());
-		//map.put("list", list);
-		
-		
 		return service.scriptlist(params);
 	}
 	
+	/*중복 코드 정리
+	 
 	@RequestMapping("/scSubCondition.ajax")
 	@ResponseBody
 	public HashMap<String, Object> scSubCondition(@RequestParam HashMap<String, String> params, HttpSession session) {
@@ -193,6 +179,7 @@ public class SubjectController {
 		return service.scrSubSearch(params);
 	}
 	
+	
 	@RequestMapping("/subCondition.ajax")
 	@ResponseBody
 	public HashMap<String, Object> subCondition(@RequestParam HashMap<String, String> params, HttpSession session) {
@@ -205,7 +192,7 @@ public class SubjectController {
 		logger.info("과목명:::" + params);
 		return service.sublistSearch(params);
 	}
-	
+	*/
 	
 	
 	

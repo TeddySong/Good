@@ -24,6 +24,14 @@ public class EmployeeDTO{
 	private String emp_log_content;
 	private String emp_log_condition;
 	
+	
+	//직원일지 추가할때 어떤 데이터 이용하지?
+	//  *작성일(현재날짜),*작성자(로그인된 사람의 직원명),작성사유(emp_log_condition),
+		// ,히스토리(내용) (emp_log_content).
+	
+	
+	
+	
 	public Date getEmp_log_date() {
 		return emp_log_date;
 	}

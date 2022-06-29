@@ -6,36 +6,98 @@
 <!-- 과정전체 배정리스트 -->
 <select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
 
-		select sub_name,co_name,co_startTime,co_startDate,cli_name,cli_phone,emp_name,co_condition from assign a
-		left outer join client c on c.cli_no = stu_no
-		left outer join course c2 on c2.co_no = a.co_no
-		left outer join subject s on s.sub_no = a.sub_no
-		left outer join employee e on e.emp_no = stu_no
-			<where>
-				<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
-					<if test="assSearchTarget.equals('sub_name')">
-						s.sub_name = #{search};
-					</if>
-					<if test="assSearchTarget.equals('co_name')">
-						c2.co_name = #{search};
-					</if>
-					<if test="assSearchTarget.equals('emp_name')">
-						e.emp_name = #{search};
-					</if>
-					<if test="assSearchTarget.equals('co_condition')">
-						c2.co_condition = #{search};
-					</if>
+	select sub_name
+	       , c2.co_name
+	       , c2.co_startTime
+	       , c2.co_startDate
+	       , s.stu_no
+	       , c.cli_name
+	       , c.cli_phone
+	       , e.emp_name
+	       , c2.co_condition
+      from assign a
+           , student s
+           , client c
+           , course c2
+           , employee e
+           , subject s2
+    where a.stu_no = s.stu_no 
+       and s.cli_no = c.cli_no
+       and e.emp_no = s.emp_no
+       and c2.co_no = a.co_no
+       and s2.sub_no = a.sub_no
+		<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+			<if test="assSearchTarget.equals('sub_name')">
+				and s2.sub_name = #{search}
 			</if>
-			</where>
+			<if test="assSearchTarget.equals('co_name')">
+				and c2.co_name = #{search}
+			</if>
+			<if test="assSearchTarget.equals('emp_name')">
+				and e.emp_name = #{search}
+			</if>
+			<if test="assSearchTarget.equals('co_condition')">
+				and c2.co_condition = #{search}
+			</if>
+	</if>
 </select>
 <!-- 선택된 과정에 대한 배정 리스트 -->
-<select id ="assCoList" resultType="com.gd.main.dto.AssListDTO"  parameterType="hashmap">
-select co_name,stu_no,cli_name,cli_phone,emp_name,ass_condition from assign a
+<select id ="assCoList" resultType="com.gd.main.dto.AssListDTO" >
+
+	select c2.co_name
+			, s.stu_no
+			, c.cli_name 
+			, c.cli_phone 
+			, e.emp_name 
+			, a.ass_condition 
+	from assign a 
+			, student s 
+			, client c 
+			, course c2 
+			, employee e 
+	where a.stu_no = s.stu_no 
+			and s.cli_no = c.cli_no 
+			and e.emp_no = s.emp_no 
+			and c2.co_no = a.co_no;
+
+
+<!-- select co_name,stu_no,cli_name,cli_phone,emp_name,ass_condition from assign a
 		left outer join client c on c.cli_no = stu_no
 		left outer join course c2 on c2.co_no = a.co_no
 		left outer join subject s on s.sub_no = a.sub_no
 		left outer join employee e on e.emp_no = stu_no
-		where c2.co_no =#{parma1};
+		where c2.co_name =#{parma1} -->
+
+</select>
+
+<select id="assStuCoList" resultType="hashmap" >
+select cli_name, sub_name, c2.co_name,c2.co_startDate ,c2.co_endDate ,c2.co_startTime, a.ass_condition 
+	from rsub r ,student s ,client c ,subject s2,course c2 ,assign a
+	where s.cli_no = c.cli_no 
+	 and s2.sub_no = r.sub_no 
+	 and r.stu_no = s.stu_no 
+	 and c2.co_no = a.co_no 
+	 and r.stu_no = #{param2}
+ 		
+
+
+	<!-- select cli_name 
+		, s2.sub_name 
+		, c2.co_name 
+		, c2.co_startDate 
+		, c2.co_endDate 
+		, c2.co_startTime 
+		, a.ass_condition 
+	from student s 
+		, client c 
+		, subject s2 
+		, rsub r 
+		, assign a
+		, course c2 
+	where s.stu_no = r.stu_no 
+		and s.cli_no = c.cli_no 
+		and s2.sub_no = r.sub_no 
+		and a.co_no = c2.co_no -->
 
 </select>
 </mapper>

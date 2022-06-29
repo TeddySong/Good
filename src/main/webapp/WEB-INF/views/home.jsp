@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h3>홈페이지</h3>
+	<input type="button" value="과목리스트" onclick="location.href='subjectMainHome.go'">
 	<br/>
 	<hr/>
 	<br/>

@@ -208,7 +208,7 @@
 					 	<div style="text-align:end; width:70%;">
 					 		<!-- <input type="button" value="선택수정"  onclick="UpdateValue();"> -->
 					    	<input type="button" id="button1" class="goodRegister" value="수정" onclick="EmpUpdateForm()"/>
-							<button onclick="location.href='empWrite.go'" class="goodRegister">등록</button>
+							<button onclick="location.href='empRegister.go'" class="goodRegister">등록</button>
 						</div>
 						<table id="goodList">								
 							<thead>
@@ -314,7 +314,7 @@ function drawList(list){
 		content += '<tr>';
 		content += '<td><input type=\"radio\" name="emp"></td>';	
 		content += '<td>'+item.emp_no+'</td>';
-		content += '<td><a href="emplogList.go?emp_no='+item.emp_no+'">'+item.emp_name+'</a></td>';
+		content += '<td><a href="empLogList.go?emp_no='+item.emp_no+'">'+item.emp_name+'</a></td>';
 		content += '<td>'+item.emp_id+'</td>';
 		content += '<td>'+item.emp_phone+'</td>';
 		content += '<td>'+item.emp_position+'</td>';

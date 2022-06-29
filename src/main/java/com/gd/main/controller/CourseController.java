@@ -29,6 +29,41 @@ public class CourseController {
 	@Autowired CourseService service;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
+	//과목 리스트 메인 페이지 이동
+	@RequestMapping(value = "/subjectMainHome.go")
+	public String classMain(Model model){
+		
+		logger.info("과목 리스트 메인 페이지 요청");
+		String page = "redirect:/subjectMainHome.do";
+
+		return page;
+	}
+	
+	//과목,과정 리스트 호출
+	@RequestMapping(value = "/subjectMainHome.do")
+	public String classMainHome(Model model){
+		
+		String page = "emp_login";
+		
+		//단과 리스트
+		ArrayList<CourseDTO> dangwa = service.dangwa();
+		logger.info("단과 과목 갯수 : "+dangwa.size());
+		model.addAttribute("dangwa",dangwa);
+		
+		//종합 리스트
+		ArrayList<CourseDTO> jonghab = service.jonghab();
+		logger.info("단과 과목 갯수 : "+jonghab.size());
+		model.addAttribute("jonghab",jonghab);
+
+		page = "./course/subjectMainHome";
+
+		return page;
+	}
+
+
+
+	
 	//과정 리스트 페이지 이동
 	@RequestMapping(value = "/courList.go")
 	public String courListGo(Model moel, HttpSession session) {

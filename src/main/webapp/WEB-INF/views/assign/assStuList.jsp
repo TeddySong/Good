@@ -184,7 +184,7 @@
                             <div class="card-body">
                                 <table id="stuList">
 									<thead>
-										<tr>
+										<!-- <tr>
 											<select id="coStuName">
 												<option value="cli_name">학생명</option>
 												<option value="stu_no">학번</option>
@@ -193,31 +193,43 @@
 											</select>
 											<input type = "text" id= "search"/>
 											<button class="registerSh" id = "assSearch" >검색</button>
+										</tr> -->
+										<tr>
+											<h3>과정 상세정보</h3>
+											<th>학생명</th>
+											<td id="cli_name"><input type="text"  />${cli_name}</td>
+											<td>
+												<button id="cli_nameSearch">검색</button>
+												<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
+											</td>
 										</tr>
-										<tr>					
-											<th>과정명</th>																					
-											<th>학번</th>																				
-											<th>학생명</th>																				
-											<th>연락처</th>																				
-											<th>담당자</th>																
+										<tr>
+											<th>과목명</th>
+											<th>과정명</th>
+											<th>개강일</th>
+											<th>종강일</th>
+											<th>강의시간</th>														
 											<th>수강상태</th>
+											<th>검색</th>
 										</tr>
 									</thead>
-									<tbody id="list">
-										<%-- <c:forEach items= "${list}" var ="dto">
-											<td id ="co_name">${dto.co_name}</td>
-											<td id ="stu_no">${dto.stu_no}</td>
-											<td id = "cli_name"><a href="assStuList.go?cli_name=${dto.cli_name}">${dto.cli_name}</a></td>	
-											<td id ="cli_phone">${dto.cli_phone}</td>
-											<td id ="emp_name">${dto.emp_name}</td>
-											<td id ="ass_condition">${dto.ass_condition}</td>
-									</c:forEach> --%>
+									<tbody id="assStuCoList">
+										<tr>
+											<td id ="sub_name"></td>
 											<td id ="co_name"></td>
-											<td id ="stu_no"></td>
-											<td ><a id = "cli_name" href="assStuList.go?cli_name=${dto.cli_name}"></a></td>	
-											<td id ="cli_phone"></td>
-											<td id ="emp_name"></td>
-											<td id ="ass_condition"></td>
+											<td id ="co_startDate"></td>	
+											<td id ="co_endDate"></td>
+											<td id ="co_startTime"></td>
+											<td id ="ass_condition">
+												<select id="coCondition">
+													<option value="ass_condition">재학</option>
+													<option value="ass_condition">대기</option>
+													<option value="ass_condition">철회</option>
+													<option value="ass_condition">수료</option>
+												</select>
+											</td>
+											<td id = "coSearch"><button>검색</button></td>
+										</tr>
 									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
@@ -242,52 +254,26 @@
 </body>
 <script>
 
- 
 $.ajax({
 	type:'get',
-	url:'assCoList.ajax',
+	url:'assStuList.ajax',
 	data:{},
 	dataType:'JSON',
 	success:function(data){
 		console.log(data);
 		//drawList(data.list);
-		$('#co_name').html(data.dto.co_name);
-		$('#stu_no').html(data.dto.stu_no);
 		$('#cli_name').html(data.dto.cli_name);
-		$('#cli_phone').html(data.dto.cli_phone);
-		$('#emp_name').html(data.dto.emp_name);
+		$('#sub_name').html(data.dto.sub_name);
+		$('#co_name').html(data.dto.co_name);
+		$('#co_startDate').html(data.dto.co_startDate);
+		$('#co_endDate').html(data.dto.co_endDate);
+		$('#co_startTime').html(data.dto.co_startTime);
 		$('#ass_condition').html(data.dto.ass_condition);
 		 
 		
 	},
 	error:function(error){}
 });
-
-/* function drawList(list){
-	var content="";
-	
-		content += '<tr>';
-		content += '<td>${dto.co_name}</td>';
-		content += '<td>${dto.stu_no}</td>';
-		content += '<td>${dto.cli_name}<a href=\"assStuList.go?cli_name=${dto.cli_name}\"></a></td>';		
-		content += '<td>${cli_phone}</td>';
-		content += '<td>${emp_name}</td>';
-		content += '<td>${ass_condition}</td>';
-		content += '</tr>';
-		
-		 content += '<tr>';
-		content += '<td id="co_name"></td>';
-		content += '<td id="stu_no"></td>';
-		content += '<td id= "cli_name"><a href="assStuList.go?cli_name=${cli_name}"></a></td>';		
-		content += '<td id="cli_phone"></td>';
-		content += '<td id="emp_name"></td>';
-		content += '<td id="ass_condition"></td>';
-		content += '</tr>'; 
-
-	$('#list').empty();
-	$('#list').append(content);
-	
-}*/
 
 	
 </script>

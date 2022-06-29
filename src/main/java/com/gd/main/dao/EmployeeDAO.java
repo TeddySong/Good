@@ -2,13 +2,15 @@ package com.gd.main.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import com.gd.main.dto.EmployeeDTO;
+
 public interface EmployeeDAO {
-	
-	
 
 	ArrayList<EmployeeDTO> emplogList(int emp_no);
-	
+
+	EmployeeDTO selectEmpMyInfo(int emp_no);
+
 	int allCount();
 
 	ArrayList<EmployeeDTO> list(int cnt, int offset);
@@ -16,13 +18,7 @@ public interface EmployeeDAO {
 	String empOverlay(String chkName);
 
 	int empWrite(HashMap<String, Object> params);
-	
-	EmployeeDTO selectEmpMyInfo(int emp_no);
 
 	int empUpdate(HashMap<String, String> params);
 
-
-
-	
-	
 }

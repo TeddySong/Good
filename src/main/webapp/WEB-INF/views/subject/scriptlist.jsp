@@ -29,7 +29,6 @@ th,td{
 <input type="radio" name="sub_condition" value="단과"/>단과
 <input type="radio" name="sub_condition" value="종합"/>종합
 <input type="radio" name="sub_condition" value="숨김"/>숨김
-<button onclick="location.href='scriptlist.go'">초기화</button>
 <button onclick="scrDel()">삭제</button>
 <button  onclick="scrRegister_pop()">등록</button>
 </div>
@@ -63,6 +62,23 @@ var currPage = 1;
 
 listCall(currPage);
 
+//과목 select 선택
+$('#sub_name').on('change', function () {
+	
+	if($("#sub_name option:selected").val() == 'all'){
+		$("#pagination").twbsPagination('destroy');
+		listCall(currPage);
+	}else{
+	$("#pagination").twbsPagination('destroy');
+	scrSubSearchCall(currPage);
+	}
+});
+
+//노출상태 선택
+$("input[name='sub_condition']").change(function(){
+	$("#pagination").twbsPagination('destroy');
+	scSubConditionCall(currPage);
+});
 
 function listCall(page){
 	var pagePerNum = 5;	
@@ -83,7 +99,7 @@ function listCall(page){
 				$("#pagination").twbsPagination({
 					startPage: data.currPage, //시작 페이지
 					totalPages: data.pages, //총 페이지
-					visiblePages: 5, //한번에 보여줄 페이지 수
+					visiblePages: 5, //한번에 보여줄 리스트 수
 					onPageClick: function(e,page){
 						console.log(page); //사용자가 클릭한 페이지
 						currPage = page;
@@ -96,47 +112,81 @@ function listCall(page){
 		}
 			
 	});
-	
-	$('#sub_name').on('change', function () {
+}
+
+//과목 select 
+function scrSubSearchCall(page){
+	var pagePerNum = 5;	
 	    var subSelect = $("#sub_name option:selected").val();
-	    
 	    $.ajax({
 	    	type:'get',
-	    	url:'scrSubSearch.ajax',
-	    	data:{sub_no:subSelect},
+	    	url:'scriptlist.ajax',
+	    	data:{
+	    		sub_no:subSelect,
+	    		cnt:pagePerNum,
+				page:page	
+	    	},
 	    	dataType:'JSON',
 	    	success:function(data){
-	    		drawList(data.scrSublist)
+	    		drawList(data.scrSubSearch)
+				currPage = data.currPage;
+				
+				$("#pagination").twbsPagination({
+					startPage: data.currPage, //시작 페이지
+					totalPages: data.pages, //총 페이지
+					visiblePages: 5, //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
+						console.log(page); //사용자가 클릭한 페이지
+						currPage = page;
+						 scrSubSearchCall(page);
+					}
+				});
 	    	},
 	    	error:function(e){
 	    		console.log(e);
 	    	}
 	    });
-	 	    
-	});
 	
-	
-	$("input[name='sub_condition']").change(function(){
+}
+
+//노출상태
+function scSubConditionCall(page){
+	var pagePerNum = 5;	
 		var subCo = $("input:radio[name='sub_condition']:checked").val();
 		console.log(subCo);
 		
 		 $.ajax({
 		    	type:'get',
-		    	url:'scSubCondition.ajax',
-		    	data:{subCo:subCo},
+		    	url:'scriptlist.ajax',
+		    	data:{
+		    		subCo:subCo,
+		    		cnt:pagePerNum,
+					page:page	
+		    	},
 		    	dataType:'JSON',
 		    	success:function(data){
 		    		drawList(data.scSubCondition);
+		    		currPage = data.currPage;
+					
+					$("#pagination").twbsPagination({
+						startPage: data.currPage, //시작 페이지
+						totalPages: data.pages, //총 페이지
+						visiblePages: 5, //한번에 보여줄 페이지 수
+						onPageClick: function(e,page){
+							console.log(page); //사용자가 클릭한 페이지
+							currPage = page;
+							scSubConditionCall(page);
+						}
+					});
 		    	},
 		    	error:function(e){
 		    		console.log(e);
 		    	}
 		    });
-});
-	
-	
-	
-}
+
+	}
+
+
 
 
 function drawList(list){
@@ -209,6 +259,7 @@ function scrRegister_pop(){
 
 function darwName(sub_name) {
 	var content = '';
+		content += '<option value="all">전체</option>';
 	sub_name.forEach(function(item){
 		content += '<option value="'+item.sub_no+'">'+item.sub_name+'</option>';
 	});

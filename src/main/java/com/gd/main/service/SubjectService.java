@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,26 @@ public class SubjectService {
 	
 	@Autowired SubjectDAO dao;
 
-	public ArrayList<SubDTO> subList() {
-		return dao.subList();
+	public HashMap<String, Object> subList(HashMap<String, String> params, HttpSession session) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String subCo = params.get("subCo");
+		String subSe = params.get("subSe");
+		boolean login = false;
+		
+		if (session.getAttribute("loginId") != null) {
+			login = true;
+			ArrayList<SubDTO> list = dao.subList();
+			ArrayList<SubDTO> subCondition = dao.subCondition(subCo);
+			ArrayList<SubDTO> sublistSearch = dao.sublistSearch(subSe);
+			logger.info("subList : " + list.size());
+			map.put("subList", list);
+			map.put("subCondition", subCondition);
+			map.put("sublistSearch", sublistSearch);
+		}
+		map.put("login", login);
+		return map;
 	}
+	
 
 	public HashMap<String, Object> subOverlay(String subname) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -108,13 +127,19 @@ public class SubjectService {
 
 	public HashMap<String, Object> scriptlist(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		String sub_no = params.get("sub_no");
+		String subCo = params.get("subCo");
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 :" + page);
 		
-		int allCnt = dao.allCount();
+		param.put("searchSubNo", sub_no);
+		param.put("searchSubCo", subCo);
+		
+		int allCnt = dao.allCount(param);
 		logger.info("allCnt : " + allCnt);
+		
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : " + pages);
 		
@@ -129,7 +154,11 @@ public class SubjectService {
 		logger.info("offset : "+offset); 
 		
 		ArrayList<SubDTO> list = dao.scriptlist(cnt, offset);
+		ArrayList<SubDTO> scrSubSearch = dao.scrSubSearch(sub_no, cnt, offset);
+		ArrayList<SubDTO> scSubCondition = dao.scSubCondition(subCo, cnt, offset);
 		map.put("list", list);
+		map.put("scrSubSearch", scrSubSearch);
+		map.put("scSubCondition", scSubCondition);
 
 		return map;
 	}
@@ -188,11 +217,11 @@ public class SubjectService {
 		return success;
 	}
 
+	/* 중복코드
 	public HashMap<String, Object> scrSubSearch(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		String sub_no = params.get("sub_no");
 		logger.info("선택 과목번호:::"+sub_no);
-		/*
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 :" + page);
@@ -212,7 +241,6 @@ public class SubjectService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		logger.info("과목번호 나오나:::" + sub_no);
-		*/
 		ArrayList<SubDTO> scrSubSearch = dao.scrSubSearch(sub_no);
 		map.put("scrSublist", scrSubSearch);
 		
@@ -228,6 +256,7 @@ public class SubjectService {
 		
 		return map;
 	}
+	 
 
 	public HashMap<String, Object> subCondition(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -248,6 +277,8 @@ public class SubjectService {
 		
 		return map;
 	}
+	
+	*/
 
 	
 

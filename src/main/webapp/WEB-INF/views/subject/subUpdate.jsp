@@ -64,6 +64,13 @@ button {
 	 			<td><textarea id="sub_summary"></textarea></td>
 	 		</tr>
 	 		<tr>
+				<th>과목이미지</th>
+				<td>
+					<input type="file" id="sub_img" multiple="multiple"/>
+					<p id="sub_img_name"></p>
+				</td>
+			</tr>
+	 		<tr>
 				<th>커리큘럼</th>
 				<td>
 					<input type="file" id="curri" multiple="multiple"/>
@@ -91,8 +98,18 @@ $.ajax({
 		$('#sub_condition').val(data.dto.sub_condition);
 		$('#sub_time').val(data.dto.sub_time);
 		$('#sub_summary').val(data.dto.sub_summary);
-		if(data.photo[0])
+		if(data.subimg[0]){
+			$("#sub_img_name").text(data.subimg[0].subimg_oriName)
+		}else{
+				
+		}
+		
+		if(data.photo[0]){
 			$("#curri_file_name").text(data.photo[0].curri_oriName);
+		}else{
+			
+		}
+		
 	},
 	error:function(error){
 		console.log(error);
@@ -134,17 +151,20 @@ function subUpdate(){
 		
 		
 			var formData = new FormData();
-			
+	
+			var subimg = $("#sub_img")[0].files[0];
 			var file = $("#curri")[0].files[0];
+			var subImgName = $("#sub_img_name").text();
 			var curriFileName = $("#curri_file_name").text();
 			
+			formData.append("subimg", $("#sub_img")[0].files[0]);
 			formData.append("file", $("#curri")[0].files[0]);
-			
 			formData.append("sub_no", $("#sub_no").val());
 			formData.append("sub_name", $sub_name.val());
 			formData.append("sub_condition", $sub_condition.val());
 			formData.append("sub_time", $sub_time.val());
 			formData.append("sub_summary", $sub_summary.val());
+			console.log(subimg);
 			
 			$.ajax({
 				type:'post',

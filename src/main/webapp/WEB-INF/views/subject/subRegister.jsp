@@ -63,6 +63,10 @@ button {
 	 			<td><textarea id="sub_summary"></textarea></td>
 	 		</tr>
 	 		<tr>
+				<th>과목이미지</th>
+				<td><input type="file" id="sub_img" multiple="multiple"/></td>
+			</tr>
+	 		<tr>
 				<th>커리큘럼</th>
 				<td><input type="file" id="curri" multiple="multiple"/></td>
 			</tr>
@@ -107,6 +111,8 @@ button {
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
+		var subimg = $("#sub_img")[0].files[0];
+		var file = $("#curri")[0].files[0];
 		
 		if(subOverChk){
 			
@@ -117,13 +123,17 @@ button {
 				alert("수강시간을 입력해 주세요.");
 			}else if($sub_summary.val() == ""){
 				alert("과목개요를 입력해 주세요.");
+			}else if(subimg == null){
+				alert("과목이미지를 선택해주세요.");
+			}else if(file == null){
+				alert("커리큘럼을 선택해주세요.");
 			}else{
 				console.log("과목등록 요청");
 				
 				var formData = new FormData();
 				
+				formData.append("sub_img",$("#sub_img")[0].files[0]);
 				formData.append("file", $("#curri")[0].files[0]);
-				
 				formData.append("sub_name", $sub_name.val());
 				formData.append("sub_condition", $sub_condition.val());
 				formData.append("sub_time", $sub_time.val());

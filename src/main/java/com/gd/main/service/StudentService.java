@@ -158,26 +158,17 @@ public class StudentService {
 	 * stu_no) { logger.info("값들 : " + sub_no + stu_no); return null; }
 	 */
 
-	public boolean stuUpdate(HashMap<String, String> params, ArrayList<Integer> subPlusList) {
+	public boolean stuUpdate(HashMap<String, String> params) {
 		boolean success = false;
+		
+		logger.info("값 1차 확인 : " + params);
 		
 		int row = dao.stuUpdate(params);
 		
-		String stuNo = params.get("params[stu_no]");
-		int stu_no = Integer.parseInt(stuNo);
-		
-		logger.info("값 확인 : " + stu_no + '/' + subPlusList + '/' + row);
-		
 		if(row>0) {
-			success = true;
-			for (Integer sub_no : subPlusList) {
-	 			HashMap<String, Object> map = new HashMap<String, Object>();
-	 			map.put("sub_no", sub_no);
-	 			map.put("stu_no", stu_no);
-	 			dao.stuSubUpdate(map);
+			success = true;		
 	 		}
-		}
-		
+				
 		logger.info("update success : " + success);
 		
 		return success;

@@ -51,6 +51,12 @@ public interface SubjectDAO {
 
 	ArrayList<SubDTO> sublistSearch(String subSe);
 
+	void subImgWrite(String oriFileName, String newFileName, int subno);
+
+	ArrayList<SubDTO> subImgDetail(String sub_no);
+
+	void subImgUpdate(String oriFileName, String newFileName, int subno);
+
 
 
 

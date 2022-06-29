@@ -216,9 +216,9 @@ public class StudentController {
 	@RequestMapping(value="/stuUpdate.ajax")
 	@ResponseBody
 	public HashMap<String, Object> stuUpdate(HttpSession session,
-			@RequestParam HashMap<String, String> params, @RequestParam(value = "subPlusList[]") ArrayList<Integer> subPlusList) {
+			@RequestParam HashMap<String, String> params) {
 		
-		logger.info("params : " + params + '/' + subPlusList);
+		logger.info("params : " + params );
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		boolean login = false;
@@ -226,7 +226,7 @@ public class StudentController {
 		if(session.getAttribute("loginId") != null) {
 			logger.info("수정하기 요청");
 			login = true;	
-			boolean success = service.stuUpdate(params, subPlusList);
+			boolean success = service.stuUpdate(params);
 			map.put("success", success);
 		}
 		

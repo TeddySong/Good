@@ -8,9 +8,9 @@ import com.gd.main.dto.EmployeeDTO;
 public interface EmployeeDAO {
 
 	//직원일지 리스트
-	 ArrayList<EmployeeDTO> empLogList(int empNo);
-	//
-	 ArrayList<EmployeeDTO> empList(HashMap<String, Object> map);
+ ArrayList<EmployeeDTO> empLogList(String emp_no); 
+	
+	 ArrayList<EmployeeDTO> empList(HashMap<String, Object> map); 
 
 	ArrayList<EmployeeDTO> allCount(HashMap<String, Object> map);
 		
@@ -35,7 +35,6 @@ public interface EmployeeDAO {
 
 
 	int empRegister(HashMap<String, Object> params);
-	ArrayList<EmployeeDTO> empLogList(String emp_no);
 
 
 

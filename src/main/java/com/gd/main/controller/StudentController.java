@@ -320,6 +320,16 @@ public class StudentController {
 	       return service.stuWantSubSearch(params);
 	    }
 	
+		
+	@RequestMapping(value="/cliUpdate.go")
+	public String cliUpdateGo(@RequestParam String cli_no, HttpSession session) {
+		logger.info("고객 수정 페이지 이동 : " + cli_no);
+		session.setAttribute("cli_no", cli_no);
+		
+		
+		return "./student/cliUpdate";
+	}
+	
 	
 	
 }

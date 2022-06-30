@@ -348,8 +348,10 @@
 		$('#stu_age').val(year - age + 1);
 	}
 	
-	function cliSearch_pop(){	
-		 window.open("/cliUpdate.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	function cliUpdate_pop(){
+		var cli_no = $('#cli_no').html();
+		console.log(cli_no);
+		 window.open("/cliUpdate.go?cli_no="+cli_no,"new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 		}
 	
 	

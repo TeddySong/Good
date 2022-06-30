@@ -236,6 +236,7 @@ public class SubjectService {
 		boolean success = false;
 		int subno = Integer.parseInt(params.get("sub_no"));
 		
+		
 		if(dao.subUpdate(params) >0) {
 			success = true;
 			if(subimg != null) {

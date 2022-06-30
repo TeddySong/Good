@@ -161,9 +161,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -199,10 +199,11 @@
 											<th>학생명</th>
 												<td><input type="text" id=cli_name value="">${cli_name}</td>
 												<td>
-													<button id="cli_nameSearch">검색</button>
+													<button id="cli_nameSearch" onclick="">검색</button>
 													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
 												</td>
-												<td  colspan="3">
+												<td id ="coSearch"  colspan="3" >
+													<button onclick="coSearch_pop()">과정검색</button></td>
 												</td>
 										</tr>
 										<tr>
@@ -211,7 +212,7 @@
 											<th>종강일</th>
 											<th>강의시간</th>														
 											<th>수강상태</th>
-											<th>검색</th>
+											
 										</tr>
 									</thead>
 									<tbody id="assStuCoList">
@@ -336,13 +337,18 @@ function listCall(page){
 		content +=	'<option value='+item.ass_condition+'>철회</option>';
 		content +=	'<option value='+item.ass_condition+'>수료</option>';
 		content +='</td>';
-		content +='<td id = \"coSearch\"><button>검색</button></td>';
 		content += '</tr>';
 	});
 	$('#cli_name').val(pop.cli_name);
 	$('#assStuCoList').empty();
 	$('#assStuCoList').append(content);
 } 
+
+function coSearch_pop(){
+	window.open("/coSearList.go","new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+
+}
+
 	
 </script>
 </html>

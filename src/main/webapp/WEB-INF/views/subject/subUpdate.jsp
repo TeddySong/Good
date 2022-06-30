@@ -166,9 +166,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -328,11 +328,17 @@ function subUpdate(){
 				processData: false,
 				dataType:'JSON',
 				success:function(data){
-					if(data){
-						alert("과목수정 성공");
-						location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+					
+					if(!data.login){
+						alert("로그인이 필요한 서비스 입니다.");
+						location.href='/';
 					}else{
-						alert("과목수정 실패");
+						if(data.success){
+							alert("과목수정 성공");
+							location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+						}else{
+							alert("과목수정 실패");
+						}
 					}
 				},
 				error:function(e){

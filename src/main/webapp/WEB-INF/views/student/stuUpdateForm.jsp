@@ -166,9 +166,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -195,21 +195,27 @@
 										<th>직원번호</th>
 										<td id="stu_no"></td>
 									</tr>
-									<tr>
-										<th>이름</th>										
-										<td id="cli_name"></td>
+									<th>이름</th>
+										<td><input type="text" id="cli_name" readonly placeholder="수정버튼을 눌러주세요"/>
+										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:18%;">고객수정</button>
+										</td>
 									</tr>
 									<tr>
 										<th>연락처</th>
-										<td id="cli_phone"></td>
+										<td><input type="text" id="cli_phone" readonly/></td>
 									</tr>
+									
 									<tr>
 										<th>담당직원</th>
-										<td id="emp_name"></td>
+										<td><input type="text" id="emp_name" readonly/></td>
 									</tr>
 									<tr>
 										<th>생년월일</th>
-										<td><input type="date" id="stu_birth" value=""/></td>
+										<td>
+											<select id="stuYear" style="width:15%; text-align:center;" onchange="ageCal()"></select> 년
+											<select id="stuMonth" style="width:15%; text-align:center;"></select> 월
+											<select id="stuDay" style="width:15%; text-align:center;"></select> 일											
+										</td>
 									</tr>
 									<tr>
 										<th>나이</th>
@@ -275,9 +281,9 @@
 			 $('#cli_no').html(data.dto.cli_no);
 			 $('#emp_no').html(data.dto.emp_no); 
 			$('#stu_no').html(data.dto.stu_no);
-			$('#cli_name').html(data.dto.cli_name);			
-			$('#cli_phone').html(data.dto.cli_phone);
-			$('#emp_name').html(data.dto.emp_name);
+			$('#cli_name').val(data.dto.cli_name);			
+			$('#cli_phone').val(data.dto.cli_phone);
+			$('#emp_name').val(data.dto.emp_name);
 			$('#stu_birth').val(data.dto.stu_birth);
 			$('#stu_age').val(data.dto.stu_age);
 			$('#stu_gender').val(data.dto.stu_gender);			
@@ -285,6 +291,7 @@
 			
 			subSearch(data.dto.cli_no);
 			radioCheck(data.dto.stu_gender);
+			birthList(data.dto.stu_birth)
 		},
 		error:function(error){
 			console.log(error);
@@ -299,6 +306,53 @@
 			$("input:radio[name='stu_gender']:radio[value='여']").prop("checked", true);
 		}
 	}
+	
+	function birthList(stu_birth){   
+		console.log(stu_birth);
+		console.log(stu_birth.substr(0,4) + '/' +stu_birth.substr(6,1)+ '/' + stu_birth.substr(8,1))
+	    var now = new Date();
+	    console.log(now);
+	    var year = now.getFullYear();
+	    var mon = now.getMonth() + 1; 
+	    var day = now.getDate();    
+	    var yearval = stu_birth.substr(0,4);
+	    var monval = stu_birth.substr(5,2);
+	    var dayval = stu_birth.substr(8,2);
+	    //년도 selectbox만들기               
+	    for(var i = 1900 ; i <= year ; i++) {
+	        $('#stuYear').append('<option value="' + i + '">' + i + '</option>');    
+	    }
+
+	    // 월별 selectbox 만들기            
+	    for(var i=1; i <= 12; i++) {                    
+	    	var mm = i > 9 ? i : "0"+i ;            
+	        $('#stuMonth').append('<option value="' + mm + '">' + mm + '</option>');            
+	    }
+	    
+	    // 일별 selectbox 만들기
+	    for(var i=1; i <= 31; i++) {                    
+	    	var dd = i > 9 ? i : "0"+i ;            
+	        $('#stuDay').append('<option value="' + dd + '">' + dd+ '</option>');      
+	    }
+	    $("#stuYear  > option[value="+yearval+"]").attr("selected", "true");        
+	    $("#stuMonth  > option[value="+monval+"]").attr("selected", "true");    
+	    $("#stuDay  > option[value="+dayval+"]").attr("selected", "true");       
+	  
+	}
+	
+	function ageCal(){
+		var date = new Date();
+		var year = date.getFullYear();
+		var age = $('#stuYear').val();		
+		
+		$('#stu_age').val(year - age + 1);
+	}
+	
+	function cliUpdate_pop(){
+		var cli_no = $('#cli_no').html();
+		console.log(cli_no);
+		 window.open("/cliUpdate.go?cli_no="+cli_no,"new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+		}
 	
 	
 	/* $.ajax({
@@ -415,7 +469,9 @@ function stuUpdate(){
 		params['cli_name'] = $('#cli_name').html();
 		params['cli_phone'] = $('#cli_phone').html();
 		params['emp_name'] = $('#emp_name').html();
-		params['stu_birth'] = $('#stu_birth').val();
+		params['stu_birth_year'] = $('#stuYear').val();
+		params['stu_birth_month'] = $('#stuMonth').val();
+		params['stu_birth_day'] = $('#stuDay').val();
 		params['stu_age'] = $('#stu_age').val();
 		params['stu_gender'] = $('input[name="stu_gender"]:checked').val();
 		params['stu_condition'] = $('#stu_condition').val();

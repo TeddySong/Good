@@ -59,7 +59,8 @@
  
 	<!-- 직원목록 보기 -->
 	<select id="empList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
-		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate, emp_endDate FROM employee
+		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate,emp_endDate FROM employee
+		
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
 					<if test="empSearchCategory.equals('emp_name')">
@@ -76,7 +77,8 @@
 					</if>
 		</if>
 	</where>	
-		ORDER BY emp_no ASC limit #{cnt} OFFSET #{offset}
+	ORDER BY emp_no ASC limit #{cnt} OFFSET #{offset} 
+	
 	</select>
 	
 	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO">

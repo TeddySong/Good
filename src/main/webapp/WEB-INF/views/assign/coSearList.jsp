@@ -79,107 +79,8 @@
 		
 </style>
 </head>
-<body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="login.do">GOOD2 IT</a>
-            <!-- Sidebar Toggle-->
-            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-            <!-- Navbar-->
-            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown" href="login.do" role="button"><i class="fas fa-user fa-fw"></i> 메인</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown" href="/" role="button"><i class="fas fa-user fa-fw"></i> 홈페이지</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown" href="#" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
-                </li>
-            </ul>
-        </nav>
-        
-        <div id="layoutSidenav">
-            <div id="layoutSidenav_nav">
-                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                    <div class="sb-sidenav-menu">
-                        <div class="nav">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsa" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                학생관리업무
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutsa" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="stuList.go">수강생목록</a>
-                                    <a class="nav-link" href="stuRegister.go">수강생등록</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutsb" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                직원관리업무
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayoutsb" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="empList.go">직원리스트</a>
-                                    <a class="nav-link" href="empRegister.go">직원등록</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                수업관리업무
-                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        과목
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="subList.go">과목리스트</a>
-                                            <a class="nav-link" href="subRegister.go">과목등록</a>
-                                        </nav>
-                                    </div>
-                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                        과정
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                    <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                        <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="courList.go">과정리스트</a>
-                                            <a class="nav-link" href="courRegister.go">과정등록</a>
-                                        </nav>
-                                    </div>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="assList.go">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                배정관리업무                                
-                            </a>
-                            <a class="nav-link collapsed" href="cliList.go">
-                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                고객정보페이지
-                            </a>                             
-                        </div>
-                    </div>
-                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
-                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
-                        <br/><br/>
-                    </div>
-                </nav>
-            </div>
-            <div id="layoutSidenav_content">
-                <main>
-                    <div class="container-fluid px-4">
-                        <h1 class="mt-4">과정 목록</h1>                        
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                GOOD2 IT 과정 리스트 입니다.                                
-                            </div>
-                        </div>
+
+                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
@@ -188,17 +89,9 @@
                             <div>
                             <table id="goodList">
                             	<tr>
-                            		<%-- <td>
-                            			<select id="subName" name="subName">
-									         <option value="과목명">과목명</option>
-									         <c:forEach items="${subName}" var="subName">
-									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
-									         </c:forEach>
-									      </select>
-                            		</td> --%>
+                            	
                             		<td><select id="courseNameSearch" name="">
 									          <option value="co_name">과정명</option>
-									          <option value="sub_name">과목명</option>
 									          <option value="co_condition">과정 진행상황</option>
 									      </select>
 									</td>
@@ -214,18 +107,19 @@
                             		<td>~</td>
                             		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
+                            		<td><button onclick="location.href='courRegister.go'" class="goodRegister">등록</button></td>
                             	</tr>
                             </table>
 							<br/>
 						    
 						    <!--표-->
-						    <button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
+						    
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th>과정번호</th>
-										<th>과정명</th>
+										<th>번호</th>
 										<th>과목명</th>
+										<th>과정명</th>
 										<th>개강일</th>
 										<th>종강일</th>
 										<th>수업시작시간</th>
@@ -376,8 +270,8 @@ function courseSearch(page){
 		
 	var pagePerNum = 10;
 	
-	 var subName = $("#subName option:selected").val();
-	 console.log(subName);
+	var selectCo =$("input:radio[name='selectCo']:checked").val();
+	console.log(selectCo);
 	 
 	 var courseNameSearch = $("#courseNameSearch option:selected").val();
 	 console.log(courseNameSearch);
@@ -432,7 +326,8 @@ function courseSearch(page){
 
 //리스트 그리기
 function drawList(courList){
-	
+	var courList = courList.slice(0);
+	console.log(courList);
 	var content="";
 	
 	courList.forEach(function(item){
@@ -442,10 +337,11 @@ function drawList(courList){
 		var nowDate2 = new Date(errorDate2.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
 		
 		//console.log(item);
-		content += '<tr>';
-		content += '<td>'+item.co_no+'</td>';
-		content += '<td><a href="courDetail.do?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
+		content += '<tr>'
+		content += '<td><input type="radio" name=selectCo value='+item.co_no+'></td>';
+		//content += '<td><input type="radio" name="selectCo" id="selectCo"></td>';
 		content += '<td>'+item.sub_name+'</td>';
+		content += '<td>'+item.co_name+'</td>';
 		content += '<td>'+nowDate+'</td>';
 		content += '<td>'+nowDate2+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';
@@ -455,6 +351,8 @@ function drawList(courList){
 	
 	$('#list').empty();
 	$('#list').append(content);
+	
+	
 }
 
 

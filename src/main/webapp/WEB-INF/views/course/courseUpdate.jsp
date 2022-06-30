@@ -182,9 +182,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -220,10 +220,10 @@
 	        <tr>
 	           <th>과목</th>
 	            <td colspan="3">
-					<select name="selectedSubName" id="sub_no">
+					<select id="sub_no">
 				         <option value="과목명">과목명</option>
 				         <c:forEach items="${subName}" var="subName">
-				         		<option value="${subName.sub_no}" <c:if test="${dto.sub_no eq subName.sub_no}">selected</c:if>>${subName.sub_name}</option>
+				         		<option id="sub_no" value="${subName.sub_no}" <c:if test="${dto.sub_no eq subName.sub_no}">selected</c:if>>${subName.sub_name}</option>
 				         </c:forEach>
 				    </select>
 	            </td>
@@ -280,7 +280,7 @@
 	        <tr>
 	        	<th colspan="4">
 	        	<input type="button" class="goodRegister" value="완료" onclick="courUpdate()"/>
-	   		 	<input type="button" value="취소" onclick="location.href='courList.go'"/>
+	   		 <input type="button" value="취소" onclick="location.href='courList.go'"/>
 	        	</th>
 	        </tr>     
 		</table>
@@ -298,6 +298,20 @@
 
 </body>
 <script>
+
+
+
+console.log($("select[name='sub_no']").val());
+
+
+$("select[name=location]").change(function(){
+  console.log($(this).val()); //value값 가져오기
+  console.log($("select[name='sub_no'] option:selected").val());
+});
+//console.log($('#co_no').val());
+//console.log($('#co_name').val());
+//console.log($('#sub_no').val());
+//console.log($('#sub_name').val());
 
 
 //작성내용 불러오기
@@ -318,7 +332,7 @@ $.ajax({
 		//$('#co_startDate').val(date.toLocaleDateString("ko-KR"));
 		//$('#co_startDate').val(date.toLocaleDateString("ko-KR"));
 		$('#co_startDate').val(moment(data.dto.co_startDate).format("YYYY-MM-DD"));
-		$('#co_endDate').val(moment(data.dto.co_endDate).format("YYYY-MM-DD"));
+		$('#co_endDate').val(moment(data.dto.co_endtDate).format("YYYY-MM-DD"));
 		
 		//var date = new Date(data.dto.co_endDate);
 		//$('#co_endDate').val(date.toLocaleDateString("ko-KR"));
@@ -361,69 +375,42 @@ function courOverlay(){
 }
 
 
-
-
 //저장
 function courUpdate(){
-	/*
-	var $co_name = $('#co_name');
-	var $sub_no = $('#sub_no');
-	//var $sub_name = $('#sub_name');
-	var $co_startDate = $('#co_startDate');
-	var $co_endDate = $('#co_endDate');
-	var $co_startTime = $('#co_startTime');
-	var $co_endTime = $('#co_endTime');
-	var $co_capacity = $('#co_capacity');
-	var $co_condition = $('#co_condition');
-	*/
-	
-	if($("#sub_no option:selected").val() == '과목명' || $("#sub_no option:selected").val() == null)
+var params = {};
+   params.co_name = $('#co_name').val();
+   params.sub_no = $('#sub_no').val();
+   params.co_startDate = $('#co_startDate').val();
+   params.co_endDate = $('#co_endDate').val();
+   params.co_startTime = $('#co_startTime').val();
+   params.co_endTime = $('#co_endTime').val();
+   params.co_capacity = $('#co_capacity').val();
+   params.co_condition = $('#co_condition').val();
+   params.co_no = $('#co_no').val();
+   console.log(params);
+   
+   
+   if($("#sub_no option:selected").val() == '과목명' ||$("#sub_no option:selected").val() == null)
 	      alert('과목명을 선택해주세요.');
-	
-	
-	
-	var params = {};
-	params.co_no = $('#co_no').val();
-	params.co_name = $('#co_name').val();
-	params.sub_no = $("#sub_no").val();
-	params.co_startDate = $('#co_startDate').val();
-	params.co_endDate = $('#co_endDate').val();
-	params.co_startTime = $('#co_startTime').val();
-	params.co_endTime = $('#co_endTime').val();
-	params.co_capacity = $('#co_capacity').val();
-	params.co_condition = $('#co_condition').val();
-	console.log(params);
-	
-	$.ajax({
-		type:'post',
-		url:'courUpdate.ajax',
-		data:params
-		/*{
-			co_name : co_name,
-			sub_no : sub_no,
-			co_startDate : co_startDate,
-			co_endDate : co_endDate,
-			co_startTime : co_startTime,
-			co_endTime : co_endTime,
-			co_capacity : co_capacity,
-			co_condition : co_condition
-		}*/,
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			if(data.success){
-				
-				alert('과정 수정에 성공하였습니다.');
-				location.href="/courDetail.do?co_no="+$("#co_no").val();
-				
-			} else {
-				alert("과정 수정에 실패했습니다.");
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
+   
+   
+   $.ajax({
+      type:'post',
+      url:'courUpdate.ajax',
+      data:params,
+      dataType:'json',
+      success:function(data){
+         console.log(data);
+         if(data.success){
+            location.href="/courDetail.do?co_no="+$("#co_no").val();
+         } else {
+            alert("과정 수정에 실패했습니다.");
+         }
+      },
+      error:function(e){
+         console.log(e);
+      }
+   });
 }
 
 

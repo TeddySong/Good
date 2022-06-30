@@ -158,9 +158,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -257,8 +257,9 @@ function listCall(page) {
 		},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
-			drawList(data.list);
+			if(data.login){
+				console.log('테이블 그리기');
+				drawList(data.list);
 			currPage = data.currPage;
 			
 			//불러오기 성공하면 플러그인 이용해서 페이징처리
@@ -272,6 +273,12 @@ function listCall(page) {
 					listCall(page);
 				}
 			});
+			} else{
+				alert('로그인이 필요한 서비스입니다.');
+				location.href='/';
+			}
+			
+			
 		},
 		error:function(e){
 			console.log(e);

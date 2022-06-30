@@ -29,7 +29,7 @@
 	
 	<input type="text" name="keyword"/>
 	
-	<button type="button" id="searchBtn">검색</button>
+	<button type="button" id="searchBtn" onclick="searchBtn()">검색</button>
 </div>
 <button type="button" onclick="cliList()">목록</button>
 	<thead>
@@ -96,56 +96,63 @@ function listCall(page){
 		
 	});
 	
-	/* 검색  */
-	$('#searchBtn').on('click',function(){
-		$("#pagination").twbsPagination('destroy');
-		var cli_log_Dday=$('input[name=chkDate]').val();
-		var searchType =$('select[name=searchType]').val();
-		var keyword = $('input[name=keyword]').val();
 
-		
-		$.ajax({
-			type:'get',
-			url:'checkList.do',
-			data:{
-				cnt:pagePerNum,
-				page:currPage,
-				keyword:keyword,
-				searchType:searchType,
-				cli_log_Dday:cli_log_Dday,
-				
-			},
-			dataType:'json',
-			success:function(data){
-				
-				drawList(data.list);
-				console.log(data.list);
-				
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작 페이지
-					totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: pagePerNum, //
-			
-					
-					onPageClick:function(e,page){
-						//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
-						console.log(page);//사용자가 클릭한 페이지
-						currPage = page;
-						listCall(currPage);
-					}
-				});
-				
-			},
-			error:function(e){console.log(e);}
-			
-			
-		});
-	});
 
 }
 
+/* 검색  */
+function searchBtn(page){
+	
+	if(page==null){
+		page=1;
+	}
+	
+	$("#pagination").twbsPagination('destroy');
+	var cli_log_Dday=$('input[name=chkDate]').val();
+	var searchType =$('select[name=searchType]').val();
+	var keyword = $('input[name=keyword]').val();
 
+	
+	$.ajax({
+		type:'get',
+		url:'checkList.do',
+		data:{
+			cnt:pagePerNum,
+			page:page,
+			keyword:keyword,
+			searchType:searchType,
+			cli_log_Dday:cli_log_Dday,
+			
+		},
+		dataType:'json',
+		success:function(data){
+			
+			drawList(data.list);
+			console.log(data.list);
+			
+			$("#pagination").twbsPagination({
+				initiateStartPageClick: false,
+				startPage:data.currPage, //시작 페이지
+				totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: pagePerNum, 
+		
+				
+				onPageClick:function(e,page){
+					//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
+					console.log(page);//사용자가 클릭한 페이지
+					//currPage = page;
+					searchBtn(page);
+				} 
+			});
+			
+		},
+		error:function(e){console.log(e);}
+		
+		
+	
+});
 
+}
 function drawList(data){
 	var content ='';
 	

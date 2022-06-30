@@ -28,7 +28,7 @@
 	}
 	
 	#clog {
-	width:600px; 
+	width:100%; 
 	height:600px;
 	overflow: scroll
 		}
@@ -37,37 +37,58 @@
 	.clog-body  textarea{
 		height:160px; width:450px; margin:0;
 	}
+	#empUp{position:relative; right:440px; }
 	#emptable{width:100%;   }
 	#cliInfo.table{width:400px; height:300px;}
 	#cliLog.table{width:600px; height:300px;}
 	.find-btn{
 	text-align: center;
 }
+ .form-control{width:200px;}
+ 
+
+ 
 </style>
 </head>
 <body>
 
-<div>
-<button type="button" onclick="cliList()" class="btn btn-default">목록</button>
-<button type="button" onclick="calChk()" class="btn btn-default">상담일정확인</button>
-<button type="button" id="scheRegister" class="btn btn-default">상담일정 등록</button>
-</div>
-	<h3>고객 정보 페이지</h3>
-	<table id="cliInfo" class="table table-striped">
-		<tr><td id="cli_no">번호: ${data.cli_no}</td></tr>
-		<tr><td>이름 : ${data.cli_name}</td></tr>
-		<tr><td>연락처 : ${data.cli_phone}</td></tr>
-		<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" type="button" id="empSearch">검색</button></td></tr>
-		<tr><td>상담 신청시간 :<fmt:formatDate value="${data.cli_qDate}" pattern="yyyy년MM월dd일 HH시mm분" /></td></tr>
-		<tr class="find-btn"><div><td><button class="btn btn-default" type="button" id="cliUpdatego" display="block" > 수정</button></td></div></tr>
-	</table>
+
 	<div>
-	<h3>상담요청 내용</h3>
-		<textarea class="form-control" id="log" name="opinion" readonly>${data.cli_req}</textarea><br>
+		<button type="button" onclick="cliList()" class="btn btn-default">목록</button>
+		<button type="button" onclick="calChk()" class="btn btn-default">상담일정확인</button>
+		<button type="button" id="scheRegister" class="btn btn-default">상담일정 등록</button>
 	</div>
-	
-<h1>상담일지</h1>	
-<div id="clog">
+
+
+
+				<h3>고객 정보 페이지</h3>
+		<table id="cliInfo" class="table table-striped">
+			<tr><td id="cli_no">번호: ${data.cli_no}</td></tr>
+			<tr><td>이름 : ${data.cli_name}</td></tr>
+			<tr><td>연락처 : ${data.cli_phone}</td></tr>
+			<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" type="button" id="empSearch">검색</button></td></tr>
+			<tr><td>상담 신청시간 :<fmt:formatDate value="${data.cli_qDate}" pattern="yyyy년MM월dd일 HH시mm분" /></td></tr>
+			<tr class="find-btn"><div><td><button class="btn btn-default" type="button" id="cliUpdatego" display="block" > 수정</button></td></div></tr>
+		</table>
+		<div>
+		<h3>상담요청 내용</h3>
+			<textarea class="form-control" id="log" name="opinion" readonly>${data.cli_req}</textarea><br>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+      				<h1>상담일지</h1>	
+		<div id="clog">
 
 			<c:forEach items="${data_log}" var="clog"> 
 				<table id="cliLog" class="table table-striped">
@@ -90,10 +111,15 @@
 					</tbody>
 				</table>
 			</c:forEach>
-</div>	
+		</div>	
+
+
+
+	
+
 
 <!-- 직원검색 Modal -->
-<div id="empSearchModal" class="modal fade" role="dialog">
+<div id="empSearchModal" class="modal fade" role="dialog" data-backdrop="static">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -104,7 +130,11 @@
       </div>
       <div class="modal-body" style="width:100%; height:500px; overflow:auto">
         <table id="emptable" class="table table-striped">
-        <select><option>직원명</option></select></select><input class="form-control" type="text" id="empkeyword"/> <button type="button" id="empsearch" class="btn btn-default">검색</button>
+        <div class="form-inline" >
+		  <select><option>직원명</option></select>
+		  <input  class="form-control" type="text" id="empkeyword" display="inline-block"/> 
+		  <button type="button" id="empsearch" class="btn btn-default">검색</button> 
+		 </div>
         	<thead >
         		<tr><td></td><td>사번</td><td>직급</td><td>직원명</td><td>연락처</td></tr>
         	</thead>
@@ -112,10 +142,11 @@
         	</tbody>
         
         </table>
-        <button type="button" id="empUp" onclick="empUp()" class="btn btn-default">선택</button>
+        <!-- <button type="button" id="empUp" onclick="empUp()" class="btn btn-default">선택</button> -->
         
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" >
+      	<button type="button" id="empUp" onclick="empUp()" class="btn btn-default" >선택</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
@@ -125,7 +156,7 @@
 
 
 <!-- 수정 Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static" >
   <div class="modal-dialog">
 
     <!-- Modal content-->

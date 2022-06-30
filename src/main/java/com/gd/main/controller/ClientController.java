@@ -82,7 +82,7 @@ public class ClientController {
 	 */
 	
 	@RequestMapping("/subSearch.ajax")
-	public @ResponseBody HashMap<String, Object>  subSearch(@RequestParam(value="cli_no") ArrayList<Object> cli_no) {
+	public @ResponseBody HashMap<String, Object>  subSearch(@RequestParam(value="cli_no",required = false) ArrayList<Object> cli_no) {
 	
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		//service.ajaxSubSearch(cli_no);
@@ -197,16 +197,17 @@ public class ClientController {
 	}
 	
 	
-	@RequestMapping("/clisearch.ajax")
+	@RequestMapping("/cliSearch.ajax")
 	public @ResponseBody HashMap<String, Object> search(
 			@RequestParam HashMap<String, String> params
 			) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		logger.info("리스트 요청"+params);
-	
-		
+		//logger.info("리스트 요청"+params);
+		System.out.println("리스트 요청"+params);
+//		 HashMap<String, Object> list  = service.ajaxSearch(params);
+//		System.out.println(list.get(0));
+		System.out.println("어떻게 보낼지.");
 		return service.ajaxSearch(params);
-		
 	} 
 	
 	@RequestMapping("/scheRegister.go")

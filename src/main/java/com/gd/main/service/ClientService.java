@@ -101,8 +101,14 @@ public class ClientService {
 	
 	public HashMap<String, Object> ajaxSearch(HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int cnt =Integer.parseInt(params.get("cnt"));
-		int page =Integer.parseInt(params.get("page"));
+		
+		  int cnt =Integer.parseInt(params.get("cnt"));
+		  int page =Integer.parseInt(params.get("page"));
+		 
+//		int cnt = 10; // 한번에 뿌릴 게시글 수 . 
+//		int page = 1; 
+//		
+		
 		
 		String searchType=params.get("searchType");
 		String keyword = params.get("keyword");
@@ -115,11 +121,13 @@ public class ClientService {
 		
 		
 		int allCnt = dao.ajaxSearchCnt(data);
-		logger.info("allCnt44 : "+allCnt);
+		//logger.info("allCnt44 : "+allCnt);
+		System.out.println("allCnt44 : "+allCnt);
 		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
 		
 		
-		logger.info("pages : "+pages);
+		//logger.info("pages : "+pages);
+		System.out.println("pages : "+pages);
 		
 		if(pages==0) {pages=1;}
 		
@@ -134,8 +142,8 @@ public class ClientService {
 		map.put("currPage", page);//현재 페이지
 		
 		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset);
-		
+		//logger.info("offset : "+offset);
+		System.out.println("offset : "+offset);
 		
 	
 		data.put("cnt", cnt);

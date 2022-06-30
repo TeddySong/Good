@@ -223,7 +223,7 @@
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th>과목번호</th>
+										<th>과정번호</th>
 										<th>과정명</th>
 										<th>과목명</th>
 										<th>개강일</th>

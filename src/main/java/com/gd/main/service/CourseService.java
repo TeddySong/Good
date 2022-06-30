@@ -60,7 +60,7 @@ public class CourseService {
 					"endSearch : "+endSearch);
 		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-		int allCnt = dao.allCount();
+		int allCnt = dao.allCount(searchResult);
 		logger.info("allCnt : "+allCnt);
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : "+pages);
@@ -100,11 +100,16 @@ public class CourseService {
  * public CourseDTO courDetail(String co_no) { return dao.courDetail(co_no); }
  */
 	
-	public void courseUpdate(HashMap<String, String> params) {
+	public boolean courseUpdate(HashMap<String, String> params) {
 
 		logger.info("과정 update 요청");
+		boolean success = false;
 		int row = dao.courseUpdate(params);
+		if(row > 0) {
+			success = true;
+		}
 		logger.info("수정된 데이터 수 : "+row);
+		return success;
 	}
 	
 

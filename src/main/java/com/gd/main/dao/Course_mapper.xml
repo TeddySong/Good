@@ -8,13 +8,13 @@
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<where>
-				<if test="startSearch != '' or endSearch != ''">
+				<!-- <if test="startSearch != '' or endSearch != ''">
 					subject.sub_name = #{subName}
 					<![CDATA[
 					co_startDate >= #{startSearch}
 					AND co_endDate <= #{endSearch}
 					]]>
-				</if>
+				</if> -->
 		</where>
 
 		<!-- <trim prefix="where (" suffix=")" prefixOverrides="AND">
@@ -52,6 +52,7 @@
 	
 	<select id="allCount" parameterType="hashmap" resultType="int">
 		SELECT COUNT(co_no) FROM course 
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<!-- INNER JOIN subject on subject.sub_no = course.sub_no
 		WHERE 1=1
 		<if test="subName != null and subName !=''">

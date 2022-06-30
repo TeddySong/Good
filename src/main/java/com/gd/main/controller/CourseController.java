@@ -2,9 +2,7 @@ package com.gd.main.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,14 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.main.dto.CourseDTO;
-import com.gd.main.dto.SubDTO;
 import com.gd.main.service.CourseService;
 
 
@@ -174,8 +169,56 @@ public class CourseController {
 		model.addAttribute("dto", dto);
 		//model.addAttribute("dto2",dto2);
 		return "./course/courseDetail";
+		//return "redirect:/courseDetail.do";
 	}
 	
+	
+	//과정 상세 페이지 이동
+	@RequestMapping("/courDetail.go")
+	public String courDetailPage(@RequestParam String co_no, HttpSession session) {
+		logger.info("상세보기 페이지 이동 : "+co_no);
+		session.setAttribute("co_no",co_no);
+		return "./course/courDetail";
+	}
+	
+	//과정 상세보기
+	@RequestMapping("/courDetail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> courDetail(HttpSession session) {
+		
+		boolean login = false;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//과목명 리스트
+		//ArrayList<CourseDTO> subName = service.subName();
+		//logger.info("과목 갯수 : "+subName.size());
+		//page = "./course/courseUpdate";
+		//model.addAttribute("subName",subName);
+		
+		//로그인 여부 확인
+		if(session.getAttribute("loginId") != null) {
+			//로그인 확인되면 세션에서 co_no 뽑아줌
+			String co_no = (String) session.getAttribute("co_no");
+			logger.info("상세보기 데이터 요청 : "+co_no);
+			session.removeAttribute("co_no"); //사용한 idx 는 지워준다.
+			login = true;
+			CourseDTO dto = service.courDetail2(co_no);
+			map.put("dto", dto);
+		}
+		map.put("login", login);
+		
+		return map;
+	}
+	
+	//과정 수정 페이지 이동
+	@RequestMapping("/courUpdate.go")
+	public String courUpdatePage(@RequestParam String co_no, HttpSession session) {
+		logger.info("과정 수정 페이지 이동");
+		session.setAttribute("co_no", co_no);
+		return "redirect:/courseUpdate.do";
+	}
+		
+	
+	/*
 	//과정 수정 페이지에 데이터 뿌려주기
 	@RequestMapping(value = "/courUpdateForm.do")
 	public String courseUpdatePage(Model model,HttpSession session,
@@ -202,23 +245,46 @@ public class CourseController {
 		
 		return page;
 	}
+	*/
 	
 	
-	//과정 수정(ajax 없이)
+	//과정 수정
 	@RequestMapping(value = "/courseUpdate.do")
-	public String courseUpdate(HttpSession session, Model model,
+	public String courseUpdate(Model model,
 			@RequestParam HashMap<String, String> params, String co_no) {
-		logger.info("params : {}",params);
-		String page = "redirect:/courDetail.do?co_no="+params.get("co_no");
-		logger.info(page);
-		if(session.getAttribute("loginId") != null) {
-			service.courseUpdate(params);
-		} else {
-			page = "login";
-			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
-		}
+		String page = "redirect:/courUpdate.do";
+		logger.info("과정수정 페이지에 과목 이름 호출");
+		//과목명 리스트
+		ArrayList<CourseDTO> subName = service.subName();
+		logger.info("과목 갯수 : "+subName.size());
+		page = "./course/courseUpdate";
+		model.addAttribute("subName",subName);		
+		
 		return page;
 	}
+	
+	
+	//과정 수정 ajax
+	@RequestMapping("/courUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> courUpdateAjax(HttpSession session,
+			@RequestParam HashMap<String, String> params, String co_no){
+		
+		logger.info("과정 수정하기 : "+params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean login = false;
+		
+		if(session.getAttribute("loginId") != null) {
+			login = true;
+			CourseDTO dto = service.courDetail2(co_no);
+			map.put("dto", dto);
+			boolean success = service.courseUpdate(params);
+			map.put("success", success);
+		}
+		map.put("login", login);
+		return map;
+	}
+	
 	
 	//과정 검색
 	@RequestMapping("/courSearch.ajax")

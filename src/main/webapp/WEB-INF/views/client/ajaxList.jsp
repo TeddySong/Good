@@ -56,7 +56,7 @@
 		border-radius: 4px;
 		padding: 10px 20px;
 	    color: rgb(26 18 50 / 100%);
-	    font-size: 18px;
+	    font-size: 25px;
 	    font-weight: 500;
 		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
@@ -215,10 +215,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
+      <h2 class="modal-title">고객 등록</h2>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
+       </div>
+      <div class="modal-body" style="text-align:center;">
         
         <table  class="table  table-striped  table-bordered" >
         	<tr>
@@ -246,7 +246,7 @@
         		</td>
         	</tr>
         </table>
-         <button type="button" id="regBtn">등록완료</button>
+         <button type="button" class="goodRegister" id="regBtn">등록완료</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

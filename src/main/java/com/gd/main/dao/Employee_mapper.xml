@@ -3,18 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
 
+<insert id="empLogRegister" parameterType='hashmap'>
+		INSERT INTO employee_log (emp_no, emp_log_content, emp_log_condition)
+		VALUES (#{emp_no}, #{emp_log_content}, #{emp_log_condition})
+	</insert>
 
-							<!-- [emp_name, emp_log_condition, emp_log_content]-->
-<!-- 직원일지 등록 --> <!-- db에서 가져와야하는것:emp_no을 통해 직원테이블의 직원명,작성사유,히스토리-->
-<!-- 	<insert id="empLogRegister" parameterType='hashmap'>
-		INSERT INTO student_log (stu_no, emp_no, stu_log_content)
-		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
-	</insert> -->
-
-
-
-
-<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO" >
+<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="String">
 	<!-- 직원일지 호출 -->
 	SELECT 
 		e.emp_name,
@@ -29,7 +23,7 @@
 	ON 
 		el.emp_no = e.emp_no 
 	WHERE 
-		e.emp_no = #{param1}
+		e.emp_no = #{emp_no}
 </select>
 		
 	<!--select distinct: 중복제거  -->

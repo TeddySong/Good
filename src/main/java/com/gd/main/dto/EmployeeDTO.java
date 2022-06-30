@@ -18,7 +18,6 @@ public class EmployeeDTO{
 	private String emp_position;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_startDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_endDate;
 	private Date emp_log_date;
 	private String emp_log_content;

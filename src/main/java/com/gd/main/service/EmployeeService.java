@@ -44,7 +44,7 @@ public class EmployeeService {
 	//직원일지 리스트
 	public ArrayList<EmployeeDTO> empLogList(String emp_no){
 		logger.info("리스트 서비스 요청");
-		logger.info("받아온 넘버 : " + emp_no);
+		logger.info("받아온 넘버 : " + emp_no);		
 		return dao.empLogList(emp_no);
 	}
 	

@@ -142,7 +142,7 @@
                             직원일지 등록
                         </div>
                         <br/>
-                     <%--    <div id=emp class="hidden">${emp_no}</div>  <!-- 직원이름숨기기 --> --%> --%>
+                     <%--    <div id=emp class="hidden">${emp_no}</div>  <!-- 직원이름숨기기 --> --%>
 			<table id="goodList">
 				<tr>
 					<th>작성자</th>
@@ -151,9 +151,9 @@
 				</tr>
 				<tr>
  					<td>${sessionScope.empName}</td>
-					<td class="hidden">${sessionScope.empNo}</td> 
+					<td id=empNo class="hidden">${sessionScope.empNo}</td> 
 					<td>   <!-- 작성사유 -->
-						<select>
+						<select id="empCondtion" style="width:100%; text-align:center;">
 					    	<option>기타</option>
 							<option>승진</option>
 							<option>퇴사</option>
@@ -187,18 +187,19 @@
 
 function empLogRegisterDo(){
 /* 	var $stu_no = $('#student_no'); */
-	/* var $emp_no = $('#empNo'); */
-	var $emp_log_content = $('#stu_log_content');
-	var $emp_log_condition = $("select[name=selectedSubName]").val(); */
+	var $emp_no = $('#empNo');
+	var $emp_log_content = $('#emp_log_content');
+	var $emp_log_condition = $("#empCondtion");
+	
+	console.log($emp_no.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
 	
 	$.ajax({
 		type:'get',
 		url:'empLogRegister.ajax',
 		data:{
-/* 			stu_no:$stu_no.html(),   */
-			emp_no:$emp_no.html(), */
-/* 			emp_log_condition = $("select[name=selectedSubName]").val();  */
-			emp_log_content:$stu_log_content.val()		 
+			emp_no:$emp_no.html(),
+			emp_log_condition : $emp_log_condition.val(),
+			emp_log_content:$emp_log_content.val()		 
 
 		},
 		dataType:'JSON',

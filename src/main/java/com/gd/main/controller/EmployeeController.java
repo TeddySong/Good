@@ -48,7 +48,7 @@ public class EmployeeController {
 	//직원일지 페이지 
 	@RequestMapping(value = "/empLogList.go")
 	public String emplogListGo(Model model, HttpSession session, @RequestParam String emp_no) {
-	logger.info("직원일지 페이지! : " + emp_no); 
+	logger.info("직원일지 페이지! : " + emp_no);
 	ArrayList<EmployeeDTO> dto = service.empLogList(emp_no);
 	logger.info("리스트 사이즈:"+dto.size());
 	String empName=service.empName(emp_no);

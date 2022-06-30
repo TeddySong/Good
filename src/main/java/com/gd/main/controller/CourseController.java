@@ -110,7 +110,14 @@ public class CourseController {
 		//HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info("과정 리스트 요청 : "+params);	
 	
-		return service.courList2(params);
+		HashMap<String, Object> map = service.courList2(params);
+		ArrayList<CourseDTO> courList = (ArrayList<CourseDTO>) map.get("courList");
+		logger.info("test");
+		for (CourseDTO dto : courList) {
+			logger.info(dto.getCo_startDate()+" >>> "+dto.getCo_endDate());
+		}
+		
+		return map;
 	}
 
 	

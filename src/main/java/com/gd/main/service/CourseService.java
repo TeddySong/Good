@@ -83,6 +83,13 @@ public class CourseService {
 		searchResult.put("offset", offset);
 		
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
+		
+		for (CourseDTO dto : courList) {
+			logger.info(dto.getCo_startDate()+" ~ "+dto.getCo_endDate());
+
+		}
+		
+		
 		//ArrayList<CourseDTO> selectSubjectCall = dao.selectSubjectCall(sub_no,sub_name,cnt,offset);
 		//map.put("selectSubjectCall", selectSubjectCall);
 		map.put("courList", courList);

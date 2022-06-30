@@ -229,7 +229,7 @@
         </tr>
         <tr>
             <th>수강정원</th>
-	            <td id="co_capacity">${dto.co_capacity} <button onclick="location.href='배정상세보기'" class="goodRegister">자세히</button>
+	            <td id="co_capacity">${dto.co_capacity} <button onclick="location.href='assCoList.go?co_name=${co_name}'" class="goodRegister">자세히</button>
 	            </td>
             <th>진행상황</th>
             <td id="co_condition">${dto.co_condition}</td>

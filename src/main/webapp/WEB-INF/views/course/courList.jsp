@@ -188,16 +188,17 @@
                             <div>
                             <table id="goodList">
                             	<tr>
-                            		<td>
+                            		<%-- <td>
                             			<select id="subName" name="subName">
-									         <option>과목명</option>
+									         <option value="과목명">과목명</option>
 									         <c:forEach items="${subName}" var="subName">
 									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
 									         </c:forEach>
 									      </select>
-                            		</td>
+                            		</td> --%>
                             		<td><select id="courseNameSearch" name="">
 									          <option value="co_name">과정명</option>
+									          <option value="sub_name">과목명</option>
 									          <option value="co_condition">과정 진행상황</option>
 									      </select>
 									</td>

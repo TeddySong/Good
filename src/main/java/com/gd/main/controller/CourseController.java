@@ -267,8 +267,8 @@ public class CourseController {
 	//과정 수정 ajax
 	@RequestMapping("/courUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courUpdateAjax(HttpSession session,
-			@RequestParam HashMap<String, String> params, String co_no){
+	public HashMap<String, Object> courUpdateAjax(HttpSession session,String co_no,
+			@RequestParam HashMap<String, String> params){
 		
 		logger.info("과정 수정하기 : "+params);
 		HashMap<String, Object> map = new HashMap<String, Object>();

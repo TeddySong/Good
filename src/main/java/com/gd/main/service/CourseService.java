@@ -96,19 +96,18 @@ public class CourseService {
 		
 		return map;
 	}	
-/*
- * public CourseDTO courDetail(String co_no) { return dao.courDetail(co_no); }
- */
 	
 	public boolean courseUpdate(HashMap<String, String> params) {
-
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		logger.info("과정 update 요청");
 		boolean success = false;
 		int row = dao.courseUpdate(params);
 		if(row > 0) {
 			success = true;
+			logger.info("넘어온 데이터 : "+params);
 		}
 		logger.info("수정된 데이터 수 : "+row);
+		result.put("success", success);
 		return success;
 	}
 	

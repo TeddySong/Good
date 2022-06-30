@@ -8,70 +8,50 @@
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<where>
-				<!-- <if test="startSearch != '' or endSearch != ''">
-					subject.sub_name = #{subName}
+			<if test="startSearch != null and endSearch != null and
+			courseNameSearch != null">
+				<if test="startSearch != '' and endSearch != ''">
 					<![CDATA[
-					co_startDate >= #{startSearch}
+					AND co_startDate >= #{startSearch}
 					AND co_endDate <= #{endSearch}
 					]]>
-				</if> -->
+					<if test="courseNameSearch.equals('co_name')">
+						AND co_name LIKE concat('%',#{keyword},'%')	
+					</if>
+					<if test="courseNameSearch.equals('co_condition')">
+						AND co_condition LIKE concat('%',#{keyword},'%')
+					</if>
+					<if test="courseNameSearch.equals('sub_name')">
+						AND subject.sub_name LIKE concat('%',#{keyword},'%')
+					</if>
+				</if>
+			</if>
 		</where>
-
-		<!-- <trim prefix="where (" suffix=")" prefixOverrides="AND">
-			<foreach item="val" index="key" collection="list">
-				<trim prefix="AND">
-					<choose>
-						<when test="key == 'subNameSearch'.toString()">
-							<trim prefixOverrides="or">
-								<foreach collection="subName" item="subNameSearch">
-									subject.sub_name = #{subNameSearch}
-								</foreach>
-							</trim>
-						</when>
-						<when test="key == 'courseNameSearch'.toString()">
-							co_name LIKE concat('%',#{keyword},'%') OR
-							co_condition LIKE concat('%',#{keyword},'%')
-						</when>
-						<when test="key == 'startSearch'.toString()">
-							<![CDATA[
-							co_startDate <= to_date(#{startSearch},'YYYY-MM-DD')
-							]]>
-						</when>
-						<when test="key =='endSearch'.toString()">
-							<![CDATA[
-							co_endDate >= to_date(#{startSearch},'YYYY-MM-DD')
-							]]>
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim> -->
-
 		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
 	<select id="allCount" parameterType="hashmap" resultType="int">
 		SELECT COUNT(co_no) FROM course 
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		<!-- INNER JOIN subject on subject.sub_no = course.sub_no
-		WHERE 1=1
-		<if test="subName != null and subName !=''">
-			AND subject.sub_name = #{subName}
+	
+		<if test="startSearch != null and endSearch != null and
+			courseNameSearch != null">
+			<if test="startSearch != '' and endSearch != ''">
+				<![CDATA[
+				AND co_startDate >= #{startSearch}
+				AND co_endDate <= #{endSearch}
+				]]>
+				<if test="courseNameSearch.equals('co_name')">
+					AND co_name LIKE concat('%',#{keyword},'%')	
+				</if>
+				<if test="courseNameSearch.equals('co_condition')">
+					AND co_condition LIKE concat('%',#{keyword},'%')
+				</if>
+				<if test="courseNameSearch.equals('sub_name')">
+					AND subject.sub_name LIKE concat('%',#{keyword},'%')
+				</if>
+			</if>
 		</if>
-		<if test="courseNameSearch != null and courseNameSearch !=''">
-			AND course.co_name = #{courseNameSearch}
-			OR course.co_condition = #{courseNameSearch}
-		</if>
-		<if test="startSearch != null and startSearch !=''">
-			AND course.co_startDate = #{startSearch}
-		</if>
-		<if test="endSearch != null and endSearch !=''">
-			AND course.co_endDate = #{endSearch}
-		</if>
-		<if test="keyword != null and keyword !=''">
-			AND course.co_name LIKE concat('%',#{keyword},'%')
-			OR co_condition LIKE concat('%',#{keyword},'%')
-		</if> -->
 	</select>
 	
 	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">

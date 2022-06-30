@@ -282,6 +282,9 @@ function noHidden(){
 function cliSearch_pop(){	
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 	}
+	
+	
+
 
 
 

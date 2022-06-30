@@ -217,7 +217,7 @@
 									</tr>
 									<tr>
 										<th>성별</th>
-										<td>										
+										<td id="checkGender">										
 										<label for="male">남</label>
 										<input type="radio" name="stu_gender" value="남"/>
 										<label for="female">여</label>
@@ -235,21 +235,15 @@
 									        </select>
 								        </td>
 									</tr>
-									</table>
+									</table>									
 									<table id="goodList">
 									<thead>
-									<tr>
-										<th colspan="2">과목정보</th>										
-									</tr>
-									<tr>																			
-											<td colspan="2" style="text-align:end;">
-												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-												<input type="button" value="과목삭제" onclick="#"/>
-											</td>										
-									</tr>
+										<tr>
+											<th style="font-size:30px;">희망과목</th>
+										</tr>
 									</thead>
-									<tbody id="subjectDetail">
-										
+									<tbody id="wantSublist">
+
 									</tbody>									
 									<tr>
 										<th colspan="2">
@@ -289,13 +283,22 @@
 			$('#stu_gender').val(data.dto.stu_gender);			
 			$('#stu_condition').val(data.dto.stu_condition);
 			
-			
+			subSearch(data.dto.cli_no);
+			radioCheck(data.dto.stu_gender);
 		},
 		error:function(error){
 			console.log(error);
 		}
 	});
 	
+	function radioCheck(stu_gender){
+		console.log(stu_gender);
+		if(stu_gender == "남"){
+			$("input:radio[name='stu_gender']:radio[value='남']").prop("checked", true);			
+		} else {
+			$("input:radio[name='stu_gender']:radio[value='여']").prop("checked", true);
+		}
+	}
 	
 	
 	/* $.ajax({
@@ -312,7 +315,7 @@
 		}
 	}); */
 	
-	subListCall();
+	/* subListCall();
 	function subListCall(){ //controller에 list를 요청
 		$.ajax({
 			type:'get',
@@ -343,7 +346,39 @@
 		});
 		$('#subjectDetail').empty();
 		$('#subjectDetail').after(content);
-	}	
+	}	 */
+	
+	
+	function subSearch(cli_no){
+		console.log(cli_no);
+		
+		$.ajax({
+			url:'stuWantSubSearch.ajax',			
+			type:'get',
+			data:{cli_no:cli_no},
+			dataType:'json',
+			success:function(data){
+				console.log(data);		
+				 drawSub(data.list);				 
+			},
+			error:function(e){}
+			
+		});
+	}
+	
+	
+	function drawSub(list){
+		console.log(list);
+		var content='';
+		list.forEach(function(item){
+			 content += '<tr>';			 
+			 content += '<td>'+item.sub_name +'</td>';
+			 content += '</tr>';
+		 });
+		$('#wantSublist').empty();
+		$('#wantSublist').append(content);
+	}
+	
 	
 	/* function subSearch_pop(){
 		

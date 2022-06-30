@@ -97,12 +97,12 @@ html,
       <h3>단과</h3>
       <div #swiperRef="" class="swiper mySwiper">
       <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/c언어2.png" alt=""></div>
       </div>
       <div class="swiper-button-next"></div>
       <div class="swiper-button-prev"></div>
@@ -112,18 +112,19 @@ html,
       <h3>종합</h3>
       <div #swiperRef="" class="swiper mySwiper">
       <div class="swiper-wrapper">
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
-          <div class="swiper-slide"><img src="./python2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
+          <div class="swiper-slide"><img src="../resources/img/java2.png" alt=""></div>
       </div>
       <div class="swiper-button-next"></div>
       <div class="swiper-button-prev"></div>
       <div class="swiper-pagination"></div>
       </div>
-
+	
+	<hr/>
 
     <ul>단과</ul>
     <div id="dangwa">

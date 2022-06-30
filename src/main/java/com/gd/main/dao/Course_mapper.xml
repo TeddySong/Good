@@ -64,9 +64,9 @@
 	
 	<select id="allCount" parameterType="hashmap" resultType="int">
 		SELECT COUNT(co_no) FROM course 
-		INNER JOIN subject on subject.sub_no = course.sub_no
+		<!-- INNER JOIN subject on subject.sub_no = course.sub_no
 		WHERE 1=1
-		<!-- <if test="subName != null and subName !=''">
+		<if test="subName != null and subName !=''">
 			AND subject.sub_name = #{subName}
 		</if>
 		<if test="courseNameSearch != null and courseNameSearch !=''">

@@ -244,19 +244,19 @@
 									<tr>
 										<th colspan="2">과목정보</th>										
 									</tr>
-									<tr>																			
+									<!-- <tr>																			
 											<td colspan="2" style="text-align:end;">
 												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
 												<input type="button" value="과목삭제" onclick="#"/>
 											</td>										
-									</tr>
+									</tr> -->
 									</thead>
 									<tbody id="subtable">
 										
 									</tbody>									
 									<tr>
 										<th colspan="2">
-											<input type="button" value="등록완료" onclick="stuUpdate()"/>
+											<input type="button" value="등록완료" onclick="stuRegister()"/>
 											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
 									</tr>									
@@ -285,7 +285,7 @@ function cliSearch_pop(){
 
 
 
-function subSearch_pop(){
+/* function subSearch_pop(){
 	var subtable = ""
 	subtable += '<tr>';
 	subtable += '<th><input type="checkbox"></th>';
@@ -299,7 +299,7 @@ function subSearch_pop(){
 	window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 	
 	
-}
+} */
 
 
 function stuRegister(){
@@ -310,10 +310,10 @@ function stuRegister(){
 	var $stu_age = $('#stu_age');
 	var $stu_gender = $('input[name="stu_gender"]:checked');
 	var $stu_condition = $('#stu_condition');	
-	var subList = [];		
+	/* var subList = [];		
 	$('.subNo').each(function(idx,item){
 		subList.push($(this).val());		
-	});
+	}); */
 	
 	$.ajax({
 		type:'get',
@@ -325,7 +325,7 @@ function stuRegister(){
 			stu_age:$stu_age.val(),
 			stu_gender:$stu_gender.val(),
 			stu_condition:$stu_condition.val(),
-			subList:subList
+			/* subList:subList */
 		},
 		dataType:'JSON',
 		success:function(data){

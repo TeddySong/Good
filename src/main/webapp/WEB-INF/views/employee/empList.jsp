@@ -186,20 +186,18 @@
                                 직원리스트
                             </div>
                             <div>
-								<form name="search-form" autocomplete="off">
 									<table id="goodList">
 										<tr>
 											<td>
-									<select name="taye" style="width:100%;">
-										<option selected value="">검색 내용 선택</option>
-										<option value="직원명">직원명</option>
-										<option value="연락처">연락처</option>
-										<option value="직급">직급</option>
-										<option value="재직상태">재직상태</option>
+									<select id="empSearchCategory" style="width:100%;">
+										<option value="emp_name">직원명</option>
+										<option value="emp_phone">연락처</option>
+										<option value="emp_position">직급</option>
+										<option value="emp_condition">재직상태</option>
 									</select>
 											</td>
-									<td><input type="text" name="keyword" placeholder="검색어를 입력해주세요" value=""></input></td>
-									<td><input type="button" onclick="getSerachList()" class="goodRegister" style="width:100%;" value="검색"></input></td>
+											<td><input type="text" id="empSearchContent" placeholder="검색어를 입력해주세요"/></td>
+                            				<td style="text-align:center"><button id="empSearch" class="goodRegister" style="width:100%;">검색</button></td>
 										</tr>
 									</table>
 								</form>
@@ -255,17 +253,9 @@ function EmpUpdateForm(){
 	location.href='empUpdate.go?emp_no='+emp_no;
 }
 
-
 var currPage = 1;
 
-
-
-
 //리스트 불러오기
-
-
-
-
 listCall(currPage);
 
 function listCall(page) {
@@ -301,7 +291,57 @@ function listCall(page) {
 			console.log(e);
 		}
 	});
-};
+	
+	
+	
+$('#empSearch').on('click',function(){
+		
+		var empSearchCategory = $("#empSearchCategory option:selected").val();
+			
+		var empSearchContent = $("#empSearchContent").val();
+		
+		$("#pagination").twbsPagination('destroy');
+				
+		$.ajax({
+			type:'get',
+			url:'empSearch.ajax',
+			data:{
+				cnt : pagePerNum,
+				page : page,
+				empSearchCategory:empSearchCategory,
+				empSearchContent:empSearchContent
+				},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+				drawList(data.list);
+				currPage=data.currPage;
+
+				//플러그인 사용 페이징
+				$("#pagination").twbsPagination({
+					startPage:data.currPage, //시작페이지
+					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+					visiblePages: 10, // 한번에 보여줄 페이지 수
+					onPageClick:function(e,page){
+						console.log(page);
+						currPage=page;
+						listCall(page);
+					}
+				});
+				
+			},
+			error:function(e){
+				console.log(e);
+			}
+		}); 
+	});
+	
+	
+	
+	
+	
+	
+}
 	
 
 //리스트 그리기

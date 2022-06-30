@@ -1,6 +1,6 @@
 package com.gd.main.controller;
 
-import java.util.ArrayList;
+import java.util.ArrayList;  
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -25,10 +25,9 @@ public class EmployeeController {
 	//직원일지 등록
 	
 	@RequestMapping(value="/empLogRegister.go")
-	public String stuLogRegisterGo(@RequestParam int emp_no, HttpSession session) {
-		logger.info("emp_no: " + emp_no); //직원의 사번 가져오기
+	public String stuLogRegisterGo(@RequestParam String emp_no, HttpSession session) {
+		logger.info("직원일지 등록페이지 이동"+ emp_no); //직원의 사번 가져오기?
 		session.setAttribute("emp_no", emp_no);
-		
 		
 		return "./employee/empLogRegister";
 	}
@@ -48,13 +47,14 @@ public class EmployeeController {
 	
 	//직원일지 페이지 
 	@RequestMapping(value = "/empLogList.go")
-	public String emplogListGo(Model model, @RequestParam int emp_no) {
-	logger.info("직원일지 페이지! : " + emp_no); 
+	public String emplogListGo(Model model, HttpSession session, @RequestParam String emp_no) {
+	logger.info("직원일지 페이지! : " + emp_no);
 	ArrayList<EmployeeDTO> dto = service.empLogList(emp_no);
 	logger.info("리스트 사이즈:"+dto.size());
 	String empName=service.empName(emp_no);
 	model.addAttribute("dto",dto);
 	model.addAttribute("empName", empName);
+	model.addAttribute("empNo", emp_no);
 	
 	return "./employee/empLogList";
 	} 
@@ -94,16 +94,29 @@ public class EmployeeController {
 	// 직원 불러오기
 	@RequestMapping(value = "employeeList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> emplist(@RequestParam HashMap<String, String> params, HttpSession session) {
+	public HashMap<String, Object> emplist(
+			@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("직원 목록 요청:" + params);
 
 		boolean login = false;
-		HashMap<String, Object> map = service.employeeList(params);
-		/*
-		 * if(session.getAttribute("loginId")!=null) { login=true; }
-		 */
-		return service.employeeList(params);
+		
+		if(session.getAttribute("loginId") != null){
+			login = true;
+		}
+		return service.empList(params);
 	}
+	
+	//직원검색
+	@RequestMapping("/empSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> empSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
+		
+		return service.empList(params);
+	}
+	
+	//
+	
+	
 
 	// 직원 등록 페이지로 이동
 	@RequestMapping(value = "/empRegister.go")
@@ -127,41 +140,5 @@ public class EmployeeController {
 		logger.info("직원 등록하기 : " + params);
 		return service.empRegister(params);
 	}
-
-	/*
-	 * // 0625 수정 진행중.........
-	 * 
-	 * // 수정 페이지 이동
-	 * 
-	 * @RequestMapping(value = "/empUpdate.go") public String EmpUpdate() {
-	 * logger.info("수정 페이지 이동"); // session.setAttribute("emp_no", emp_no); return
-	 * "./employee/empUpdate"; }
-	 * 
-	 * // 수정하기
-	 * 
-	 * @RequestMapping(value = "/empUpdate.ajax")
-	 * 
-	 * @ResponseBody public HashMap<String, Object> update(HttpSession
-	 * session, @RequestParam HashMap<String, String> params) {
-	 * logger.info("params : " + params); HashMap<String, Object> map = new
-	 * HashMap<String, Object>();
-	 * 
-	 * boolean success = service.empUpdate(params); map.put("success", success);
-	 * 
-	 * return map; }
-	 */
-	 /*
-	 @RequestMapping("/cliList.go") 
-	 public String ajaxhome() { 
-		 return "client/ajaxList"; 
-	 }
-	  
-	 @RequestMapping("/clientlist.ajax") 
-	 public @ResponseBody HashMap<String,Object> list(@RequestParam HashMap<String, String> params) {
-	  */
-	
-	  //logger.info("리스트 요청"+params); return service.ajaxlist(params); }
-	 
-//
 
 }

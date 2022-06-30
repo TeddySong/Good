@@ -21,13 +21,24 @@
 		VALUES(#{param1}, #{param2}, #{param3})
 	</insert>
 	
+	
 	<insert id="fileWrite">
-		INSERT INTO curriculm(curri_oriName, curri_newName, sub_no)
+		INSERT INTO curriculm (curri_oriName, curri_newName, sub_no)
+		VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<insert id="subImgWrite">
+		INSERT INTO subjectimg(subimg_oriName, subimg_newName, sub_no)
 		VALUES(#{param1}, #{param2}, #{param3})
 	</insert>
 	
 	<update id="fileUpdate">
 		UPDATE curriculm SET curri_oriName = #{param1}, curri_newName = #{param2}
+		WHERE sub_no = #{param3}
+	</update>
+	
+	<update id="subImgUpdate">
+		UPDATE subjectimg SET subimg_oriName = #{param1}, subimg_newName = #{param2}
 		WHERE sub_no = #{param3}
 	</update>
 	
@@ -68,6 +79,13 @@
 		*
 	FROM
 		curriculm WHERE sub_no =#{sub_no};
+	</select>
+	
+	<select id="subImgDetail" parameterType="String" resultType="com.gd.main.dto.SubDTO">
+	SELECT
+		*
+	FROM
+		subjectimg WHERE sub_no =#{sub_no};
 	</select>
 	
 	

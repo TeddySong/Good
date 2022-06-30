@@ -3,7 +3,7 @@ package com.gd.main.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 
 
 
@@ -18,7 +18,6 @@ public class EmployeeDTO{
 	private String emp_position;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_startDate;
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date emp_endDate;
 	private Date emp_log_date;
 	private String emp_log_content;

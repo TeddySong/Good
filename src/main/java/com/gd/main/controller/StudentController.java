@@ -186,13 +186,25 @@ public class StudentController {
 	}
 	
 	
+	/*
+	 * @RequestMapping("/stuRegister.ajax")
+	 * 
+	 * @ResponseBody public HashMap<String, Object>stuRegister(
+	 * 
+	 * @RequestParam HashMap<String, String> params, @RequestParam(value =
+	 * "subList[]") ArrayList<Integer> subList) throws ParseException {
+	 * 
+	 * logger.info("글쓰기 확인 : " + params + subList); return
+	 * service.stuRegister(params, subList); }
+	 */
+	
 	@RequestMapping("/stuRegister.ajax")
 	   @ResponseBody
 	    public HashMap<String, Object>stuRegister(
-	          @RequestParam HashMap<String, String> params, @RequestParam(value = "subList[]") ArrayList<Integer> subList) throws ParseException {
+	          @RequestParam HashMap<String, String> params) throws ParseException {
 	       
-	       logger.info("글쓰기 확인 : " + params + subList);
-	       return service.stuRegister(params, subList);
+	       logger.info("글쓰기 확인 : " + params);
+	       return service.stuRegister(params);
 	    }
 	
 		/*
@@ -298,6 +310,15 @@ public class StudentController {
 	       
 	       logger.info("학사일지쓰기");
 	       return service.stuLogRegister(params);
+	    }
+	
+	@RequestMapping("/stuWantSubSearch.ajax")
+	   @ResponseBody
+	    public HashMap<String, Object> stuWantSubSearch(
+	          @RequestParam HashMap<String, String> params) {
+	       
+	       logger.info("희망과목보기");
+	       return service.stuWantSubSearch(params);
 	    }
 	
 	

@@ -32,7 +32,7 @@
 
 	
 	
-	<select id="list_Client2" resultType="hashmap">
+<!-- 	<select id="list_Client2" resultType="hashmap">
 		select distinct  c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
 		from qsub q
 		left outer join client c   on q.cli_no =c.cli_no
@@ -40,11 +40,11 @@
 		left outer join client_log cl  on c.cli_no = cl.cli_no 
 		left outer join subject ss on ss.sub_no = q.sub_no
 	</select>
+	 -->
 	
 	
 	
-	
-	<select id="client_searh" parameterType="hashmap"  resultMap="client_Dto">
+	<!-- <select id="client_searh" parameterType="hashmap"  resultMap="client_Dto">
 		SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
 		FROM client  c
 		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
@@ -71,7 +71,7 @@
 		    	  	</if>
 		</where>
 			order by c.cli_no  desc
-	</select>
+	</select> -->
 
 	<!-- 회원 상세보기  -->
 	<select id="detail_Client" parameterType="integer" resultMap="client_Dto">
@@ -80,17 +80,19 @@
 		LEFT JOIN employee as e ON c.emp_no=e.emp_no
 		WHERE c.cli_no= #{cli_no}	
 	</select>
-<!-- 상세보기 페이지 일지 보기 -->
-<select id="clientLog" parameterType="integer" resultMap="client_Dto">
-	SELECT client_log.cli_log_result ,client_log.cli_log_Dday,client_log.cli_log_Dtime ,client_log.cli_log_date ,client_log.cli_log_content , employee.emp_name 
-	, client.cli_qDate 
-	FROM client_log
-	LEFT JOIN employee  on client_log.emp_no = employee.emp_no 
-	LEFT JOIN client on client_log.cli_no =client.cli_no 
-	WHERE client.cli_no =#{cli_no}
-</select>
+	
+	<!-- 상세보기 페이지 일지 보기 -->
+	<select id="clientLog" parameterType="integer" resultMap="client_Dto">
+		SELECT client_log.cli_log_result ,client_log.cli_log_Dday,client_log.cli_log_Dtime ,client_log.cli_log_date ,client_log.cli_log_content , employee.emp_name 
+		, client.cli_qDate 
+		FROM client_log
+		LEFT JOIN employee  on client_log.emp_no = employee.emp_no 
+		LEFT JOIN client on client_log.cli_no =client.cli_no 
+		WHERE client.cli_no =#{cli_no}
+		order by  client_log.cli_log_date  desc 
+	</select>
 
-<select id="listsearchCount" parameterType="hashmap" resultType="integer">
+<!-- 	<select id="listsearchCount" parameterType="hashmap" resultType="integer">
 			SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
 			FROM client c
 			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
@@ -118,8 +120,8 @@
 		</where> 
 	
 			
-</select>
-<select id="listPageSearch" parameterType="hashmap" resultMap="client_Dto">
+</select> -->
+<!-- <select id="listPageSearch" parameterType="hashmap" resultMap="client_Dto">
 	SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
 		FROM client  c
 		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
@@ -147,18 +149,18 @@
 		</where>
 		
 			order by c.cli_no  desc limit #{postNum}  offset #{pageStart}
-	</select>
+	</select> -->
 		
-	<select id="allCount" resultType="integer">
+<!-- 	<select id="allCount" resultType="integer">
 		SELECT  COUNT( c.cli_no and c.cli_name  and c.cli_phone and c.cli_qDate and e.emp_name and cl.cli_log_result and ss.sub_name  ) 
 			FROM client c
 			LEFT JOIN employee e  on c.emp_no  = e.emp_no 
 			LEFT JOIN client_log cl  on c.cli_no = cl.cli_no 
 			LEFT JOIN qsub q  on q.cli_no =c.cli_no
 			LEFT JOIN subject ss on ss.sub_no = q.sub_no 
-	</select>	
+	</select>	 -->
 	
-	<select id="ajaxlist" resultType="com.gd.main.dto.Client_Dto">
+<!-- 	<select id="ajaxlist" resultType="com.gd.main.dto.Client_Dto">
 			SELECT   c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result ,ss.sub_name  
 		FROM client  c
 		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
@@ -166,40 +168,39 @@
 		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
 		LEFT JOIN subject  ss ON ss.sub_no = q.sub_no 
 	order by c.cli_no  desc limit #{param1} offset #{param2} 
-	</select>
+	</select> -->
 	
 	 	<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">
-	SELECT  DISTINCT c.cli_no , c.cli_name ,c.cli_phone , c.cli_qDate , e.emp_name ,cl.cli_log_result
-		FROM client  c
-		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
-		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
-		LEFT JOIN qsub  q  ON q.cli_no =c.cli_no
+			select * from (select  distinct c.cli_no,cli_name,cli_phone, cli_qDate,max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
+			left join client_log cl on cl.cli_no = c.cli_no 
+			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result order by cli_log_date desc ) as t 
 
 			<where>          		
 			<if test="searchType != null and searchType != '' and keyword != null and keyword != ''">
 				
 			        <if test ='searchType.equals("client")'>		
-			          	AND c.cli_name LIKE  concat('%',#{keyword},'%') 
+			          	AND t.cli_name LIKE  concat('%',#{keyword},'%') 
 			    	</if>
 						
 		 			<if test ='searchType.equals("phone")'>	
-			          	AND c.cli_phone LIKE  concat('%',#{keyword},'%') 
+			          	AND t.cli_phone LIKE  concat('%',#{keyword},'%') 
 			    	</if>
 			    	<if test ='searchType.equals("emp")'>	
-			          	AND e.emp_name LIKE  concat('%',#{keyword},'%') 
+			          	AND t.emp_name LIKE  concat('%',#{keyword},'%') 
 			    	</if>
 			    	<if test ='searchType.equals("result")'>	
-			          	AND cl.cli_log_result LIKE  concat('%',#{keyword},'%') 
+			          	AND t.cli_log_result LIKE  concat('%',#{keyword},'%') 
 		    	  	</if>
 		    	  	
 		    	  	</if>
 		</where>
-		order by c.cli_no  desc limit #{cnt}  offset #{offset}
+		group by t.cli_no
+		order by t.cli_no  desc limit #{cnt}  offset #{offset}
 		</select>
 		
 		
 		<select id="ajaxSearchCnt" parameterType="hashmap" resultType="integer">
-		SELECT  count(c.cli_no ) 
+		SELECT  count(distinct c.cli_no ) 
 		FROM client  c
 		LEFT JOIN employee  e  ON c.emp_no  =  e.emp_no 
 		LEFT JOIN client_log  cl  ON c.cli_no =cl.cli_no 
@@ -303,6 +304,79 @@
 		<select id="cli_no" resultType="integer">
 			SELECT cli_no from client ORDER BY cli_no DESC
 		</select>
+		
+		
+			<!-- 담당직원 호출 -->
+		<select id="cliManager" parameterType="integer"  resultType="com.gd.main.dto.Client_Dto">
+			SELECT e.emp_name , e.emp_no from employee e 
+				LEFT JOIN client c ON c.emp_no = e.emp_no 
+				WHERE c.cli_no= #{cli_no}
+		</select>
+		
+		<insert id="scheRegister" parameterType="hashmap">
+			INSERT INTO client_log(cli_log_Dday,cli_log_Dtime,cli_log_content,cli_no,emp_no,cli_log_result)values(#{cli_log_Dday},#{cli_log_Dtime},#{cli_log_content},#{cli_no},#{emp_no},#{cli_log_result}) 
+		</insert>
+		
+		<select id="checkCnt" parameterType="hashmap" resultType="int">
+		select count(d.cli_no) from ( select * from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
+			left join client_log cl on cl.cli_no = c.cli_no 
+			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result order by cli_log_date desc ) as t  group by t.cli_no having t.cli_log_result='상담예정')as d
+			<where>
+			 <!-- cl.cli_log_result ='상담예정' --> 
+			<if test="cli_log_Dday!=null and  cli_log_Dday!='' ">
+				and d.cli_log_Dday >= #{cli_log_Dday}
+			</if>
+			<if test= "searchType !='' and searchType != null and keyword!='' and keyword!=null ">
+				<if test="searchType.equals('client')">
+				  	and d.cli_name like concat('%',#{keyword},'%')
+				</if>
+				 <if test="searchType.equals('phone')">
+				 	and d.cli_phone like concat('%',#{keyword},'%')
+				 </if>
+				 <if test="searchType.equals('emp')">
+					and d.emp_name like concat('%',#{keyword},'%')
+				</if>
+			</if>
+			</where>
+		</select>
+		
+		<select id="shcekList" parameterType="hashmap" resultType="com.gd.main.dto.Client_Dto">
+			select t.* from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
+			left join client_log cl on cl.cli_no = c.cli_no 
+			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result order by cli_log_date desc ) as t 
+			<where>
+				<!--   t.cli_log_result ='상담예정'  --><!--or  cli_log_result ='상담완료' -->
+				
+			<!-- cli_log_result ='상담예정'
+			<if test=>
+			
+			</if> -->
+			<if test="cli_log_Dday!=null and  cli_log_Dday!='' ">
+				and t.cli_log_Dday >= #{cli_log_Dday}
+			</if>
+			<if test= "searchType !='' and searchType != null and keyword!='' and keyword!=null ">
+				<if test="searchType.equals('client')">
+				  	AND t.cli_name LIKE  concat('%',#{keyword},'%') 
+				</if>
+				 <if test="searchType.equals('phone')">
+				 	and t.cli_phone like concat('%',#{keyword},'%')
+				 </if>
+				 <if test="searchType.equals('emp')">
+					and t.emp_name like concat('%',#{keyword},'%')
+				</if>
+			</if>
+			 
+			</where>
+			
+			group by t.cli_no having t.cli_log_result='상담예정'
+			order by t.cli_log_date desc limit #{cnt}  offset #{offset}
+			<!-- order by cli_log_date desc limit #{offset},#{cnt} -->
+		</select>
+		
+		<!-- <select id="chkEndCnt" resultType="int">
+			select cli_no from client_log cl  where  cl.cli_log_result = '상담완료' order by cli_no asc
+		</select>
+		 -->
 		
 		<!--  new 방식
 			<select id="ajaxSearch" parameterType="hashmap" resultMap="client_Dto">

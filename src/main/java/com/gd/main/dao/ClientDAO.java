@@ -10,24 +10,26 @@ import com.gd.main.dto.Client_Dto;
 
 public interface ClientDAO {
 
-ArrayList<Client_Dto> list_Client();
-
-ArrayList<Client_Dto> client_searh(HashMap<String, Object> data);
+//ArrayList<Client_Dto> list_Client();
+//
+//ArrayList<Client_Dto> client_searh(HashMap<String, Object> data);
 
 Client_Dto detail_Client(int cli_no );
 
 ArrayList<Client_Dto> clientLog(int cli_no);
 
-ArrayList<HashMap<String, Object>> list_Client2();
+/*
+ * ArrayList<HashMap<String, Object>> list_Client2();
+ * 
+ * 
+ * 
+ * ArrayList<Client_Dto> listPageSearch(HashMap<String, Object> data);
+ */
+
+//int listsearchCount(HashMap<String, Object> data);
 
 
-
-ArrayList<Client_Dto> listPageSearch(HashMap<String, Object> data);
-
-int listsearchCount(HashMap<String, Object> data);
-
-
-int allCount();
+//int allCount();
 
 ArrayList<Client_Dto> ajaxlist(int cnt, int offset);
 
@@ -63,6 +65,17 @@ ArrayList<HashMap<String, Object>> regSub();
 
 ArrayList<Integer> cli_no();
 
+Client_Dto cliManager(int cli_no);
+
+int scheRegister(HashMap<String, Object> map);
+
+int checkCnt();
+
+ArrayList<Client_Dto> shcekList(HashMap<String, Object> map);
+
+int checkCnt(HashMap<String, Object> map);
+
+/* ArrayList<Integer> chkEndCnt(); */
 
 
 

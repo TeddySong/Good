@@ -136,15 +136,16 @@
 								<tr>
 									<th>작성자</th>
 									<td id="empName">${sessionScope.empName}</td>
-								</tr>
+								</tr>	
 								<tr class="hidden">
 									<th>사번</th>
 									<td id="empNo">${sessionScope.empNo}</td>
-								</tr>								
+								</tr>															
 								<tr>
 									<th>내용</th>
 									<td><textarea id="stu_log_content" style="width:100%;"></textarea></td>
 								</tr>
+								
 								
 							</table>
 							<br/><br/>

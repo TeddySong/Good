@@ -189,7 +189,7 @@
                             <table id="goodList">
                             	<tr>
                             		<td>
-                            			<select id="subNameSearch" name="subNameSearch">
+                            			<select id="subName" name="subName">
 									         <option>과목명</option>
 									         <c:forEach items="${subName}" var="subName">
 									         		<option value="${subName.sub_name}">${subName.sub_name}</option>
@@ -197,8 +197,8 @@
 									      </select>
                             		</td>
                             		<td><select id="courseNameSearch" name="">
-									          <option value="과정명">과정명</option>
-									          <option value="과정 진행상황">과정 진행상황</option>
+									          <option value="co_name">과정명</option>
+									          <option value="co_condition">과정 진행상황</option>
 									      </select>
 									</td>
                             		<%-- <td><select id="courseNameSearch" name="">
@@ -276,6 +276,55 @@ var currPage = 1;
 
 listCall(currPage);
 
+
+//과목 select
+/*
+$('#subName').on('change',function(){
+	if($("#subName option:selected").val() == '과목명'){
+		$("#pagination").twbsPagination('destroy');
+		listCall(currPage);
+	} else {
+		$("#pagination").twbsPagination('destroy');
+		selectSubjectCall(currPage);
+	}
+});
+
+
+function selectSubjectCall(page){
+	var pagePerNum = 10;
+	var subSelect = $("#subName option:selected").val();
+	$({
+		type:'get',
+		url:'courSearch.ajax',
+		data:{
+			cnt:pagePerNum,
+			page:page,
+			sub_name:subSelect
+		},
+		dataType:'JSON',
+		success:function(data){
+			drawList(data.selectSubject)
+			currPage = data.currPage;
+			
+			$("#pagination").twbsPagination({
+				startPage: data.currPage, //시작 페이지
+				totalPages: data.pages, //총 페이지
+				visiblePages: 5, //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
+					console.log(page); //사용자가 클릭한 페이지
+					currPage = page;
+					selectSubjectCall(page);
+				}
+			});
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+*/
+
+
 function listCall(page){
 	
 	var pagePerNum = 10;
@@ -313,11 +362,21 @@ function listCall(page){
 	});
 	
 	
+}
+
 //검색
 $('#courSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	courseSearch(currPage);
+});
+
+
+function courseSearch(page){
+		
+	var pagePerNum = 10;
 	
-	 var subNameSearch = $("#subNameSearch option:selected").val();
-	 console.log(subNameSearch);
+	 var subName = $("#subName option:selected").val();
+	 console.log(subName);
 	 
 	 var courseNameSearch = $("#courseNameSearch option:selected").val();
 	 console.log(courseNameSearch);
@@ -337,7 +396,7 @@ $('#courSearch').on('click',function(){
 		 data:{
 			 cnt : pagePerNum,
 			 page : page,
-			 subNameSearch : subNameSearch,
+			 subName : subName,
 			 courseNameSearch : courseNameSearch,
 			 keyword : keyword,
 			 startSearch : startSearch,
@@ -357,7 +416,7 @@ $('#courSearch').on('click',function(){
 				onPageClick:function(e,page){
 					console.log(page);
 					currPage=page;
-					listCall(page);
+					courseSearch(page);
 				}
 			});
 		},
@@ -365,11 +424,9 @@ $('#courSearch').on('click',function(){
 			console.log(e);
 		}
 	 });
-});
 
+	}
 
-
-}
 
 
 //리스트 그리기
@@ -378,13 +435,18 @@ function drawList(courList){
 	var content="";
 	
 	courList.forEach(function(item){
+		var errorDate = new Date(item.co_startDate);
+		var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
+		var errorDate2 = new Date(item.co_endDate);
+		var nowDate2 = new Date(errorDate2.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
+		
 		//console.log(item);
 		content += '<tr>';
 		content += '<td>'+item.co_no+'</td>';
 		content += '<td><a href="courDetail.do?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
 		content += '<td>'+item.sub_name+'</td>';
-		content += '<td>'+item.co_startDate+'</td>';
-		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+nowDate+'</td>';
+		content += '<td>'+nowDate2+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';
 		content += '<td>'+item.co_condition+'</td>';
 		content += '</tr>';

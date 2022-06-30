@@ -2,37 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
+							<!-- [emp_name, emp_log_condition, emp_log_content]-->
+<!-- 직원일지 등록 --> <!-- db에서 가져와야하는것:emp_no을 통해 직원테이블의 직원명,작성사유,히스토리-->
+	<insert id="empLogRegister" parameterType='hashmap'>
+		INSERT INTO student_log (stu_no, emp_no, stu_log_content)
+		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
+	</insert>
 
-<select id="emplogList" resultType="com.gd.main.dto.EmployeeDTO">
+
+
+
+<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO">
 	<!-- 직원일지 호출 -->
-	SELECT e.emp_name,
+	SELECT 
+		e.emp_name,
 		el.emp_log_date,
 		el.emp_log_condition,
-		el.emp_log_content
-FROM employee_log el 
-INNER JOIN  
-		employee e ON el.emp_no =#{param1}
+		el.emp_log_content,
+		el.emp_no
+	FROM 
+		employee_log el 
+	JOIN 
+		employee e 
+	ON 
+		el.emp_no = e.emp_no 
+	WHERE 
+		e.emp_no = #{param1}
+</select>
+		
+	<!--select distinct: 중복제거  -->
+	<!--ON : JOIN 을 하기 전 필터링을 한다 (=ON 조건으로 필터링이 된 레코들간 JOIN이 이뤄진다)   -->
+	<!--WHERE : JOIN 을 한 후 필터링을 한다 (=JOIN을 한 결과에서 WHERE 조건절로 필터링이 이뤄진다)  -->
+<select id="empName" resultType="String">
+		SELECT DISTINCT (e.emp_name) FROM employee e JOIN employee_log el ON e.emp_no = el.emp_no WHERE e.emp_no= #{param1}
 </select>
 
 	 <!--  직원정보 등록 -->
-	<insert id="empWrite" parameterType="hashmap" >
+	<insert id="empRegister" parameterType="hashmap" >
 		INSERT INTO employee(
-												emp_id,
-												emp_pw,
-												emp_name,
-												emp_phone,
-												emp_position,
-												emp_startDate,
-											    emp_condition 
-												) VALUES										
-												(	
-												#{emp_id},
-												#{emp_pw},
-												#{emp_name},
-												#{emp_phone},
-												#{emp_position},
-												#{emp_startDate},
-												#{emp_condition}) 
+			emp_id,
+			emp_pw,
+			emp_name,
+			emp_phone,
+			emp_position,
+			emp_startDate,
+		    emp_condition 
+		) VALUES (	
+			#{emp_id},
+			#{emp_pw},
+			#{emp_name},
+			#{emp_phone},
+			#{emp_position},
+			#{emp_startDate},
+			#{emp_condition}
+		) 
 	</insert>
  
 	<!-- 직원목록 보기 -->

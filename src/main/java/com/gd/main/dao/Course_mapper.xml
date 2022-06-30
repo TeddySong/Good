@@ -3,34 +3,30 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.CourseDAO">
 
-	<!-- <select id="courList" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, subject.sub_no, sub_name, co_startDate, co_endDate, 
-		co_startTime, co_condition FROM course
-		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		ORDER BY co_no DESC limit #{param1} offset #{param2}
-	</select> -->
-	
 	 <select id="courList2" parameterType="hashmap" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<where>
 			<!-- <if test="name == 'subNameSearch'.toString()"> -->
-			<if test="subNameSearch.equals('sub_name')">
-				subject.sub_name = #{subNameSearch}
+			<if test="subName != null and courseNameSearch != null 
+			and startSearch != null and endSearch != null">
+				<if test="subName != null">
+					subject.sub_name = #{subName}
+				</if>
+				<if test="courseNameSearch != null">
+				<!-- <if test="courseNameSearch != null"> -->
+					OR co_name LIKE concat('%',#{keyword},'%')
+					OR co_condition LIKE concat('%',#{keyword},'%')
+				</if>
+				<if test="startSearch != '' or endSearch != ''">
+					<![CDATA[
+					AND co_startDate >= #{startSearch}
+					AND co_endDate <= #{endSearch}
+					]]>
+				</if>
 			</if>
-			<if test="courseNameSearch.equals('과정명') or
-			courseNameSearch.equals('과정 진행상황')">
-				AND co_name LIKE concat('%',#{keyword},'%') OR
-				co_condition LIKE concat('%',#{keyword},'%')
-			</if>
-			<if test="startSearch.equals('co_startDate') or
-			endSearch.equals('co_endDate')">
-				<![CDATA[
-				AND co_startDate <= #{startSearch}
-				OR co_endDate >= #{endSearch}
-				]]>
-			</if>
+			
 		</where>
 
 		<!-- <trim prefix="where (" suffix=")" prefixOverrides="AND">
@@ -62,24 +58,31 @@
 				</trim>
 			</foreach>
 		</trim> -->
-		
-		<!-- <where>
-			<choose>
-				<when test="type == 'subNameSearch'.toString()">
-					subject.sub_name = #{subNameSearch}
-				</when>
-				<when test="name == 'courseNameSearch'.toString()">
-					AND co_name LIKE concat('%',#{keyword},'%') OR
-					co_condition LIKE concat('%',#{keyword},'%')
-				</when>
-			</choose>
-		</where> -->
 
 		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
-	<select id="allCount" resultType="int">
-		SELECT COUNT(co_no) FROM course
+	<select id="allCount" parameterType="hashmap" resultType="int">
+		SELECT COUNT(co_no) FROM course 
+		<!-- INNER JOIN subject on subject.sub_no = course.sub_no
+		WHERE 1=1
+		<if test="subName != null and subName !=''">
+			AND subject.sub_name = #{subName}
+		</if>
+		<if test="courseNameSearch != null and courseNameSearch !=''">
+			AND course.co_name = #{courseNameSearch}
+			OR course.co_condition = #{courseNameSearch}
+		</if>
+		<if test="startSearch != null and startSearch !=''">
+			AND course.co_startDate = #{startSearch}
+		</if>
+		<if test="endSearch != null and endSearch !=''">
+			AND course.co_endDate = #{endSearch}
+		</if>
+		<if test="keyword != null and keyword !=''">
+			AND course.co_name LIKE concat('%',#{keyword},'%')
+			OR co_condition LIKE concat('%',#{keyword},'%')
+		</if> -->
 	</select>
 	
 	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">
@@ -132,4 +135,27 @@
 		SELECT co_no,co_name,sub_no FROM course
 	</select>
 
+	<!-- 단과 가져오기 -->
+	<select id="dangwa" resultType="com.gd.main.dto.CourseDTO">
+		<if test="sub_condition != '숨김'">
+			SELECT sub_name,sub_no,sub_condition FROM subject
+			WHERE sub_condition = '단과'
+		</if>
+	</select>
+
+	<!-- 종합 가져오기 -->
+	<select id="jonghab" resultType="com.gd.main.dto.CourseDTO">
+		<if test="sub_condition != '숨김'">
+			SELECT sub_name,sub_no,sub_condition FROM subject
+			WHERE sub_condition = '종합'
+		</if>
+	</select>
+	
+	<select id="selectSubjectCall" resultType="com.gd.main.dto.CourseDTO">
+		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
+		co_startTime, co_condition FROM course
+		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
+		WHERE subject.sub_name = #{param1}
+		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
+	</select>
 </mapper>

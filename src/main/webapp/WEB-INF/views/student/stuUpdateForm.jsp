@@ -235,16 +235,22 @@
 									        </select>
 								        </td>
 									</tr>
+									</table>
+									<table id="goodList">
+									<thead>
 									<tr>
 										<th colspan="2">과목정보</th>										
 									</tr>
-									<tr>
-										<td colspan="2"></td>				
+									<tr>																			
+											<td colspan="2" style="text-align:end;">
+												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
+												<input type="button" value="과목삭제" onclick="#"/>
+											</td>										
 									</tr>
-									<tr id="subjectDetail">
-										<th>과목</th>
-										<td><input type="text" id="sub_name" value=""/></td>
-									</tr>
+									</thead>
+									<tbody id="subjectDetail">
+										
+									</tbody>									
 									<tr>
 										<th colspan="2">
 											<input type="button" value="수정완료" onclick="stuUpdate()"/>
@@ -292,7 +298,7 @@
 	
 	
 	
-	$.ajax({
+	/* $.ajax({
 		type:'get',
 		url:'subDetail.ajax',
 		data:{},
@@ -304,8 +310,56 @@
 		error:function(error){
 			console.log(error);
 		}
-	});
+	}); */
 	
+	subListCall();
+	function subListCall(){ //controller에 list를 요청
+		$.ajax({
+			type:'get',
+			url:'stuSubDetail.ajax',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+					console.log(data);
+					console.log('테이블 그리기');
+					drawList(data.list);								
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	}
+	
+	function drawList(list){
+		var content ='';
+		console.log(Array.isArray(list));
+		list.forEach(function(item,idx){
+			console.log(item);
+			content += '<tr>';
+			content += '<th><input type="checkbox"></th>';
+			content += '<td><input type="text" id="sub_name" value='+item.sub_name+'></td>';	
+			content += '<td class="hidden"><input type="text" id="sub_no" class="subNo"/></td>';
+			content += '</tr>';
+		});
+		$('#subjectDetail').empty();
+		$('#subjectDetail').after(content);
+	}	
+	
+	/* function subSearch_pop(){
+		
+			var subtable = ""
+			subtable += '<tr>';
+			subtable += '<th><input type="checkbox"></th>';
+			subtable += '<td><input type="text" id="sub_name"/></td>';
+			subtable +='<td class="hidden"><input type="text" id="sub_no" class="subPlusNo"/></td>';
+			subtable += '</tr>';
+			
+			$('#subjectDetail').after(subtable);
+		
+		window.open("/subSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+		
+		
+	} */
 	
 	
 function stuUpdate(){
@@ -331,6 +385,11 @@ function stuUpdate(){
 		params['stu_gender'] = $('input[name="stu_gender"]:checked').val();
 		params['stu_condition'] = $('#stu_condition').val();
 		console.log(params);
+		
+		var subPlusList = [];		
+		$('.subPlusNo').each(function(idx,item){
+			subPlusList.push($(this).val());		
+		});
 		
 		
 		$.ajax({

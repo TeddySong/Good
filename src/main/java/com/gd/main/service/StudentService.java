@@ -1,6 +1,9 @@
 package com.gd.main.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -106,31 +109,66 @@ public class StudentService {
 		return map;
 	}
 
-	public HashMap<String, Object> stuRegister(HashMap<String, String> params) {
+	public HashMap<String, Object> stuRegister(HashMap<String, String> params, ArrayList<Integer> subList) throws ParseException{
 		logger.info("들어왔는지 확인");
 	      HashMap<String, Object> result=new HashMap<String, Object>();
+	      	      
+	      StuDTO dto = new StuDTO();
+	      String cliNo = params.get("cli_no");
+	      int cli_no = Integer.parseInt(cliNo);
+	      dto.setCli_no(cli_no);
+	      String empNo = params.get("emp_no");
+	      int emp_no = Integer.parseInt(empNo);
+	      dto.setEmp_no(emp_no);
+	      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	      String stuBirth = params.get("stu_birth");
+	      Date stubirth = format.parse(stuBirth);
+	      java.sql.Date stu_birth=new java.sql.Date(stubirth.getTime());
+	      dto.setStu_birth(stu_birth);
+	      String stuAge = params.get("stu_age");
+	      int stu_age = Integer.parseInt(stuAge);
+	      dto.setStu_age(stu_age);
+	      dto.setStu_gender(params.get("stu_gender"));
+	      dto.setStu_condition(params.get("stu_condition"));
 	      
-	      int row=dao.stuRegister(params);	      
+	      
+	      	      
+	      logger.info("값 들 : " + cli_no + '/' + dto.getEmp_no() + '/' + stu_birth + '/'+ stu_age + '/' + subList);
+	      
+	      int row=dao.stuRegister(dto);	
+	      int stu_no = dto.getStu_no();
+	      logger.info("방금 생성된 stu_no:" + stu_no);
 	      
 	      boolean cnt=false;
 	      if(row>0) {
-	         cnt=true;	         
+	         cnt=true;	
+	         for (Integer sub_no : subList) {
+	 			HashMap<String, Object> map = new HashMap<String, Object>();
+	 			map.put("sub_no", sub_no);
+	 			map.put("stu_no", stu_no);
+	 			dao.stuSubRegister(map);
+	 		}
 	      }
-	      result.put("success",cnt);
+	      result.put("success",cnt);	      
 	      return result;
 	}
 	
-	
+	/*
+	 * public HashMap<String, Object> stuSubRegister(ArrayList<Object> sub_no, int
+	 * stu_no) { logger.info("값들 : " + sub_no + stu_no); return null; }
+	 */
 
 	public boolean stuUpdate(HashMap<String, String> params) {
 		boolean success = false;
 		
+		logger.info("값 1차 확인 : " + params);
+		
 		int row = dao.stuUpdate(params);
 		
 		if(row>0) {
-			success = true;
-		}
-		
+			success = true;		
+	 		}
+				
 		logger.info("update success : " + success);
 		
 		return success;
@@ -175,6 +213,8 @@ public class StudentService {
 		return dao.stuName(stu_no);
 		
 	}
+
+	
 
 	
 

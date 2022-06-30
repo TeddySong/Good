@@ -106,22 +106,18 @@ function empUpdate(){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
-			/*
-			$('#emp_no').html(data.dto.emp_no);
-			$('#emp_id').html(data.dto.emp_id);
-			$('#emp_pw').html(data.dto.emp_pw);
-			$('#emp_name').html(data.dto.emp_name);
-			$('#emp_phone').html(data.dto.emp_phone);
-			$('#emp_position').html(data.dto.emp_position);
-			$('#emp_startDate').html(data.dto.emp_startDate);
-			$('#emp_endDate').html(data.dto.emp_startDate);
-			$('#emp_condition').html(data.dto.emp_position);
-			*/
+			if(data.success){
+				alert("수정이 되었습니다!");
+				location.href="empList.go";
+			} else {
+				alert("로그인이 필요한 서비스입니다.");
+				location.href='/login.go';
+			}
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});
-}
+} 
 </script>
 </html>

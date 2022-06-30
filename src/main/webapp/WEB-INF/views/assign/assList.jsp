@@ -317,23 +317,27 @@ function listCall(page){
 }
 	function drawList(assList){
 		var content="";
+		
 		assList.forEach(function(item){
+			
+			var errorDate = new Date(item.co_startDate);
+			var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");;
+			
+			console.log(nowDate);
 				content +='<tr>';
 				content +='<td>'+item.sub_name+'</td>';
 				content +='<td><a href="assCoList.go?co_name='+item.co_name+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
-				content +='<td>'+item.co_startDate+'</td>';
+				content +='<td>'+nowDate+'</td>';
 				content +='<td>'+item.cli_name+'</td>';
 				content +='<td>'+item.cli_phone+'</td>';
 				content +='<td>'+item.emp_name+'</td>';
 				content +='<td>'+item.co_condition+'</td>'; 
 				content +='<tr>';
 			});
+		
 			$('#list').empty();
 			$('#list').append(content);
-	} 
-	
-	
-	
+	}
 </script>
 </html>

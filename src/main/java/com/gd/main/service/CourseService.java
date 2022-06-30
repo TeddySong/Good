@@ -1,14 +1,11 @@
 package com.gd.main.service;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.LocalDateParser;
 import org.springframework.stereotype.Service;
 
 import com.gd.main.dao.CourseDAO;
@@ -29,18 +26,22 @@ public class CourseService {
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		
+		//String sub_no = params.get("sub_no");
+		//String sub_name = params.get("sub_name");
 		
-		String subNameSearch = params.get("subNameSearch");
+		String subName = params.get("subName");
 		String courseNameSearch = params.get("courseNameSearch");
 		String keyword = params.get("keyword");
 		String startSearch = params.get("startSearch");
 		String endSearch = params.get("endSearch");
 		
 		HashMap<String, Object> searchResult = new HashMap<String, Object>();
-		searchResult.put("subNameSearch", subNameSearch);
+		searchResult.put("subName", subName);
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
+		//searchResult.put("sub_no", sub_no);
+		//searchResult.put("sub_name", sub_name);
 		
 		//입력된 날짜가 빈값일 때
 		if(startSearch == "") {
@@ -52,7 +53,7 @@ public class CourseService {
 		
 		searchResult.put("startSearch", startSearch);
 		searchResult.put("endSearch", endSearch);
-		logger.info("subNameSearch : "+subNameSearch+" / "+
+		logger.info("subName : "+subName+" / "+
 					"courseNameSearch : "+courseNameSearch+" / "+
 					"keyword : "+keyword+" / "+
 					"startSearch : "+startSearch+" / "+
@@ -82,7 +83,8 @@ public class CourseService {
 		searchResult.put("offset", offset);
 		
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
-		//ArrayList<CourseDTO> courList = dao.courList2(cnt,offset);
+		//ArrayList<CourseDTO> selectSubjectCall = dao.selectSubjectCall(sub_no,sub_name,cnt,offset);
+		//map.put("selectSubjectCall", selectSubjectCall);
 		map.put("courList", courList);
 		
 		return map;
@@ -151,6 +153,16 @@ public class CourseService {
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);
+	}
+
+	public ArrayList<CourseDTO> dangwa() {
+		// TODO Auto-generated method stub
+		return dao.dangwa();
+	}
+
+	public ArrayList<CourseDTO> jonghab() {
+		// TODO Auto-generated method stub
+		return dao.jonghab();
 	}
 
 

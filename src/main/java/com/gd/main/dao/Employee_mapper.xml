@@ -2,17 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
+
+
 							<!-- [emp_name, emp_log_condition, emp_log_content]-->
 <!-- 직원일지 등록 --> <!-- db에서 가져와야하는것:emp_no을 통해 직원테이블의 직원명,작성사유,히스토리-->
-	<insert id="empLogRegister" parameterType='hashmap'>
+<!-- 	<insert id="empLogRegister" parameterType='hashmap'>
 		INSERT INTO student_log (stu_no, emp_no, stu_log_content)
 		VALUES (#{stu_no}, #{emp_no}, #{stu_log_content})
-	</insert>
+	</insert> -->
 
 
 
 
-<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO">
+<select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO" >
 	<!-- 직원일지 호출 -->
 	SELECT 
 		e.emp_name,
@@ -59,13 +61,45 @@
 	</insert>
  
 	<!-- 직원목록 보기 -->
-	<select id="list" resultType="com.gd.main.dto.EmployeeDTO">
+	<select id="empList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
 		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate, emp_endDate FROM employee
-		ORDER BY emp_no ASC limit #{param1} offset #{param2}
+	<where>
+				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
+					<if test="empSearchCategory.equals('emp_name')">
+						emp_name = #{empSearchContent}
+					</if>
+					<if test="empSearchCategory.equals('emp_phone')">
+						emp_phone = #{empSearchContent}
+					</if>
+					<if test="empSearchCategory.equals('emp_position')">
+						emp_position = #{empSearchContent}
+					</if>
+					<if test="empSearchCategory.equals('emp_condition')">
+						emp_condition = #{empSearchContent}
+					</if>
+		</if>
+	</where>	
+		ORDER BY emp_no ASC limit #{cnt} OFFSET #{offset}
 	</select>
 	
-	<select id="allCount" resultType="int">
+	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO">
 		SELECT COUNT(emp_no) FROM employee
+				<where>
+					<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
+						<if test="empSearchCategory.equals('emp_name')">
+							emp_name = #{empSearchContent}
+						</if>
+						<if test="empSearchCategory.equals('emp_phone')">
+							emp_phone = #{empSearchContent}
+						</if>
+						<if test="empSearchCategory.equals('emp_position')">
+							emp_position = #{empSearchContent}
+						</if>
+						<if test="empSearchCategory.equals('emp_condition')">
+							emp_condition = #{empSearchContent}
+						</if>
+					</if>
+		</where>	
 	</select>
 
 	<select id="empOverlay" parameterType="String" resultType="String">

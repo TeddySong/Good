@@ -78,7 +78,7 @@ ${empName}
 	<button onclick="empLogBack()">목록</button>
 	</div>
 	<div style="text-align:center; float:right;">
-	<input type="button" value="등록" onclick="location.href='/empLogRegister.go?emp_no=${emp_no}'" >
+	<input type="button" value="등록" onclick="location.href='/empLogRegister.go?emp_no=${emp_no}'" >   <!-- 이게맞나 ? -->
 <!-- 	<button onclick="empLogRegister()">등록</button> -->
 	</div>
 	<br>

@@ -6,11 +6,10 @@
 <!-- 과정전체 배정리스트 -->
 <select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
 
-	select sub_name
-	       , c2.co_name
+	
+	select c2.co_name
 	       , c2.co_startTime
 	       , c2.co_startDate
-	       , s.stu_no
 	       , c.cli_name
 	       , c.cli_phone
 	       , e.emp_name
@@ -71,13 +70,9 @@
 </select>
 
 <select id="assStuCoList" resultType="hashmap" >
-select cli_name, sub_name, c2.co_name,c2.co_startDate ,c2.co_endDate ,c2.co_startTime, a.ass_condition 
-	from rsub r ,student s ,client c ,subject s2,course c2 ,assign a
-	where s.cli_no = c.cli_no 
-	 and s2.sub_no = r.sub_no 
-	 and r.stu_no = s.stu_no 
-	 and c2.co_no = a.co_no 
-	 and r.stu_no = #{param2}
+
+select cli_name , co_name ,co_startDate,co_endDate,co_startTime,ass_condition from assign a,student s ,client c ,course c2 
+	where a.stu_no = s.stu_no and s.cli_no = c.cli_no and c2.co_no = a.co_no;
  		
 
 

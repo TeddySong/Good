@@ -188,7 +188,6 @@
 <div>
 <input type="hidden" id="sub_no"  value=""/>
 <select id='sub_name'>
-	<option value='과목명' selected>과목명</option>
 </select>
 <input type="radio" name="sub_condition" value="단과"/>단과
 <input type="radio" name="sub_condition" value="종합"/>종합

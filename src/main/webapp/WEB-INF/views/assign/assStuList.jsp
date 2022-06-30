@@ -195,24 +195,24 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr> -->
 										<tr>
-											<h3>과정 상세정보</h3>
-											<tr>
-										<th>학생명</th>
-											<td id="cli_name"><input type="text"  />${cli_name}</td>
-											<td>
-												<button id="cli_nameSearch">검색</button>
-												<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
-											</td>
-										</tr>
+											<h3>과정 상세정보</h3>		
+											<th>학생명</th>
+												<td><input type="text" id=cli_name value="">${cli_name}</td>
+												<td>
+													<button id="cli_nameSearch" onclick="">검색</button>
+													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
+												</td>
+												<td id ="coSearch"  colspan="3" >
+													<button onclick="coSearch_pop()">과정검색</button></td>
+												</td>
 										</tr>
 										<tr>
-											<th>과목명</th>
 											<th>과정명</th>
 											<th>개강일</th>
 											<th>종강일</th>
 											<th>강의시간</th>														
 											<th>수강상태</th>
-											<th>검색</th>
+											
 										</tr>
 									</thead>
 									<tbody id="assStuCoList">
@@ -274,14 +274,15 @@ function listCall(page){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
+			
 			drawList(data.assStuCoList);
-		/* 	$('#cli_name').html(data.dto.cli_name);
-			$('#sub_name').html(data.dto.sub_name);
+		 	//$('#cli_name').html(data.dto.cli_name);
+			/* $('#sub_name').html(data.dto.sub_name);
 			$('#co_name').html(data.dto.co_name);
 			$('#co_startDate').html(data.dto.co_startDate);
 			$('#co_endDate').html(data.dto.co_endDate);
 			$('#co_startTime').html(data.dto.co_startTime);
-			$('#ass_condition').html(data.dto.ass_condition); */
+			$('#ass_condition').html(data.dto.ass_condition);  */
 			 
 			
 		},
@@ -311,30 +312,43 @@ function listCall(page){
 
 
 
+
+
  function drawList(assStuCoList){
+	var cliName=assStuCoList.slice(0);
+	var pop = cliName.pop();
+	console.log(pop.cli_name);
 	var content="";
+
 	assStuCoList.forEach(function(item){
+		
+		var startErrorDate = new Date(item.co_startDate).toLocaleDateString("ko-kr");
+		//var startnowDate = new Date(startErrorDate.setDate(startErrorDate.getDate()).toLocaleDateString("ko-kr");
+		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
+		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		content += '<tr>';
-		content += '<td>'+item.sub_name+'</td>';
-		content += '<td>'+item.co_name+'</a></td>';		
-		content += '<td>'+item.co_startDate+'</td>';
-		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+item.co_name+'</td>';		
+		content += '<td>'+startErrorDate+'</td>';
+		content += '<td>'+endErrorDate+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';
-		content += '<td>'+item.ass_condition+'<select id=\"coCondition\">';
+		content += '<td><select id=\"coCondition\">';
 		content +=	'<option value='+item.ass_condition+'>재학</option>';
 		content +=	'<option value='+item.ass_condition+'>대기</option>';
 		content +=	'<option value='+item.ass_condition+'>철회</option>';
 		content +=	'<option value='+item.ass_condition+'>수료</option>';
 		content +='</td>';
-		content +='<td id = \"coSearch\"><button>검색</button></td>'
-		content += '</tr>'; 
+		content += '</tr>';
 	});
+	$('#cli_name').val(pop.cli_name);
 	$('#assStuCoList').empty();
 	$('#assStuCoList').append(content);
-	
 } 
-	
-	
+
+function coSearch_pop(){
+	window.open("/coSearList.go","new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+
+}
+
 	
 </script>
 </html>

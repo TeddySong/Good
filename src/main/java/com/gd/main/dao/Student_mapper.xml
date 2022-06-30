@@ -94,7 +94,7 @@
 		WHERE r.stu_no = #{stu_no}
 	</select>
 	
-	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='com.gd.main.dto.StuDTO'>
+	<insert id="stuRegister" useGeneratedKeys="true" keyColumn="stu_no" keyProperty="stu_no"  parameterType='hashmap'>
 		INSERT INTO student (cli_no, emp_no, stu_birth, stu_age, stu_gender, stu_condition)
 		VALUES (#{cli_no}, #{emp_no}, #{stu_birth}, #{stu_age}, #{stu_gender}, #{stu_condition})
 	</insert>
@@ -131,9 +131,18 @@
 		WHERE stu_no = #{param1}
 	</select>
 	
-	<insert id="stuSubRegister" parameterType='hashmap'>
+	<!-- <insert id="stuSubRegister" parameterType='hashmap'>
 		INSERT INTO rSub(stu_no, sub_no)
 		VALUES (#{stu_no}, #{sub_no})
-	</insert>
+	</insert> -->
+	
+	<select id="stuWantSubSearch" parameterType="hashmap" resultType="com.gd.main.dto.StuDTO">
+		SELECT  s.sub_name FROM subject s
+		left join qsub q on q.sub_no  = s.sub_no 
+		left join client c on q.cli_no= c.cli_no
+		where c.cli_no =#{cli_no};	
+		</select>
+	
+	
 	
 </mapper>

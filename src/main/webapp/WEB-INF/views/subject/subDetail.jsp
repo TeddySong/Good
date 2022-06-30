@@ -267,5 +267,11 @@
 		var sub_no = $('#sub_no').html();
 		location.href='subUpdate.go?sub_no='+sub_no;
 	}
+	
+	var msg = "${msg}";
+	if(msg !=""){
+		alert(msg);
+		location.href='/';
+	}
 </script>
 </html>

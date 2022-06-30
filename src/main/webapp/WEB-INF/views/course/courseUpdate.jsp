@@ -12,6 +12,7 @@
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script> 
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 	<script type="text/javascript" src="resources/JS/course/jquery.twbsPagination.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <style>
 	body{
 		font-family: 'Noto Sans KR', sans-serif;
@@ -197,12 +198,14 @@
                                 수강생등록
                             </div>
     <!--표-->
-	<form action="courseUpdate.do" method="post">
+	<!-- <form action="courseUpdate.do" method="post"> -->
 		<table id="goodList">
 	
 			<tr>
 				<th>과정번호</th>
-				<td colspan="3" name="co_no">${dto.co_no}</td>
+				<td colspan="3">
+					<input type="text" id="co_no" value="" readonly/>
+				</td>
 			</tr>
 			<!-- 여기 안넣으면 과정명이 같이 안넘어옴 -->
 	        <tr>
@@ -210,16 +213,15 @@
 	            	<!-- <input type="hidden" id="co_no" /> -->
 	            </th>
 	            <td colspan="3" >
-	            	<input type="hidden" name="co_no" value="${dto.co_no}"/>
-	            	<input type="text" name="co_name" value="${dto.co_name}"/>
+	            	<input type="text" id="co_name" value=""/>
 	            	<button onclick="courOverlay()">중복</button>
 	            </td>
 			</tr>
 	        <tr>
 	           <th>과목</th>
 	            <td colspan="3">
-					<select name="sub_no">
-				         <option>과목명</option>
+					<select id="sub_no">
+				         <option value="과목명">과목명</option>
 				         <c:forEach items="${subName}" var="subName">
 				         		<option id="sub_no" value="${subName.sub_no}" <c:if test="${dto.sub_no eq subName.sub_no}">selected</c:if>>${subName.sub_name}</option>
 				         </c:forEach>
@@ -229,17 +231,17 @@
 	        <tr>
 	            <th>개강일</th>
 	            <td>
-	            	<input type="date" name="co_startDate" value="${dto.co_startDate}" min="2022-06-01" max="2100-06-01"/>
+	            	<input type="date" id="co_startDate" value="" min="2022-06-01" max="2100-06-01"/>
 	            </td>
 	            <th>종강일</th>
 	            <td>
-	            	<input type="date" name="co_endDate" value="${dto.co_endDate}" min="2022-06-01" max="2100-06-01"/>
+	            	<input type="date" id="co_endDate" value="" min="2022-06-01" max="2100-06-01"/>
 	            </td>
 	        </tr>
 	        <tr>
 	            <th>수업시작시간</th>
 	            <td>
-	            	<select name="co_startTime" value="${dto.co_startTime}">
+	            	<select id="co_startTime" value="">
 	            		<option value="09:00">09:00</option>
 	            		<option value="11:00">11:00</option>
 	            		<option value="13:00">13:00</option>
@@ -249,7 +251,7 @@
 	            </td>
 	            <th>수업종료시간</th>
 	            <td>
-	            	<select name="co_endTime" value="${dto.co_endTime}">
+	            	<select id="co_endTime" value="">
 	            		<option value="18:00">18:00</option>
 	            		<option value="19:00">19:00</option>
 	            		<option value="20:00">20:00</option>
@@ -261,12 +263,12 @@
 	        <tr>
 	            <th>수강정원</th>
 	            <td>
-	            	<input type="text" name="co_capacity" value="${dto.co_capacity}"/>
+	            	<input type="text" id="co_capacity" value=""/>
 	            	<button onclick="location.href='배정상세보기'">자세히</button>
 	            </td>
 	            <th>진행상황</th>
 	            <td>
-	            	<select name="co_condition" value="${dto.co_condition}">
+	            	<select id="co_condition" value="">
 	            		<option value="모집중">모집중</option>
 	            		<option value="모집 마감">모집 마감</option>
 	            		<option value="폐강">폐강</option>
@@ -277,13 +279,13 @@
 	        </tr> 
 	        <tr>
 	        	<th colspan="4">
-	        	<input type="submit" class="goodRegister" value="완료"/>
+	        	<input type="button" class="goodRegister" value="완료" onclick="courUpdate()"/>
 	   		 <input type="button" value="취소" onclick="location.href='courList.go'"/>
 	        	</th>
 	        </tr>     
 		</table>
 	    
-      </form>
+      <!-- </form> -->
 </div>
                     </div>
                 </main>
@@ -296,14 +298,11 @@
 
 </body>
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
+
 
 
 console.log($("select[name='sub_no']").val());
-jQuery
+
 
 $("select[name=location]").change(function(){
   console.log($(this).val()); //value값 가져오기
@@ -313,6 +312,43 @@ $("select[name=location]").change(function(){
 //console.log($('#co_name').val());
 //console.log($('#sub_no').val());
 //console.log($('#sub_name').val());
+
+
+//작성내용 불러오기
+$.ajax({
+	type: 'get',
+	url: 'courDetail.ajax',
+	data:{},
+	dataType:'json',
+	success:function(data){
+				
+		console.log(data);	
+		$('#co_no').val(data.dto.co_no);
+		$('#co_name').val(data.dto.co_name);
+		$('#sub_no').val(data.dto.sub_no);
+		$('#sub_name').val(data.dto.sub_name);
+		
+		//var date = new Date(data.dto.co_startDate);
+		//$('#co_startDate').val(date.toLocaleDateString("ko-KR"));
+		//$('#co_startDate').val(date.toLocaleDateString("ko-KR"));
+		$('#co_startDate').val(moment(data.dto.co_startDate).format("YYYY-MM-DD"));
+		$('#co_endDate').val(moment(data.dto.co_endtDate).format("YYYY-MM-DD"));
+		
+		//var date = new Date(data.dto.co_endDate);
+		//$('#co_endDate').val(date.toLocaleDateString("ko-KR"));
+		
+		$('#co_startTime').val(data.dto.co_startTime);
+		$('#co_endTime').val(data.dto.co_endTime);
+		$('#co_capacity').val(data.dto.co_capacity);
+		$('#co_condition').val(data.dto.co_condition);
+		
+		
+	},
+	error:function(e){
+		console.log(e);
+	}
+});
+
 
 
 //중복체크
@@ -339,8 +375,70 @@ function courOverlay(){
 }
 
 
+//저장
+function courUpdate(){
+	var $co_name = $('#co_name');
+	var $sub_no = $('#sub_no');
+	//var $sub_name = $('#sub_name');
+	var $co_startDate = $('#co_startDate');
+	var $co_endDate = $('#co_endDate');
+	var $co_startTime = $('#co_startTime');
+	var $co_endTime = $('#co_endTime');
+	var $co_capacity = $('#co_capacity');
+	var $co_condition = $('#co_condition');
+	
+	$.ajax({
+		type:'post',
+		url:'courUpdate.ajax',
+		data:{
+			co_name : co_name,
+			sub_no : sub_no,
+			co_startDate : co_startDate,
+			co_endDate : co_endDate,
+			co_startTime : co_startTime,
+			co_endTime : co_endTime,
+			co_capacity : co_capacity,
+			co_condition : co_condition
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			if(data.success){
+				location.href="/courDetail.do?co_no="+$("#sub_no").val();
+			} else {
+				alert("과정 수정에 실패했습니다.");
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
 
 
+/* $('.goodRegister').on('click',function(){
+	if($("select[name='sub_no'] option:selected").val() == '과목명'){
+		alert('과목명을 선택해주세요.');
+		//location.href='/courUpdateForm.do?co_no=${dto.co_no}';
+	}
+}); */
+
+
+//날짜변환
+function formatDate(date) {
+    
+    var d = new Date(date),
+    
+    month = '' + (d.getMonth() + 1) , 
+    day = '' + d.getDate(), 
+    year = d.getFullYear();
+    
+    if (month.length < 2) month = '0' + month; 
+    if (day.length < 2) day = '0' + day; 
+    
+    return [year, month, day].join('-');
+    
+    }
 
 </script>
 </html>

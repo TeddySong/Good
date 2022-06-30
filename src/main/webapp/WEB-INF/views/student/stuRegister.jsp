@@ -256,7 +256,7 @@
 									</tbody>									
 									<tr>
 										<th colspan="2">
-											<input type="button" value="등록완료" onclick="stuUpdate()"/>
+											<input type="button" value="등록완료" onclick="stuRegister()"/>
 											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
 									</tr>									

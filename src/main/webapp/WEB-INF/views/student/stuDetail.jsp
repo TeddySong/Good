@@ -237,7 +237,7 @@
 									<table id="goodList">
 									<thead>
 										<tr>
-											<th style="font-size:30px;">등록 과목</th>
+											<th style="font-size:30px;">희망과목</th>
 										</tr>
 									</thead>
 									<tbody id="list">
@@ -273,6 +273,7 @@
 		dataType:'JSON',
 		success:function(data){
 			 console.log(data);
+			 $('#cli_no').html(data.dto.cli_no);
 			$('#stu_no').html(data.dto.stu_no);
 			$('#cli_name').html(data.dto.cli_name);			
 			$('#cli_phone').html(data.dto.cli_phone);
@@ -282,12 +283,44 @@
 			$('#stu_gender').html(data.dto.stu_gender);			
 			$('#stu_condition').html(data.dto.stu_condition);
 			
+			subSearch(data.dto.cli_no);
 			
 		},
 		error:function(error){
 			console.log(error);
 		}
 	});
+	
+	
+	function subSearch(cli_no){
+		console.log(cli_no);
+		
+		$.ajax({
+			url:'stuWantSubSearch.ajax',			
+			type:'get',
+			data:{cli_no:cli_no},
+			dataType:'json',
+			success:function(data){
+				console.log(data);		
+				 drawSub(data.list);				 
+			},
+			error:function(e){}
+			
+		});
+	}
+	
+	
+	function drawSub(list){
+		console.log(list);
+		var content='';
+		list.forEach(function(item){
+			 content += '<tr>';			 
+			 content += '<td>'+item.sub_name +'</td>';
+			 content += '</tr>';
+		 });
+		$('#list').empty();
+		$('#list').append(content);
+	}
 	
 	
 	/* $.ajax({
@@ -304,7 +337,7 @@
 		}
 	}); */
 	
-	subListCall();
+	/* subListCall();
 	function subListCall(){ //controller에 list를 요청
 		$.ajax({
 			type:'get',
@@ -333,7 +366,7 @@
 		});
 		$('#list').empty();
 		$('#list').append(content);
-	}
+	} */
 	
 	
 	function stuUpdate(){

@@ -328,11 +328,17 @@ function subUpdate(){
 				processData: false,
 				dataType:'JSON',
 				success:function(data){
-					if(data){
-						alert("과목수정 성공");
-						location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+					
+					if(!data.login){
+						alert("로그인이 필요한 서비스 입니다.");
+						location.href='/';
 					}else{
-						alert("과목수정 실패");
+						if(data.success){
+							alert("과목수정 성공");
+							location.href='/subDetail.do?sub_no=' + $("#sub_no").val();
+						}else{
+							alert("과목수정 실패");
+						}
 					}
 				},
 				error:function(e){

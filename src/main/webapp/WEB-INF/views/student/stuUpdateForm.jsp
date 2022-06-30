@@ -195,17 +195,19 @@
 										<th>직원번호</th>
 										<td id="stu_no"></td>
 									</tr>
-									<tr>
-										<th>이름</th>										
-										<td id="cli_name"></td>
+									<th>이름</th>
+										<td><input type="text" id="cli_name" readonly placeholder="수정버튼을 눌러주세요"/>
+										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:18%;">고객수정</button>
+										</td>
 									</tr>
 									<tr>
 										<th>연락처</th>
-										<td id="cli_phone"></td>
+										<td><input type="text" id="cli_phone" readonly/></td>
 									</tr>
+									
 									<tr>
 										<th>담당직원</th>
-										<td id="emp_name"></td>
+										<td><input type="text" id="emp_name" readonly/></td>
 									</tr>
 									<tr>
 										<th>생년월일</th>
@@ -279,9 +281,9 @@
 			 $('#cli_no').html(data.dto.cli_no);
 			 $('#emp_no').html(data.dto.emp_no); 
 			$('#stu_no').html(data.dto.stu_no);
-			$('#cli_name').html(data.dto.cli_name);			
-			$('#cli_phone').html(data.dto.cli_phone);
-			$('#emp_name').html(data.dto.emp_name);
+			$('#cli_name').val(data.dto.cli_name);			
+			$('#cli_phone').val(data.dto.cli_phone);
+			$('#emp_name').val(data.dto.emp_name);
 			$('#stu_birth').val(data.dto.stu_birth);
 			$('#stu_age').val(data.dto.stu_age);
 			$('#stu_gender').val(data.dto.stu_gender);			
@@ -345,6 +347,10 @@
 		
 		$('#stu_age').val(year - age + 1);
 	}
+	
+	function cliSearch_pop(){	
+		 window.open("/cliUpdate.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+		}
 	
 	
 	/* $.ajax({

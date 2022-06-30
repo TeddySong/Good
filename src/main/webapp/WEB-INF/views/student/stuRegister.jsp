@@ -216,18 +216,18 @@
 									</tr>								
 									<tr>
 										<th>이름</th>
-										<td><input type="text" id="cli_name"/>
+										<td><input type="text" id="cli_name" readonly placeholder="검색버튼을 눌러주세요"/>
 										<button onclick="cliSearch_pop()" class="goodRegister" style="width:18%;">고객검색</button>
 										</td>
 									</tr>
 									<tr>
 										<th>연락처</th>
-										<td><input type="text" id="cli_phone"/></td>
+										<td><input type="text" id="cli_phone" readonly/></td>
 									</tr>
 									
 									<tr>
 										<th>담당직원</th>
-										<td><input type="text" id="emp_name"/></td>
+										<td><input type="text" id="emp_name" readonly/></td>
 									</tr>
 									<tr>
 										<th>생년월일</th>

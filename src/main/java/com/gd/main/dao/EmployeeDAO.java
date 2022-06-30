@@ -7,22 +7,23 @@ import com.gd.main.dto.EmployeeDTO;
 
 public interface EmployeeDAO {
 
+	//직원일지 리스트
+	 ArrayList<EmployeeDTO> empLogList(String emp_no);
+	//
+	 ArrayList<EmployeeDTO> empList(HashMap<String, Object> map);
 
-	ArrayList<EmployeeDTO> empLogList(int emp_no);
-	
+	ArrayList<EmployeeDTO> allCount(HashMap<String, Object> map);
+		
+	/* int allCount(); */
 
-	int allCount();
-
-	ArrayList<EmployeeDTO> list(int cnt, int offset);
+	/* ArrayList<EmployeeDTO> list(int cnt, int offset); */
 
 	String empOverlay(String chkName);
 
-
-	
 	EmployeeDTO selectEmpMyInfo(int emp_no);
 
 
-	String empName(int emp_no);
+	String empName(String emp_no);
 	
 	//직원일지 추가하기
 	int empLogRegister(HashMap<String, String> params);
@@ -34,6 +35,12 @@ public interface EmployeeDAO {
 
 
 	int empRegister(HashMap<String, Object> params);
+
+
+
+
+	
+
 
 
 }

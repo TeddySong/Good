@@ -145,7 +145,20 @@ public class AssignController {
 	 return service.assStuCoList(params,stu_no);
 	 }
 	
-	
+	  @RequestMapping("/coSearList.go")
+		public String coSear(HttpSession session, Model model) {
+			
+			 String page = "home";
+			 if(session.getAttribute("loginId") != null) {
+					
+				//session.setAttribute("stu_no", stu_no); 	
+			
+				page = "./assign/coSearList";
+			 }
+			
+			
+			return page;
+		}
 
 
 }

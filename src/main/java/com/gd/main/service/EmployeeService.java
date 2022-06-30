@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gd.main.dao.EmployeeDAO;
 import com.gd.main.dto.EmployeeDTO;
-import com.gd.main.dto.StuDTO;
+
 
 
 @Service
@@ -41,12 +41,20 @@ public class EmployeeService {
 
 
 	
-	//직원일지 리스트
+	//직원일지 리스트 
 	public ArrayList<EmployeeDTO> empLogList(String emp_no){
 		logger.info("리스트 서비스 요청");
 		logger.info("받아온 넘버 : " + emp_no);		
 		return dao.empLogList(emp_no);
 	}
+	
+		/*
+	*직원일지 임시생성 public HashMap<String, Object> empLogList(HashMap<String, String>
+	 * params) { logger.info("직원일지 서비스 요청);" logger.info("받아온 넘버 : "); return null;
+	 * }
+	 */
+
+	
 	
 	//직원일지 상단에 직원명 가져오기 
 	public String empName(String emp_no) {
@@ -143,6 +151,8 @@ public class EmployeeService {
 		/* result.put("success",success); */
 		return success;
 	}
+
+
 
 
 

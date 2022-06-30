@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="ko">
 <head>
 	<meta charset="utf-8" />
@@ -246,7 +247,7 @@
 		<tbody id="list">
 			<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
 				<tr>  
-				<td>${employee_log.emp_log_date}</td> <!-- 작성일-->
+				<td><fmt:formatDate value="${employee_log.emp_log_date}"  pattern="yyyy-MM-dd" /></td> <!-- 작성일-->
 					<td>${employee_log.emp_name}</td> 			<!-- 작성자 -->
 					<td>${employee_log.emp_no}</td> 	 
 					<td>${employee_log.emp_log_condition}</td>	 <!--  작성사유 -->

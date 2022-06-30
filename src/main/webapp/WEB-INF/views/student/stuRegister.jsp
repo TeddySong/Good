@@ -319,12 +319,14 @@ function birthList(){
 
     // 월별 selectbox 만들기            
     for(var i=1; i <= 12; i++) {                    
-        $('#stuMonth').append('<option value="' + i + '">' + i + '</option>');    
+    	var mm = i > 9 ? i : "0"+i ;            
+        $('#stuMonth').append('<option value="' + mm + '">' + mm + '</option>');            
     }
     
     // 일별 selectbox 만들기
     for(var i=1; i <= 31; i++) {                    
-        $('#stuDay').append('<option value="' + i + '">' + i+ '</option>');    
+    	var dd = i > 9 ? i : "0"+i ;            
+        $('#stuDay').append('<option value="' + dd + '">' + dd+ '</option>');      
     }
     $("#stuYear  > option[value="+year+"]").attr("selected", "true");        
     $("#stuMonth  > option[value="+mon+"]").attr("selected", "true");    

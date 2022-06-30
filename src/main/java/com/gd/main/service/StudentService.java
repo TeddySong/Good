@@ -173,6 +173,12 @@ public class StudentService {
 	  false;
 	  
 	  logger.info("값 1차 확인 : " + params);
+	  String stu_birth_year = params.get("stu_birth_year");
+		String stu_birth_month = params.get("stu_birth_month");
+		String stu_birth_day = params.get("stu_birth_day");
+		
+		String stu_birth = stu_birth_year + '-' + stu_birth_month + '-' + stu_birth_day;
+		params.put("stu_birth", stu_birth);
 	  
 	  int row = dao.stuUpdate(params);
 	  
@@ -180,7 +186,8 @@ public class StudentService {
 	  
 	  logger.info("update success : " + success);
 	  
-	  return success; }
+	  return success; 
+	  }
 	 
 
 	/*

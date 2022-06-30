@@ -404,7 +404,7 @@ function courseSearch(page){
 		 },
 		dataType:'json',
 		success:function(data){
-			//console.log(data);
+			console.log(data);
 			drawList(data.courList);
 			currPage = data.currPage;
 			

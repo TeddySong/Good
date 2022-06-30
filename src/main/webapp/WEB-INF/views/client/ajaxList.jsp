@@ -230,12 +230,9 @@ function searchClick(page){
 		
 	let searchType =$('select[name=searchType]').val();
 	let keyword = $('input[name=keyword]').val();
-	//location.href="listPageSearch?"+"searchType="+searchType+"&" +"keyword="+keyword;
 	
-	/* console.log("ㅋㅇㄷ"+keyword);
-	console.log("ㅅㅊ"+searchType);
-	console.log("ㅍㅇㅈ"+page);
-	console.log("페이퍼넘"+pagePerNum); */
+	
+
 	$.ajax({
 		type:'get',
 		url:'cliSearch.ajax',
@@ -339,7 +336,6 @@ function subSearch(){
 
 function drawList(list){
 
-	
 	var content = '';
 	list.forEach(function(item){
 		
@@ -404,6 +400,11 @@ function del(){
 			chkArr.push($(this).val());		
 		}); // foreach는 js함수 each는 jQuery()
 	//	console.log(chkArr);
+		console.log(chkArr);
+		if(chkArr.length==0){
+			alert('삭제할 고객을 체크해주세요');
+			return false; 
+		}else{
 		
 		$.ajax({
 			type:'get',
@@ -426,6 +427,8 @@ function del(){
 			}
 			
 		});
+		
+		}
 }
 
 

@@ -9,14 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gd.main.dao.ClientDAO;
+import com.gd.main.dao.SubjectDAO;
 import com.gd.main.dto.Client_Dto;
+import com.gd.main.dto.SubDTO;
 
 
 @Service
 public class ClientService {
 	 Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ClientDAO dao;
-	
+	@Autowired SubjectDAO subDao;
 	
 //	public ArrayList<Client_Dto> W() {
 //		return dao.list_Client();
@@ -300,6 +302,6 @@ public class ClientService {
 
 
 
-	
+
 	
 }

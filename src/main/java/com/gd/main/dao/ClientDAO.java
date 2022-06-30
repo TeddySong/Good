@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.gd.main.dto.Client_Dto;
+import com.gd.main.dto.SubDTO;
 
 public interface ClientDAO {
 

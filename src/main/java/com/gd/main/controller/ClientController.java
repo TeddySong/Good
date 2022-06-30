@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.main.dto.Client_Dto;
-
+import com.gd.main.dto.SubDTO;
 import com.gd.main.service.ClientService;
+import com.gd.main.service.SubjectService;
 
 @Controller
 public class ClientController {
 	 Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired ClientService service; 
-	
+	@Autowired SubjectService subService;
 
 	
 //	@RequestMapping("/listSearch")
@@ -269,5 +270,53 @@ public class ClientController {
 		
 		return service.checkListDo(params);
 	}
+	
+	
+	@RequestMapping("/firstRegister.go")
+	public String firstReg() {
+		return "client/firstRegister";
+	}
+	
+	
+	@RequestMapping("/homeSubDetail.do")
+	public String detailPage(@RequestParam String sub_no, HttpSession session, Model model) {
+		logger.info("상세보기 페이지 이동 : " +sub_no);
+		session.setAttribute("sub_no", sub_no);
+		
+		SubDTO subDetail = subService.subDetail(sub_no);
+		ArrayList<SubDTO> srcList = subService.subDetailsc(sub_no);
+		ArrayList<SubDTO> photoList = subService.subCurriDetail(sub_no);
+		ArrayList<SubDTO> subImgList = subService.subImgDetail(sub_no);
+		
+		
+		
+		model.addAttribute("subDetail", subDetail);
+		model.addAttribute("srcList", srcList);
+		model.addAttribute("photoList", photoList);
+		model.addAttribute("subImgList", subImgList);
+		return "./client/homeSubDetail";
+	}
+	
+	
+	
+	@RequestMapping("/homeSubDetail2.do")
+	public String detailPage2(@RequestParam String sub_no, HttpSession session, Model model) {
+		logger.info("상세보기 페이지 이동 : " +sub_no);
+		session.setAttribute("sub_no", sub_no);
+		
+		SubDTO subDetail = subService.subDetail(sub_no);
+		ArrayList<SubDTO> srcList = subService.subDetailsc(sub_no);
+		ArrayList<SubDTO> photoList = subService.subCurriDetail(sub_no);
+		ArrayList<SubDTO> subImgList = subService.subImgDetail(sub_no);
+		
+		
+		
+		model.addAttribute("subDetail", subDetail);
+		model.addAttribute("srcList", srcList);
+		model.addAttribute("photoList", photoList);
+		model.addAttribute("subImgList", subImgList);
+		return "./client/homeSubDetail2";
+	}
+	
 	
 }

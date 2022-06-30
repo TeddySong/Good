@@ -236,8 +236,9 @@
         </tr>
         <tr>
         	<th colspan="4">
-        	<input type="button" value="수정" onclick="location.href='courUpdateForm.do?co_no=${dto.co_no}'"/>
-    <input type="button" value="목록" onclick="location.href='courList.go'"/>
+        	<%-- <input type="button" value="수정" onclick="location.href='courUpdateForm.do?co_no=${dto.co_no}'"/> --%>
+        	<input type="button" value="수정" onclick="courUpdateForm()"/>
+   			 <input type="button" value="목록" onclick="location.href='courList.go'"/>
         	</th>
         </tr>
 	</table>
@@ -256,11 +257,12 @@
 </body>
 <script>
 //수정 -> 수정 페이지 이동 -> 상세정보 요청 -> 가져온 상세정보 input에 뿌려주기
-/* function courUpdateForm(){
+ 
+ function courUpdateForm(){
 	var co_no = $('#co_no').html();
 	console.log(co_no);
 	location.href="courUpdate.go?co_no="+co_no;
-} */
+} 
 
 
 

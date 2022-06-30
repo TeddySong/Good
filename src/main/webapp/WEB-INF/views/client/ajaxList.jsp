@@ -45,22 +45,22 @@
 	</select>
 		
 	<input type="text" name="keyword" />
-	<button type="button" id="searchBtn">검색</button>
+	<button type="button" id="searchBtn" onclick="searchClick()">검색</button>
 	<br>
 </div>
 <div>	
-	<button type="button">상담일정확인</button>
+	<button type="button" onclick="calChk()">상담일정확인</button>
 	<button type="button" id="regOpenBtn">등록</button>
 	<button type="button" onclick="del()" >삭제</button>
 </div>
 
-	게시물 갯수
-	<select id="pagePerNum">
+	
+<!-- 	<select id="pagePerNum">
 		<option value="5">5</option>
 		<option value="10">10</option>
 		<option value="15">15</option>
 		<option value="20">20</option>
-	</select>
+	</select> -->
 	
 	<div  >
 	<table id="colist" height="200px"  width="500px" width="60%" class="table table-striped">
@@ -71,7 +71,7 @@
 				<th>고객명</th>
 				<th>연락처</th>
 
-				<th>상담요청시간</th>
+				<th>상담신청시간</th>
 				<th>담당자</th>
 				<th>상담결과</th>
 			</tr>
@@ -103,7 +103,7 @@
 			</td>
 		</tr>
 	<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="myModal" class="modal fade" role="dialog" data-backdrop="static">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -121,7 +121,7 @@
         	</tr>
         	<tr>
         		<th>연락처</th>
-        		<td><input type="text" id="cli_phone" /></td>
+        		<td><input type="text" id="cli_phone" oninput="autoHyphen(this)" maxlength="13" /></td>
         	</tr>
         	<tr>
         		<th colspan="2">
@@ -136,7 +136,7 @@
         	<tr><th colspan="2">상담요청내용</th></tr>
         	<tr>
         		<td colspan="2">
-		        	<textarea id="req_content" placeholder="내용을 입력해 주세요"></textarea>
+		        	<textarea id="req_content" placeholder="내용을 입력해 주세요 (500자 이내)"></textarea>
         		</td>
         	</tr>
         </table>
@@ -155,33 +155,28 @@
 
  var currPage = 1;
 
+ 
 listCall(currPage); 
 
-$('#pagePerNum').on('change',function(){	
+/* $('#pagePerNum').on('change',function(){	
 	console.log('currPage : '+currPage);
 
 	$("#pagination").twbsPagination('destroy');
 	listCall(currPage);
 	
-});
+}); */
 
 function listCall(page){
-	
+	 var pagePerNum=5;
 
-
-	var pagePerNum=$('#pagePerNum').val();
-
-	
-		
 	$.ajax({
 		type:'GET',
-		url:'clisearch.ajax',
-	
+		url:'cliSearch.ajax',
+		
 		data:{
 			
 			cnt:pagePerNum,
-			page:currPage,
-			
+			page:currPage
 		},
 		dataType:'json',
 		success:function(data){
@@ -194,18 +189,18 @@ function listCall(page){
 			$("#pagination").twbsPagination({
 				startPage:data.currPage, //시작 페이지
 				totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, //한번에 보여줄 페이지 수 [1][2][3][4][5]
-			
+				visiblePages: 5 ,//한번에 보여줄 게시글 수. 
 				
 				onPageClick:function(e,page){
 					//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
-					console.log(page);//사용자가 클릭한 페이지
+				//	console.log(page);//사용자가 클릭한 페이지
 					currPage = page;
 					listCall(page);
 					 
 				}
 			});
 		},
+	
 		error:function(e){
 			console.log(e);
 		}	
@@ -214,59 +209,107 @@ function listCall(page){
 	
 	
 	
-	/* 검색 */
-	$('#searchBtn').on('click',function(){
-
-		let searchType =$('select[name=searchType]').val();
-		let keyword = $('input[name=keyword]').val();
-	
-		//location.href="listPageSearch?"+"searchType="+searchType+"&" +"keyword="+keyword;
-		$.ajax({
-			type:'get',
-			url:'clisearch.ajax',
-			data:{
-				cnt:pagePerNum,
-				page:page,
-				searchType:searchType,
-				keyword:keyword		
-			},
-			dataType:'json',
-			success:function(data){
-				drawList(data.list);
-				 subSearch();
-				currPage = data.currPage;
-				//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작 페이지
-					totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, //한번에 보여줄 페이지 수 [1][2][3][4][5]
-					
-				});
-			},
-			error:function(e){
-				console.log(e);
-			}
-			
-		});
-
-	});
-	
 	
 }
 
 
+function searchClick(page){
+/* 검색 */
+ 
+/* $('#searchBtn').on('click',function(){ */
+	
+	 var pagePerNum=5;
+	//var page= null;
+	if( page==null){
+		page=1;
+	} 
+	
+	
+	
+	$("#pagination").twbsPagination('destroy');
+		
+	let searchType =$('select[name=searchType]').val();
+	let keyword = $('input[name=keyword]').val();
+	//location.href="listPageSearch?"+"searchType="+searchType+"&" +"keyword="+keyword;
+	
+	/* console.log("ㅋㅇㄷ"+keyword);
+	console.log("ㅅㅊ"+searchType);
+	console.log("ㅍㅇㅈ"+page);
+	console.log("페이퍼넘"+pagePerNum); */
+	$.ajax({
+		type:'get',
+		url:'cliSearch.ajax',
+		async: false,
+		data:{
+			cnt:pagePerNum,
+			page:page,
+			searchType:searchType,
+			keyword:keyword		
+		},
+		dataType:'json',
+		success:function(data){
+			drawList(data.list);
+			console.log("검색결과"+data.list);
+		
+			subSearch(); 
+			//currPage = data.currPage;
+			//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
+			$("#pagination").twbsPagination({
+				initiateStartPageClick: false,
+				startPage:data.currPage, //시작 페이지
+				totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, //한번에 보여줄 페이지 수 [1][2][3][4][5]
+				//href:'cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+				/* onPageClick:function(){
+					  //href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
+					//href:'?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+					 $('.page-link').on('click',function(){
+							console.log('s');
+							location.href='cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+						
+					 })
+					
+				} ,
+				  */
+				
+				
+		 		onPageClick:function(e,page){
+					//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
+					console.log("정보"+page);//사용자가 클릭한 페이지
+					//currPage = page;
+				
+					searchClick(page);
+					 
+				}   
+			});
+		},
+		error:function(e){
+			console.log(e);
+		}
+	
+	});
+	     
+/* }); */
+
+
+}
+
+
+
 function subSearch(){
 	var  cli_no=[];
+	
 		$('#list input[type=checkbox]').each(function(idx,item){
 			cli_no.push($(this).val());		
 		});
 		
-	
+		
 		if(cli_no ==null || cli_no==''){
 			$('#sub').empty();
-		}
-		
-	if(cli_no !=null | cli_no !=''){
+			return;
+		}else  {
+			
+			/* (cli_no !=null | cli_no !='') */
 		$.ajax({
 			url:'subSearch.ajax',
 			 traditional : true,
@@ -275,7 +318,10 @@ function subSearch(){
 			dataType:'json',
 			success:function(data){
 			//	console.log(data.list);
+		
 				 drawSUb(data.list);
+			
+				
 				 
 			},
 			error:function(e){}
@@ -292,8 +338,14 @@ function subSearch(){
 
 
 function drawList(list){
+
+	
 	var content = '';
 	list.forEach(function(item){
+		
+		if(item.emp_name==null){item.emp_name= '미정';}
+		if(item.cli_log_result==null){item.cli_log_result='상담 전';}
+	
 		//console.log(item);
 		content += '<tr>';
 		content += '<td><input type="checkbox" value="'+item.cli_no+'"/></td>';
@@ -360,9 +412,15 @@ function del(){
 			dataType:'JSON',
 			success:function(data){
 					console.log(data);
+				if(confirm('고객 정보를 삭제하시겠습니까?')){
 					alert(data.msg);
 					listCall(currPage);// 데이터가 삭제 되었으니 , ui를 다시 그려서 변경된 상태를 적용시켜야 한다. 
-			},
+				}else{
+					location.reload();
+				}
+					
+					
+				},
 			error:function(e){
 				console.log(e);
 			}
@@ -410,6 +468,8 @@ $("#regOpenBtn").click(function(){
 $('#regBtn').on('click',function(){
 	let cli_name=$('#cli_name').val();
 	let cli_phone=$('#cli_phone').val();
+	
+	
 	let req_course= [];	
 	$('#req_course input[type="checkbox"]:checked').each(function(idx,item){
 		req_course.push($(this).val());		
@@ -418,32 +478,67 @@ $('#regBtn').on('click',function(){
 	
 	console.log(req_course);
 	
-	$.ajax({
-		type:'post',
-		url:'cliReg.ajax',
-		 traditional : true,
-		data:{
-			cli_name:cli_name,
-			cli_phone:cli_phone,
-			cli_req:req_content,
-			sub_no:req_course
-		
-		},
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			alert('고객을 등록했습니다.');
-/* 			listCall(currPage);
-			$('#myModal').modal('hide'); */
-			location.reload();
-			
-		},
-		error:function(e){
-			console.log(e);
-		}
-		
-	});	
+	/* 유효성 검사 */
 
+	
+	if(cli_name ==""){
+		alert('이름을 입력해 주세요'); 
+		$('#cli_name').focus();
+		return false;
+	}else if(cli_phone==""){
+		alert('전화번호를을 입력해 주세요'); 
+		$('#cli_phone').focus();
+	}else if(req_course==""){
+		alert('과목을 선택해주세요');
+		
+	}else if(req_content.length>500){
+		alert('500자내로 작성해 주세요')
+	}
+	else{
+		$.ajax({
+			type:'post',
+			url:'cliReg.ajax',
+			  async: false,
+			 traditional : true,
+			data:{
+				cli_name:cli_name,
+				cli_phone:cli_phone,
+				cli_req:req_content,
+				sub_no:req_course
+			
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				alert('고객을 등록했습니다.');
+	/* 			listCall(currPage);
+				$('#myModal').modal('hide'); */
+				location.reload();
+				
+			},
+			error:function(e){
+				console.log(e);
+			}
+			
+			
+		});	
+		
+		
+	}
 });
+
+/* 상담일정 확인 */
+function calChk(){
+	location.href="checkList.go";
+}
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
+
+
+
+
 </script>
 </html>

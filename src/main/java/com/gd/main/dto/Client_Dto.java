@@ -2,6 +2,8 @@ package com.gd.main.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Client_Dto {
@@ -10,9 +12,10 @@ public class Client_Dto {
 	 private String cli_name;
 	 private String cli_phone;
 	 private String cli_req ;
-	   @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+@JsonFormat(timezone = "Asia/Seoul", pattern = "yyyy-MM-dd HH시mm분" )
+	// @DateTimeFormat(pattern = "yyyy년MM월dd일 HH시mm분")
 	 private Date cli_qDate;
-	 private int emp_no ;
+	 private int emp_no ;      
 	 private int sub_no;
 	 
 	 //cli_log

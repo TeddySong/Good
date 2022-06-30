@@ -10,6 +10,7 @@ import com.gd.main.dao.EmployeeDAO;
 import com.gd.main.dto.EmployeeDTO;
 
 
+
 @Service
 public class EmployeeService {
 
@@ -40,15 +41,23 @@ public class EmployeeService {
 
 
 	
-	//직원일지 리스트
-	public ArrayList<EmployeeDTO> empLogList(int emp_no){
+	//직원일지 리스트 
+	public ArrayList<EmployeeDTO> empLogList(String emp_no){
 		logger.info("리스트 서비스 요청");
-		logger.info("받아온 넘버 : " + emp_no);
+		logger.info("받아온 넘버 : " + emp_no);		
 		return dao.empLogList(emp_no);
 	}
 	
+		/*
+	*직원일지 임시생성 public HashMap<String, Object> empLogList(HashMap<String, String>
+	 * params) { logger.info("직원일지 서비스 요청);" logger.info("받아온 넘버 : "); return null;
+	 * }
+	 */
+
+	
+	
 	//직원일지 상단에 직원명 가져오기 
-	public String empName(int emp_no) {
+	public String empName(String emp_no) {
 		logger.info("받아온 넘버 : " + emp_no);
 		return dao.empName(emp_no);
 	}
@@ -60,14 +69,24 @@ public class EmployeeService {
 		
 	}
 	
-	public HashMap<String,Object> employeeList(HashMap<String,String> params) {
+	//직원리스트
+	public HashMap<String,Object> empList(HashMap<String,String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
-		logger.info("보여주는 페이지:"+page);
+		String empSearchCategory=params.get("empSearchCategory");
+		String empSearchContent = params.get("empSearchContent");	
+		logger.info("보여줄 페이지:"+page);
 		
-		int allCnt = dao.allCount();
+		map.put("cnt", cnt);
+		
+		map.put("empSearchCategory", empSearchCategory);
+		map.put("empSearchContent", empSearchContent);
+		
+		
+		ArrayList<EmployeeDTO> allCount = dao.allCount(map);
+		int allCnt =allCount.size();
 		logger.info("allCnt : "+allCnt);
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : "+pages);
@@ -82,7 +101,10 @@ public class EmployeeService {
 		int offset = (page-1) * cnt;
 		logger.info("offset : "+offset);
 		
-		ArrayList<EmployeeDTO> list = dao.list(cnt,offset);
+		map.put("offset", offset);
+		
+		ArrayList<EmployeeDTO> list = dao.empList(map);
+		logger.info("list : "+list.size());
 		map.put("list", list);
 		
 		return map;
@@ -137,27 +159,9 @@ public class EmployeeService {
 
 
 
-		
-/*		boolean success = false;
-		if(dao.empUpdate(params)>0) {
-			success = true;
-		
-		}
-		logger.info("수정성공 : "+success);
-		result.put("success",success);
-		return success;
-	}*/
+
+
 	
-	//0625 수정페이지 진행중..
-	
-	/*
-	 * public boolean empUpdate(HashMap<String, String> params) { boolean success =
-	 * false; int row = dao.empUpdate(params);
-	 * 
-	 * if(row > 0) { success = true; }
-	 * 
-	 * logger.info("update success : "+success); return success; }
-	 */
 
 }
 

@@ -23,7 +23,7 @@ public interface StudentDAO {
 	
 	ArrayList<StuDTO> subList(HashMap<String, Object> map);
 
-	int stuRegister(StuDTO dto);
+	/* int stuRegister(StuDTO dto); */ 
 
 	int stuUpdate(HashMap<String, String> params);
 
@@ -35,9 +35,16 @@ public interface StudentDAO {
 
 	int stuNoRegister(HashMap<String, String> params);
 
-	void stuSubRegister(HashMap<String, Object> map);
+	
+	  int stuRegister(HashMap<String, String> params);
 
-	void stuSubUpdate(HashMap<String, Object> map);
+	ArrayList<StuDTO> stuWantSubSearch(HashMap<String, String> params);
+	 
+	/*
+	 * void stuSubRegister(HashMap<String, Object> map);
+	 * 
+	 * void stuSubUpdate(HashMap<String, Object> map);
+	 */
 
 	
 

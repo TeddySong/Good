@@ -186,7 +186,7 @@
                                 <i class="fas fa-table me-1"></i>
                                 직원리스트
                             </div>
-	<table>
+	<table id="goodList">
 		<tr style="display:none;" id="hidden">
 			<th>NO</th>
 			<td><input type="text" id="emp_no" name="emp_no" value="${employeeDTO.emp_no}"/></td>		

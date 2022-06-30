@@ -33,7 +33,7 @@
 			color:#FFFFFF
 		}
 		
-	#goodList,#goodList th,#goodList td
+	#goodList,#goodList th
 	{
 		font-size:20px;
 		text-align:center;
@@ -41,6 +41,15 @@
 		border:1px solid #dddddd;
 		border-collapse:collapse
 	}
+	
+	#goodList td{
+		font-size:20px;
+		text-align:start;
+		padding:4px;
+		border:1px solid #dddddd;
+		border-collapse:collapse
+	}
+	
 	#goodList tr:nth-child(odd){
 		background-color:#c4c4c4;
 	}
@@ -49,7 +58,7 @@
 	}
 	
 	input[type='text']{
-	width : 100%;
+	width : 80%;
 	}
 	
 	.goodRegister {
@@ -186,7 +195,7 @@
                                 <i class="fas fa-table me-1"></i>
                                 직원리스트
                             </div>
-	<table>
+	<table id="goodList">
 		<tr>
 			<th>ID</th>
 			<td><input type="text" id="emp_id" name="emp_id"/></td>			
@@ -199,7 +208,7 @@
 			<th>직원명</th>
 			<td>
             	<input type="text" id="emp_name"  name="emp_name" value=""/>
-            	<button onclick="empOverlay()">중복체크</button>
+            	<button onclick="empOverlay()" class="goodRegister">중복체크</button>
             </td>			
 		</tr>
 		<tr>
@@ -233,8 +242,8 @@
 		</tr> 
 		<tr>
 			<th colspan="2">
-				<input type="button" id="button1" value="등록완료" onclick="save()"/>
-				<input type="button" id="button2" value="취소" onclick="location.href='empList.go'"/>
+				<input type="button" id="button1" class="goodRegister" value="등록완료" onclick="save()"/>
+				<input type="button" id="button2" class="goodRegister" value="취소" onclick="location.href='empList.go'"/>
 			</th>		
 		</tr>
 	</table>

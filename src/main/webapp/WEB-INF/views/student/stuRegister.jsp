@@ -59,6 +59,25 @@
 		width : 80%;
 	}
 	
+	.goodRegister {
+		position: relative;
+		margin: 20px auto;
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+
+	.goodRegister:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+	
 	input[type='button'] {
 		position: relative;
 		margin: 20px auto;
@@ -198,7 +217,7 @@
 									<tr>
 										<th>이름</th>
 										<td><input type="text" id="cli_name"/>
-										<button onclick="cliSearch_pop()">고객정보 검색</button>
+										<button onclick="cliSearch_pop()" class="goodRegister" style="width:18%;">고객검색</button>
 										</td>
 									</tr>
 									<tr>
@@ -212,7 +231,11 @@
 									</tr>
 									<tr>
 										<th>생년월일</th>
-										<td><input type="date" id="stu_birth"/></td>
+										<td>
+											<select id="stuYear" style="width:15%; text-align:center;" onchange="ageCal()"></select> 년
+											<select id="stuMonth" style="width:15%; text-align:center;"></select> 월
+											<select id="stuDay" style="width:15%; text-align:center;"></select> 일											
+										</td>
 									</tr>
 									<tr>
 										<th>나이</th>
@@ -283,8 +306,31 @@ function cliSearch_pop(){
 	 window.open("/cliSearch.go","new","width=1000, height=600, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 	}
 	
-	
+birthList();	
+function birthList(){            
+    var now = new Date();
+    var year = now.getFullYear();
+    var mon = now.getMonth() + 1; 
+    var day = now.getDate();           
+    //년도 selectbox만들기               
+    for(var i = 1900 ; i <= year ; i++) {
+        $('#stuYear').append('<option value="' + i + '">' + i + '</option>');    
+    }
 
+    // 월별 selectbox 만들기            
+    for(var i=1; i <= 12; i++) {                    
+        $('#stuMonth').append('<option value="' + i + '">' + i + '</option>');    
+    }
+    
+    // 일별 selectbox 만들기
+    for(var i=1; i <= 31; i++) {                    
+        $('#stuDay').append('<option value="' + i + '">' + i+ '</option>');    
+    }
+    $("#stuYear  > option[value="+year+"]").attr("selected", "true");        
+    $("#stuMonth  > option[value="+mon+"]").attr("selected", "true");    
+    $("#stuDay  > option[value="+day+"]").attr("selected", "true");       
+  
+}
 
 
 
@@ -313,6 +359,11 @@ function stuRegister(){
 	var $stu_age = $('#stu_age');
 	var $stu_gender = $('input[name="stu_gender"]:checked');
 	var $stu_condition = $('#stu_condition');	
+	var $stu_birth_year = $('#stuYear');
+	var $stu_birth_month = $('#stuMonth');
+	var $stu_birth_day = $('#stuDay');
+	
+	console.log($stu_birth_year.val());
 	/* var subList = [];		
 	$('.subNo').each(function(idx,item){
 		subList.push($(this).val());		
@@ -323,11 +374,13 @@ function stuRegister(){
 		url:'stuRegister.ajax',
 		data:{
 			cli_no:$cli_no.val(),
-			emp_no:$emp_no.val(),
-			stu_birth:$stu_birth.val(),
+			emp_no:$emp_no.val(),			
 			stu_age:$stu_age.val(),
 			stu_gender:$stu_gender.val(),
 			stu_condition:$stu_condition.val(),
+			stu_birth_year:$stu_birth_year.val(),
+			stu_birth_month:$stu_birth_month.val(),
+			stu_birth_day:$stu_birth_day.val(),
 			/* subList:subList */
 		},
 		dataType:'JSON',
@@ -366,6 +419,14 @@ function stuRegister(){
 		
 	}	 */
 
+	
+	function ageCal(){
+		var date = new Date();
+		var year = date.getFullYear();
+		var age = $('#stuYear').val();		
+		
+		$('#stu_age').val(year - age + 1);
+	}
 	
 	
 </script>

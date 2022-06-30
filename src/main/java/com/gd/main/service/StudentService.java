@@ -113,6 +113,13 @@ public class StudentService {
 		logger.info("들어왔는지 확인");
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
+		String stu_birth_year = params.get("stu_birth_year");
+		String stu_birth_month = params.get("stu_birth_month");
+		String stu_birth_day = params.get("stu_birth_day");
+		
+		String stu_birth = stu_birth_year + '-' + stu_birth_month + '-' + stu_birth_day;
+		params.put("stu_birth", stu_birth);
+		
 		int row = dao.stuRegister(params);
 
 		boolean cnt = false;

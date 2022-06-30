@@ -187,7 +187,7 @@
                                 	<thead>
 										<tr>
 											<select id="coName">
-												<option value="sub_name">과목</option>
+										
 												<option value="co_name">과정</option>
 												<option value="emp_name">담당직원</option>
 												<option value="co_condition">수강상태</option>
@@ -196,7 +196,7 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>
-											<th>과목명</th>
+											
 											<th>과정명</th>
 											<th>강의시간</th>
 											<th>개강일</th>
@@ -321,11 +321,12 @@ function listCall(page){
 		assList.forEach(function(item){
 			
 			var errorDate = new Date(item.co_startDate);
-			var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");;
+			var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
+			
+			
 			
 			console.log(nowDate);
 				content +='<tr>';
-				content +='<td>'+item.sub_name+'</td>';
 				content +='<td><a href="assCoList.go?co_name='+item.co_name+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
 				content +='<td>'+nowDate+'</td>';

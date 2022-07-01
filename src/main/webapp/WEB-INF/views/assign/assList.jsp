@@ -241,6 +241,9 @@ function listCall(page){
 	var pagePerNum = 10;
 	console.log("param page : " + page);
 	
+	
+	
+	
 	$.ajax({
 		type:'get',
 		url:'assignList.ajax',
@@ -280,6 +283,7 @@ function listCall(page){
 	
 		var search = $("#search").val();
 		console.log(search);
+		
 		
 		$.ajax({
 			type:'get',
@@ -322,12 +326,10 @@ function listCall(page){
 			
 			var errorDate = new Date(item.co_startDate);
 			var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
-			
-			
-			
 			console.log(nowDate);
+			
 				content +='<tr>';
-				content +='<td><a href="assCoList.go?co_name='+item.co_name+'">'+item.co_name+'</a></td>';
+				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
 				content +='<td>'+nowDate+'</td>';
 				content +='<td>'+item.cli_name+'</td>';

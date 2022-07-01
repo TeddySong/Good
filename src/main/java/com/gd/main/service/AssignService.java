@@ -60,8 +60,11 @@ public class AssignService {
 			 * Integer.parseInt(params.get("page"));
 			 */
 		  HashMap<String, Object> assMap = new HashMap<String, Object>();
+		  assMap.put("params", params);
+		  assMap.put("co_no", co_no);
 		  ArrayList<AssListDTO> assCoList = dao.assCoList(params);
 		  assMap.put("assCoList", assCoList);
+			logger.info(assMap + "~");
 		  
 		  return assMap;
 	  }

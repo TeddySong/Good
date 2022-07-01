@@ -36,7 +36,9 @@ public class AssignService {
 		data.put("search", search);
 		logger.info("조건검색 : " + search + "/" + assSearchTarget);
 		assMap.put("currPage", page);// 현재 페이지
-
+		
+		logger.info("리스트 : " + data);
+		
 		int offset = (page - 1) * cnt;
 		logger.info("offset ,cnt : " + offset + cnt);
 
@@ -46,25 +48,31 @@ public class AssignService {
 		ArrayList<AssListDTO> assList = dao.assList(data);
 		assMap.put("assList", assList);
 		
-
+		logger.info("리스트 배열: " + assMap);
+		
 		return assMap;
 	}
 
 
 	
-	  public HashMap<String, Object> assCoList(HashMap<String, String> params) { 
+	  public HashMap<String, Object> assCoList(HashMap<String, String> params, String co_no) { 
 		 
-			/*
-			 * HashMap<String, Object> assMap = new HashMap<String, Object>(); int cnt =
-			 * Integer.parseInt(params.get("cnt")); int page =
-			 * Integer.parseInt(params.get("page"));
-			 */
+		   /*
+			* HashMap<String, Object> assMap = new HashMap<String, Object>(); 
+		    * int cnt = Integer.parseInt(params.get("cnt"));
+		    *  int page =Integer.parseInt(params.get("page"));
+			*/
+		  
 		  HashMap<String, Object> assMap = new HashMap<String, Object>();
 		  assMap.put("params", params);
 		  assMap.put("co_no", co_no);
-		  ArrayList<AssListDTO> assCoList = dao.assCoList(params);
+		  logger.info(assMap + "/");
+		  
+		  ArrayList<AssListDTO> assCoList = dao.assCoList(assMap);
+		  
 		  assMap.put("assCoList", assCoList);
-			logger.info(assMap + "~");
+		  
+		  logger.info(assMap + "~");
 		  
 		  return assMap;
 	  }

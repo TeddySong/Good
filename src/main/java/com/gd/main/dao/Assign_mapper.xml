@@ -5,7 +5,8 @@
 
 <!-- 과정전체 배정리스트 -->
 <select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
-	select c2.co_name
+	select c2.co_no
+		   , c2.co_name
 	       , c2.co_startTime
 	       , c2.co_startDate
 	       , c.cli_name

@@ -11,7 +11,7 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> assList(HashMap<String, Object> assMap);
 
-	ArrayList<AssListDTO> assCoList(HashMap<String, String> params);
+	ArrayList<AssListDTO> assCoList(HashMap<String, Object> assMap);
 
 	ArrayList<AssListDTO> assStuCoList(HashMap<String, Object> assMap);
 	
@@ -20,6 +20,8 @@ public interface AssignDAO {
 	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
 
 	int assStuListInsert(HashMap<String, Object> assMap);
+
+	
 
 
 

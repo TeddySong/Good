@@ -196,7 +196,6 @@
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr>
 										<tr>
-											
 											<th>과정명</th>
 											<th>강의시간</th>
 											<th>개강일</th>

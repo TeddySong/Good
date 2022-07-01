@@ -188,7 +188,7 @@
                             <div>
                             	<table id="goodList">
                             		<tr>
-										<td><input type="text" id="search" placeholder="과목명 입력"></td>
+										<td><input type="text" id="search" placeholder="과목명을 입력해주세요"></td>
 										<td><button class="goodRegister" id="subSearch" style="width:100%">검색</button></td>
 										<td>
 										<input type="radio" name="sub_condition" value="단과"/>단과

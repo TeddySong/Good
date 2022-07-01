@@ -147,12 +147,10 @@ public class CourseService {
 	}
 
 	public ArrayList<CourseDTO> subName() {
-		// TODO Auto-generated method stub
 		return dao.subName();
 	}
 
 	public ArrayList<CourseDTO> courseName() {
-		// TODO Auto-generated method stub
 		return dao.courseName();
 	}
 	
@@ -161,13 +159,21 @@ public class CourseService {
 	}
 
 	public ArrayList<CourseDTO> dangwa() {
-		// TODO Auto-generated method stub
 		return dao.dangwa();
 	}
 
 	public ArrayList<CourseDTO> jonghab() {
-		// TODO Auto-generated method stub
 		return dao.jonghab();
+	}
+
+
+	public CourseDTO subDetailHome(String sub_no) {
+		return dao.subDetailHome(sub_no);
+	}
+
+
+	public ArrayList<CourseDTO> homeSrcList(String sub_no) {
+		return dao.homeSrcList(sub_no);
 	}
 
 

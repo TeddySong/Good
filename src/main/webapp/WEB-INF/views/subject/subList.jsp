@@ -188,12 +188,13 @@
                             <div>
                             	<table id="goodList">
                             		<tr>
-										<td><input type="text" id="search" placeholder="과목명 입력"></td>
+										<td><input type="text" id="search" placeholder="과목명을 입력해주세요"></td>
 										<td><button class="goodRegister" id="subSearch" style="width:100%">검색</button></td>
 										<td>
 										<input type="radio" name="sub_condition" value="단과"/>단과
 										<input type="radio" name="sub_condition" value="종합"/>종합
 										<input type="radio" name="sub_condition" value="숨김"/>숨김
+										<button onclick="location.href='subList.go'" class="goodRegister">초기화</button>
 										</td>
 									</tr>
 								</table>
@@ -202,7 +203,6 @@
 							<button onclick="location.href='subRegister.go'" class="goodRegister">등록</button>
 							<button onclick="location.href='scriptlist.go'" class="goodRegister">과목후기</button>
 							<button onclick="location.href='courList.go'" class="goodRegister">과정목록</button>
-							<button onclick="location.href='subList.go'" class="goodRegister">초기화</button>
 							</div>
 								<table id="goodList">
 									<thead>
@@ -266,6 +266,7 @@ function listCall(){
 	//radio 선택
 	function SubConditionCall(){
 	var subCo = $("input:radio[name='sub_condition']:checked").val();
+	$('#search').val('');
 	console.log(subCo);
 	
 	 $.ajax({
@@ -285,6 +286,7 @@ function listCall(){
 	//과목검색
 	function subSearchCall(){
 	var subsearch = $("#search").val();
+    $('input[name="sub_condition"]').prop('checked', false);
 	console.log(subsearch);
 	
 	$.ajax({

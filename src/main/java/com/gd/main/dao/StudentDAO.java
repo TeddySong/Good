@@ -39,6 +39,10 @@ public interface StudentDAO {
 	  int stuRegister(HashMap<String, String> params);
 
 	ArrayList<StuDTO> stuWantSubSearch(HashMap<String, String> params);
+
+	StuDTO cliInfoGet(String cli_no);
+
+	int cliStuFinUpdate(HashMap<String, String> params);
 	 
 	/*
 	 * void stuSubRegister(HashMap<String, Object> map);

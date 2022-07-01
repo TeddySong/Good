@@ -5,34 +5,155 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="icon" href="resources/img/icon.png">
-
+<link href="../resources/img/goodfavicon.png" rel="icon">
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/JS//course/jquery.twbsPagination.js"></script>
-<style></style>
+<style>	
+	
+	body{
+		font-family: 'Noto Sans KR', sans-serif;
+	}
+
+	#goodList {  
+			                          
+			  
+			  width: 100%;
+			  border-collapse: collapse;
+			  border-radius: 5px;
+			  overflow: hidden;
+			  font-family: 'Do Hyeon', sans-serif;
+            }
+            
+   #goodList th {
+			background-color:#505050;
+			color:#FFFFFF;
+			text-align:center;
+		}
+		
+	#goodList,#goodList th,#goodList td
+	{
+		font-size:20px;		
+		padding:4px;		
+		border-collapse:collapse
+	}
+	#goodList tr:nth-child(odd){
+		background-color:#c4c4c4;
+	}
+	#goodList tr:nth-child(even){
+		background-color:#fdfdfd;
+	}
+	
+	.goodRegister {
+		position: relative;		
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 0 10px;		
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 25px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+
+	.goodRegister:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
+	
+	table{ td:30px; align:center;}
+
+	table,th,td{
+		/* border: 1px solid black; */
+		font-size:20px;		
+			
+		border-collapse: collapse;
+		padding: 5px;
+	}
+	
+	
+	
+	td{height: 30px;}
+	 tr {
+        line-height: 25px;
+    }
+	textarea{ resize:none;width:100%;height:150px;}
+	
+	table tr:nth-child(odd){
+		background-color:#c4c4c4;
+	}
+	table tr:nth-child(even){
+		background-color:#fdfdfd;
+	}
+
+	#colist{float:left;}
+	#myModal table{
+	 	width:500px;
+	}
+	#colist.table {
+		width:70%;
+				  		  
+		  border-collapse: collapse;
+		  border-radius: 5px;
+		  overflow: hidden;
+		  font-family: 'Do Hyeon', sans-serif;
+	}
+	 #subist.table{
+	 	width:30%;
+	 			  		  
+		  border-collapse: collapse;
+		  border-radius: 5px;
+		  overflow: hidden;
+		  font-family: 'Do Hyeon', sans-serif;
+	 }
+</style>
 </head>
 <body>
 
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="login.do">GOOD2 IT</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="login.do" role="button"><i class="fas fa-user fa-fw"></i> 메인</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="/" role="button"><i class="fas fa-user fa-fw"></i> 홈페이지</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="#" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
+                </li>
+            </ul>
+        </nav>
 
 <table class="table table-striped">
-<div>
-	<input type="date" name="chkDate"/>
-	
-
-	
-	<select name="searchType">
+	<thead>
+	<tr>
+	<td colspan="4" style="text-align:end;">상담일정 검색 : </td>
+<td colspan="1"><input type="date" name="chkDate"/></td>
+<td colspan="1">
+	<select name="searchType" style="width:100%;">
 		<option value="client">방문자</option>
 		<option value="phone">연락처</option>
 		<option value="emp">상담자</option>
 	</select>
-	
-	<input type="text" name="keyword"/>
-	
-	<button type="button" id="searchBtn" onclick="searchBtn()">검색</button>
-</div>
-<button type="button" onclick="cliList()">목록</button>
-	<thead>
+</td>
+<td colspan="1">
+<input type="text" style="width:100%;" name="keyword" placeholder="검색어를 입력하세요"/>
+</td>
+<td>
+<button type="button" id="searchBtn" class="goodRegister" onclick="searchBtn()">검색</button>
+<button type="button" class="goodRegister" onclick="cliList()">목록</button>
+</td>
+</tr>
 		<tr>
 		<th>상담번호</th><th>방문자</th><th>상담날짜</th><th>상담시간</th><th>연락처</th><th>담당자</th><th>상담신청날짜</th><th>상담결과</th>
 		</tr>

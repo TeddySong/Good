@@ -249,15 +249,19 @@
 
 </body>
 <script>
-function EmpUpdateForm(){
-	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
-	location.href='empUpdate.go?emp_no='+emp_no;
-}
+
+
 
 var currPage = 1;
 
 //리스트 불러오기
 listCall(currPage);
+
+//검색 페이징처리
+$('#empSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	empSearchCall(currPage);
+});
 
 function listCall(page) {
 	
@@ -292,57 +296,63 @@ function listCall(page) {
 			console.log(e);
 		}
 	});
-	
-	
-	
-$('#empSearch').on('click',function(){
-		
-		var empSearchCategory = $("#empSearchCategory option:selected").val();
-			
-		var empSearchContent = $("#empSearchContent").val();
-		
-		$("#pagination").twbsPagination('destroy');
-				
-		$.ajax({
-			type:'get',
-			url:'empSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				empSearchCategory:empSearchCategory,
-				empSearchContent:empSearchContent
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage=data.currPage;
-
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 10, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-	
-	
-	
-	
-	
-	
 }
+	
+	
+
+
+//직원 검색 리스트
+function empSearchCall(page) {
+	var pagePerNum = 10;
+	
+	var empSearchCategory = $("#empSearchCategory option:selected").val();
+	var empSearchContent = $("#empSearchContent").val();
+			
+	$.ajax({
+		type:'get',
+		url:'empSearch.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page,
+			empSearchCategory:empSearchCategory,
+			empSearchContent:empSearchContent
+			},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.list);
+			currPage=data.currPage;
+
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 10, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					empSearchCall(page);
+				}
+			});
+			
+		},
+		error:function(e){
+			console.log(e);
+			  if(e.statusText == 'error'){
+		            alert("조회된 데이터가 없습니다.");
+		            $('#empSearchContent').val('');
+		            listCall(currPage);
+		         }
+		}
+	}); 
+
+
+}
+	
+	
+	
+	
+
 	
 
 //리스트 그리기
@@ -352,6 +362,8 @@ function drawList(list){
 	
 	list.forEach(function(item){
 	
+		if(item.emp_endDate==null){item.emp_endDate= '';}
+		
 		content += '<tr>';
 		content += '<td><input type=\"radio\" name="emp"></td>';	
 		content += '<td>'+item.emp_no+'</td>';
@@ -361,12 +373,23 @@ function drawList(list){
 		content += '<td>'+item.emp_position+'</td>';
 		content += '<td>'+item.emp_startDate+'</td>';
 		content += '<td>'+item.emp_endDate+'</td>';
+		
 		content += '<td>'+item.emp_condition+'</td>';
 		content += '</tr>';
 	});
 	
 	$('#list').empty();
 	$('#list').append(content);
+	
+}
+//0701 13:00 조성훈 수정버튼눌렀을때 페이지400 안 나도오록 수정중
+function EmpUpdateForm(){
+	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
+	if(emp_no>0){
+		location.href='empUpdate.go?emp_no='+emp_no;	
+	}else{
+		alert("수정할 직원의 버튼을 선택하고 수정버튼을 누르세요!");
+	}
 	
 }
 </script>

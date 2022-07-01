@@ -41,5 +41,9 @@ public interface CourseDAO {
 
 	ArrayList<CourseDTO> selectSubjectCall(String sub_no, String sub_name, int cnt, int offset);
 
+	CourseDTO subDetailHome(String sub_no);
+
+	ArrayList<CourseDTO> homeSrcList(String sub_no);
+
 	
 }

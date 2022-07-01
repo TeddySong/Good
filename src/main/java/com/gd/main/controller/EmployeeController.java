@@ -1,6 +1,6 @@
 package com.gd.main.controller;
 
-import java.util.ArrayList;  
+import java.util.ArrayList;   
 import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
@@ -88,9 +88,6 @@ public class EmployeeController {
 	
 	
 	
-	
-	
-	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
 	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {
@@ -135,7 +132,7 @@ public class EmployeeController {
 		if(session.getAttribute("loginId") != null){
 			login = true;
 		}
-		return service.empList(params);
+		return service.empList(params,login);
 	}
 	
 	//직원검색
@@ -143,7 +140,7 @@ public class EmployeeController {
 	@ResponseBody
 	public HashMap<String, Object> empSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
 		
-		return service.empList(params);
+		return service.empList(params,false);
 	}
 	
 	//

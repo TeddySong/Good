@@ -60,21 +60,21 @@
 	<!-- 직원목록 보기 -->
 	<select id="empList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
 		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition,
-				 emp_position, emp_startDate,emp_endDate FROM employee
+					 emp_position, emp_startDate,emp_endDate,emp_endDate FROM employee
 		
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
 					<if test="empSearchCategory.equals('emp_name')">
-						emp_name = #{empSearchContent}
+						AND emp_name LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_phone')">
-						emp_phone = #{empSearchContent}
+						AND emp_phone  LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						emp_position = #{empSearchContent}
+						AND emp_position LIKE concat('%',#empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
-						emp_condition = #{empSearchContent}
+						AND emp_condition LIKE concat('%',#{empSearchContent},'%')
 					</if>
 		</if>
 	</where>	
@@ -83,21 +83,21 @@
 	</select>
 	
 	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
-		SELECT count(emp_no) FROM employee
+		SELECT emp_no FROM employee
 	<!-- 	parameterType="hashmap" -->
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
 					<if test="empSearchCategory.equals('emp_name')">
-						emp_name = #{empSearchContent}
+						AND emp_name LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_phone')">
-						emp_phone = #{empSearchContent}
+						AND emp_phone LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						emp_position = #{empSearchContent}
+						AND emp_position LIKE concat('%',#empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
-						emp_condition = #{empSearchContent}
+						AND emp_condition LIKE concat('%',#{empSearchContent},'%')
 					</if>
 		</if>
 	</where>	

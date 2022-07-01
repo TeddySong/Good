@@ -18,8 +18,14 @@
 	<hr/>
 	<br/>
 	<input type="button" value="상담신청 페이지" onclick="location.href='firstRegister.go'">
+	<br/>
+	<hr/>
+	<br/>
+	<input type="button" value="홈페이지 (부트스트랩)페이지" onclick="location.href='homeSubDetail3.do'">
 	
 	
+	
+
 </body>
 <script></script>
 </html>

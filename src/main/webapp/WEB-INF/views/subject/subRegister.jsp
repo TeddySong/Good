@@ -189,7 +189,7 @@
 		<tr>
 			<th>과목명</th>
 			<td>
-			<input type="text" id="sub_name"/>
+			<input type="text" id="sub_name" />
 			<button onclick="subOverlay()">중복</button>
 			</td>
 		</tr>
@@ -213,7 +213,7 @@
 	 		</tr>
 	 		<tr>
 				<th>과목이미지</th>
-				<td><input type="file" id="sub_img" multiple="multiple"/></td>
+				<td><input type="file" id="subimg" multiple="multiple"/></td>
 			</tr>
 	 		<tr>
 				<th>커리큘럼</th>
@@ -270,7 +270,7 @@
 		var $sub_condition = $('#sub_condition');
 		var $sub_time  = $('#sub_time');
 		var $sub_summary = $('#sub_summary');
-		var subimg = $("#sub_img")[0].files[0];
+		var subimg = $("#subimg")[0].files[0];
 		var file = $("#curri")[0].files[0];
 		
 		if(subOverChk){
@@ -291,7 +291,7 @@
 				
 				var formData = new FormData();
 				
-				formData.append("sub_img",$("#sub_img")[0].files[0]);
+				formData.append("subimg",$("#subimg")[0].files[0]);
 				formData.append("file", $("#curri")[0].files[0]);
 				formData.append("sub_name", $sub_name.val());
 				formData.append("sub_condition", $sub_condition.val());

@@ -20,7 +20,7 @@
 	#goodList {                
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 70%;
+			  width: 80%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
@@ -174,27 +174,33 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">과목 목록</h1>                        
+                        <h1 class="mt-4">과목후기 목록</h1>                        
                         <div class="card mb-4">
                             <div class="card-body">
-                                GOOD2 IT 과목 리스트 입니다.                                
+                                GOOD2 IT 과목후기 리스트 입니다.                                
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                과목리스트
+                                과목후기 리스트
                             </div>
-<div>
-<input type="hidden" id="sub_no"  value=""/>
-<select id='sub_name'>
-</select>
-<input type="radio" name="sub_condition" value="단과"/>단과
-<input type="radio" name="sub_condition" value="종합"/>종합
-<input type="radio" name="sub_condition" value="숨김"/>숨김
-<button onclick="scrDel()">삭제</button>
-<button  onclick="scrRegister_pop()">등록</button>
-</div>
+<table id="goodList">
+<tr>
+<td class="hidden"><input type="text" id="sub_no"  value=""/></td>
+<td><select id='sub_name' style="width:80%;">
+</select></td>
+<td>
+<input type="radio" name="sub_condition" value="단과"/> 단과 
+<input type="radio" name="sub_condition" value="종합"/> 종합 
+<input type="radio" name="sub_condition" value="숨김"/> 숨김 
+</td>
+<td>
+<button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrDel()">삭제</button>
+<button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrRegister_pop()">등록</button>
+</td>
+</tr>
+</table>
 <br/>
 <table id="goodList">
 	 	<thead>
@@ -318,6 +324,11 @@ function scrSubSearchCall(page){
 	    	},
 	    	error:function(e){
 	    		console.log(e);
+	    		if(e.statusText == 'error'){
+					alert("조회된 데이터가 없습니다.");
+					listCall(currPage);
+					$("#sub_name option:eq(0)").prop("selected", true);
+				}
 	    	}
 	    });
 	
@@ -356,6 +367,11 @@ function scSubConditionCall(page){
 		    	},
 		    	error:function(e){
 		    		console.log(e);
+		    		if(e.statusText == 'error'){
+						alert("조회된 데이터가 없습니다.");
+						listCall(currPage);
+						$('input[name="sub_condition"]').prop('checked', false);
+					}
 		    	}
 		    });
 

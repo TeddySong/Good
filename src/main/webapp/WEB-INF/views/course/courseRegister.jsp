@@ -208,7 +208,7 @@
         <tr>
             <th>과목</th>
             <td colspan="3">
-				<select id="sub_name" name="selectedSubName">
+				<select id="sub_no" name="selectedSubName">
 			         <option>과목명</option>
 			         <c:forEach items="${subName}" var="subName">
 			         		<option id="subName" value="${subName.sub_no}">${subName.sub_name}</option>
@@ -326,6 +326,9 @@ function courSave(){
 	var $co_condition = $('#co_condition');
 	
 	
+	if($("#sub_no option:selected").val() == '과목명' ||$("#sub_no option:selected").val() == null)
+	      alert('과목명을 선택해주세요.');
+	
 	if(overChk){
 		if($co_name.val() == "") {
 			alert("과정명을 입력하세요.");
@@ -359,7 +362,7 @@ function courSave(){
 			
 			//var $sub_name = $("#sub_name").val();
 			var sub_no = $("select[name=selectedSubName]").val();
-			console.log(sub_name);
+			console.log(sub_no);
 		
 			//var sub_no = $("sub_no").val();
 			

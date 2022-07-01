@@ -24,7 +24,21 @@ public class CourseDTO {
 	private int curri_no;
 	private String curri_oriName;
 	private String curri_newName;
+	private int src_no;
+	private String scr_content;
 	
+	public int getSrc_no() {
+		return src_no;
+	}
+	public void setSrc_no(int src_no) {
+		this.src_no = src_no;
+	}
+	public String getScr_content() {
+		return scr_content;
+	}
+	public void setScr_content(String scr_content) {
+		this.scr_content = scr_content;
+	}
 	public int getCurri_no() {
 		return curri_no;
 	}

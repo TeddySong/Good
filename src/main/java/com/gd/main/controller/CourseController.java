@@ -74,12 +74,12 @@ public class CourseController {
 		return page;
 	}
 		
-	//과목상세 홈페이지에 리스트 호출
+	//과목상세 홈페이지에 정보 뿌려주기
 	@RequestMapping(value = "/subjectDetailHome.do")
 	public String subjectDetailHomepage(Model model,String sub_no){
 		
 		String page = "emp_login";
-		
+		/*
 		//단과 리스트
 		ArrayList<CourseDTO> dangwa = service.dangwa();
 		logger.info("단과 과목 갯수 : "+dangwa.size());
@@ -89,19 +89,15 @@ public class CourseController {
 		ArrayList<CourseDTO> jonghab = service.jonghab();
 		logger.info("단과 과목 갯수 : "+jonghab.size());
 		model.addAttribute("jonghab",jonghab);
-		
-		/*
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		 ArrayList< HashMap<String, Object>> subList= clientService.regSub();
-		 map.put("subList", subList);
-		 model.addAttribute("subList", subList);
-		 */
+		*/
+		ArrayList<CourseDTO> homeSrcList = service.homeSrcList(sub_no);
 		 
 		//과목 상세 뿌려주기
 		CourseDTO dto = service.subDetailHome(sub_no);
 		
 		logger.info("과목 상세 홈페이지 이동 : "+dto);
 		model.addAttribute("dto", dto);
+		model.addAttribute("homeSrcList", homeSrcList);
 		return "./course/subjectDetailHome";
 		
 	}

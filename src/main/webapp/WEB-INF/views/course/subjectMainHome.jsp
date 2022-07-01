@@ -50,7 +50,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">GOOD IT</a></h1>
+      <h1 class="logo"><a href="#hero">GOOD IT</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -125,8 +125,8 @@
 
         <!--과목박스 묶음-->
         <div class="row">
-
-          <h4>단과</h4>
+		
+          <ul><li><h4>단과</h4></li></ul>
             <c:forEach items="${dangwa}" var="dangwa">
                 <div class="col-md-4" id="${dangwa.sub_name}">
                     <div class="work-box">
@@ -156,7 +156,7 @@
                 </div>
             </c:forEach>
             <!--과목박스2(종합)-->
-            <h4>종합</h4>
+            <ul><li><h4>종합</h4></li></ul>
             <c:forEach items="${jonghab}" var="jonghab">
                 <div class="col-md-4" id="${jonghab.sub_name}">
                     <div class="work-box">

@@ -8,12 +8,12 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <html lang="en">
-<title>DevFolio Bootstrap Portfolio Template - Index</title>
+<title>굳이IT</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
 <!-- Favicons -->
-<link href="../resources/img/homesub/favicon.png" rel="icon">
+<link href="../resources/img/goodfavicon.png" rel="icon">
 <link href="../resources/img/homesub/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Vendor CSS Files -->
@@ -50,18 +50,18 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="index.html">GOOD</a></h1>
+      <h1 class="logo"><a href="index.html">GOOD IT</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#services">Services</a></li>
-          <li><a class="nav-link scrollto " href="#work">Work</a></li>
-          <li><a class="nav-link scrollto " href="#blog">Blog</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <!-- <li><a class="nav-link scrollto" href="#about">About</a></li> -->
+          <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
+          <li><a class="nav-link scrollto " href="#work">과목</a></li>
+          <!-- <li><a class="nav-link scrollto " href="#blog">Blog</a></li> -->
+          <!-- <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
@@ -77,8 +77,8 @@
               <li><a href="#">Drop Down 3</a></li>
               <li><a href="#">Drop Down 4</a></li>
             </ul>
-          </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          </li> -->
+          <li><a class="nav-link scrollto" href="#contact">상담신청</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -116,7 +116,7 @@
                 과목
               </h3>
               <p class="subtitle-a">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                IT를 배우는 가장 똑똑한 방법 - 굳이IT
               </p>
               <div class="line-mf"></div>
             </div>
@@ -147,7 +147,7 @@
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
                             <div class="w-like">
-                            <a href="subDetail.do?sub_no=${dangwa.sub_no}"> <span class="bi bi-plus-circle"></span></a>
+                            <a href="subjectDetailHome.do?sub_no=${dangwa.sub_no}"> <span class="bi bi-plus-circle"></span></a>
                             </div>
                         </div>
                         </div>
@@ -177,7 +177,7 @@
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
                             <div class="w-like">
-                            <a href="subDetail.do?sub_no=${jonghab.sub_no}"> <span class="bi bi-plus-circle"></span></a>
+                            <a href="subjectDetailHome.do?sub_no=${jonghab.sub_no}"> <span class="bi bi-plus-circle"></span></a>
                             </div>
                         </div>
                         </div>

@@ -167,5 +167,10 @@ public class CourseService {
 	}
 
 
+	public CourseDTO subDetailHome(String sub_no) {
+		return dao.subDetailHome(sub_no);
+	}
+
+
 	
 }

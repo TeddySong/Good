@@ -89,7 +89,7 @@ public class AssignController {
 		logger.info("과정 배정 페이지 이동");
 		 
 		 //HashMap<String, Object> map = new HashMap<String, Object>();
-		 //map = (HashMap<String, Object>) session.getAttribute("co_name");
+		//String co_name =(String) session.getAttribute("co_name",co_name);
 		
 		 //ArrayList<AssListDTO> dto = service.assCoList(params);
 		 //map.put("dto", dto);
@@ -122,8 +122,7 @@ public class AssignController {
 			 if(session.getAttribute("loginId") != null) {
 					
 				session.setAttribute("stu_no", stu_no); 
-				page = "./assign/assStuList";
-				//model.addAttribute("list",list);		 
+				page = "./assign/assStuList";	 
 			} 
 			return page;
 		}
@@ -150,15 +149,38 @@ public class AssignController {
 			
 			 String page = "home";
 			 if(session.getAttribute("loginId") != null) {
-					
 				//session.setAttribute("stu_no", stu_no); 	
-			
 				page = "./assign/coSearList";
 			 }
-			
-			
 			return page;
 		}
+	//리스트 호출
+		@RequestMapping("/coSearList.ajax")
+		@ResponseBody
+		public HashMap<String, Object> courList(
+				@RequestParam HashMap<String, String> params) {
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("과정 리스트 요청 : "+params);	
+		
+			HashMap<String, Object> map = service.courList2(params);
+			ArrayList<AssListDTO> courList = (ArrayList<AssListDTO>) map.get("courList");
+			logger.info("test");
+		
+			return map;
+		}
+	  
+		
+		//과정 검색
+		@RequestMapping("/assCourSearch.ajax")
+		@ResponseBody
+		public HashMap<String, Object> courSearch(
+				@RequestParam HashMap<String, String> params){
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("검색결과 리스트 요청"+params);
+			return service.courList2(params);
+		}
+	  
+	  
 
 
 }

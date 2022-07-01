@@ -197,7 +197,7 @@
 										<tr>
 											<h3>과정 상세정보</h3>		
 											<th>학생명</th>
-												<td><input type="text" id=cli_name value="">${cli_name}</td>
+												<td><input type="text" id=cli_name value=""></td>
 												<td>
 													<button id="cli_nameSearch" onclick="">검색</button>
 													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>

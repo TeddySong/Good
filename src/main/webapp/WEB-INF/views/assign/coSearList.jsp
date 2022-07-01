@@ -227,7 +227,7 @@ function listCall(page){
 	
 	$.ajax({
 		type:'get',
-		url:'courList.ajax',
+		url:'coSearList.ajax',
 		data:{
 			cnt : pagePerNum,
 			page : page
@@ -287,7 +287,7 @@ function courseSearch(page){
 	 
 	 $.ajax({
 		 type:'get',
-		 url:'courSearch.ajax',
+		 url:'assCourSearch.ajax',
 		 data:{
 			 cnt : pagePerNum,
 			 page : page,

@@ -13,7 +13,11 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> assCoList(HashMap<String, String> params);
 
-	ArrayList<AssListDTO> assStuCoList(HashMap<String, String> params, String stu_no);
+	ArrayList<AssListDTO> assStuCoList(HashMap<String, Object> assMap);
+	
+	int allCount(HashMap<String, Object> searchResult);
+
+	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
 
 
 	

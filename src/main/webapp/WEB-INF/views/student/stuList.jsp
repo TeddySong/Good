@@ -158,9 +158,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -244,6 +244,12 @@ var currPage = 1;
 //리스트 불러오기
 listCall(currPage);
 
+//검색 페이징처리
+$('#stuSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	stuSearchCall(currPage);
+});
+
 function listCall(page) {
 	
 	var pagePerNum = 10;
@@ -257,8 +263,9 @@ function listCall(page) {
 		},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
-			drawList(data.list);
+			if(data.login){
+				console.log('테이블 그리기');
+				drawList(data.list);
 			currPage = data.currPage;
 			
 			//불러오기 성공하면 플러그인 이용해서 페이징처리
@@ -272,57 +279,66 @@ function listCall(page) {
 					listCall(page);
 				}
 			});
+			} else{
+				alert('로그인이 필요한 서비스입니다.');
+				location.href='/';
+			}
+			
+			
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});
 	
-		$('#stuSearch').on('click',function(){
-		
-		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
-			
-		var stuSearchContent = $("#stuSearchContent").val();
-		
-		$("#pagination").twbsPagination('destroy');
-				
-		$.ajax({
-			type:'get',
-			url:'stuSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				stuSearchCategory:stuSearchCategory,
-				stuSearchContent:stuSearchContent
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage=data.currPage;
-
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-	
-	
-	
 }
+	
+		
+//학생 검색 리스트
+function stuSearchCall(page) {
+	var pagePerNum = 10;
+
+	var stuSearchCategory = $("#stuSearchCategory option:selected").val();
+	var stuSearchContent = $("#stuSearchContent").val();
+	
+			
+	$.ajax({
+		type:'get',
+		url:'stuSearch.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page,
+			stuSearchCategory:stuSearchCategory,
+			stuSearchContent:stuSearchContent
+			},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.list);
+			currPage=data.currPage;
+
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					stuSearchCall(page);
+				}
+			});
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+
+
+
+}
+
 
 //리스트 그리기
 function drawList(list){

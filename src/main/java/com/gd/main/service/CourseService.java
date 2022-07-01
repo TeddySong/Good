@@ -26,8 +26,6 @@ public class CourseService {
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		
-		//String sub_no = params.get("sub_no");
-		//String sub_name = params.get("sub_name");
 		
 		String subName = params.get("subName");
 		String courseNameSearch = params.get("courseNameSearch");
@@ -40,8 +38,6 @@ public class CourseService {
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
-		//searchResult.put("sub_no", sub_no);
-		//searchResult.put("sub_name", sub_name);
 		
 		//입력된 날짜가 빈값일 때
 		if(startSearch == "") {
@@ -60,7 +56,9 @@ public class CourseService {
 					"endSearch : "+endSearch);
 		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
+
 		int allCnt = dao.allCount(searchResult);
+
 		logger.info("allCnt : "+allCnt);
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
 		logger.info("pages : "+pages);
@@ -84,32 +82,35 @@ public class CourseService {
 		
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
 		
+		/*
 		for (CourseDTO dto : courList) {
 			logger.info(dto.getCo_startDate()+" ~ "+dto.getCo_endDate());
 
 		}
-		
-		
-		//ArrayList<CourseDTO> selectSubjectCall = dao.selectSubjectCall(sub_no,sub_name,cnt,offset);
-		//map.put("selectSubjectCall", selectSubjectCall);
+		*/
+
 		map.put("courList", courList);
 		
 		return map;
 	}	
+
 	
 	public boolean courseUpdate(HashMap<String, String> params) {
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		logger.info("과정 update 요청");
-		boolean success = false;
-		int row = dao.courseUpdate(params);
-		if(row > 0) {
-			success = true;
-			logger.info("넘어온 데이터 : "+params);
-		}
-		logger.info("수정된 데이터 수 : "+row);
-		result.put("success", success);
-		return success;
-	}
+	      HashMap<String, Object> result = new HashMap<String, Object>();
+	      logger.info("과정 update 요청");
+	      boolean success = false;
+	      int row = dao.courseUpdate(params);
+	      logger.info("데이터가 넘어왔는지 확인:::"+params);
+	      if(row > 0) {
+	         success = true;
+	         logger.info("데이터가 넘어왔는지 확인:::"+params);
+	      }
+	      logger.info("수정된 데이터 수 : "+row);
+	      
+	      result.put("success", success);
+	      return success;
+	   }
+
 	
 
 	public HashMap<String, Object> courOverlay(String chkCo) {
@@ -154,13 +155,6 @@ public class CourseService {
 		// TODO Auto-generated method stub
 		return dao.courseName();
 	}
-
-	/*
-	public ArrayList<CourseDTO> courList() {
-		logger.info("과정 리스트 요청");
-		return dao.courList();
-	}
-	*/
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);

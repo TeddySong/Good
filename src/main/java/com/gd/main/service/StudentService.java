@@ -1,9 +1,7 @@
 package com.gd.main.service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -22,7 +20,7 @@ public class StudentService {
 	@Autowired
 	StudentDAO dao;
 
-	public HashMap<String, Object> stuList(HashMap<String, String> params) {
+	public HashMap<String, Object> stuList(HashMap<String, String> params, boolean login) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		// hashmap 을 반환하기위해 객체화
 
@@ -63,6 +61,7 @@ public class StudentService {
 
 		ArrayList<StuDTO> list = dao.stuList(map);
 		logger.info("list : " + list.size());
+		map.put("login", login);
 		map.put("list", list);
 
 		return map;
@@ -109,7 +108,7 @@ public class StudentService {
 		return map;
 	}
 
-	public HashMap<String, Object> stuRegister(HashMap<String, String> params) throws ParseException {
+	public HashMap<String, Object> stuRegister(HashMap<String, String> params){
 		logger.info("들어왔는지 확인");
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		

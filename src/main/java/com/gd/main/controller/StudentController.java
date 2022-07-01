@@ -1,6 +1,5 @@
 package com.gd.main.controller;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -49,14 +48,14 @@ public class StudentController {
 			login = true;
 		}
 		
-		return service.stuList(params);
+		return service.stuList(params,login);
 	}
 	
 	@RequestMapping("/stuSearch.ajax")
 	@ResponseBody
 	public HashMap<String, Object> stuSearch(HttpSession session, @RequestParam HashMap<String, String> params) {
 		
-		return service.stuList(params);
+		return service.stuList(params, false);
 	}
 	
 	
@@ -201,7 +200,7 @@ public class StudentController {
 	@RequestMapping("/stuRegister.ajax")
 	   @ResponseBody
 	    public HashMap<String, Object>stuRegister(
-	          @RequestParam HashMap<String, String> params) throws ParseException {
+	          @RequestParam HashMap<String, String> params){
 	       
 	       logger.info("글쓰기 확인 : " + params);
 	       return service.stuRegister(params);
@@ -320,6 +319,16 @@ public class StudentController {
 	       logger.info("희망과목보기");
 	       return service.stuWantSubSearch(params);
 	    }
+	
+		
+	@RequestMapping(value="/cliUpdate.go")
+	public String cliUpdateGo(@RequestParam String cli_no, HttpSession session) {
+		logger.info("고객 수정 페이지 이동 : " + cli_no);
+		session.setAttribute("cli_no", cli_no);
+		
+		
+		return "./student/cliUpdate";
+	}
 	
 	
 	

@@ -165,9 +165,9 @@
                             </a>                             
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
-                        <div class="small">Logged in as:</div>
-                        Start Bootstrap
+                    <div class="sb-sidenav-footer" style="font-size:20px; text-align:center;">
+                        <div class="small">Logged in as : ${sessionScope.empName} </div>                        
+                        <br/><br/>
                     </div>
                 </nav>
             </div>
@@ -223,7 +223,7 @@
 							<table id="goodList">
 								<thead>
 									<tr>
-										<th>과목번호</th>
+										<th>과정번호</th>
 										<th>과정명</th>
 										<th>과목명</th>
 										<th>개강일</th>

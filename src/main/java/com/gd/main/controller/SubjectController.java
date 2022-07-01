@@ -89,31 +89,39 @@ public class SubjectController {
 		ArrayList<SubDTO> srcList = service.subDetailsc(sub_no);
 		ArrayList<SubDTO> photoList = service.subCurriDetail(sub_no);
 		ArrayList<SubDTO> subImgList = service.subImgDetail(sub_no);
+
 		
-		model.addAttribute("subDetail", subDetail);
-		model.addAttribute("srcList", srcList);
-		model.addAttribute("photoList", photoList);
-		model.addAttribute("subImgList", subImgList);
+		if(session.getAttribute("loginId") != null) {
+				model.addAttribute("subDetail", subDetail);
+				model.addAttribute("srcList", srcList);
+				model.addAttribute("photoList", photoList);
+				model.addAttribute("subImgList", subImgList);
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스 입니다.");
+		}
+				
 		return "./subject/subDetail";
 	}
 	
 	@RequestMapping("/subDetail.ajax")
 	@ResponseBody
 	public HashMap<String, Object> subDetail(HttpSession session) {
+		boolean login = false;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		String sub_no = (String) session.getAttribute("sub_no");
-		logger.info("상세보기 요청 : " + sub_no);
-		session.removeAttribute("sub_no");
-		SubDTO dto = service.subDetail(sub_no);
-		ArrayList<SubDTO> list = service.subDetailsc(sub_no);
-		ArrayList<SubDTO> photo = service.subCurriDetail(sub_no);
-		ArrayList<SubDTO> subimg = service.subImgDetail(sub_no);
-		map.put("dto", dto);
-		map.put("list", list);
-		map.put("photo", photo);
-		map.put("subimg", subimg);
-			
+		if(session.getAttribute("loginId") != null) {
+			String sub_no = (String) session.getAttribute("sub_no");
+			logger.info("상세보기 요청 : " + sub_no);
+			session.removeAttribute("sub_no");
+			SubDTO dto = service.subDetail(sub_no);
+			ArrayList<SubDTO> list = service.subDetailsc(sub_no);
+			ArrayList<SubDTO> photo = service.subCurriDetail(sub_no);
+			ArrayList<SubDTO> subimg = service.subImgDetail(sub_no);
+			map.put("dto", dto);
+			map.put("list", list);
+			map.put("photo", photo);
+			map.put("subimg", subimg);
+		}
+		map.put("login", login);
 		return map;
 	}
 	
@@ -134,19 +142,23 @@ public class SubjectController {
 			@RequestParam(value = "sub_time") String subTime,
 			@RequestParam(value = "sub_summary") String subSummary,
 			@RequestParam(value = "subimg", required = false) MultipartFile subimg,
-			@RequestParam(value = "file", required = false) MultipartFile file) {
+			@RequestParam(value = "file", required = false) MultipartFile file, HttpSession session) {
 		logger.info("과목 수정 : " +  subName + ", " + subCondition + ", " + subTime + ", " + subSummary+", " + subimg);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> params = new HashMap<String, String>();
+		boolean login = false;
 		params.put("sub_no", subNo);
 		params.put("sub_name", subName);
 		params.put("sub_condition", subCondition);
 		params.put("sub_time", subTime);
 		params.put("sub_summary", subSummary);
 		
-		boolean success = service.subUpdate(params, subimg, file);
-		map.put("success", success);
-		
+		if (session.getAttribute("loginId") != null) {
+			login = true;
+			boolean success = service.subUpdate(params, subimg, file);
+			map.put("success", success);
+		}
+		map.put("login", login);
 		return map;
 	}
 	

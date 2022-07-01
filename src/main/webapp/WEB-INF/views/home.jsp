@@ -14,7 +14,10 @@
 	<hr/>
 	<br/>
 	<input type="button" value="직원전용 페이지" onclick="location.href='login.go'">
-	
+	<br/>
+	<hr/>
+	<br/>
+	<input type="button" value="상담신청 페이지" onclick="location.href='firstRegister.go'">
 	
 	
 </body>

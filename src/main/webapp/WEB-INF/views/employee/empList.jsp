@@ -249,15 +249,18 @@
 
 </body>
 <script>
-function EmpUpdateForm(){
-	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
-	location.href='empUpdate.go?emp_no='+emp_no;
-}
+
 
 var currPage = 1;
 
 //리스트 불러오기
 listCall(currPage);
+
+//검색 페이징처리
+$('#empSearch').on('click',function(){	
+	$("#pagination").twbsPagination('destroy');
+	empSearchCall(currPage);
+});
 
 function listCall(page) {
 	
@@ -292,57 +295,58 @@ function listCall(page) {
 			console.log(e);
 		}
 	});
-	
-	
-	
-$('#empSearch').on('click',function(){
-		
-		var empSearchCategory = $("#empSearchCategory option:selected").val();
-			
-		var empSearchContent = $("#empSearchContent").val();
-		
-		$("#pagination").twbsPagination('destroy');
-				
-		$.ajax({
-			type:'get',
-			url:'empSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				empSearchCategory:empSearchCategory,
-				empSearchContent:empSearchContent
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage=data.currPage;
-
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 10, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-	
-	
-	
-	
-	
-	
 }
+	
+	
+
+
+//직원 검색 리스트
+function empSearchCall(page) {
+	var pagePerNum = 10;
+	
+	var empSearchCategory = $("#empSearchCategory option:selected").val();
+	var empSearchContent = $("#empSearchContent").val();
+			
+	$.ajax({
+		type:'get',
+		url:'empSearch.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page,
+			empSearchCategory:empSearchCategory,
+			empSearchContent:empSearchContent
+			},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.list);
+			currPage=data.currPage;
+
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 10, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					empSearchCall(page);
+				}
+			});
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+
+
+}
+	
+	
+	
+	
+
 	
 
 //리스트 그리기
@@ -368,6 +372,11 @@ function drawList(list){
 	$('#list').empty();
 	$('#list').append(content);
 	
+}
+
+function EmpUpdateForm(){
+	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
+	location.href='empUpdate.go?emp_no='+emp_no;
 }
 </script>
 </html>

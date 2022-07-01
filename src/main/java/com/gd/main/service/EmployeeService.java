@@ -71,53 +71,51 @@ public class EmployeeService {
 	}
 	
 	//직원리스트
-	public HashMap<String,Object> empList(HashMap<String,String> params) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int cnt = Integer.parseInt(params.get("cnt")); //1페이지의 게시물 수 
-		int page = Integer.parseInt(params.get("page")); //현재 페이지.
-		
-		
-		String empSearchCategory=params.get("empSearchCategory");
-		String empSearchContent = params.get("empSearchContent");	
-		logger.info("보여줄 페이지:"+cnt+" / "+page);
-		// 1페이지 -> 0(offset:게시글 시작 번호)
-		// 2페이지 -> 5
-		// 3페이지 -> 10
-		// 4페이지 -> 15
-		// 5페이지 -> 20
-		
-		 map.put("cnt", cnt);
-		
-		map.put("empSearchCategory", empSearchCategory);
-		map.put("empSearchContent", empSearchContent);
-		
-		// 총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-		ArrayList<EmployeeDTO> allCount = dao.allCount(map);
-		int allCnt = allCount.size();
-		logger.info("allCnt : " + allCnt);
-		int pages = allCnt % cnt > 0 ? (allCnt / cnt) + 1 : (allCnt / cnt);
-		logger.info("pages : " + pages);
+		public HashMap<String,Object> empList(HashMap<String,String> params) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			int cnt = Integer.parseInt(params.get("cnt")); //1페이지의 게시물 수 
+			int page = Integer.parseInt(params.get("page")); //현재 페이지.
+			String empSearchCategory=params.get("empSearchCategory");
+			String empSearchContent = params.get("empSearchContent");	
+			logger.info("보여줄 페이지:"+cnt+" / "+page);
+			// 1페이지 -> 0(offset:게시글 시작 번호)
+			// 2페이지 -> 5
+			// 3페이지 -> 10
+			// 4페이지 -> 15
+			// 5페이지 -> 20
+			
+			 map.put("cnt", cnt);
+			
+			map.put("empSearchCategory", empSearchCategory);
+			map.put("empSearchContent", empSearchContent);
+			
+			
+			ArrayList<EmployeeDTO> allCount = dao.allCount(map);
+			int allCnt = allCount.size();
+			logger.info("allCnt : " + allCnt);
+			int pages = allCnt % cnt > 0 ? (allCnt / cnt) + 1 : (allCnt / cnt);
+			logger.info("pages : " + pages);
 
-		
-		if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결
-			page = pages;
+			
+			if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결
+				page = pages;
+			}
+			
+			map.put("pages", pages); //만들 수 있는 최대 페이지 수
+			map.put("currPage", page); //현재 페이지
+			
+			int offset = (page-1) * cnt;
+			logger.info("offset : "+offset);
+			
+			map.put("offset", offset);
+			
+			ArrayList<EmployeeDTO> list = dao.empList(map);
+			logger.info("list : "+list.size());
+			map.put("list", list);
+			
+			return map;
 		}
-		
-		map.put("pages", pages); //만들 수 있는 최대 페이지 수
-		map.put("currPage", page); //현재 페이지
-		
-		int offset = (page-1) * cnt;
-		logger.info("offset : "+offset);
-		
-		map.put("offset", offset);
-		
-		ArrayList<EmployeeDTO> list = dao.empList(map);
-		logger.info("list : "+list.size());
-		map.put("list", list);
-		
-		return map;
-	}
 	
 	public HashMap<String, Object> empOverlay(String chkName) {
 		HashMap<String, Object> map = new HashMap<String, Object>();

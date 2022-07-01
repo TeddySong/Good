@@ -291,6 +291,7 @@ function listCall(page){
 function scrSubSearchCall(page){
 	var pagePerNum = 5;	
 	    var subSelect = $("#sub_name option:selected").val();
+	    $('input[name="sub_condition"]').prop('checked', false);
 	    $.ajax({
 	    	type:'get',
 	    	url:'scriptlist.ajax',
@@ -326,6 +327,7 @@ function scrSubSearchCall(page){
 function scSubConditionCall(page){
 	var pagePerNum = 5;	
 		var subCo = $("input:radio[name='sub_condition']:checked").val();
+		$("#sub_name option:eq(0)").prop("selected", true);
 		console.log(subCo);
 		
 		 $.ajax({

@@ -113,7 +113,7 @@
 		<tbody id="cliSearchlist">
 			<c:forEach items="${cliSearchList}" var="cliSearchList">
 			<tr id="cliSearch_${cliSearchList.cli_no}">
-				<td><input type="radio" value="${cliSearchList.cli_no}"/></td>
+				<td><input type="radio" name="cliSearchList" value="${cliSearchList.cli_no}"/></td>
 				<td id="cli_name">${cliSearchList.cli_name}</td>
 				<td id="cli_phone">${cliSearchList.cli_phone}</td>
 				<td id="emp_name">${cliSearchList.emp_name}</td>
@@ -130,20 +130,31 @@
 </body>
 <script>
 	noHidden();
+	
+	
 	function noHidden(){
 		$(".hidden").css("display", "none");
 	}
 
+	
+	
 	function cliChoice(){
 		
 		var cliArr = new Array();
 		
 		console.log("여기냐");
 		
+		if($('#cliSearchList input[type="radio"]:checked').is(":checked") == false){
+			alert("학생을 선택해 주세요");
+		}
+		//console.log("현재 체크상태::::" + test);
+		
 		$('#cliSearchList input[type="radio"]:checked').each(function(idx){
 		console.log("그럼여기냐");
 		var cliChoice = $(this).val();
 		console.log(cliChoice);
+	
+
 		
 		$tr = $("#cliSearch_"+cliChoice);
 		console.log($tr.text());	

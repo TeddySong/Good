@@ -251,13 +251,14 @@
 <script>
 
 
+
 var currPage = 1;
 
 //리스트 불러오기
 listCall(currPage);
 
 //검색 페이징처리
-$('#empSearch').on('click',function(){	
+$('#empSearch').on('click',function(){
 	$("#pagination").twbsPagination('destroy');
 	empSearchCall(currPage);
 });
@@ -356,6 +357,8 @@ function drawList(list){
 	
 	list.forEach(function(item){
 	
+		if(item.emp_endDate==null){item.emp_endDate= '';}
+		
 		content += '<tr>';
 		content += '<td><input type=\"radio\" name="emp"></td>';	
 		content += '<td>'+item.emp_no+'</td>';
@@ -365,6 +368,7 @@ function drawList(list){
 		content += '<td>'+item.emp_position+'</td>';
 		content += '<td>'+item.emp_startDate+'</td>';
 		content += '<td>'+item.emp_endDate+'</td>';
+		
 		content += '<td>'+item.emp_condition+'</td>';
 		content += '</tr>';
 	});
@@ -373,10 +377,15 @@ function drawList(list){
 	$('#list').append(content);
 	
 }
-
+//0701 13:00 조성훈 수정버튼눌렀을때 페이지400 안 나도오록 수정중
 function EmpUpdateForm(){
 	var emp_no = $('input[type=radio]:checked').parents('td').next().html();
-	location.href='empUpdate.go?emp_no='+emp_no;
+	if(emp_no>0){
+		location.href='empUpdate.go?emp_no='+emp_no;	
+	}else{
+		alert("수정할 직원의 버튼을 선택하고 수정버튼을 누르세요!");
+	}
+	
 }
 </script>
 </html>

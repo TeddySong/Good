@@ -332,9 +332,13 @@ function stuSearchCall(page) {
 		},
 		error:function(e){
 			console.log(e);
+			  if(e.statusText == 'error'){
+		            alert("조회된 데이터가 없습니다.");
+		            $('#stuSearchContent').val('');
+		            listCall(currPage);
+		         }
 		}
 	}); 
-
 
 
 }

@@ -10,16 +10,16 @@
 		<where>
 				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
 					<if test="stuSearchCategory.equals('cli_name')">
-						c.cli_name = #{stuSearchContent}
+						AND c.cli_name LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('cli_phone')">
-						c.cli_phone = #{stuSearchContent}
+						AND c.cli_phone LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('stu_age')">
-						s.stu_age = #{stuSearchContent}
+						AND s.stu_age LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('emp_name')">
-						e.emp_name = #{stuSearchContent}
+						AND e.emp_name  LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 			</if>
 			</where>
@@ -34,16 +34,16 @@
 		<where>
 				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
 					<if test="stuSearchCategory.equals('cli_name')">
-						c.cli_name = #{stuSearchContent}
+						AND c.cli_name LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('cli_phone')">
-						c.cli_phone = #{stuSearchContent}
+						AND c.cli_phone LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('stu_age')">
-						s.stu_age = #{stuSearchContent}
+						AND s.stu_age LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 					<if test="stuSearchCategory.equals('emp_name')">
-						e.emp_name = #{stuSearchContent}
+						AND e.emp_name  LIKE concat('%',#{stuSearchContent},'%')
 					</if>
 			</if>
 			</where>

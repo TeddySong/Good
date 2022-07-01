@@ -60,7 +60,7 @@
 	<!-- 직원목록 보기 -->
 	<select id="empList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
 		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition,
-				 emp_position, emp_startDate,emp_endDate FROM employee
+					 emp_position, emp_startDate,emp_endDate,emp_endDate FROM employee
 		
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">

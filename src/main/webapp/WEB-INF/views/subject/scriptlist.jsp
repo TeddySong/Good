@@ -20,7 +20,7 @@
 	#goodList {                
               border: 1px #a39485 solid;
 			  box-shadow: 0 2px 5px rgba(0,0,0,.25);
-			  width: 70%;
+			  width: 80%;
 			  border-collapse: collapse;
 			  border-radius: 5px;
 			  overflow: hidden;
@@ -185,16 +185,22 @@
                                 <i class="fas fa-table me-1"></i>
                                 과목리스트
                             </div>
-<div>
-<input type="hidden" id="sub_no"  value=""/>
-<select id='sub_name'>
-</select>
-<input type="radio" name="sub_condition" value="단과"/>단과
-<input type="radio" name="sub_condition" value="종합"/>종합
-<input type="radio" name="sub_condition" value="숨김"/>숨김
-<button onclick="scrDel()">삭제</button>
-<button  onclick="scrRegister_pop()">등록</button>
-</div>
+<table id="goodList">
+<tr>
+<td class="hidden"><input type="text" id="sub_no"  value=""/></td>
+<td><select id='sub_name' style="width:80%;">
+</select></td>
+<td>
+<input type="radio" name="sub_condition" value="단과"/> 단과 
+<input type="radio" name="sub_condition" value="종합"/> 종합 
+<input type="radio" name="sub_condition" value="숨김"/> 숨김 
+</td>
+<td>
+<button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrDel()">삭제</button>
+<button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrRegister_pop()">등록</button>
+</td>
+</tr>
+</table>
 <br/>
 <table id="goodList">
 	 	<thead>

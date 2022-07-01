@@ -41,8 +41,19 @@
   ======================================================== -->
 </head>
 <style>
- 
-
+ textarea{ resize:none;width:95%;height:150px;}
+.col-md-6{position: relative; right:-27%;
+margin:0px; height:450px; 
+  } 
+.title-left{top:-30px;}
+#regTable{width:600px; height:500px; position: relative; top:-40px;}
+td #regBtn{top:-100px; position: relative; top:-70px; right:-23%; width:300px;}
+#req_content{ position: relative; top:-40px; }
+	.agree-area{
+		 font-size:11px;
+	}
+	.term_wrap{height:200px;
+	}
 </style>
 <body>
 
@@ -299,45 +310,47 @@
                     </div>
                     <div>
                     <!-- 폼태그  -->
-                    
+                 
+                 
+                        
                      
-                     	      <table  class="table  table-striped  table-bordered" >
-        
-					   
-			        	<tr>
-			        		<th>이름</th>
-			        		<td><input type="text" id="cli_name"  /></td>
-			        		
-			        	</tr>
-			        	<tr>
-			        		<th>연락처</th>
-			        		<td><input type="text"  id="cli_phone" oninput="autoHyphen(this)" maxlength="13"   /></td>
-			        	</tr>
-			        	<tr>
-			        		<th colspan="2" >
-			        			문의과목
-			        		</th>
-			        	</tr>
-			       		<tr> <!-- 과목 db에서 가져와 뿌리기 .  -->
-			       		
-				       		<th colspan="2" id="req_course" >
-				       			<c:forEach  var="sub" items="${subList}">
-				    
-					    			<label>
-									<input type="checkbox" value="${sub.sub_no}">		
-									${sub.sub_name}
-									</label>
-				       			</c:forEach>
-				       		</th>
-			       		</tr>
-			        	<tr><th colspan="2">상담요청내용</th></tr>      
-			        	
-			        	<tr>
-			        		<td colspan="2">
-					        	<textarea id="req_content" placeholder="내용을 입력해 주세요 (500자 이내)" ></textarea>
-			        		</td>
-			        	</tr>
-			        	<button id="regBtn">전송</button>
+                     	      <table id="regTable">
+   
+				        	<tr>
+				        		<th>이름</th>
+				        		<td><input type="text" id="cli_name"  /></td>
+				        		<th>연락처</th>
+				        		<td><input type="text"  id="cli_phone" oninput="autoHyphen(this)" maxlength="13"   /></td>
+				        	</tr>		
+				        
+				        	<tr>
+				        		<th colspan="4" >
+				        			문의과목
+				        		</th>
+				        	</tr>
+				       		<tr> <!-- 과목 db에서 가져와 뿌리기 .  -->
+				       		
+					       		<th colspan="4" id="req_course" >
+					       			<c:forEach  var="sub" items="${subList}">
+					    
+						    			<label>
+										<input type="checkbox" value="${sub.sub_no}">		
+										${sub.sub_name}
+										</label>
+					       			</c:forEach>
+					       		</th>
+				       		</tr>
+				        	<tr><th colspan="4">상담요청내용</th></tr>      
+				        	
+				        	<tr>
+				        		<td colspan="4">
+						        	<textarea id="req_content" placeholder="내용을 입력해 주세요 (500자 이내)" ></textarea>
+				        		</td>
+				        	</tr>
+				        	<tr> 
+				        		<td colspan="4"><button id="regBtn" class="btn btn-primary" width="288px">전송</button></td>
+	                     	</tr>
+                     		
                      	</table>
                    
                      

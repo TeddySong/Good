@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>과목 리스트 페이지</title>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,17 +13,17 @@
 <meta content="" name="keywords">
 
 <!-- Favicons -->
-<link href="assets/img/favicon.png" rel="icon">
-<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="../resources/img/homesub/favicon.png" rel="icon">
+<link href="../resources/img/homesub/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Vendor CSS Files -->
-<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/bootstrap-icons.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/glightbox.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/swiper-bundle.min.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="./resources/CSS/course/style.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/style.css" rel="stylesheet">
 
 <!-- =======================================================
 * Template Name: DevFolio - v4.7.1
@@ -33,7 +32,18 @@
 * License: https://bootstrapmade.com/license/
 ======================================================== -->
 </head>
+<style>
+	 textarea{ resize:none;width:95%;height:150px;}
+	.col-md-6{position: relative; right:-27%;
+	margin:0px; height:450px; 
+	  } 
+	.title-left{top:-30px;}
+	#regTable{width:600px; height:500px; position: relative; top:-40px;}
+	td #regBtn{top:-100px; position: relative; top:-70px; right:-23%; width:300px;}
+	#req_content{ position: relative; top:-40px; }
 
+
+</style>
 <body>
 
   <!-- ======= Header ======= -->
@@ -77,7 +87,7 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <div id="hero" class="hero route bg-image" style="background-image: url(assets/img/hero-bg.jpg)">
+  <div id="hero" class="hero route bg-image" style="background-image: url(../resources/img/homesub/hero-bg.jpg)">
     <div class="overlay-itro"></div>
     <div class="hero-content display-table">
       <div class="table-cell">
@@ -130,9 +140,9 @@
                         <div class="col-sm-8">
                             <h2 class="w-title">${dangwa.sub_name}</h2>
                             <!--이거는 사진 아래 설명이라 빼도 될듯함-->
-                            <div class="w-more">
+                            <!-- <div class="w-more">
                             <span class="w-ctegory">Web Design</span> / <span class="w-date">18 Sep. 2018</span>
-                            </div>
+                            </div> -->
                         </div>
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
@@ -160,9 +170,9 @@
                         <div class="col-sm-8">
                             <h2 class="w-title">${jonghab.sub_name}</h2>
                             <!--이거는 사진 아래 설명이라 빼도 될듯함-->
-                            <div class="w-more">
+                            <!-- <div class="w-more">
                             <span class="w-ctegory">Web Design</span> / <span class="w-date">18 Sep. 2018</span>
-                            </div>
+                            </div> -->
                         </div>
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
@@ -183,7 +193,7 @@
 
     <!-- ======= Contact Section ======= -->
     <!--상담신청-->
-    <section id="contact" class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(assets/img/overlay-bg.jpg)">
+    <section id="contact" class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(../resources/img/homesub/overlay-bg.jpg)">
       <div class="overlay-mf"></div>
       <div class="container">
         <div class="row">
@@ -200,71 +210,48 @@
                     </div>
                     <!--가입폼-->
                     <div>
-                      <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                        <div class="row">
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                            </div>
-                          </div>
-                          <div class="col-md-12 mb-3">
-                            <div class="form-group">
-                              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-                            </div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="form-group">
-                              <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
-                            </div>
-                          </div>
-                          <div class="col-md-12 text-center my-3">
-                            <div class="loading">Loading</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Your message has been sent. Thank you!</div>
-                          </div>
-                          <div class="col-md-12 text-center">
-                            <button type="submit" class="button button-a button-big button-rouded">Send Message</button>
-                          </div>
-                        </div>
-                      </form>
+                       	      <table id="regTable">
+   
+				        	<tr>
+				        		<th>이름</th>
+				        		<td><input type="text" id="cli_name"  /></td>
+				        		<th>연락처</th>
+				        		<td><input type="text"  id="cli_phone" oninput="autoHyphen(this)" maxlength="13"   /></td>
+				        	</tr>		
+				        
+				        	<tr>
+				        		<th colspan="4" >
+				        			문의과목
+				        		</th>
+				        	</tr>
+				       		<tr> <!-- 과목 db에서 가져와 뿌리기 .  -->
+				       		
+					       		<th colspan="4" id="req_course" >
+					       			<c:forEach  var="sub" items="${subList}">
+					    
+						    			<label>
+										<input type="checkbox" value="${sub.sub_no}">		
+										${sub.sub_name}
+										</label>
+					       			</c:forEach>
+					       		</th>
+				       		</tr>
+				        	<tr><th colspan="4">상담요청내용</th></tr>      
+				        	
+				        	<tr>
+				        		<td colspan="4">
+						        	<textarea id="req_content" placeholder="내용을 입력해 주세요 (500자 이내)" ></textarea>
+				        		</td>
+				        	</tr>
+				        	<tr> 
+				        		<td colspan="4"><button id="regBtn" class="btn btn-primary" width="288px">전송</button></td>
+	                     	</tr>
+                     		
+                     	</table>
                     </div>
                   </div>
 
-                  <div class="col-md-6">
-                    <!--약관동의로 활용 가능할지도-->
-                    <div class="title-box-2 pt-4 pt-md-0">
-                      <h5 class="title-left">
-                        Get in Touch
-                      </h5>
-                    </div>
-                    <!--텍스트부분-->
-                    <div class="more-info">
-                      <p class="lead">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis dolorum dolorem soluta quidem
-                        expedita aperiam aliquid at.
-                        Totam magni ipsum suscipit amet? Autem nemo esse laboriosam ratione nobis
-                        mollitia inventore?
-                      </p>
-                      <ul class="list-ico">
-                        <li><span class="bi bi-geo-alt"></span> 329 WASHINGTON ST BOSTON, MA 02108</li>
-                        <li><span class="bi bi-phone"></span> (617) 557-0089</li>
-                        <li><span class="bi bi-envelope"></span> contact@example.com</li>
-                      </ul>
-                    </div>
-                    <div class="socials">
-                      <ul>
-                        <li><a href=""><span class="ico-circle"><i class="bi bi-facebook"></i></span></a></li>
-                        <li><a href=""><span class="ico-circle"><i class="bi bi-instagram"></i></span></a></li>
-                        <li><a href=""><span class="ico-circle"><i class="bi bi-twitter"></i></span></a></li>
-                        <li><a href=""><span class="ico-circle"><i class="bi bi-linkedin"></i></span></a></li>
-                      </ul>
-                    </div>
-                  </div>
+               
                 </div>
               </div>
             </div>
@@ -301,16 +288,85 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="../resources/JS/homesub/purecounter.js"></script>
+  <script src="../resources/JS/homesub/purecounter.js"></script>
+  <script src="../resources/JS/homesub/glightbox.min.js"></script>
+  <script src="../resources/JS/homesub/swiper-bundle.min.js"></script>
+  <script src="../resources/JS/homesub/typed.min.js"></script>
+  <script src="../resources/JS/homesub/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="./resources/JS/course/main.js"></script>
+  <script src="../resources/JS/homesub/main.js"></script>
 
 </body>
+<script>
+$('#regBtn').on('click',function(){
+	let cli_name=$('#cli_name').val();
+	let cli_phone=$('#cli_phone').val();
+	
+	
+	let req_course= [];	
+	$('#req_course input[type="checkbox"]:checked').each(function(idx,item){
+		req_course.push($(this).val());		
+	});
+	let req_content=$('#req_content').val();
+	
+	console.log(req_course);
+	
+	/* 유효성 검사 */
+
+	
+	if(cli_name ==""){
+		alert('이름을 입력해 주세요'); 
+		$('#cli_name').focus();
+		return false;
+	}else if(cli_phone==""){
+		alert('전화번호를을 입력해 주세요'); 
+		$('#cli_phone').focus();
+	}else if(req_course==""){
+		alert('과목을 선택해주세요');
+		
+	}else if(req_content.length>500){
+		alert('500자내로 작성해 주세요')
+	}
+	else{
+		$.ajax({
+			type:'post',
+			url:'cliReg.ajax',
+			  async: false,
+			 traditional : true,
+			data:{
+				cli_name:cli_name,
+				cli_phone:cli_phone,
+				cli_req:req_content,
+				sub_no:req_course
+			
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				alert('고객을 등록했습니다.');
+	/* 			listCall(currPage);
+				$('#myModal').modal('hide'); */
+				location.reload();
+				
+			},
+			error:function(e){
+				console.log(e);
+			}
+			
+			
+		});	
+	
+	}
+});
+
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
+
+</script>
 
 </html>

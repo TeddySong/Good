@@ -19,7 +19,21 @@ public class CourseDTO {
 	private int co_capacity;
 	private int sub_no;
 	private String sub_condition;
+	private String sub_time;
+	private String sub_summary;
 	
+	public String getSub_time() {
+		return sub_time;
+	}
+	public void setSub_time(String sub_time) {
+		this.sub_time = sub_time;
+	}
+	public String getSub_summary() {
+		return sub_summary;
+	}
+	public void setSub_summary(String sub_summary) {
+		this.sub_summary = sub_summary;
+	}
 	private int subimg_no;
 	private String subimg_oriName;
 	private String subimg_newName;

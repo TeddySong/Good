@@ -257,7 +257,7 @@ var currPage = 1;
 listCall(currPage);
 
 //검색 페이징처리
-$('#empSearch').on('click',function(){	
+$('#empSearch').on('click',function(){
 	$("#pagination").twbsPagination('destroy');
 	empSearchCall(currPage);
 });

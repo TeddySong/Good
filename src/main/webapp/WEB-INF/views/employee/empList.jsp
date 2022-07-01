@@ -357,6 +357,8 @@ function drawList(list){
 	
 	list.forEach(function(item){
 	
+		if(item.emp_endDate==null){item.emp_endDate= '';}
+		
 		content += '<tr>';
 		content += '<td><input type=\"radio\" name="emp"></td>';	
 		content += '<td>'+item.emp_no+'</td>';

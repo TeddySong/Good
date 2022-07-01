@@ -59,7 +59,8 @@
  
 	<!-- 직원목록 보기 -->
 	<select id="empList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
-		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition, emp_position, emp_startDate,emp_endDate FROM employee
+		SELECT emp_no, emp_name, emp_id, emp_phone, emp_condition,
+				 emp_position, emp_startDate,emp_endDate FROM employee
 		
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
@@ -81,26 +82,32 @@
 	
 	</select>
 	
-	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO">
-		SELECT COUNT(emp_no) FROM employee
-				<where>
-					<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
-						<if test="empSearchCategory.equals('emp_name')">
-							emp_name = #{empSearchContent}
-						</if>
-						<if test="empSearchCategory.equals('emp_phone')">
-							emp_phone = #{empSearchContent}
-						</if>
-						<if test="empSearchCategory.equals('emp_position')">
-							emp_position = #{empSearchContent}
-						</if>
-						<if test="empSearchCategory.equals('emp_condition')">
-							emp_condition = #{empSearchContent}
-						</if>
+	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
+		SELECT count(emp_no) FROM employee
+	<!-- 	parameterType="hashmap" -->
+	<where>
+				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
+					<if test="empSearchCategory.equals('emp_name')">
+						emp_name = #{empSearchContent}
 					</if>
-		</where>	
-	</select>
+					<if test="empSearchCategory.equals('emp_phone')">
+						emp_phone = #{empSearchContent}
+					</if>
+					<if test="empSearchCategory.equals('emp_position')">
+						emp_position = #{empSearchContent}
+					</if>
+					<if test="empSearchCategory.equals('emp_condition')">
+						emp_condition = #{empSearchContent}
+					</if>
+		</if>
+	</where>	
 
+	
+	</select>
+	 
+	
+	
+	
 	<select id="empOverlay" parameterType="String" resultType="String">
 		SELECT emp_name
 		FROM 

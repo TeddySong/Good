@@ -244,6 +244,12 @@ var currPage = 1;
 //리스트 불러오기
 listCall(currPage);
 
+//검색 페이징처리
+$('#stuSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	stuSearchCall(currPage);
+});
+
 function listCall(page) {
 	
 	var pagePerNum = 10;
@@ -285,51 +291,54 @@ function listCall(page) {
 		}
 	});
 	
-		$('#stuSearch').on('click',function(){
-		
-		var stuSearchCategory = $("#stuSearchCategory option:selected").val();
-			
-		var stuSearchContent = $("#stuSearchContent").val();
-		
-		$("#pagination").twbsPagination('destroy');
-				
-		$.ajax({
-			type:'get',
-			url:'stuSearch.ajax',
-			data:{
-				cnt : pagePerNum,
-				page : page,
-				stuSearchCategory:stuSearchCategory,
-				stuSearchContent:stuSearchContent
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage=data.currPage;
-
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
-			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	});
-	
-	
-	
 }
+	
+		
+//학생 검색 리스트
+function stuSearchCall(page) {
+	var pagePerNum = 10;
+
+	var stuSearchCategory = $("#stuSearchCategory option:selected").val();
+	var stuSearchContent = $("#stuSearchContent").val();
+	
+			
+	$.ajax({
+		type:'get',
+		url:'stuSearch.ajax',
+		data:{
+			cnt : pagePerNum,
+			page : page,
+			stuSearchCategory:stuSearchCategory,
+			stuSearchContent:stuSearchContent
+			},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.list);
+			currPage=data.currPage;
+
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
+					console.log(page);
+					currPage=page;
+					stuSearchCall(page);
+				}
+			});
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+
+
+
+}
+
 
 //리스트 그리기
 function drawList(list){

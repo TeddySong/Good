@@ -174,16 +174,16 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">과목 목록</h1>                        
+                        <h1 class="mt-4">과목후기 목록</h1>                        
                         <div class="card mb-4">
                             <div class="card-body">
-                                GOOD2 IT 과목 리스트 입니다.                                
+                                GOOD2 IT 과목후기 리스트 입니다.                                
                             </div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                과목리스트
+                                과목후기 리스트
                             </div>
 <table id="goodList">
 <tr>

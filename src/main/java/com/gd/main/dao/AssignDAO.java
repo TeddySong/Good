@@ -19,6 +19,9 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
 
+	int assStuListInsert(HashMap<String, Object> assMap);
+
+
 
 	
 }

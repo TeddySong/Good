@@ -82,7 +82,7 @@ public class AssignService {
 
 
 
-	public HashMap<String, Object> courList2(HashMap<String, String> params) {
+	public HashMap<String, Object> courList2(HashMap<String, String> params, String stu_no) {
 HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//cnt : 리스트 갯수, page : 보여줄 페이지 수
@@ -137,6 +137,8 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("currPage", page); //현재 페이지
 		
+		map.put("stu_no", stu_no);
+		
 		int offset = (page-1) * cnt;
 		logger.info("offset,cnt : "+offset+","+cnt); //offset:게시글 시작번호
 		
@@ -144,13 +146,58 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		searchResult.put("cnt", cnt);
 		searchResult.put("offset", offset);
 		
+		
 		ArrayList<AssListDTO> courList = dao.courList2(searchResult);
 		
 	
 		map.put("courList", courList);
+		logger.info(map + "~");
 		
 		return map;
 	}
+
+
+
+	public HashMap<String, Object> assStuListInsert(HashMap<String, String> params,String stu_no) {
+			
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		String co_no = params.get("co_no");
+		//assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		assMap.put("co_no", co_no);
+		String waiting = "대기";
+		assMap.put("ass_condition", waiting);
+		
+		logger.info(assMap + "여긴어때");
+		
+		int row = dao.assStuListInsert(assMap);
+		
+		boolean cnt = false;
+		if (row > 0) {
+			cnt = true;
+
+		}
+		assMap.put("success", cnt);
+		return assMap;
+		
+		}
+	
+
+		/*
+		 * public HashMap<String, Object> assStuCoList(HashMap<String, String> params, String stu_no) {
+		 * 
+		 * HashMap<String, Object> assMap = new HashMap<String, Object>();
+		 * assMap.put("params", params);
+		 *  assMap.put("stu_no", stu_no);
+		 * 
+		 * ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(assMap);
+		 * assMap.put("assStuCoList", assStuCoList);
+		 * 
+		 * logger.info(assMap + "~");
+		 * 
+		 * return assMap;
+		 *  }
+		 */
 	 
 	 
 }

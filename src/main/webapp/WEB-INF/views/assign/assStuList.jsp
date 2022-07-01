@@ -198,15 +198,18 @@
 											<h3>과정 상세정보</h3>		
 											<th>학생명</th>
 												<td><input type="text" id=cli_name value=""></td>
+											<th>학생번호</th>
+												<td id="stu_no"></td>
 												<td>
 													<button id="cli_nameSearch" onclick="">검색</button>
 													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
 												</td>
-												<td id ="coSearch"  colspan="3" >
+												<td id ="coSearch"  colspan="1" >
 													<button onclick="coSearch_pop()">과정검색</button></td>
 												</td>
 										</tr>
 										<tr>
+											<th></th>
 											<th>과정명</th>
 											<th>개강일</th>
 											<th>종강일</th>
@@ -274,7 +277,7 @@ function listCall(page){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			
+			$('#stu_no').html(data.stu_no);
 			drawList(data.assStuCoList);
 		 	//$('#cli_name').html(data.dto.cli_name);
 			/* $('#sub_name').html(data.dto.sub_name);
@@ -317,7 +320,9 @@ function listCall(page){
  function drawList(assStuCoList){
 	var cliName=assStuCoList.slice(0);
 	var pop = cliName.pop();
+
 	console.log(pop.cli_name);
+	console.log(stu_no);
 	var content="";
 
 	assStuCoList.forEach(function(item){
@@ -327,11 +332,12 @@ function listCall(page){
 		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
 		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		content += '<tr>';
+		content += '<td>'+item.stu_no+'</td>';	
 		content += '<td>'+item.co_name+'</td>';		
 		content += '<td>'+startErrorDate+'</td>';
 		content += '<td>'+endErrorDate+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';
-		content += '<td><select id=\"coCondition\">';
+		content += '<td><select id="coCondition">';
 		content +=	'<option value='+item.ass_condition+'>재학</option>';
 		content +=	'<option value='+item.ass_condition+'>대기</option>';
 		content +=	'<option value='+item.ass_condition+'>철회</option>';
@@ -345,7 +351,8 @@ function listCall(page){
 } 
 
 function coSearch_pop(){
-	window.open("/coSearList.go","new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	var stu_no=$("#stu_no").html();
+	window.open("/coSearList.go?stu_no="+stu_no,"new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 
 }
 

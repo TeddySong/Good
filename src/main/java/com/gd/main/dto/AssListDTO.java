@@ -17,6 +17,8 @@ public class AssListDTO {
 	private String cli_phone;
 	private String emp_name;
 	private String co_condition;
+	private int co_no;
+
 	
 	//배정 과정상세보기 필요 컬럼
 	private String ass_condition;
@@ -34,7 +36,7 @@ public class AssListDTO {
 	public void setCo_no(int co_no) {
 		this.co_no = co_no;
 	}
-	private int co_no;
+	
 	
 	public String getAss_condition() {
 		return ass_condition;

@@ -1,6 +1,5 @@
 package com.gd.main.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gd.main.dto.AssListDTO;
 import com.gd.main.service.AssignService;
 
 @Controller
@@ -150,6 +148,7 @@ public class AssignController {
 			 String page = "home";
 			 if(session.getAttribute("loginId") != null) {
 				//session.setAttribute("stu_no", stu_no); 	
+				
 				page = "./assign/coSearList";
 			 }
 			return page;
@@ -158,13 +157,15 @@ public class AssignController {
 		@RequestMapping("/coSearList.ajax")
 		@ResponseBody
 		public HashMap<String, Object> courList(
-				@RequestParam HashMap<String, String> params) {
+				@RequestParam HashMap<String, String> params,HttpSession session) {
 			//HashMap<String, Object> map = new HashMap<String, Object>();
 			logger.info("과정 리스트 요청 : "+params);	
-		
-			HashMap<String, Object> map = service.courList2(params);
-			ArrayList<AssListDTO> courList = (ArrayList<AssListDTO>) map.get("courList");
-			logger.info("test");
+			String stu_no = (String)session.getAttribute("stu_no");
+			HashMap<String, Object> map = service.courList2(params,stu_no);
+			
+			
+			logger.info(map + "!");
+			
 		
 			return map;
 		}
@@ -174,13 +175,32 @@ public class AssignController {
 		@RequestMapping("/assCourSearch.ajax")
 		@ResponseBody
 		public HashMap<String, Object> courSearch(
-				@RequestParam HashMap<String, String> params){
+				@RequestParam HashMap<String, String> params,HttpSession session){
 			//HashMap<String, Object> map = new HashMap<String, Object>();
 			logger.info("검색결과 리스트 요청"+params);
-			return service.courList2(params);
+			String stu_no = (String)session.getAttribute("stu_no");
+		
+			return service.courList2(params, stu_no);
 		}
 	  
-	  
+		@RequestMapping("/assStuListInsert.ajax")
+		@ResponseBody 
+		public HashMap<String, Object> assStuListInsert(HttpSession session,@RequestParam HashMap<String, String> params){
+			  
+			  logger.info("학생 배정 페이지 이동");
+			  
+				/*
+				 * HashMap<String, Object> map = new HashMap<String, Object>(); 
+				 *  
+				 * AssListDTO dto = service.assStuCoList(cli_name);
+				 * 
+				 * map.put("dto", dto); logger.info("클라이언트 : " + dto);
+				 */
+			String stu_no =(String) session.getAttribute("stu_no");
+			
+			  
+			 return service.assStuListInsert(params,stu_no);
+			 }
 
 
 }

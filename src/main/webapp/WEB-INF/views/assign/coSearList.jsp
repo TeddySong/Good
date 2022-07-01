@@ -89,7 +89,7 @@
                             <div>
                             <table id="goodList">
                             	<tr>
-                            	
+                            		<td id="stu_no"></td>
                             		<td><select id="courseNameSearch" name="">
 									          <option value="co_name">과정명</option>
 									          <option value="co_condition">과정 진행상황</option>
@@ -102,12 +102,13 @@
 									         </c:forEach>
 									      </select>
 									</td> --%>
+									
                             		<td><input id="keyword" type="text" value="" style="width:100%;" placeholder="검색어를 입력해주세요"/></td>
                             		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td>~</td>
                             		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
-                            		<td><button onclick="location.href='courRegister.go'" class="goodRegister">등록</button></td>
+                            		<td><button type="button" onclick="esc()" id="courSearch" class="goodRegister">검색</button></td>
+                            		<td><button onclick="assStuList()" class="goodRegister">등록</button></td>
                             	</tr>
                             </table>
 							<br/>
@@ -235,6 +236,7 @@ function listCall(page){
 		dataType:'JSON',
 		success:function(data){
 			//console.log(data);
+			$('#stu_no').html(data.stu_no);
 			drawList(data.courList);
 			currPage=data.currPage;
 			
@@ -300,6 +302,7 @@ function courseSearch(page){
 		dataType:'json',
 		success:function(data){
 			console.log(data);
+			
 			drawList(data.courList);
 			currPage = data.currPage;
 			
@@ -351,9 +354,36 @@ function drawList(courList){
 	
 	$('#list').empty();
 	$('#list').append(content);
-	
-	
 }
+
+function assStuList(){
+	
+	var co_no = $('input[name="selectCo"]:checked').val();
+	console.log(co_no);
+	
+	$.ajax({
+		type:'get',
+		url:'assStuListInsert.ajax',
+		data:{
+			co_no:co_no
+			/* subList:subList */
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			opener.parent.location.href='assStuList.go?stu_no='+(data.stu_no);
+			window.close();
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});	
+}
+function esc(){
+	
+	window.close();
+}
+
 
 
 </script>

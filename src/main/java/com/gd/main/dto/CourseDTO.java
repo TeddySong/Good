@@ -21,7 +21,28 @@ public class CourseDTO {
 	private String sub_condition;
 	private String sub_time;
 	private String sub_summary;
+	private int curri_no;
+	private String curri_oriName;
+	private String curri_newName;
 	
+	public int getCurri_no() {
+		return curri_no;
+	}
+	public void setCurri_no(int curri_no) {
+		this.curri_no = curri_no;
+	}
+	public String getCurri_oriName() {
+		return curri_oriName;
+	}
+	public void setCurri_oriName(String curri_oriName) {
+		this.curri_oriName = curri_oriName;
+	}
+	public String getCurri_newName() {
+		return curri_newName;
+	}
+	public void setCurri_newName(String curri_newName) {
+		this.curri_newName = curri_newName;
+	}
 	public String getSub_time() {
 		return sub_time;
 	}

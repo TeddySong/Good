@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -316,5 +317,64 @@ public class ClientController {
 		return "./client/homeSubDetail2";
 	}
 	
+	@RequestMapping("/homeSubDetail3.do")
+	public String detailPage3( HttpSession session, Model model) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		/*
+		 * logger.info("상세보기 페이지 이동 : " +sub_no); session.setAttribute("sub_no",
+		 * sub_no);
+		 * 
+		 * SubDTO subDetail = subService.subDetail(sub_no); ArrayList<SubDTO> srcList =
+		 * subService.subDetailsc(sub_no); ArrayList<SubDTO> photoList =
+		 * subService.subCurriDetail(sub_no); ArrayList<SubDTO> subImgList =
+		 * subService.subImgDetail(sub_no);
+		 * 
+		 * 
+		 * 
+		 * model.addAttribute("subDetail", subDetail); model.addAttribute("srcList",
+		 * srcList); model.addAttribute("photoList", photoList);
+		 * model.addAttribute("subImgList", subImgList);
+		 */
+		 ArrayList< HashMap<String, Object>> subList= service.regSub();
+		 map.put("subList", subList);
+		 model.addAttribute("subList", subList);
+		
+		return "client/homeSubDetail3";
+	}
+	
+	
+	// 홈페이지 상담신청 
+	@RequestMapping("/homeCliReg")
+	@ResponseBody
+	public String homeReg (@RequestParam(value="cli_name",required = false) String cli_name, @RequestParam(value="cli_phone",required = false) String cli_phone,
+			@RequestParam(value="cli_req",required = false) String cli_req,@RequestParam(value="sub_no", required = false)  ArrayList<Integer> sub_no
+			) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		logger.info("로그추적"+cli_name+","+cli_phone+","+cli_req);
+//		System.out.println(cli_name);
+//		System.out.println(cli_phone);
+//		System.out.println(cli_req);
+		System.out.println(sub_no);
+		map.put("cli_name", cli_name);
+		map.put("cli_phone", cli_phone);
+		map.put("cli_req", cli_req);
+			//@RequestParam(value="parameter이름[]")List<String>
+		//System.out.println(params);
+//		
+//		List<String> sub = (List<String>) params.get("sub_name");
+//		for (String string : sub) {
+//			System.out.println(string);
+//		}
+		String msg = "상담신청 오류발생.";
+		  if(service.cliReg(map)>0) {
+			  msg = "상담신청을 완료했습니다. 감사합니다.";
+			  service.cliRegCo(sub_no);
+		  }
+		  
+		 map.put("msg", msg);
+	
+		return  "redirect:/homeSubDetail3.do";
+	}
 	
 }

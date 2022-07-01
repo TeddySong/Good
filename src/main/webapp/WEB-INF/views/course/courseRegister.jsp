@@ -190,11 +190,11 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">수강생 등록</h1>                        
+                        <h1 class="mt-4">과정 등록</h1>                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                수강생등록
+                                과정 등록
                             </div>
     <!--표-->
 	<table id="goodList">
@@ -289,6 +289,7 @@
 var overChk = false; //중복체크 여부
 
 function courOverlay(){
+	
 	var co_name = $("#co_name").val();
 	console.log('과정명 중복 체크 : '+co_name);
 	$.ajax({
@@ -303,6 +304,7 @@ function courOverlay(){
 				alert("사용 가능한 과정명입니다.");
 				overChk = true;
 			}
+			
 		},
 		error:function(e){
 			console.log(e);
@@ -325,15 +327,17 @@ function courSave(){
 	var $co_capacity = $('#co_capacity');
 	var $co_condition = $('#co_condition');
 	
-	
-	if($("#sub_no option:selected").val() == '과목명' ||$("#sub_no option:selected").val() == null)
-	      alert('과목명을 선택해주세요.');
-	
+	/*
+	if(overChk == ''){
+		alert("과정명 중복체크를 실행하세요.");
+	}
+	*/
+		
 	if(overChk){
 		if($co_name.val() == "") {
 			alert("과정명을 입력하세요.");
 			$co_name.focus();
-		} else if($sub_name.val() == "") {
+		} else if($("#sub_no option:selected").val() == '과목명' ||$("#sub_no option:selected").val() == null) {
 			alert("과목명을 선택하세요.");
 			$sub_name.focus();
 		} else if($co_startDate.val() == "") {
@@ -429,69 +433,12 @@ function courSave(){
 				}
 			});
 			
-			
-			/*
-			if(overChk){
-				if($co_name == "") {
-					alert("과정명을 입력하세요.");
-					$co_name.focus();
-				} else if($sub_name == "") {
-					alert("과목명을 선택하세요.");
-					$sub_name.focus();
-				} else if($co_startDate == "") {
-					alert("개강일을 선택하세요.");
-					$co_startDate.focus();
-				} else if($co_endDate == "") {
-					alert("종강일을 선택하세요.");
-					$co_endDate.focus();
-				} else if($co_startTime == "") {
-					alert("수업 시작시간을 선택하세요.");
-					$co_startTime.focus();
-				} else if($co_endTime == "") {
-					alert("수업 종료시간을 선택하세요.");
-					$co_endTime.focus();
-				} else if($co_capacity == "") {
-					alert("수강정원을 입력하세요.");
-					$co_capacity.focus();
-				} else if($co_condition == "") {
-					alert("수강상태를 선택하세요.");
-					$co_condition.focus();
-				} else {
-					
-					$.ajax({
-						type:'post',
-						url:'write.ajax',
-						data:{
-							co_name : co_name,
-							sub_name : sub_name,
-							co_startDate : co_startDate,
-							co_endDate : co_endDate,
-							co_startTime : co_startTime,
-							co_endTime : co_endTime,
-							co_capacity : co_capacity,
-							co_condition : co_condition
-						},
-						dataType:'json',
-						success:function(data){
-							console.log(data);
-							if(data.success){
-								location.href="courList.go";
-							} else {
-								alert("로그인이 필요한 서비스입니다.");
-								location.href='/login.go';
-							}
-						},
-						error:function(e){
-							console.log(e);
-						}
-					});
-				}
-			}
-			*/	
-				
 				
 		}
 		
+	} else {
+		alert("과정명 중복을 체크하세요.");
+		$co_name.focus();
 	}
 }
 </script>

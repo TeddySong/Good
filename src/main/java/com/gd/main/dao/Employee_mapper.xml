@@ -65,16 +65,16 @@
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
 					<if test="empSearchCategory.equals('emp_name')">
-						emp_name = #{empSearchContent}
+						AND emp_name LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_phone')">
-						emp_phone = #{empSearchContent}
+						AND emp_phone  LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						emp_position = #{empSearchContent}
+						AND emp_positionLIKE concat('%',#empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
-						emp_condition = #{empSearchContent}
+						AND emp_conditionLIKE concat('%',#{empSearchContent},'%')
 					</if>
 		</if>
 	</where>	
@@ -83,21 +83,21 @@
 	</select>
 	
 	<select id="allCount" resultType="com.gd.main.dto.EmployeeDTO" parameterType="hashmap">
-		SELECT count(emp_no) FROM employee
+		SELECT emp_no FROM employee
 	<!-- 	parameterType="hashmap" -->
 	<where>
 				<if test="empSearchCategory != null and empSearchCategory != '' and empSearchContent != null and empSearchContent != ''">
 					<if test="empSearchCategory.equals('emp_name')">
-						emp_name = #{empSearchContent}
+						AND emp_name LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_phone')">
-						emp_phone = #{empSearchContent}
+						AND emp_phone  LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						emp_position = #{empSearchContent}
+						AND emp_positionLIKE concat('%',#empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
-						emp_condition = #{empSearchContent}
+						AND emp_conditionLIKE concat('%',#{empSearchContent},'%')
 					</if>
 		</if>
 	</where>	

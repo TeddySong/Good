@@ -107,7 +107,14 @@
 	<!-- 단과 가져오기 -->
 	<select id="dangwa" resultType="com.gd.main.dto.CourseDTO">
 		<if test="sub_condition != '숨김'">
-			SELECT sub_name,sub_no,sub_condition FROM subject
+			SELECT sub_name
+				,subject.sub_no
+				,sub_condition
+				,subjectimg.subimg_no
+				,subjectimg.subimg_oriName
+				,subjectimg.subimg_newName 
+			FROM subject
+			LEFT OUTER JOIN subjectimg ON subject.sub_no = subjectimg.sub_no
 			WHERE sub_condition = '단과'
 		</if>
 	</select>
@@ -115,16 +122,23 @@
 	<!-- 종합 가져오기 -->
 	<select id="jonghab" resultType="com.gd.main.dto.CourseDTO">
 		<if test="sub_condition != '숨김'">
-			SELECT sub_name,sub_no,sub_condition FROM subject
+			SELECT sub_name
+				,subject.sub_no
+				,sub_condition
+				,subjectimg.subimg_no
+				,subjectimg.subimg_oriName
+				,subjectimg.subimg_newName 
+			FROM subject
+			LEFT OUTER JOIN subjectimg ON subject.sub_no = subjectimg.sub_no
 			WHERE sub_condition = '종합'
 		</if>
 	</select>
 	
-	<select id="selectSubjectCall" resultType="com.gd.main.dto.CourseDTO">
+	<!-- <select id="selectSubjectCall" resultType="com.gd.main.dto.CourseDTO">
 		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		WHERE subject.sub_name = #{param1}
 		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
-	</select>
+	</select> -->
 </mapper>

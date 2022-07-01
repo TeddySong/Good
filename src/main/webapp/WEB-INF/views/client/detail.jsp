@@ -213,7 +213,6 @@
 <script>
 var msg = "${msg}";
 if(msg!="") {
-	alert(msg);
 	window.close();
 	opener.parent.location.href="clientDetail.go?cli_no="+${data.cli_no};
 	}

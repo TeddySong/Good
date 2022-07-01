@@ -236,7 +236,7 @@
 	 	<tr>
 			<th>재직상태</th>
 			<td>
-				<input type="radio" id="emp_condition"name="condition" value="재직"/><label for="재직">재직</label><br>
+				<input type="radio" id="emp_condition"name="condition" value="재직" checked="checked"/><label for="재직">재직</label><br>
 				<!-- input type="text" id="condition" name="condition"/> -->
 			</td>			
 		</tr> 
@@ -287,42 +287,84 @@ function empOverlay(){
 
 function save(){
 	console.log('직원등록');
-	var $emp_id=$("#emp_id").val();
-	var $emp_pw=$("#emp_pw").val();
-	var $emp_name=$("#emp_name").val();
-	var $emp_phone=$("#emp_phone").val();
-	var $emp_position=$("#emp_position").val();
-	var $emp_startDate=$("#emp_startDate").val();
-	 var $emp_condition=$("#emp_condition").val(); 
-	
-	
-	$.ajax({
-		type:'post',
-		url:'empRegister.ajax',
-		data:{
-			emp_id:$emp_id,
-			emp_pw:$emp_pw,
-			emp_name:$emp_name,
-			emp_phone:$emp_phone,
-			emp_position:$emp_position,
-	 		emp_startDate:$emp_startDate,
-	 		emp_condition:$emp_condition 
-		},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			if(data.success){
-				alert("등록이 되었습니다!");
-				location.href="empList.go";
-			} else {
-				alert("로그인이 필요한 서비스입니다.");
-				location.href='/login.go';
-			}
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-} 
+	var $emp_id=$("#emp_id");
+	var $emp_pw=$("#emp_pw");
+	var $emp_name=$("#emp_name");
+	var $emp_phone=$("#emp_phone");
+	var $emp_position=$("#emp_position");
+	var $emp_startDate=$("#emp_startDate");
+	var $emp_condition=$("#emp_condition"); 
+
+		
+		 if($emp_id.val()==""){
+			 alert('ID를 입력해주세요!');
+			 $emp_id.focus();
+		 }else if($emp_pw.val() ==""){
+			 alert('PW를 입력해주세요!');
+			 $emp_pw.focus();
+		 }else if($emp_name.val() ==""){
+			 alert('이름을 입력해주세요!');
+			 $emp_name.focus();
+		 }else if(!overChk){
+			 alert('직원명 중복을 확인해주세요!');
+			 $emp_name.focus();	 
+		 }else if($emp_phone.val()==""){
+			 alert('휴대폰번호를 입력해주세요!');
+			 $emp_phone.focus();
+		 }else if($emp_position.val() ==""){
+			 alert('직급을 입력해주세요!');
+			 $emp_position.focus();
+		 } else if($emp_startDate.val() ==""){
+			 alert('입사일을 선택해주세요!');
+			 $emp_startDate.focus();
+		 } else if($emp_condition.val() ==""){
+			 alert('재직상태를 선택해주세요');
+			 $emp_condition.focus();
+		 }
+ 			console.log('직원등록');
+			var $emp_id=$("#emp_id").val();
+			console.log(emp_id);
+			var $emp_pw=$("#emp_pw").val();
+			console.log(emp_pw);
+			var $emp_name=$("#emp_name").val();
+			console.log(emp_name);
+			var $emp_phone=$("#emp_phone").val();
+			console.log(emp_phone);
+			var $emp_position=$("#emp_position").val();
+			console.log(emp_position);
+			var $emp_startDate=$("#emp_startDate").val();
+			console.log(emp_startDate); 
+		 	var $emp_condition=$("#emp_condition").val();
+		 	console.log(emp_condition);
+			$.ajax({
+				type:'post',
+				url:'empRegister.ajax',
+				data:{
+					emp_id:$emp_id,
+					emp_pw:$emp_pw,
+					emp_name:$emp_name,
+					emp_phone:$emp_phone,
+					emp_position:$emp_position,
+			 		emp_startDate:$emp_startDate,
+			 		emp_condition:$emp_condition 
+				},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data);
+					if(data.success){
+						alert("등록이 되었습니다!");
+						location.href="empList.go";
+					} else {
+						alert("로그인이 필요한 서비스입니다.");
+						location.href='/login.go';
+					}
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		} 
+		 
+
 </script>
 </html>

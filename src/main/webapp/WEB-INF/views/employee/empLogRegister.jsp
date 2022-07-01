@@ -193,6 +193,15 @@ function empLogRegisterDo(){
 	
 	console.log($emp_no.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
 	
+/*
+	 유효성 검사  
+	 if(emp_log_content==""){
+		alert('내용을 입력해주세요');	
+		$('emp_log_content').focus();
+	}
+		
+	else{
+		*/
 	$.ajax({
 		type:'get',
 		url:'empLogRegister.ajax',
@@ -212,7 +221,8 @@ function empLogRegisterDo(){
 			console.log(error);
 		}
 	});
-	
+		
+	/* } */
 	
 	
 }

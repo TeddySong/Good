@@ -26,8 +26,6 @@ public class CourseService {
 		int page = Integer.parseInt(params.get("page"));
 		logger.info("보여줄 페이지 : "+page);
 		
-		//String sub_no = params.get("sub_no");
-		//String sub_name = params.get("sub_name");
 		
 		String subName = params.get("subName");
 		String courseNameSearch = params.get("courseNameSearch");
@@ -40,8 +38,6 @@ public class CourseService {
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
-		//searchResult.put("sub_no", sub_no);
-		//searchResult.put("sub_name", sub_name);
 		
 		//입력된 날짜가 빈값일 때
 		if(startSearch == "") {
@@ -86,21 +82,18 @@ public class CourseService {
 		
 		ArrayList<CourseDTO> courList = dao.courList2(searchResult);
 		
+		/*
 		for (CourseDTO dto : courList) {
 			logger.info(dto.getCo_startDate()+" ~ "+dto.getCo_endDate());
 
 		}
-		
-		
-		//ArrayList<CourseDTO> selectSubjectCall = dao.selectSubjectCall(sub_no,sub_name,cnt,offset);
-		//map.put("selectSubjectCall", selectSubjectCall);
+		*/
+
 		map.put("courList", courList);
 		
 		return map;
 	}	
-/*
- * public CourseDTO courDetail(String co_no) { return dao.courDetail(co_no); }
- */
+
 	
 	public boolean courseUpdate(HashMap<String, String> params) {
 	      HashMap<String, Object> result = new HashMap<String, Object>();
@@ -162,13 +155,6 @@ public class CourseService {
 		// TODO Auto-generated method stub
 		return dao.courseName();
 	}
-
-	/*
-	public ArrayList<CourseDTO> courList() {
-		logger.info("과정 리스트 요청");
-		return dao.courList();
-	}
-	*/
 	
 	public CourseDTO courDetail2(String co_no) {
 		return dao.courDetail2(co_no);

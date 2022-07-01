@@ -33,7 +33,7 @@
 	<select id="allCount" parameterType="hashmap" resultType="int">
 		SELECT COUNT(co_no) FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-	<where>
+
 		<if test="startSearch != null and endSearch != null and
 			courseNameSearch != null">
 			<if test="startSearch != '' and endSearch != ''">
@@ -52,7 +52,6 @@
 				</if>
 			</if>
 		</if>
-		</where>
 	</select>
 	
 	<select id="courDetail2" parameterType="String" resultType="com.gd.main.dto.CourseDTO">

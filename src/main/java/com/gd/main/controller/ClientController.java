@@ -239,9 +239,7 @@ public class ClientController {
 		int emp_no=Integer.parseInt(params.get("emp_no"));
 		String cli_log_Dday = params.get("cli_log_Dday");
 		String cli_log_Dtime = params.get("cli_log_Dtime");
-		String cli_log_result = params.get("result");
-		
-		
+		String cli_log_result = params.get("result");		
 		
 		map.put("cli_log_result", cli_log_result);
 		map.put("cli_no", cli_no);
@@ -251,7 +249,7 @@ public class ClientController {
 		map.put("cli_log_content", cli_log_content);
 		//성공 메시지 저장 
 		String msg = service.scheRegister(map);
-			re.addFlashAttribute("msg",msg);
+			re.addFlashAttribute("msg",msg);			
 			re.addAttribute("cli_no", cli_no);
 		return "redirect:/clientDetail.go";
 	}

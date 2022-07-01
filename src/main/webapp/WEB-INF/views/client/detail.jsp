@@ -212,7 +212,11 @@
 </body>
 <script>
 var msg = "${msg}";
-if(msg!="") {alert(msg); location.reload();}
+if(msg!="") {
+	alert(msg);
+	window.close();
+	opener.parent.location.href="clientDetail.go?cli_no="+${data.cli_no};
+	}
 
 $("#cliUpdatego").click(function(){
 	       $('#myModal').modal();
@@ -335,7 +339,8 @@ $('#scheRegister').on('click',function(){
 		//location.href='scheRegister.go?cli_no='+cli_noo;
 		} else{
 			let cli_noo=${data.cli_no};
-			location.href='scheRegister.go?cli_no='+cli_noo;
+			window.open("scheRegister.go?cli_no="+cli_noo,"new","width=1000, height=500, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+			
 		}
 		
 });

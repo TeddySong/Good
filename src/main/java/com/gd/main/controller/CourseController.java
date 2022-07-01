@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.main.dto.CourseDTO;
+import com.gd.main.service.ClientService;
 import com.gd.main.service.CourseService;
 
 
@@ -22,6 +23,7 @@ import com.gd.main.service.CourseService;
 public class CourseController {
 	
 	@Autowired CourseService service;
+	@Autowired ClientService clientService;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	
@@ -29,7 +31,6 @@ public class CourseController {
 	@RequestMapping(value = "/subjectMainHome.go")
 	public String classMain(Model model){
 		
-		logger.info("과목 리스트 메인 페이지 요청");
 		String page = "redirect:/subjectMainHome.do";
 
 		return page;
@@ -50,7 +51,15 @@ public class CourseController {
 		ArrayList<CourseDTO> jonghab = service.jonghab();
 		logger.info("단과 과목 갯수 : "+jonghab.size());
 		model.addAttribute("jonghab",jonghab);
-
+		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		 ArrayList< HashMap<String, Object>> subList= clientService.regSub();
+		 map.put("subList", subList);
+		 model.addAttribute("subList", subList);
+		 
+		 
+		logger.info("과목 리스트 메인 페이지 요청");
 		page = "./course/subjectMainHome";
 
 		return page;

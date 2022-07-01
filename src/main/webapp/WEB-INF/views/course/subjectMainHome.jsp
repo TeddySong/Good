@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>과목 리스트 페이지</title>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -14,17 +13,17 @@
 <meta content="" name="keywords">
 
 <!-- Favicons -->
-<link href="assets/img/favicon.png" rel="icon">
-<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="../resources/img/homesub/favicon.png" rel="icon">
+<link href="../resources/img/homesub/apple-touch-icon.png" rel="apple-touch-icon">
 
 <!-- Vendor CSS Files -->
-<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/bootstrap-icons.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/glightbox.min.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/swiper-bundle.min.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="./resources/CSS/course/style.css" rel="stylesheet">
+<link href="../resources/CSS/homesub/css/style.css" rel="stylesheet">
 
 <!-- =======================================================
 * Template Name: DevFolio - v4.7.1
@@ -77,7 +76,7 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <div id="hero" class="hero route bg-image" style="background-image: url(assets/img/hero-bg.jpg)">
+  <div id="hero" class="hero route bg-image" style="background-image: url(../resources/img/homesub/hero-bg.jpg)">
     <div class="overlay-itro"></div>
     <div class="hero-content display-table">
       <div class="table-cell">
@@ -130,9 +129,9 @@
                         <div class="col-sm-8">
                             <h2 class="w-title">${dangwa.sub_name}</h2>
                             <!--이거는 사진 아래 설명이라 빼도 될듯함-->
-                            <div class="w-more">
+                            <!-- <div class="w-more">
                             <span class="w-ctegory">Web Design</span> / <span class="w-date">18 Sep. 2018</span>
-                            </div>
+                            </div> -->
                         </div>
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
@@ -160,9 +159,9 @@
                         <div class="col-sm-8">
                             <h2 class="w-title">${jonghab.sub_name}</h2>
                             <!--이거는 사진 아래 설명이라 빼도 될듯함-->
-                            <div class="w-more">
+                            <!-- <div class="w-more">
                             <span class="w-ctegory">Web Design</span> / <span class="w-date">18 Sep. 2018</span>
-                            </div>
+                            </div> -->
                         </div>
                         <!--설명 옆 상세페이지로 가는 + 버튼-->
                         <div class="col-sm-4">
@@ -183,7 +182,7 @@
 
     <!-- ======= Contact Section ======= -->
     <!--상담신청-->
-    <section id="contact" class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(assets/img/overlay-bg.jpg)">
+    <section id="contact" class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(../resources/img/homesub/overlay-bg.jpg)">
       <div class="overlay-mf"></div>
       <div class="container">
         <div class="row">
@@ -301,15 +300,15 @@
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/typed.js/typed.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="../resources/JS/homesub/purecounter.js"></script>
+  <script src="../resources/JS/homesub/purecounter.js"></script>
+  <script src="../resources/JS/homesub/glightbox.min.js"></script>
+  <script src="../resources/JS/homesub/swiper-bundle.min.js"></script>
+  <script src="../resources/JS/homesub/typed.min.js"></script>
+  <script src="../resources/JS/homesub/validate.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="./resources/JS/course/main.js"></script>
+  <script src="../resources/JS/homesub/main.js"></script>
 
 </body>
 

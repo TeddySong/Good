@@ -71,7 +71,7 @@ public class EmployeeService {
 	}
 	
 	//직원리스트
-		public HashMap<String,Object> empList(HashMap<String,String> params) {
+		public HashMap<String,Object> empList(HashMap<String,String> params,boolean login) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			
 			int cnt = Integer.parseInt(params.get("cnt")); //1페이지의 게시물 수 

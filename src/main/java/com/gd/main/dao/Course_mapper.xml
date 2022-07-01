@@ -113,9 +113,16 @@
 				,sub_condition
 				,subjectimg.subimg_no
 				,subjectimg.subimg_oriName
-				,subjectimg.subimg_newName 
+				,subjectimg.subimg_newName
+				,subject_home.sub_time
+				,subject_home.sub_summary
+				,curriculm.curri_no
+				,curriculm.curri_oriName
+				,curriculm.curri_newName
 			FROM subject
 			LEFT OUTER JOIN subjectimg ON subject.sub_no = subjectimg.sub_no
+			LEFT OUTER JOIN subject_home ON subject.sub_no = subject_home.sub_no
+			LEFT OUTER JOIN curriculm ON subject.sub_no = curriculm.sub_no
 			WHERE sub_condition = '단과'
 		</if>
 	</select>
@@ -128,18 +135,33 @@
 				,sub_condition
 				,subjectimg.subimg_no
 				,subjectimg.subimg_oriName
-				,subjectimg.subimg_newName 
+				,subjectimg.subimg_newName
+				,subject_home.sub_time
+				,subject_home.sub_summary
+				,curriculm.curri_no
+				,curriculm.curri_oriName
+				,curriculm.curri_newName
 			FROM subject
 			LEFT OUTER JOIN subjectimg ON subject.sub_no = subjectimg.sub_no
+			LEFT OUTER JOIN subject_home ON subject.sub_no = subject_home.sub_no
+			LEFT OUTER JOIN curriculm ON subject.sub_no = curriculm.sub_no
 			WHERE sub_condition = '종합'
 		</if>
 	</select>
 	
-	<!-- <select id="selectSubjectCall" resultType="com.gd.main.dto.CourseDTO">
-		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
-		co_startTime, co_condition FROM course
-		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
-		WHERE subject.sub_name = #{param1}
-		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
-	</select> -->
+	<!-- 과목상세 홈페이지에 뿌려줄 내용 -->
+	<select id="subDetailHome" resultType="com.gd.main.dto.CourseDTO">
+		SELECT subject.sub_name
+			,subject.sub_no
+			,subject_home.sub_time
+			,subject_home.sub_summary
+			,curriculm.curri_no
+			,curriculm.curri_oriName
+			,curriculm.curri_newName
+		FROM subject
+		<!-- LEFT OUTER JOIN subjectimg ON subject.sub_no = subjectimg.sub_no -->
+		LEFT OUTER JOIN subject_home ON subject.sub_no = subject_home.sub_no
+		LEFT OUTER JOIN curriculm ON subject.sub_no = curriculm.sub_no
+		WHERE subject.sub_no = #{sub_no}
+	</select>
 </mapper>

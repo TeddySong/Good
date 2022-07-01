@@ -135,8 +135,16 @@
                 ${dto.sub_summary}
               </p>
             </div>
+            <div class="portfolio-description">
+              <h2>과목후기</h2>
+              <c:forEach items="${homeSrcList}" var="homeSrcList">
+              	<p>${homeSrcList.scr_content}</p>
+              </c:forEach>
+            </div>
+			<center>
+				<button class="btn btn-primary" onclick="location.href='subjectMainHome.do#contact'" width="288px">상담신청</button>
+          	</center>
           </div>
-
         </div>
 
       </div>

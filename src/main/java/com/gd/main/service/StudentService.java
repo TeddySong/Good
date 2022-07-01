@@ -236,4 +236,24 @@ public class StudentService {
 		return map;
 	}
 
+	
+	public StuDTO cliUpdateInfo(String cli_no) {
+		logger.info("서비스 영역" + cli_no);
+		return dao.cliInfoGet(cli_no);
+		
+	}
+
+	public boolean cliStuFinUpdate(HashMap<String, String> params) {
+		 logger.info("값 1차 확인 : " + params);
+		
+		int row = dao.cliStuFinUpdate(params);
+		  
+		boolean success = false;
+		  if (row > 0) { success = true; }
+		  
+		  logger.info("update success : " + success);
+		  
+		  return success; 
+		  }
+
 }

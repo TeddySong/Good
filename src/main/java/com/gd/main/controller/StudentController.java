@@ -322,12 +322,51 @@ public class StudentController {
 	
 		
 	@RequestMapping(value="/cliUpdate.go")
-	public String cliUpdateGo(@RequestParam String cli_no, HttpSession session) {
+	public String cliUpdateGo(@RequestParam String cli_no, Model model , HttpSession session) {
 		logger.info("고객 수정 페이지 이동 : " + cli_no);
 		session.setAttribute("cli_no", cli_no);
 		
-		
 		return "./student/cliUpdate";
+	}
+	
+	@RequestMapping(value="/cliUpdateInfo.ajax")
+	@ResponseBody
+	public HashMap<String, Object> cliUpdate(HttpSession session) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String cli_no = (String) session.getAttribute("cli_no");
+		logger.info("상세 데이터 요청 : " + cli_no);			
+		StuDTO dto = service.cliUpdateInfo(cli_no);
+		map.put("dto", dto);
+		logger.info("클라이언트 : {}", dto );
+	
+	
+	return map;
+	}	
+	
+	
+	@RequestMapping(value="/cliStuFinUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> cliStuFinUpdate(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		
+		logger.info("params : " + params );
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean login = false;
+				
+		if(session.getAttribute("loginId") != null) {
+			logger.info("수정하기 요청");
+			login = true;	
+			boolean success = service.cliStuFinUpdate(params);
+			map.put("success", success);
+		}
+		
+		map.put("login", login);
+		
+		
+		return map;
 	}
 	
 	

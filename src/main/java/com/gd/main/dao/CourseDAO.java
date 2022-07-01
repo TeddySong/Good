@@ -43,5 +43,7 @@ public interface CourseDAO {
 
 	CourseDTO subDetailHome(String sub_no);
 
+	ArrayList<CourseDTO> homeSrcList(String sub_no);
+
 	
 }

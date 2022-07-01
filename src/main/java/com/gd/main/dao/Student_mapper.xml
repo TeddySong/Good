@@ -136,13 +136,26 @@
 		VALUES (#{stu_no}, #{sub_no})
 	</insert> -->
 	
-	<select id="stuWantSubSearch" parameterType="hashmap" resultType="com.gd.main.dto.StuDTO">
+	<select id="stuWantSubSearch" resultType="com.gd.main.dto.StuDTO">
 		SELECT  s.sub_name FROM subject s
 		left join qsub q on q.sub_no  = s.sub_no 
 		left join client c on q.cli_no= c.cli_no
 		where c.cli_no =#{cli_no};	
 		</select>
 	
+	<select id="cliInfoGet" resultType="com.gd.main.dto.StuDTO" parameterType='hashmap'>
+		SELECT cli_no, cli_name, cli_phone, emp_name, c.emp_no FROM client c 
+		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no
+		where c.cli_no = #{param1}
+	</select>	
+	
+	<update id="cliStuFinUpdate" parameterType='hashmap'>
+		UPDATE client SET 
+			cli_name = #{cli_name},
+			cli_phone = #{cli_phone},
+			emp_no = #{emp_no}
+		WHERE cli_no = #{cli_no}
+	</update>
 	
 	
 </mapper>

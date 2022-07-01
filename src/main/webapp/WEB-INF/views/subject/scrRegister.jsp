@@ -100,7 +100,7 @@
 			</select>
 			</td>
 			<td style="width:70%;">
-			<textarea id="scr_content" style="width:100%;"></textarea>
+			<textarea id="scr_content" placeholder="내용을 입력해주세요" style="width:100%;"></textarea>
 			</td>
 		</tr>
 	</tbody>

@@ -57,6 +57,9 @@
     </div>
 </body>
 <script>
+
+
+
 	function empLogin(){
 		
 		//입력된 value 값을 var 변수에 저장

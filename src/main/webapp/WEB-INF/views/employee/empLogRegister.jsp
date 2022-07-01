@@ -183,43 +183,56 @@
 
 </body>
 <script>
-/* document.getElementById('now_date').valueAsDate = new Date(); //오늘날짜 자동입력넣기 */
 
 function empLogRegisterDo(){
-/* 	var $stu_no = $('#student_no'); */
+	console.log('직원일지등록')
 	var $emp_no = $('#empNo');
 	var $emp_log_content = $('#emp_log_content');
 	var $emp_log_condition = $("#empCondtion");
 	
 	console.log($emp_no.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
 	
+	/*유효성 검사  */
+	 if($emp_log_content.val()==""){       //히스토리(내용)이 비었으면
+		alert('내용을 입력해주세요');	     //알림창
+		$('#emp_log_content').focus();
+	} else {
+		
+	
+	console.log('직원일지등록');
+	var emp_log_content=$("#emp_log_content").val();
+	console.log(emp_log_content);
+		
 	$.ajax({
 		type:'get',
 		url:'empLogRegister.ajax',
 		data:{
 			emp_no:$emp_no.html(),
 			emp_log_condition : $emp_log_condition.val(),
-			emp_log_content:$emp_log_content.val()		 
+			emp_log_content:$emp_log_content.val()	
 
 		},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
+			if(data.success)
+			alert("직원일지 등록이 되었습니다!");
 			opener.parent.location.href='empLogList.go?emp_no='+(data.empNo);
 			window.close()
+			} else {
+				alert("로그인이 필요한 서비스입니다.");
+				location.href='/login.go';
+			}
 		},
 		error:function(error){
 			console.log(error);
 		}
 	});
-	
-	
-	
-}
 
+	}
 	function wclose(){
 		window.close();
 	}
-	
+}
 </script>
 </html>

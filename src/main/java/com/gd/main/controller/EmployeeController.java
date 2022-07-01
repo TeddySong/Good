@@ -88,9 +88,6 @@ public class EmployeeController {
 	
 	
 	
-	
-	
-	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
 	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {

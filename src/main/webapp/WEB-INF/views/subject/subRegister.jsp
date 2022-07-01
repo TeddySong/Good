@@ -189,7 +189,7 @@
 		<tr>
 			<th>과목명</th>
 			<td>
-			<input type="text" id="sub_name"/>
+			<input type="text" id="sub_name" />
 			<button onclick="subOverlay()">중복</button>
 			</td>
 		</tr>

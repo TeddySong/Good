@@ -5,114 +5,142 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="resources/img/icon.png">
+<link href="../resources/img/goodfavicon.png" rel="icon">
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+<link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="resources/JS//course/jquery.twbsPagination.js"></script>
 <title>Insert title here</title>
 <style>
-	*{box-sizing: border-box; padding:0; border:0; margin:0; }
-	
-	body{padding:0; border:0; margin:0;}
-	table{border-collapse: collapse;}
-	#log{
-		width:300px; 
-		height:200px; 
-   		 resize: none;
-   		 overflow: scroll;
+
+ body{
+		font-family: 'Noto Sans KR', sans-serif;
 	}
-	 textarea{
-		width:500px; 
-		height:150px; 
-   		 resize: none;
-   		 overflow-y: auto;
-	}
-	
-	#clog {
-	width:100%; 
-	height:600px;
-	overflow: scroll
+
+	#goodList {  
+			                          
+			  
+			  width: 100%;
+			  border-collapse: collapse;
+			  border-radius: 5px;
+			  overflow: hidden;
+			  font-family: 'Do Hyeon', sans-serif;
+            }
+            
+   #goodList th {
+			background-color:#505050;
+			color:#FFFFFF;
+			text-align:center;
 		}
 		
-	.clog-body{height:150px;}
-	.clog-body  textarea{
-		height:160px; width:450px; margin:0;
+	#goodList,#goodList th,#goodList td
+	{
+		font-size:20px;		
+		padding:4px;		
+		border-collapse:collapse
 	}
-	#empUp{position:relative; right:440px; }
-	#emptable{width:100%;   }
-	#cliInfo.table{width:400px; height:300px;}
-	#cliLog.table{width:600px; height:300px;}
-	.find-btn{
-	text-align: center;
-}
- .form-control{width:200px;}
- 
+	#goodList tr:nth-child(odd){
+		background-color:#white;
+	}
+	#goodList tr:nth-child(even){
+		background-color:#fdfdfd;
+	}
+	
+	.goodRegister {
+		position: relative;		
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 25px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+
+	.goodRegister:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
 
  
 </style>
 </head>
 <body>
 
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="login.do">GOOD2 IT</a>            
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="login.do" role="button"><i class="fas fa-user fa-fw"></i> 메인</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="/" role="button"><i class="fas fa-user fa-fw"></i> 홈페이지</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" id="navbarDropdown" href="#" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
+                </li>
+            </ul>
+        </nav>
 
-	<div>
-		<button type="button" onclick="cliList()" class="btn btn-default">목록</button>
-		<button type="button" onclick="calChk()" class="btn btn-default">상담일정확인</button>
-		<button type="button" id="scheRegister" class="btn btn-default">상담일정 등록</button>
-	</div>
+<table class="table table-striped">
+	<tr>
+	<th>
+		<h1>고객 정보 상세 페이지</h1>
+	</th>
+	<th style="text-align:end;">
+		<button type="button" onclick="cliList()" class="goodRegister">목록</button>
+		<button type="button" onclick="calChk()" class="goodRegister">상담일정확인</button>
+		<button type="button" id="scheRegister" class="goodRegister">상담일정 등록</button>
+		</th>
+	</tr>
+</table>
 
-
-
-				<h3>고객 정보 페이지</h3>
-		<table id="cliInfo" class="table table-striped">
+<div style="width:30%; margin: 0 10px; float:left;">
+				
+				<h1>▶ 고객 정보</h1>
+		<table id="goodList" class="table table-striped">
 			<tr><td id="cli_no">번호: ${data.cli_no}</td></tr>
 			<tr><td>이름 : ${data.cli_name}</td></tr>
 			<tr><td>연락처 : ${data.cli_phone}</td></tr>
-			<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" type="button" id="empSearch">검색</button></td></tr>
+			<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" style="font-size:20px;" type="button" id="empSearch">검색</button></td></tr>
 			<tr><td>상담 신청시간 :<fmt:formatDate value="${data.cli_qDate}" pattern="yyyy년MM월dd일 HH시mm분" /></td></tr>
-			<tr class="find-btn"><div><td><button class="btn btn-default" type="button" id="cliUpdatego" display="block" > 수정</button></td></div></tr>
+			<tr class="find-btn"><td><button class="btn btn-default" style="font-size:20px;" type="button" id="cliUpdatego"> 수정</button></td></tr>
+			<tr><td><h3>상담요청 내용</h3></td></tr>
+			<tr><td><textarea class="form-control" id="log" name="opinion" style="border:2px solid black; font-size:20px;" readonly>${data.cli_req}</textarea></td></tr>		
 		</table>
-		<div>
-		<h3>상담요청 내용</h3>
-			<textarea class="form-control" id="log" name="opinion" readonly>${data.cli_req}</textarea><br>
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-      
-      
-      				<h1>상담일지</h1>	
-		<div id="clog">
-
+</div>		    
+ <div style="width:65%; margin: 0 20px; float:right;">     
+      				<h1>▶ 상담일지</h1>	
 			<c:forEach items="${data_log}" var="clog"> 
-				<table id="cliLog" class="table table-striped">
+				<table id="goodList" style="border:1px solid black" class="table table-striped">
 					<thead class="clog-head">
 						<tr> <td>상담결과:${clog.cli_log_result} </td>
 							<td>상담일정 :<fmt:formatDate value="${clog.cli_log_Dday}" pattern="yyyy년MM월dd일"/></td>
 							<td>상담 시간:${clog.cli_log_Dtime}</td>
 						</tr>
 						<tr> 
-							<td colspan="3">작성시간:<fmt:formatDate value="${clog.cli_log_date}" pattern="yyyy년MM월dd일HH시mm분"/> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <span>작성자:${clog.emp_name}</span></td> 
-							</td>
+							<td colspan="3">작성시간:<fmt:formatDate value="${clog.cli_log_date}" pattern="yyyy년MM월dd일HH시mm분"/> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <span>작성자:${clog.emp_name}</span></td>
+							
 						</tr>
 					</thead>
 					<tbody>    
 					<tr>
 						<td colspan="3" class="clog-body" readonly >
-							<textarea class="form-control" readonly>${clog.cli_log_content}</textarea>
+							<textarea class="form-control" style="border:2px solid black; font-size:20px;" readonly>${clog.cli_log_content}</textarea>
 						</td>
 					</tr>
 					</tbody>
 				</table>
-			</c:forEach>
-		</div>	
-
+			</c:forEach>		
+</div>
 
 
 	

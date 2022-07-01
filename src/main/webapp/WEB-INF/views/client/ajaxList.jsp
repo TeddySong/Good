@@ -223,11 +223,11 @@
         <table  class="table  table-striped  table-bordered" >
         	<tr>
         		<th>고객명</th>
-        		<td><input type="text" id="cli_name" /></td>
+        		<td><input type="text" style="width:100%;" id="cli_name" /></td>
         	</tr>
         	<tr>
         		<th>연락처</th>
-        		<td><input type="text" id="cli_phone" oninput="autoHyphen(this)" maxlength="13" /></td>
+        		<td><input type="text" id="cli_phone" style="width:100%;" oninput="autoHyphen(this)" maxlength="13" /></td>
         	</tr>
         	<tr>
         		<th colspan="2">

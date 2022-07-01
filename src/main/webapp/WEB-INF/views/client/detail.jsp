@@ -110,9 +110,9 @@
 			<tr><td id="cli_no">번호: ${data.cli_no}</td></tr>
 			<tr><td>이름 : ${data.cli_name}</td></tr>
 			<tr><td>연락처 : ${data.cli_phone}</td></tr>
-			<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" style="font-size:20px;" type="button" id="empSearch">검색</button></td></tr>
+			<tr><td>담당자 :<span id="emp"> ${data.emp_name} </span><button class="btn btn-default" style="font-size:20px; border:2px solid black;" type="button" id="empSearch">검색</button></td></tr>
 			<tr><td>상담 신청시간 :<fmt:formatDate value="${data.cli_qDate}" pattern="yyyy년MM월dd일 HH시mm분" /></td></tr>
-			<tr class="find-btn"><td><button class="btn btn-default" style="font-size:20px;" type="button" id="cliUpdatego"> 수정</button></td></tr>
+			<tr class="find-btn"><td style="text-align:end;"><button class="goodRegister" style="font-size:20px; width:30%;" type="button" id="cliUpdatego"> 수정</button></td></tr>
 			<tr><td><h3>상담요청 내용</h3></td></tr>
 			<tr><td><textarea class="form-control" id="log" name="opinion" style="border:2px solid black; font-size:20px;" readonly>${data.cli_req}</textarea></td></tr>		
 		</table>
@@ -153,20 +153,20 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">담당자 검색 </h4>
+      <h4 class="modal-title">담당자 검색 </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>        
       </div>
       <div class="modal-body" style="width:100%; height:500px; overflow:auto">
         <table id="emptable" class="table table-striped">
-        <div class="form-inline" >
-		  <select><option>직원명</option></select>
-		  <input  class="form-control" type="text" id="empkeyword" display="inline-block"/> 
-		  <button type="button" id="empsearch" class="btn btn-default">검색</button> 
+        <div id="goodList" class="form-inline" >
+		  <select style="width:20%"><option>직원명</option></select>
+		  <input  class="form-control" type="text" style="width:50%" id="empkeyword" display="inline-block"/> 
+		  <button type="button" id="empsearch" style="width:20%" class="btn btn-default">검색</button> 
 		 </div>
-        	<thead >
+        	<thead style="text-align:center; font-size:20px;">
         		<tr><td></td><td>사번</td><td>직급</td><td>직원명</td><td>연락처</td></tr>
         	</thead>
-        	<tbody id="list">
+        	<tbody id="list" style="font-size:20px;">
         	</tbody>
         
         </table>
@@ -175,7 +175,7 @@
       </div>
       <div class="modal-footer" >
       	<button type="button" id="empUp" onclick="empUp()" class="btn btn-default" >선택</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
       </div>
     </div>
 
@@ -190,17 +190,19 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">고객정보 수정</h4>
+      <h4 class="modal-title">고객정보 수정</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>        
       </div>
       <div class="modal-body">
-        <table id="uptable" class="table table-striped">
-        	<tr><td>회원번호</td><td>고객명</td><td>연락처</td><td>수정</td></tr>
-        	<tr><td>${data.cli_no}</td><td><input type="text" value="${data.cli_name}" id="cli_name"/></td><td><input type="text" value="${data.cli_phone}" id="cli_phone"/></td><td><button class="btn btn-default" type="button" id="UpdateDo">수정</button></td></tr>	
+        <table id="goodList" class="table table-striped">
+        	<tr><td>회원번호</td><td>${data.cli_no}</td></tr>
+        	<tr><td>고객명</td><td><input type="text" value="${data.cli_name}" id="cli_name"/></td></tr>
+        	<tr><td>연락처</td><td><input type="text" value="${data.cli_phone}" id="cli_phone"/></td></tr>        	       		
         </table>
       
       </div>
       <div class="modal-footer">
+      	<button class="btn btn-default" type="button" id="UpdateDo">수정</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

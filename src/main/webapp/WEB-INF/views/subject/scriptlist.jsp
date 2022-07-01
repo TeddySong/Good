@@ -327,6 +327,7 @@ function scrSubSearchCall(page){
 	    		if(e.statusText == 'error'){
 					alert("조회된 데이터가 없습니다.");
 					listCall(currPage);
+					$("#sub_name option:eq(0)").prop("selected", true);
 				}
 	    	}
 	    });
@@ -366,6 +367,11 @@ function scSubConditionCall(page){
 		    	},
 		    	error:function(e){
 		    		console.log(e);
+		    		if(e.statusText == 'error'){
+						alert("조회된 데이터가 없습니다.");
+						listCall(currPage);
+						$('input[name="sub_condition"]').prop('checked', false);
+					}
 		    	}
 		    });
 

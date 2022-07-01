@@ -20,6 +20,28 @@ public class CourseDTO {
 	private int sub_no;
 	private String sub_condition;
 	
+	private int subimg_no;
+	private String subimg_oriName;
+	private String subimg_newName;
+	
+	public int getSubimg_no() {
+		return subimg_no;
+	}
+	public void setSubimg_no(int subimg_no) {
+		this.subimg_no = subimg_no;
+	}
+	public String getSubimg_oriName() {
+		return subimg_oriName;
+	}
+	public void setSubimg_oriName(String subimg_oriName) {
+		this.subimg_oriName = subimg_oriName;
+	}
+	public String getSubimg_newName() {
+		return subimg_newName;
+	}
+	public void setSubimg_newName(String subimg_newName) {
+		this.subimg_newName = subimg_newName;
+	}
 	public String getSub_condition() {
 		return sub_condition;
 	}

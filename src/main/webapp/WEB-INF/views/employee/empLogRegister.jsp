@@ -169,7 +169,7 @@
 			<br/><br/>
 			<div style="text-align:center;">
 			<button onclick="empLogRegisterDo()" class="goodRegister">완료</button>
-			<button onclick="window.close()'" class="goodRegister">취소</button>
+			<button onclick="wclose()" class="goodRegister">취소</button>
 			</div>
                     </div>
                 </div>
@@ -217,7 +217,9 @@ function empLogRegisterDo(){
 	
 }
 
-	
+	function wclose(){
+		window.close();
+	}
 	
 </script>
 </html>

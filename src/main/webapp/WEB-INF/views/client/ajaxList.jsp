@@ -169,7 +169,7 @@
 		<option value="20">20</option>
 	</select> -->
 	
-	<div>
+	<div id="clientList">
 	<table id="colist" height="200px"  width="500px" width="60%" class="table table-striped">
 		<thead >
 			<tr>
@@ -289,6 +289,7 @@ function listCall(page){
 			//console.log(data);
 		//	console.log(data.sublist);
 			drawList(data.list);
+			console.log("검색결과:"+data.list)
 			 subSearch();
 			currPage = data.currPage;
 			//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
@@ -337,7 +338,9 @@ function searchClick(page){
 	let searchType =$('select[name=searchType]').val();
 	let keyword = $('input[name=keyword]').val();
 	
-	
+	if(keyword.trim()==""){
+		alert('검색어를 입력해 주세요'); 
+	}
 
 	$.ajax({
 		type:'get',
@@ -351,47 +354,48 @@ function searchClick(page){
 		},
 		dataType:'json',
 		success:function(data){
-			drawList(data.list);
 			console.log("검색결과"+data.list);
-		
-			subSearch(); 
-			//currPage = data.currPage;
-			//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
-			$("#pagination").twbsPagination({
-				initiateStartPageClick: false,
-				startPage:data.currPage, //시작 페이지
-				totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, //한번에 보여줄 페이지 수 [1][2][3][4][5]
-				//href:'cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
-				/* onPageClick:function(){
-					  //href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
-					//href:'?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
-					 $('.page-link').on('click',function(){
-							console.log('s');
-							location.href='cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+			drawList(data.list);
+				subSearch(); 
+				//currPage = data.currPage;
+				//불러오기가 성공되면 플러그인 을 이용해 페이징 처리
+				$("#pagination").twbsPagination({
+					initiateStartPageClick: false,
+					startPage:data.currPage, //시작 페이지
+					totalPages: data.pages, // 총 페이지(전체 개시물 수 / 한 페이지에 보여줄 게시물 수)
+					visiblePages: 5, //한번에 보여줄 페이지 수 [1][2][3][4][5]
+					//href:'cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+					/* onPageClick:function(){
+						  //href:'?page={{number}}&searchcol='+$('#search_select').val()+'&searchval='+$('#searchval').val()
+						//href:'?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+						 $('.page-link').on('click',function(){
+								console.log('s');
+								location.href='cliSearch.ajax?cnt='+pagePerNum+'&page='+currPage+'&searchType='+searchType+'&keyword='+keyword;
+							
+						 })
 						
-					 })
+					} ,
+					  */
 					
-				} ,
-				  */
-				
-				
-		 		onPageClick:function(e,page){
-					//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
-					console.log("정보"+page);//사용자가 클릭한 페이지
-					//currPage = page;
-				
-					searchClick(page);
-					 
-				}   
-			});
+					
+			 		onPageClick:function(e,page){
+						//console.log(e);//클릭한 페이지와 관련된 이벤트 객체
+						console.log("정보"+page);//사용자가 클릭한 페이지
+						//currPage = page;
+					
+						searchClick(page);
+						 
+					}   
+				});
+			
+
 		},
 		error:function(e){
 			console.log(e);
 		}
 	
 	});
-	     
+		
 /* }); */
 
 
@@ -443,27 +447,38 @@ function subSearch(){
 function drawList(list){
 
 	var content = '';
-	list.forEach(function(item){
-		
-		if(item.emp_name==null){item.emp_name= '미정';}
-		if(item.cli_log_result==null){item.cli_log_result='상담 전';}
 	
-		//console.log(item);
-		content += '<tr>';
-		content += '<td><input type="checkbox" value="'+item.cli_no+'"/></td>';
-		content += '<td>'+item.cli_no+'</td>';
-		content += '<td><a href=clientDetail.go?cli_no='+item.cli_no+'>'+item.cli_name+'</a></td>';
-		content += '<td>'+item.cli_phone+'</td>';
- 
-		content += '<td>'+item.cli_qDate+'</td>';
-		content += '<td>'+item.emp_name+'</td>';
-		content += '<td >'+item.cli_log_result+'</td>';
-		content += '</tr>';
-	});
+	
+	
+		list.forEach(function(item){
+			
+			if(item.emp_name==null){item.emp_name= '미정';}
+			if(item.cli_log_result==null){item.cli_log_result='상담 전';}
+		
+			//console.log(item);
+			content += '<tr>';
+			content += '<td><input type="checkbox" value="'+item.cli_no+'"/></td>';
+			content += '<td>'+item.cli_no+'</td>';
+			content += '<td><a href=clientDetail.go?cli_no='+item.cli_no+'>'+item.cli_name+'</a></td>';
+			content += '<td>'+item.cli_phone+'</td>';
+	 
+			content += '<td>'+item.cli_qDate+'</td>';
+			content += '<td>'+item.emp_name+'</td>';
+			content += '<td >'+item.cli_log_result+'</td>';
+			content += '</tr>';
+			
+			
+		
+	});		
+		
+
+	
+
+	
 	$('#list').empty();
 	$('#list').append(content);
- 
-	
+
+
 }
  
  

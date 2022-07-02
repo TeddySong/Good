@@ -38,7 +38,9 @@ public class AssignController {
 	@ResponseBody
 	public HashMap<String, Object> list(HttpSession session, 
 			@RequestParam HashMap<String, String> params) {
-		logger.info("배정 리스트 요청");
+		logger.info("배정 리스트 요청" + params);
+		
+	
 		
 		return service.assList(params);
 	}

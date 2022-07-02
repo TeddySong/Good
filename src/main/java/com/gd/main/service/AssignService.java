@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.gd.main.dao.AssignDAO;
 import com.gd.main.dto.AssListDTO;
 import com.gd.main.dto.CourseDTO;
+import com.gd.main.dto.StuDTO;
 
 @Service
 public class AssignService {
@@ -23,34 +24,61 @@ public class AssignService {
 	public HashMap<String, Object> assList(HashMap<String, String> params) {
 		logger.info("배정 리스트 서비스 도착");
 
-		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		// cnt : 리스트 갯수 , page : 보여줄 페이지수
 		int cnt = Integer.parseInt(params.get("cnt"));
 		int page = Integer.parseInt(params.get("page"));
 		String assSearchTarget = params.get("assSearchTarget");
 		String search = params.get("search");
-
-		HashMap<String, Object> data = new HashMap<String, Object>();
-		data.put("assSearchTarget", assSearchTarget);
-		data.put("search", search);
-		logger.info("조건검색 : " + search + "/" + assSearchTarget);
-		assMap.put("currPage", page);// 현재 페이지
 		
-		logger.info("리스트 : " + data);
+		logger.info("보여줄 페이지 : " + page);
+		// 1페이지 -> 0(offset:게시글 시작 번호)
+		// 2페이지 -> 5
+		// 3페이지 -> 10
+		// 4페이지 -> 15
+		// 5페이지 -> 20
+		
+		map.put("cnt", cnt);
+		
+		map.put("assSearchTarget", assSearchTarget);
+		map.put("search", search);
+		
+		//HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		/*
+		 * logger.info("조건검색 : " + search + "/" + assSearchTarget);
+		 *  logger.info("리스트 : + map);
+		 */
+		
+		
+		
+		//총 (allCnt) / 페이지동 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
+		ArrayList<AssListDTO> allCount = dao.allCount(map);
+		int allCnt = allCount.size();
+		logger.info("총페이지 : " + allCnt);
+		int pages = allCnt % cnt > 0 ? (allCnt / cnt) + 1 : (allCnt / cnt);
+		logger.info("리스트 : " + pages);
+		
+		if(page > pages) {//5개씩 보는 마지막 페이지로 갔을 대 , 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결
+			page = pages;
+		}
+		
+		map.put("pages", pages);
+		map.put("currPage", page);
 		
 		int offset = (page - 1) * cnt;
 		logger.info("offset ,cnt : " + offset + cnt);
-
-		data.put("cnt", cnt);
-		data.put("offset", offset);
-
-		ArrayList<AssListDTO> assList = dao.assList(data);
-		assMap.put("assList", assList);
 		
-		logger.info("리스트 배열: " + assMap);
+		map.put("offset", offset);
+
+		ArrayList<AssListDTO> assList = dao.assList(map);
+		logger.info("assList : ",assList.size());
+		map.put("assList", assList);
 		
-		return assMap;
+		logger.info("리스트 배열: " + assList);
+		
+		return map;
 	}
 
 
@@ -132,22 +160,21 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 
-		int allCnt = dao.allCount(searchResult);
-
-		logger.info("allCnt : "+allCnt);
-		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
-		logger.info("pages : "+pages);
-		
-		if(pages==0) {pages=1;}
-		
-		if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결
-			page = pages;
-		}
-		
-		map.put("pages", pages); //만들 수 있는 최대 페이지 수
-		
-		map.put("currPage", page); //현재 페이지
-		
+		/*
+		 * int allCnt = dao.allCount(searchResult);
+		 * 
+		 * logger.info("allCnt : "+allCnt); int pages = allCnt % cnt > 0 ? (allCnt /
+		 * cnt)+1 : (allCnt / cnt); logger.info("pages : "+pages);
+		 * 
+		 * if(pages==0) {pages=1;}
+		 * 
+		 * if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결 page =
+		 * pages; }
+		 * 
+		 * map.put("pages", pages); //만들 수 있는 최대 페이지 수
+		 * 
+		 * map.put("currPage", page); //현재 페이지
+		 */
 		map.put("stu_no", stu_no);
 		
 		int offset = (page-1) * cnt;

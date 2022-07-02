@@ -23,21 +23,20 @@
        and s.cli_no = c.cli_no
        and e.emp_no = s.emp_no
        and c2.co_no = a.co_no
-      
+      <where>
 		<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
-			<if test="assSearchTarget.equals('sub_name')">
-				and s2.sub_name = #{search}
-			</if>
 			<if test="assSearchTarget.equals('co_name')">
-				and c2.co_name = #{search}
+				and c2.co_name LIKE concat('%',#{search},'%')
 			</if>
 			<if test="assSearchTarget.equals('emp_name')">
-				and e.emp_name = #{search}
+				and e.emp_name LIKE concat('%',#{search},'%')
 			</if>
 			<if test="assSearchTarget.equals('co_condition')">
-				and c2.co_condition = #{search}
+				and c2.co_condition LIKE concat('%',#{search},'%')
 			</if>
-	</if>
+		</if>
+	</where>
+		 limit #{cnt} OFFSET #{offset}
 </select>
 <!-- 선택된 과정에 대한 배정 리스트 -->
 <select id ="assCoList" resultType="hashmap" >

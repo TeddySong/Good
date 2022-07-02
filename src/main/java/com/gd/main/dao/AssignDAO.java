@@ -6,20 +6,24 @@ import java.util.HashMap;
 import com.gd.main.dto.AssListDTO;
 
 public interface AssignDAO {
-
-	ArrayList<AssListDTO> assList(int cnt, int offset);
-
-	ArrayList<AssListDTO> assList(HashMap<String, Object> assMap);
+	
+	ArrayList<AssListDTO> allCount(HashMap<String, Object> map);
+	
+	ArrayList<AssListDTO> assList(HashMap<String, Object> map);
 
 	ArrayList<AssListDTO> assCoList(HashMap<String, Object> assMap);
 
 	ArrayList<AssListDTO> assStuCoList(HashMap<String, Object> assMap);
 	
-	int allCount(HashMap<String, Object> searchResult);
+	int allCount1(HashMap<String, Object> searchResult);
 
 	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
 
 	int assStuListInsert(HashMap<String, Object> assMap);
+
+	ArrayList<AssListDTO> allPage(HashMap<String, Object> map);
+
+	
 
 	
 

@@ -235,33 +235,37 @@ var currPage = 1;
 
 listCall(currPage);
 
+$('#assSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	assSearchCall(currPage);
+});
+
+
 function listCall(page){
 	
-	var pagePerNum = 10;
+	var cnt = 10;
+	
 	console.log("param page : " + page);
-	
-	
-	
 	
 	$.ajax({
 		type:'get',
 		url:'assignList.ajax',
 		data:{
-			cnt : pagePerNum,
+			cnt : cnt,
 			page : page
 		},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
 			drawList(data.assList);
-			currPage=data.currPage;
+			currPage = data.currPage;
 			
 			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
-				startPage:data.currPage, //시작페이지
-				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, // 한번에 보여줄 페이지 수
-				onPageClick:function(e,page){
+				startPage: data.currPage, //시작페이지
+				totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5,  //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
 					console.log(page);
 					currPage=page;
 					listCall(page);
@@ -273,22 +277,25 @@ function listCall(page){
 			console.log(e);
 		}
 	});
-	
+}	
 		//검색
-		$('#assSearch').on('click',function(){
+function assSearchCall(page){
+	
 		
+		var cnt = 10;
+			
+			
 		var assSearchTarget = $("#coName option:selected").val();
 		console.log(assSearchTarget);
 	
 		var search = $("#search").val();
 		console.log(search);
 		
-		
 		$.ajax({
 			type:'get',
 			url:'assignSearch.ajax',
 			data:{
-				cnt : pagePerNum,
+				cnt : cnt,
 				page : page,
 				assSearchTarget:assSearchTarget,
 				search:search
@@ -297,14 +304,14 @@ function listCall(page){
 			success:function(data){
 				console.log(data);
 				drawList(data.assList);
-				currPage=data.currPage;
+				currPage = data.currPage;
 				
 				//플러그인 사용 페이징
 				$("#pagination").twbsPagination({
-					startPage:data.currPage, //시작페이지
-					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages: 5, // 한번에 보여줄 페이지 수
-					onPageClick:function(e,page){
+					startPage: data.currPage, //시작페이지
+					totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+					visiblePages:5,  //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
 						console.log(page);
 						currPage=page;
 						listCall(page);
@@ -316,8 +323,8 @@ function listCall(page){
 				console.log(e);
 			}
 		}); 
-	});
-}
+	}
+
 	function drawList(assList){
 		var content="";
 		
@@ -337,7 +344,6 @@ function listCall(page){
 				content +='<td>'+item.co_condition+'</td>'; 
 				content +='<tr>';
 			});
-		
 			$('#list').empty();
 			$('#list').append(content);
 	}

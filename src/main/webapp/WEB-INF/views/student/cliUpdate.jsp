@@ -138,7 +138,7 @@
 			</tr>		
 			<tr>
 			<th>연락처</th>
-			<td><input type="text" id="cli_phone" /></td>
+			<td><input type="text" id="cli_phone" oninput="autoHyphen" maxlength="13"/></td>
 			</tr>			
 			<tr>
 				<th>담당직원</th>
@@ -328,8 +328,8 @@ function cliStuUpdate(){
 			}else {
 				if(data.success){
 					alert('수정에 성공하였습니다.');
-					opener.parent.location.href='stuUpdate.go?stu_no='+(data.stu_no);
-					window.close()
+					opener.parent.location.reload();
+					window.close();
 				}else{
 					alert('수정에 실패하였습니다.');
 				}

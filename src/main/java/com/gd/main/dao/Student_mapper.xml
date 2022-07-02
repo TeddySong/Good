@@ -6,7 +6,7 @@
 	<select id="stuList" resultType="com.gd.main.dto.StuDTO" parameterType="hashmap">
 		SELECT stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, emp_name FROM student s 
 		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
-		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no		
+		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no		
 		<where>
 				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
 					<if test="stuSearchCategory.equals('cli_name')">
@@ -30,7 +30,7 @@
 	<select id="allCount" resultType="com.gd.main.dto.StuDTO">
 		SELECT stu_no FROM student s
 		LEFT OUTER JOIN client c ON s.cli_no = c.cli_no
-		LEFT OUTER JOIN employee e ON s.emp_no = e.emp_no		
+		LEFT OUTER JOIN employee e ON c.emp_no = e.emp_no		
 		<where>
 				<if test="stuSearchCategory != null and stuSearchCategory != '' and stuSearchContent != null and stuSearchContent != ''">
 					<if test="stuSearchCategory.equals('cli_name')">
@@ -83,7 +83,7 @@
 	<select id="stuDetail" resultType="com.gd.main.dto.StuDTO">
 		SELECT s.cli_no, s.emp_no, stu_no, cli_name, cli_phone, stu_birth, stu_age, stu_gender, stu_condition, emp_name FROM student s
 		LEFT OUTER JOIN client c ON c.cli_no = s.cli_no 
-		LEFT OUTER JOIN employee e ON e.emp_no =s.emp_no 
+		LEFT OUTER JOIN employee e ON c.emp_no =e.emp_no 
 		WHERE stu_no = #{param1}
 	</select>
 	

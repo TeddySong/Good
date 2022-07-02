@@ -50,7 +50,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="#hero">GOOD IT</a></h1>
+      <h1 class="logo"><a href="#hero">GOOD2 IT Academy</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -93,8 +93,8 @@
       <div class="table-cell">
         <div class="container">
           <!--<p class="display-6 color-d">Hello, world!</p>-->
-          <h1 class="hero-title mb-4">굳이 IT를 공부해야할까요?<br>굳이 IT를 공부해야합니다.</h1>
-          <p class="hero-subtitle"><span class="typed" data-typed-items="공부는, 굳이, IT, 굳이IT"></span></p>
+          <h1 class="hero-title mb-4">세상을 바꾸는 힘<br>굳이 IT 아카데미.</h1>
+          <p class="hero-subtitle"><span class="typed" data-typed-items="굳이 IT를 공부해야할까요?, , 굳이 IT를 공부해야합니다., "></span></p>
           <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
         </div>
       </div>
@@ -205,42 +205,46 @@
                   <div class="col-md-6">
                     <div class="title-box-2">
                       <h5 class="title-left">
-                        Send Message Us
+                        Good2 IT 상담신청
                       </h5>
                     </div>
                     <!--가입폼-->
                     <div>
-                       	      <table id="regTable">
-   
+                       	      <table id="regTable">   
 				        	<tr>
-				        		<th>이름</th>
-				        		<td><input type="text" id="cli_name"  /></td>
-				        		<th>연락처</th>
-				        		<td><input type="text"  id="cli_phone" oninput="autoHyphen(this)" maxlength="13"   /></td>
+				        		<th style="font-size:20px;">이름</th>
+				        		<td>
+				        		<input type="text" id="cli_name" style="width:100%;" placeholder="이름을 입력해주세요" />
+				        		</td>
+				        		</tr>
+				        		<tr>
+				        		<th style="font-size:20px;">연락처</th>
+				        		<td>
+				        		<input type="text"  id="cli_phone" oninput="autoHyphen(this)" maxlength="13"  style="width:100%;" placeholder="연락처를 입력해주세요"  />
+				        		</td>
 				        	</tr>		
 				        
 				        	<tr>
-				        		<th colspan="4" >
+				        		<th colspan="4" style="font-size:20px;" >
 				        			문의과목
 				        		</th>
 				        	</tr>
-				       		<tr> <!-- 과목 db에서 가져와 뿌리기 .  -->
+				       		<tr style="border:1px solid black; border-radius:10%;"> <!-- 과목 db에서 가져와 뿌리기 .  -->
 				       		
 					       		<th colspan="4" id="req_course" >
 					       			<c:forEach  var="sub" items="${subList}">
 					    
-						    			<label>
+						    			<label style="margin:0 3px;">
 										<input type="checkbox" value="${sub.sub_no}">		
 										${sub.sub_name}
 										</label>
 					       			</c:forEach>
 					       		</th>
 				       		</tr>
-				        	<tr><th colspan="4">상담요청내용</th></tr>      
-				        	
+				        	<tr><th colspan="4"  style="font-size:20px;">상담요청내용</th></tr>				        	
 				        	<tr>
 				        		<td colspan="4">
-						        	<textarea id="req_content" placeholder="내용을 입력해 주세요 (500자 이내)" ></textarea>
+						        	<textarea id="req_content" style="width:100%;" placeholder="내용을 입력해 주세요 (500자 이내)" ></textarea>
 				        		</td>
 				        	</tr>
 				        	<tr> 

@@ -297,11 +297,6 @@
 
 </body>
 <script>
-var msg = "${msg}";
-if(msg != ""){
-	alert(msg);
-}
-
 noHidden();
 function noHidden(){
 	$(".hidden").css("display", "none");
@@ -395,14 +390,16 @@ function stuRegister(){
 			console.log(data);
 			if(data.login){
 			/* stuSub(data.stu_no); */
+			alert('등록이 완료되었습니다.');
 			location.href='stuList.go';	
 			} else{
 				alert('로그인이 필요한 서비스입니다.');
-				location.href='/';
+				location.href='/login.go';
 			}
 			
 		},
 		error:function(error){
+			alert('등록에 실패하였습니다.')
 			console.log(error);
 		}
 	});	

@@ -254,7 +254,7 @@
 									<tr>
 										<th colspan="2">
 											<input type="button" value="수정완료" onclick="stuUpdate()"/>
-											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
+											<input type="button" value="돌아가기" onclick="history.back()"/>
 										</th>				
 									</tr>
 								</table>  				
@@ -495,7 +495,7 @@ function stuUpdate(){
 					location.href='/';
 				}else {
 					if(data.success){
-						alert('수정에 성공하였습니다.');
+						alert('수정이 완료되었습니다.');
 						location.href='stuDetail.go?stu_no='+params.stu_no;
 					}else{
 						alert('수정에 실패하였습니다.');

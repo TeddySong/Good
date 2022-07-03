@@ -102,6 +102,7 @@
 	<update id="stuUpdate" parameterType='hashmap'>
 		UPDATE student SET 
 			stu_birth = #{stu_birth},
+			stu_age = #{stu_age},
 			stu_gender = #{stu_gender},
 			stu_condition = #{stu_condition}
 		WHERE stu_no = #{stu_no}
@@ -117,7 +118,7 @@
 		left outer join employee e on sl.emp_no = e.emp_no 
 		left outer join student s on sl.stu_no = s.stu_no 
 		left outer join client c on s.cli_no = c.cli_no
-		WHERE sl.stu_no = #{param1}
+		WHERE sl.stu_no = #{param1}		
 	</select>
 	
 	<insert id="stuLogRegister" parameterType='hashmap'>

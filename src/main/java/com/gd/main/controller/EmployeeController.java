@@ -26,11 +26,18 @@ public class EmployeeController {
 	
 	//직원일지 등록	
 	@RequestMapping(value="/empLogRegister.go")
-	public String stuLogRegisterGo(@RequestParam String emp_no, HttpSession session) {
-		logger.info("직원일지 등록페이지 이동"+ emp_no); //직원의 사번 가져오기?
+	public String stuLogRegisterGo(Model model,@RequestParam String emp_no, HttpSession session) {
+		logger.info("직원일지 등록페이지 이동"+ emp_no); 
 		session.setAttribute("emp_no", emp_no);
 		
-		return "./employee/empLogRegister";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./employee/empLogRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping("/empLogRegister.ajax")
@@ -45,18 +52,26 @@ public class EmployeeController {
 	
 	//직원일지 페이지
 	  @RequestMapping(value = "/empLogList.go") 
-	  public String emplogListGo(Model model, HttpSession session, 
-			  @RequestParam String emp_no) {
+	  public String emplogListGo(Model model, HttpSession session, @RequestParam String emp_no) {
+		  
+      String page = "redirect:/empList.go";	  
 	  logger.info("직원일지 페이지! : " + emp_no); 
+	  
+	  if(session.getAttribute("loginId") != null) {
 	  ArrayList<EmployeeDTO> dto =service.empLogList(emp_no); 
+	  if(dto != null) {
 	  logger.info("리스트 사이즈:"+dto.size()); 
 	  String empName=service.empName(emp_no); 
 	  model.addAttribute("dto",dto);
 	  model.addAttribute("empName", empName); 
 	  model.addAttribute("empNo", emp_no);
-	  return "./employee/empLogList"; 
+	  page = "./employee/empLogList";
 	  }
-	
+	  }else {
+		   model.addAttribute("msg", "로그인이 필요한 서비스입니다");
+	  }
+	  return page; 
+	}
 	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
@@ -124,9 +139,17 @@ public class EmployeeController {
 	
 	// 직원 등록 페이지로 이동
 	@RequestMapping(value = "/empRegister.go")
-	public String empRegister() throws Exception {
+	public String empRegister(Model model, HttpSession session) {
 		logger.info("회원등록 페이지 이동");
-		return "./employee/empRegister";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./employee/empRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
 	}
 
 	// 직원명 중복체크

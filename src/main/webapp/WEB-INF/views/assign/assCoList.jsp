@@ -265,6 +265,8 @@ function listCall(page){
 	console.log(search);
 	
 	
+	
+	
 	$.ajax({
 		type:'get',
 		url:'assCoList.ajax',
@@ -310,7 +312,7 @@ function drawList(assCoList){
 		content += '<tr>';
 		content += '<td>'+item.co_name+'</td>';
 		content += '<td>'+item.stu_no+'</td>';
-		content += '<td><a href="assStuList.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';		
+		content += '<td ><a id ="cliName" href="assStuList.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';		
 		content += '<td>'+item.cli_phone+'</td>';
 		content += '<td>'+item.emp_name+'</td>';
 		content += '<td>'+item.ass_condition+'</td>';

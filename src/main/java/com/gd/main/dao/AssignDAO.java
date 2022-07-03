@@ -25,6 +25,10 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> assStuListchange(HashMap<String, Object> assMap);
 
+	int coSearchUp(HashMap<String, Object> assMap);
+
+	int coSearchDel(HashMap<String, Object> assMap);
+
 
 
 	

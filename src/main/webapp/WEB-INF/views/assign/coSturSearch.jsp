@@ -218,6 +218,7 @@ function stuSearchCall(page) {
 		success:function(data){
 			console.log(data);
 			drawList(data.list);
+			
 			currPage=data.currPage;
 
 			//플러그인 사용 페이징
@@ -282,7 +283,7 @@ function assStuList(){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
-			opener.parent.location.href='assStuList.go?stu_no='+stuCo;
+			opener.parent.location.href='assStuList.go?stu_no='+data.stuCo;
 			window.close();
 		},
 		error:function(error){
@@ -290,10 +291,7 @@ function assStuList(){
 		}
 	});	
 }
-function esc(){
-	
-	window.close();
-}
+
 
 
 

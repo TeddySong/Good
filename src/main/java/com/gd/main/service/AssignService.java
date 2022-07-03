@@ -2,6 +2,7 @@ package com.gd.main.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -120,7 +121,7 @@ public class AssignService {
 		HashMap<String, Object> assMap = new HashMap<String, Object>();
 		assMap.put("params", params);
 		assMap.put("stu_no", stu_no);
-		
+
 		ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(assMap);
 		assMap.put("assStuCoList", assStuCoList);
 		
@@ -168,23 +169,7 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 					"startSearch : "+startSearch+" / "+
 					"endSearch : "+endSearch);
 		
-		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-
-		/*
-		 * int allCnt = dao.allCount(searchResult);
-		 * 
-		 * logger.info("allCnt : "+allCnt); int pages = allCnt % cnt > 0 ? (allCnt /
-		 * cnt)+1 : (allCnt / cnt); logger.info("pages : "+pages);
-		 * 
-		 * if(pages==0) {pages=1;}
-		 * 
-		 * if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결 page =
-		 * pages; }
-		 * 
-		 * map.put("pages", pages); //만들 수 있는 최대 페이지 수
-		 * 
-		 * map.put("currPage", page); //현재 페이지
-		 */
+	
 		map.put("stu_no", stu_no);
 		
 		int offset = (page-1) * cnt;
@@ -251,6 +236,70 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		return assMap;
 
 		
+	}
+
+	public HashMap<String, Object> coSearchUp(HashMap<String, String> params, String stu_no ) {
+		
+		
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		int stuCo  = Integer.parseInt(params.get("stuCo"));
+		String ass_condition = params.get("ass_condition");
+		assMap.put("stuCo", stuCo);
+		assMap.put("ass_condition",ass_condition);
+		//assMap.put("co_no", co_no);
+		logger.info("나오려나...? "+assMap);
+		//assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		
+		//ArrayList<AssListDTO> coSearchUp = dao.coSearchUp(assMap);
+		//assMap.put("coSearchUp", coSearchUp);
+		
+		int row = dao.coSearchUp(assMap);
+		
+		boolean cnt = false;
+		if (row > 0) {
+			cnt = true;
+
+		}
+		assMap.put("success", cnt);
+		
+		
+		
+		logger.info(assMap + "~");
+		
+		return assMap;
+	}
+
+
+
+	public HashMap<String, Object> coSearchDel(HashMap<String, String> params, String stu_no) {
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		int stuCo  = Integer.parseInt(params.get("stuCo"));
+		String ass_condition = params.get("ass_condition");
+		assMap.put("stuCo", stuCo);
+		assMap.put("ass_condition",ass_condition);
+		//assMap.put("co_no", co_no);
+		logger.info("나오려나...? "+assMap);
+		//assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		
+		//ArrayList<AssListDTO> coSearchUp = dao.coSearchUp(assMap);
+		//assMap.put("coSearchUp", coSearchUp);
+		
+		int row = dao.coSearchDel(assMap);
+		
+		boolean cnt = false;
+		if (row > 0) {
+			cnt = true;
+
+		}
+		assMap.put("success", cnt);
+		
+		
+		
+		logger.info(assMap + "~");
+		
+		return assMap;
 	}
 	
 

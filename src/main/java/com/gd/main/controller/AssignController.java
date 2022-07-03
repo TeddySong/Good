@@ -119,11 +119,12 @@ public class AssignController {
 	 */
 	 
 	  @RequestMapping("/assStuList.go")
-		public String assStuList(HttpSession session, @RequestParam String stu_no,Model model) {
+		public String assStuList(HttpSession session, @RequestParam String stu_no, Model model) {
 			 String page = "home";
 			 if(session.getAttribute("loginId") != null) {
 					
-				session.setAttribute("stu_no", stu_no); 
+				session.setAttribute("stu_no", stu_no);
+				
 				
 				page = "./assign/assStuList";	 
 			} 
@@ -136,10 +137,34 @@ public class AssignController {
 	  
 	  logger.info("학생 배정 페이지 이동");
 	  String stu_no =(String) session.getAttribute("stu_no");
-	  
+	
 	  
 	 return service.assStuCoList(params,stu_no);
 	 }
+	  
+	  @RequestMapping("/coSearchUp.ajax")
+	  @ResponseBody 
+	  public HashMap<String, Object> coSearchUp(HttpSession session,@RequestParam HashMap<String, String> params){
+	  
+	  logger.info("배정수정 페이지!");
+	  String stu_no =(String) session.getAttribute("stu_no");
+	  //String co_no = (String) session.getAttribute("co_no");
+	  
+	 return service.coSearchUp(params,stu_no);
+	 }
+	  
+	  @RequestMapping("/coSearchDel.ajax")
+	  @ResponseBody 
+	  public HashMap<String, Object> coSearchDel(HttpSession session,@RequestParam HashMap<String, String> params){
+	  
+	  logger.info("배정수정 페이지!");
+	  String stu_no =(String) session.getAttribute("stu_no");
+	  //String co_no = (String) session.getAttribute("co_no");
+	  
+	 return service.coSearchDel(params,stu_no);
+	 }
+	  
+	  
 	
 	  @RequestMapping("/coSearList.go")
 		public String coSear(HttpSession session, Model model) {
@@ -215,7 +240,7 @@ public class AssignController {
 		 @ResponseBody 
 			public HashMap<String, Object> assStuListchange(HttpSession session,@RequestParam HashMap<String, String> params){
 				  
-				  logger.info("학생 배정 페이지 이동");
+				  logger.info("배정 수정 페이지");
 				  
 					/*
 					 * HashMap<String, Object> map = new HashMap<String, Object>(); 

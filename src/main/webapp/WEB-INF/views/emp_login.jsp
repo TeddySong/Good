@@ -3,61 +3,90 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Good2 직원 로그인</title>
+<link href="../resources/img/goodfavicon.png" rel="icon">
+<link href="../resources/CSS/emp/empLogin.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style></style>
-</head>
-    <link href="../resources/CSS/emp/empLogin.css" rel="stylesheet">
+<style>
+	body{
+		font-family: 'Bowlby One SC', cursive;
+	}
 
-</head>
+	div {
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%,-50%);
+		  width:30%;
+		  height:40%;		  
+	}
+	
+	table {
+		width:100%;
+		height:100%;
+		border: 3px dotted white;
+		border-radius: 5px;
+	}
+	
+	table td{
+		font-size:30px;
+	}
+	
+	input[type='text'], input[type="password"]{
+		width:90%;
+		height:90%;
+		font-size: 20px;
+		
+		  border: 0;
+		  border-radius: 15px;
+		  outline: none;
+		  padding-left: 10px;
+		  background-color: rgb(233, 233, 233);
+	}
+	
+	.goodRegister {
+		font-family: 'Bowlby One SC', cursive;
+		position: relative;		
+		margin: 0 auto;
+		width: 50%;
+		height:80%;
+		text-decoration: none;
+		border-radius: 20px;
+		padding: 10px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 20px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
 
+	.goodRegister:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+		cursor:pointer;
+	}
+	
+</style>
+</head>
 <body class="bg-gradient-primary">
 
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">굳이IT아카데미</h1>
-                                    </div>
-                                    <form class="user">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user"
-                                                name="emp_id" aria-describedby="emailHelp"
-                                                placeholder="아이디를 입력하세요">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                name="emp_pw" placeholder="비밀번호를 입력하세요">
-                                        </div>
-                                        <input type="button"  class="btn btn-primary btn-user btn-block" value="로그인" onclick="empLogin()"/> 
-                                    </form>
-                                    <hr>
-                               
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
+	<div>
+		<table>
+			<tr><td style="font-size:15px; height:5%; font-family: 'Noto Sans KR', sans-serif;">직원전용페이지</td></tr>
+			<tr><td style="text-align:center; font-size:35px; height:25%">Welcome to Good2 IT!</td></tr>		
+			<tr><td style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;ID</td></tr>
+			<tr><th style="height:15%"><input type="text" name="emp_id" placeholder="ID를 입력하세요"/></th></tr>
+			<tr><td style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;Password</td></tr>
+			<tr><th style="height:15%"><input type="password" name="emp_pw" placeholder="패스워드를 입력하세요"/></th></tr>
+			<tr><th style="height:20%"><input type="button" class="goodRegister" onclick="empLogin()" value="Log In"/></th></tr>			
+		</table>
+	</div>
+    
 </body>
 <script>
-
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
 
 
 	function empLogin(){

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.gd.main.dao.EmployeeDAO;
 import com.gd.main.dto.EmployeeDTO;
+import com.gd.main.dto.StuDTO;
 
 
 
@@ -152,9 +153,10 @@ public class EmployeeService {
 		
 		if(row>0) {
 			success = true;
-		
+			
 		}
-		logger.info("수정성공 : "+success);
+		logger.info("수정된 데이터 수:"+row);
+		logger.info("수정된 데이터 : "+success);
 		/* result.put("success",success); */
 		return success;
 	}
@@ -168,9 +170,17 @@ public class EmployeeService {
 
 
 
+
+
+
+
+
+
 	
 
 }
+
+
 
 
 

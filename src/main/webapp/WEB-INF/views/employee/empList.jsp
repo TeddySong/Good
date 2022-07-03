@@ -388,7 +388,7 @@ function EmpUpdateForm(){
 	if(emp_no>0){
 		location.href='empUpdate.go?emp_no='+emp_no;	
 	}else{
-		alert("수정할 직원의 버튼을 선택하고 수정버튼을 누르세요!");
+		alert("수정할 직원명을 먼저 선택하세요");
 	}
 	
 }

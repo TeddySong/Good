@@ -209,11 +209,10 @@
             <td colspan="3" id="co_name">${dto.co_name}</td>
         </tr>
         <tr>
-            <th<%--   value="${callSubNo.sub_no}" --%>>과목</th>
-            <td id="sub_name">${dto.sub_name}</td>
-            <%-- <td colspan="3" id="sub_name">${dto.sub_name}</td> --%>
-            <th>과목번호</th>
-            <td id="sub_no">${dto.sub_no}</td>
+            <th>과목</th>
+            <td colspan="3" id="sub_name">${dto.sub_name}</td>
+            <%-- <th>과목번호</th>
+            <td id="sub_no">${dto.sub_no}</td> --%>
         </tr>
         <tr>
             <th>개강일</th>
@@ -229,7 +228,7 @@
         </tr>
         <tr>
             <th>수강정원</th>
-	            <td id="co_capacity">${dto.co_capacity} <button onclick="location.href='assCoList.go?co_name=${co_name}'" class="goodRegister">자세히</button>
+	            <td id="co_capacity">${dto.co_capacity} <button onclick="location.href='assCoList.go?co_no=${co_no}'" class="goodRegister">자세히</button>
 	            </td>
             <th>진행상황</th>
             <td id="co_condition">${dto.co_condition}</td>

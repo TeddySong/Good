@@ -138,7 +138,7 @@
 			</tr>		
 			<tr>
 			<th>연락처</th>
-			<td><input type="text" id="cli_phone" oninput="autoHyphen" maxlength="13"/></td>
+			<td><input type="text" id="cli_phone" oninput="autoHyphen(this)" maxlength="13"/></td>
 			</tr>			
 			<tr>
 				<th>담당직원</th>
@@ -339,13 +339,14 @@ function cliStuUpdate(){
 			console.log(error);
 		}
 	});
-	
-	
-	
-	
+		
 }
 
-
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
 	
 
 

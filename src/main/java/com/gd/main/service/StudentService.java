@@ -107,7 +107,7 @@ public class StudentService {
 		return map;
 	}
 
-	public HashMap<String, Object> stuRegister(HashMap<String, String> params){
+	public HashMap<String, Object> stuRegister(HashMap<String, String> params, String loginId){
 		logger.info("들어왔는지 확인");
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
@@ -119,12 +119,17 @@ public class StudentService {
 		params.put("stu_birth", stu_birth);
 		
 		int row = dao.stuRegister(params);
-
+		
 		boolean cnt = false;
+		boolean login=false;
 		if (row > 0) {
+			if(loginId != null) {
 			cnt = true;
-
+			login = true;
+			}
 		}
+		
+		result.put("login", login);
 		result.put("success", cnt);
 		return result;
 	}

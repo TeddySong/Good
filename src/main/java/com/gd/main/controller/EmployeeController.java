@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.gd.main.dto.EmployeeDTO;
+import com.gd.main.dto.StuDTO;
 import com.gd.main.service.EmployeeService;
 
 @Controller
@@ -23,14 +24,20 @@ public class EmployeeController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
-	//직원일지 등록
-	
+	//직원일지 등록	
 	@RequestMapping(value="/empLogRegister.go")
-	public String stuLogRegisterGo(@RequestParam String emp_no, HttpSession session) {
-		logger.info("직원일지 등록페이지 이동"+ emp_no); //직원의 사번 가져오기?
+	public String stuLogRegisterGo(Model model,@RequestParam String emp_no, HttpSession session) {
+		logger.info("직원일지 등록페이지 이동"+ emp_no); 
 		session.setAttribute("emp_no", emp_no);
 		
-		return "./employee/empLogRegister";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./employee/empLogRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping("/empLogRegister.ajax")
@@ -42,69 +49,47 @@ public class EmployeeController {
 	       return service.empLogRegister(params);
 	    }
 	
-	//
-	//
-	//
 	
-	//직원일지 페이지 
-	
+	//직원일지 페이지
 	  @RequestMapping(value = "/empLogList.go") 
-	  public String emplogListGo(Model model, HttpSession session, 
-			  @RequestParam String emp_no) {
+	  public String emplogListGo(Model model, HttpSession session, @RequestParam String emp_no) {
+		  
+      String page = "redirect:/empList.go";	  
 	  logger.info("직원일지 페이지! : " + emp_no); 
+	  
+	  if(session.getAttribute("loginId") != null) {
 	  ArrayList<EmployeeDTO> dto =service.empLogList(emp_no); 
+	  if(dto != null) {
 	  logger.info("리스트 사이즈:"+dto.size()); 
 	  String empName=service.empName(emp_no); 
 	  model.addAttribute("dto",dto);
 	  model.addAttribute("empName", empName); 
 	  model.addAttribute("empNo", emp_no);
-	  return "./employee/empLogList"; 
+	  page = "./employee/empLogList";
 	  }
-	
-	
-	
-	 /*직원일지 페이지 임시생성
-	@RequestMapping(value = "/empLogList.go", method = RequestMethod.GET)
-	public String emplogListGo(Model model,HttpSession session) {
-		
-		 String page = "home";
-
-		 if(session.getAttribute("loginId") != null) {
-			 page = "./employee/empList";
-		} 
-		return page;
+	  }else {
+		   model.addAttribute("msg", "로그인이 필요한 서비스입니다");
+	  }
+	  return page; 
 	}
-	
-	//직원 리스트 페이지 이동 임시생성
-	@RequestMapping("/empLogList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> list(HttpSession session, @RequestParam HashMap<String, String> params) {
-		logger.info("배정 리스트 요청");
-		return service.list(params);
-	}
-	
-	*/
-	
-	
-	
 	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
-	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {
+	public String getSelectImpInfo(Model model, HttpSession session, int emp_no,
+		@RequestParam HashMap<String, String> params) { 
 		logger.info("상세보기 페이지 이동:"+emp_no);
 		session.setAttribute("emp_no", emp_no);
 		logger.info("상세보기 페이지 이동:"+emp_no);
 		EmployeeDTO employeeDTO = service.getselectEmpMyInfo(emp_no);
 		model.addAttribute("employeeDTO", employeeDTO);
 		
-		return "./employee/empUpdate";
-		
+		return "./employee/empUpdate";	
 	}
 	
 	 @RequestMapping("/empUpdate.ajax")
 	 @ResponseBody
 	 public HashMap<String, Object> empUpdate(
-			 @RequestParam HashMap<String, String>params){
+			 @RequestParam HashMap<String, String>params ){
 		logger.info("직원 수정: " +params);
 		HashMap<String, Object> map= new HashMap<String, Object>();
 		boolean success=service.empUpdate(params);
@@ -112,28 +97,36 @@ public class EmployeeController {
 		
 		 return map;
 	 }
-	//직원 목록페이지 이동
 	 
-	@RequestMapping(value = "/empList.go")
-	public String empListGo() {
-	logger.info("직원 목록 페이지!");
-	return "./employee/empList";
-	}
+	//직원 목록페이지 이동
+		
+		@RequestMapping(value = "/empList.go")
+		public String empListGo(Model model, HttpSession session) {
+			logger.info("직원 목록 페이지로 이동!");
+			
+			String page="emp_login";
+			if(session.getAttribute("loginId") !=null) {
+				page="./employee/empList";
+			}else{
+				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			}
+		return page;
+		}
 
 	// 직원 불러오기
-	@RequestMapping(value = "employeeList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> emplist(
-			@RequestParam HashMap<String, String> params, HttpSession session) {
-		logger.info("직원 목록 요청:" + params);
+		@RequestMapping(value = "employeeList.ajax")
+		@ResponseBody
+		public HashMap<String, Object> emplist(
+				@RequestParam HashMap<String, String> params, HttpSession session) {
+			logger.info("직원 목록 요청:" + params);
 
-		boolean login = false;
-		
-		if(session.getAttribute("loginId") != null){
-			login = true;
+			boolean login = false;
+			
+			if(session.getAttribute("loginId") != null){
+				login = true;
+			}
+			return service.empList(params,login);
 		}
-		return service.empList(params,login);
-	}
 	
 	//직원검색
 	@RequestMapping("/empSearch.ajax")
@@ -143,15 +136,20 @@ public class EmployeeController {
 		return service.empList(params,false);
 	}
 	
-	//
 	
-	
-
 	// 직원 등록 페이지로 이동
 	@RequestMapping(value = "/empRegister.go")
-	public String empRegister() throws Exception {
+	public String empRegister(Model model, HttpSession session) {
 		logger.info("회원등록 페이지 이동");
-		return "./employee/empRegister";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./employee/empRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
 	}
 
 	// 직원명 중복체크

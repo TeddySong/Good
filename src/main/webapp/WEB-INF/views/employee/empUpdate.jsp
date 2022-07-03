@@ -225,15 +225,15 @@
 		<tr>
 			<th>입사일</th>
 			<td>
-         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_startDate}" />
-			</td>			
+         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_startDate}" pattern="yyyy-MM-dd" />">
+         	</td>			
 		</tr>
 		<tr>
 			<th>퇴사일</th>
 			<td>
-         		<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_endDate}" />
+				<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_endDate}" pattern="yyyy-MM-dd" />">
 			</td>			
-		</tr>		
+		</tr>			
 	 	<tr>
 			<th>재직상태</th>
 			<td>

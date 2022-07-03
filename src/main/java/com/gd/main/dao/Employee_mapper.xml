@@ -131,6 +131,7 @@
 			,emp_phone = #{emp_phone}
 			,emp_position = #{emp_position}
 			,emp_startDate =#{emp_startDate}
+			,emp_endDate =NULLIF(#{emp_endDate},'')
 			,emp_condition =#{emp_condition}
 		WHERE emp_no= #{emp_no} 
 	</update>

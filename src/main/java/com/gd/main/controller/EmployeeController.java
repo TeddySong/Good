@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.gd.main.dto.EmployeeDTO;
+import com.gd.main.dto.StuDTO;
 import com.gd.main.service.EmployeeService;
 
 @Controller
@@ -59,7 +60,8 @@ public class EmployeeController {
 	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
-	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {
+	public String getSelectImpInfo(Model model, HttpSession session, int emp_no,
+		@RequestParam HashMap<String, String> params) { 
 		logger.info("상세보기 페이지 이동:"+emp_no);
 		session.setAttribute("emp_no", emp_no);
 		logger.info("상세보기 페이지 이동:"+emp_no);
@@ -72,7 +74,7 @@ public class EmployeeController {
 	 @RequestMapping("/empUpdate.ajax")
 	 @ResponseBody
 	 public HashMap<String, Object> empUpdate(
-			 @RequestParam HashMap<String, String>params){
+			 @RequestParam HashMap<String, String>params ){
 		logger.info("직원 수정: " +params);
 		HashMap<String, Object> map= new HashMap<String, Object>();
 		boolean success=service.empUpdate(params);
@@ -82,26 +84,34 @@ public class EmployeeController {
 	 }
 	 
 	//직원 목록페이지 이동
-	@RequestMapping(value = "/empList.go")
-	public String empListGo() {
-	logger.info("직원 목록 페이지!");
-	return "./employee/empList";
-	}
+		
+		@RequestMapping(value = "/empList.go")
+		public String empListGo(Model model, HttpSession session) {
+			logger.info("직원 목록 페이지로 이동!");
+			
+			String page="emp_login";
+			if(session.getAttribute("loginId") !=null) {
+				page="./employee/empList";
+			}else{
+				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
+			}
+		return page;
+		}
 
 	// 직원 불러오기
-	@RequestMapping(value = "employeeList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> emplist(
-			@RequestParam HashMap<String, String> params, HttpSession session) {
-		logger.info("직원 목록 요청:" + params);
+		@RequestMapping(value = "employeeList.ajax")
+		@ResponseBody
+		public HashMap<String, Object> emplist(
+				@RequestParam HashMap<String, String> params, HttpSession session) {
+			logger.info("직원 목록 요청:" + params);
 
-		boolean login = false;
-		
-		if(session.getAttribute("loginId") != null){
-			login = true;
+			boolean login = false;
+			
+			if(session.getAttribute("loginId") != null){
+				login = true;
+			}
+			return service.empList(params,login);
 		}
-		return service.empList(params,login);
-	}
 	
 	//직원검색
 	@RequestMapping("/empSearch.ajax")

@@ -303,13 +303,13 @@ function save(){
 			 alert('PW를 입력해주세요!');
 			 $emp_pw.focus();
 		 }else if($emp_name.val() ==""){
-			 alert('이름을 입력해주세요!');
+			 alert('직원명을 입력해주세요!');
 			 $emp_name.focus();
 		 }else if(!overChk){
 			 alert('직원명 중복을 확인해주세요!');
 			 $emp_name.focus();	 
 		 }else if($emp_phone.val()==""){
-			 alert('휴대폰번호를 입력해주세요!');
+			 alert('연락처를 입력해주세요!');
 			 $emp_phone.focus();
 		 }else if($emp_position.val() ==""){
 			 alert('직급을 입력해주세요!');

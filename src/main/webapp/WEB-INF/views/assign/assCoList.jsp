@@ -280,6 +280,7 @@ function listCall(page){
 function drawList(assCoList){
 	var content="";
 	assCoList.forEach(function(item){
+		
 		content += '<tr>';
 		content += '<td>'+item.co_name+'</td>';
 		content += '<td>'+item.stu_no+'</td>';

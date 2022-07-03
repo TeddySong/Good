@@ -134,6 +134,7 @@ function listCall() {
 
 function darwName(list) {
 	var content = '';
+		content +='<option value="선택">과목선택</option>';
 	list.forEach(function(item){
 		content += '<option value="'+item.sub_no+'">'+item.sub_name+'</option>';
 	});
@@ -149,29 +150,41 @@ function scrReg(subno) {
 	
 	console.log($('#sub_name option:selected').val());
 	
+	if($("#sub_name option:selected").val() == '선택'){
+		alert("과목을 선택해주세요");
+	}else{
+		
+	}
 	
-	$.ajax({
-		type:'get',
-		url:'scrReg.ajax',
-		data:{
-			sub_no:$sub_no.val(),
-			scr_content:$scr_content.val()
-		},
-		dataType:'JSON',
-		success:function(data){
-			console.log(data);
-			if(data.scrReg){
-				opener.parent.location.reload();
-				window.close();
-			}else{
-				alert("등록 실패");
+	if($scr_content.val() ==""){
+		alert("후기내용을 입력해주세요.");
+		$scr_content.focus();
+	}else{
+	
+		
+		$.ajax({
+			type:'get',
+			url:'scrReg.ajax',
+			data:{
+				sub_no:$sub_no.val(),
+				scr_content:$scr_content.val()
+			},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+				if(data.scrReg){
+					opener.parent.location.reload();
+					window.close();
+				}else{
+					alert("등록 실패");
+				}
+			},
+			error:function(e){
+				console.log(e);
 			}
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-
+		});
+	
+	}
 }
 
 </script>

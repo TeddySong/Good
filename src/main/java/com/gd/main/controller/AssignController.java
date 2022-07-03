@@ -1,6 +1,5 @@
 package com.gd.main.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.gd.main.dto.AssListDTO;
 import com.gd.main.service.AssignService;
 
 @Controller
@@ -38,8 +36,12 @@ public class AssignController {
 	//배정 리스트 페이지 이동
 	@RequestMapping("/assignList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> list(HttpSession session, @RequestParam HashMap<String, String> params) {
-		logger.info("배정 리스트 요청");
+	public HashMap<String, Object> list(HttpSession session, 
+			@RequestParam HashMap<String, String> params) {
+		logger.info("배정 리스트 요청" + params);
+		
+	
+		
 		return service.assList(params);
 	}
 	
@@ -53,13 +55,13 @@ public class AssignController {
 	
 	//과정배정 리스트 페이지 이동
 	@RequestMapping(value = "/assCoList.go", method = RequestMethod.GET)
-	public String assCoListGo(HttpSession session,@RequestParam String co_name,Model model) {
+	public String assCoListGo(HttpSession session,@RequestParam String co_no,Model model) {
 		
 		 String page = "home";
 
 		 if(session.getAttribute("loginId") != null) {
 			
-			session.setAttribute("co_name", co_name); 
+			session.setAttribute("co_no", co_no); 
 			page = "./assign/assCoList";
 			//model.addAttribute("list",list);		 
 		} 
@@ -89,14 +91,14 @@ public class AssignController {
 		logger.info("과정 배정 페이지 이동");
 		 
 		 //HashMap<String, Object> map = new HashMap<String, Object>();
-		 //map = (HashMap<String, Object>) session.getAttribute("co_name");
+		 String co_no =(String) session.getAttribute("co_no");
 		
 		 //ArrayList<AssListDTO> dto = service.assCoList(params);
 		 //map.put("dto", dto);
 		 //map.put("co_name",map);
+		 logger.info("배열은 : " + params);
 		 
-		 
-		 return service.assCoList(params);
+		 return service.assCoList(params,co_no);
 	 }
 	
 	
@@ -122,8 +124,7 @@ public class AssignController {
 			 if(session.getAttribute("loginId") != null) {
 					
 				session.setAttribute("stu_no", stu_no); 
-				page = "./assign/assStuList";
-				//model.addAttribute("list",list);		 
+				page = "./assign/assStuList";	 
 			} 
 			return page;
 		}
@@ -150,15 +151,60 @@ public class AssignController {
 			
 			 String page = "home";
 			 if(session.getAttribute("loginId") != null) {
-					
 				//session.setAttribute("stu_no", stu_no); 	
-			
+				
 				page = "./assign/coSearList";
 			 }
-			
-			
 			return page;
 		}
+	//리스트 호출
+		@RequestMapping("/coSearList.ajax")
+		@ResponseBody
+		public HashMap<String, Object> courList(
+				@RequestParam HashMap<String, String> params,HttpSession session) {
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("과정 리스트 요청 : "+params);	
+			String stu_no = (String)session.getAttribute("stu_no");
+			HashMap<String, Object> map = service.courList2(params,stu_no);
+			
+			
+			logger.info(map + "!");
+			
+		
+			return map;
+		}
+	  
+		
+		//과정 검색
+		@RequestMapping("/assCourSearch.ajax")
+		@ResponseBody
+		public HashMap<String, Object> courSearch(
+				@RequestParam HashMap<String, String> params,HttpSession session){
+			//HashMap<String, Object> map = new HashMap<String, Object>();
+			logger.info("검색결과 리스트 요청"+params);
+			String stu_no = (String)session.getAttribute("stu_no");
+		
+			return service.courList2(params, stu_no);
+		}
+	  
+		@RequestMapping("/assStuListInsert.ajax")
+		@ResponseBody 
+		public HashMap<String, Object> assStuListInsert(HttpSession session,@RequestParam HashMap<String, String> params){
+			  
+			  logger.info("학생 배정 페이지 이동");
+			  
+				/*
+				 * HashMap<String, Object> map = new HashMap<String, Object>(); 
+				 *  
+				 * AssListDTO dto = service.assStuCoList(cli_name);
+				 * 
+				 * map.put("dto", dto); logger.info("클라이언트 : " + dto);
+				 */
+			String stu_no =(String) session.getAttribute("stu_no");
+			
+			  
+			 return service.assStuListInsert(params,stu_no);
+			 }
 
 
 }

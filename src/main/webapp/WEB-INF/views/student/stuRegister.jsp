@@ -261,29 +261,14 @@
 									        </select>
 								        </td>
 									</tr>
-									</table>
-									<table id="goodList">
-									<thead>
-									<tr>
-										<th colspan="2">과목정보</th>										
-									</tr>
-									<!-- <tr>																			
-											<td colspan="2" style="text-align:end;">
-												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-												<input type="button" value="과목삭제" onclick="#"/>
-											</td>										
-									</tr> -->
-									</thead>
-									<tbody id="subtable">
-										
-									</tbody>									
 									<tr>
 										<th colspan="2">
 											<input type="button" value="등록완료" onclick="stuRegister()"/>
 											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
-									</tr>									
-								</table>  				
+									</tr>
+									</table>
+									  				
                             </div>                            
                         </div>
                     </div>

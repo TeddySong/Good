@@ -89,10 +89,12 @@ public class ClientController {
 			@RequestParam(value = "delList[]") ArrayList<String> delList) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		
+			if(session.getAttribute("loginId")=="emp0") {
 			int cnt = service.ajaxDelete(delList);
 			map.put("msg", delList.size() + "중" + cnt + " 개 삭제 완료");
-	
+			}else {
+				map.put("msg", "권한이 없습니다.");
+			}
 		
 		return map;
 	}

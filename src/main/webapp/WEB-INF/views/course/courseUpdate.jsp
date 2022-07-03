@@ -264,7 +264,6 @@
 	            <th>수강정원</th>
 	            <td>
 	            	<input type="text" id="co_capacity" value=""/>
-	            	<button onclick="location.href='배정상세보기'">자세히</button>
 	            </td>
 	            <th>진행상황</th>
 	            <td>

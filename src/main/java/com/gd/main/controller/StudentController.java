@@ -62,9 +62,17 @@ public class StudentController {
 	
 	
 	@RequestMapping(value = "/stuRegister.go")
-	public String stuRegisterGo() {	
+	public String stuRegisterGo(Model model, HttpSession session) {	
 		logger.info("수강생 리스트 페이지 이동");
-		return "./student/stuRegister";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./student/stuRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;
 	}
 	
 	@RequestMapping(value = "/cliSearch.go")
@@ -74,21 +82,24 @@ public class StudentController {
 	}
 	
 	@RequestMapping(value = "/cliSearch.do")
-	public String cliSearch(Model model, HttpServletRequest req) {
+	public String cliSearch(Model model, HttpSession session, HttpServletRequest req) {
 		logger.info("고객 검색");
 		
 		String cliSearchCondition = req.getParameter("cliSearchCondition");
 		String searchContent = req.getParameter("searchContent");
 		
+		if(session.getAttribute("loginId") != null) {
 		logger.info(cliSearchCondition + "/" + searchContent);
 		
 		ArrayList<StuDTO> cliSearchList = service.cliSearchList(cliSearchCondition, searchContent);
 		logger.info("list size : " + cliSearchList.size());
-		
 		model.addAttribute("cliSearchList", cliSearchList);
+		}	
 		
 		return "./student/cliSearch";
 	}
+	
+	
 	
 	@RequestMapping(value="/cliChoice.ajax")
 	@ResponseBody
@@ -102,10 +113,18 @@ public class StudentController {
 		 logger.info("상세보기 페이지 이동 : " + result);
 		 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<StuDTO> cliChoice = service.cliChoice(result);
 		
+		boolean login = false;
+		
+		if(session.getAttribute("loginId")!=null){
+		
+		ArrayList<StuDTO> cliChoice = service.cliChoice(result);
+		login=true;
 		map.put("cliChoice", cliChoice);
 		logger.info("클라이언트 : {}", cliChoice );
+		
+		}
+		map.put("login", login);
 		return map;
 	}
 	
@@ -140,14 +159,22 @@ public class StudentController {
 		logger.info("상세보기 페이지 이동 : " + choice );
 		 int result =Integer.parseInt(choice);
 		 logger.info("상세보기 페이지 이동 : " + result);
-		 
+		 		 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<StuDTO> subChoice = service.subChoice(result);
 		
+		boolean login = false;
+		
+		if(session.getAttribute("loginId")!=null){
+		ArrayList<StuDTO> subChoice = service.subChoice(result);
+		login=true;
 		map.put("subChoice", subChoice);
 		logger.info("클라이언트 : {}", subChoice );
+		 }
+		map.put("login", login);
 		return map;
 	}
+	
+	
 	
 	@RequestMapping(value="/stuDetail.go")
 	public String detailPage(@RequestParam String stu_no, HttpSession session) {
@@ -161,14 +188,21 @@ public class StudentController {
 	public HashMap<String, Object> stuDetail(HttpSession session) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+				
 			String stu_no = (String) session.getAttribute("stu_no");
-			logger.info("상세 데이터 요청 : " + stu_no);			
+			logger.info("상세 데이터 요청 : " + stu_no);
+			
+			boolean login = false;
+			
+			if(session.getAttribute("loginId")!=null){
+			
 			StuDTO dto = service.stuDetail(stu_no);
 			map.put("dto", dto);
+			login=true;
 			logger.info("클라이언트 : {}", dto );
-		
-		
+			}
+			
+		map.put("login", login);
 		return map;
 	}
 	
@@ -200,10 +234,13 @@ public class StudentController {
 	@RequestMapping("/stuRegister.ajax")
 	   @ResponseBody
 	    public HashMap<String, Object>stuRegister(
-	          @RequestParam HashMap<String, String> params){
+	          @RequestParam HashMap<String, String> params, HttpSession session){
 	       
 	       logger.info("글쓰기 확인 : " + params);
-	       return service.stuRegister(params);
+	       String loginId = (String) session.getAttribute("loginId");
+	       
+	       
+	       return service.stuRegister(params, loginId);
 	    }
 	
 		/*

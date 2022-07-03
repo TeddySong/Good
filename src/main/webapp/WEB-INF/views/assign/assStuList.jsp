@@ -197,12 +197,14 @@
 										<tr>
 											<h3>과정 상세정보</h3>		
 											<th>학생명</th>
-												<td><input type="text" id=cli_name value=""></td>
+												<td>
+													<input type="text" id=cli_name value="${cli_name}">
+												</td>
 											<th>학생번호</th>
 												<td id="stu_no"></td>
 												<td>
-													<button id="cli_nameSearch" onclick="">검색</button>
-													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
+													<button id="cli_nameSearch" onclick="stuSearch_pop()">학생검색</button>
+													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">학생수정</button>
 												</td>
 												<td id ="coSearch"  colspan="1" >
 													<button onclick="coSearch_pop()">과정검색</button></td>
@@ -215,7 +217,6 @@
 											<th>종강일</th>
 											<th>강의시간</th>														
 											<th>수강상태</th>
-											
 										</tr>
 									</thead>
 									<tbody id="assStuCoList">
@@ -228,7 +229,7 @@
 											<td id ="co_startTime"></td>
 											<td id ="ass_condition">
 												<select id="coCondition">
-													<option value="ass_condition">재학</option>
+													<option value="ass_condition">대기</option>
 													<option value="ass_condition">대기</option>
 													<option value="ass_condition">철회</option>
 													<option value="ass_condition">수료</option>
@@ -238,6 +239,10 @@
 										</tr> -->
 									</tbody>
 									<tr>
+											<td colspan="5" >
+												<button id="coSearchUp">수업수정</button>
+												<button id="coSearchDel">수업삭제</button>								
+											</td>
 									<!-- plugin 사용법(twbspagination) -->
 										<td colspan="8" id ="paging">
 											<div class="container">
@@ -272,22 +277,13 @@ function listCall(page){
 
 	$.ajax({
 		type:'get',
-		url:'assStuList.ajax',
+		url:'assStuList.ajax',  
 		data:{},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
 			$('#stu_no').html(data.stu_no);
 			drawList(data.assStuCoList);
-		 	//$('#cli_name').html(data.dto.cli_name);
-			/* $('#sub_name').html(data.dto.sub_name);
-			$('#co_name').html(data.dto.co_name);
-			$('#co_startDate').html(data.dto.co_startDate);
-			$('#co_endDate').html(data.dto.co_endDate);
-			$('#co_startTime').html(data.dto.co_startTime);
-			$('#ass_condition').html(data.dto.ass_condition);  */
-			 
-			
 		},
 		error:function(error){
 			console.log(error);
@@ -295,6 +291,64 @@ function listCall(page){
 		}
 	});
 }
+
+//업데이트
+$('#coSearchUp').on('click',function(){
+	
+	var stuCo = $('input[name="selectAss"]:checked').val();
+	console.log(stuCo);
+	var ass_condition = $('#coCondition option:selected').val();
+	console.log(ass_condition);
+	
+	$.ajax({
+		type:'get',
+		url:'coSearchUp.ajax',  
+		data:{
+			stuCo:stuCo,
+			ass_condition:ass_condition
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			$('#stu_no').html(data.stu_no);
+			//drawList(data.assStuCoList);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+	
+});
+
+$('#coSearchDel').on('click',function(){
+	
+	var stuCo = $('input[name="selectAss"]:checked').val();
+	console.log(stuCo);
+	var ass_condition = $('#coCondition option:selected').val();
+	console.log(ass_condition);
+	
+	$.ajax({
+		type:'get',
+		url:'coSearchDel.ajax',  
+		data:{
+			stuCo:stuCo,
+			ass_condition:ass_condition
+		},
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			$('#stu_no').html(data.stu_no);
+			//drawList(data.assStuCoList);
+		},
+		error:function(error){
+			console.log(error);
+		}
+	});
+});
+
+
+
+
 /* function drawList(assStuCoList){
 	var content="";
 	assStuCoList.forEach(function(item){
@@ -312,16 +366,13 @@ function listCall(page){
 	$('#assStuCoList').append(content);
 	
 } */
-
-
-
-
-
  function drawList(assStuCoList){
-	var cliName=assStuCoList.slice(0);
-	var pop = cliName.pop();
-
-	console.log(pop.cli_name);
+	//var cliName=assStuCoList.slice(0);
+	//var pop = cliName.pop();
+	//console.log(pop.cli_name);
+	var assCondition = assStuCoList
+	
+	
 	console.log(stu_no);
 	var content="";
 
@@ -332,20 +383,20 @@ function listCall(page){
 		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
 		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		content += '<tr>';
-		content += '<td>'+item.stu_no+'</td>';	
+		content += '<td><input type="radio" name=selectAss value='+item.co_no+'>'+item.co_no+'</td>';	
 		content += '<td>'+item.co_name+'</td>';		
 		content += '<td>'+startErrorDate+'</td>';
 		content += '<td>'+endErrorDate+'</td>';
 		content += '<td>'+item.co_startTime+'</td>';
-		content += '<td><select id="coCondition">';
-		content +=	'<option value='+item.ass_condition+'>재학</option>';
-		content +=	'<option value='+item.ass_condition+'>대기</option>';
-		content +=	'<option value='+item.ass_condition+'>철회</option>';
-		content +=	'<option value='+item.ass_condition+'>수료</option>';
+		content += '<td>'+item.ass_condition+'<select id="coCondition" name="coCondition">';
+		content +=	'<option value="재학">재학</option>';
+		content +=	'<option value="수료">수료</option>'
+		content +=	'<option value="철회">철회</option>';
+		content +=	'<option value="대기">대기</option>';
 		content +='</td>';
 		content += '</tr>';
 	});
-	$('#cli_name').val(pop.cli_name);
+	//$('#cli_name').val(pop.cli_name);
 	$('#assStuCoList').empty();
 	$('#assStuCoList').append(content);
 } 
@@ -356,6 +407,10 @@ function coSearch_pop(){
 
 }
 
-	
+function stuSearch_pop(){
+	var stu_no=$("#stu_no").html();
+	window.open("/coSturSearch.go", "new","width=1000, height=700, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+
+}
 </script>
 </html>

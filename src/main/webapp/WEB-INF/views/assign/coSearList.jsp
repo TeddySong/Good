@@ -107,7 +107,7 @@
                             		<td><input type="date" id="startSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
                             		<td>~</td>
                             		<td><input type="date" id="endSearch" value="" min="2022-06-01" max="2100-06-01"/></td>
-                            		<td><button type="button" onclick="esc()" id="courSearch" class="goodRegister">검색</button></td>
+                            		<td><button type="button" id="courSearch" class="goodRegister">검색</button></td>
                             		<td><button onclick="assStuList()" class="goodRegister">등록</button></td>
                             	</tr>
                             </table>
@@ -172,59 +172,9 @@ var currPage = 1;
 
 listCall(currPage);
 
-
-//과목 select
-/*
-$('#subName').on('change',function(){
-	if($("#subName option:selected").val() == '과목명'){
-		$("#pagination").twbsPagination('destroy');
-		listCall(currPage);
-	} else {
-		$("#pagination").twbsPagination('destroy');
-		selectSubjectCall(currPage);
-	}
-});
-
-
-function selectSubjectCall(page){
-	var pagePerNum = 10;
-	var subSelect = $("#subName option:selected").val();
-	$({
-		type:'get',
-		url:'courSearch.ajax',
-		data:{
-			cnt:pagePerNum,
-			page:page,
-			sub_name:subSelect
-		},
-		dataType:'JSON',
-		success:function(data){
-			drawList(data.selectSubject)
-			currPage = data.currPage;
-			
-			$("#pagination").twbsPagination({
-				startPage: data.currPage, //시작 페이지
-				totalPages: data.pages, //총 페이지
-				visiblePages: 5, //한번에 보여줄 페이지 수
-				onPageClick: function(e,page){
-					console.log(page); //사용자가 클릭한 페이지
-					currPage = page;
-					selectSubjectCall(page);
-				}
-			});
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
-}
-*/
-
-
 function listCall(page){
 	
 	var pagePerNum = 10;
-	//console.log("param page : " + page);
 	
 	$.ajax({
 		type:'get',
@@ -238,7 +188,7 @@ function listCall(page){
 			//console.log(data);
 			$('#stu_no').html(data.stu_no);
 			drawList(data.courList);
-			currPage=data.currPage;
+			/* currPage=data.currPage;
 			
 			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
@@ -250,7 +200,7 @@ function listCall(page){
 					currPage=page;
 					listCall(page);
 				}
-			});
+			}); */
 			
 		},
 		error:function(e){
@@ -265,65 +215,67 @@ function listCall(page){
 $('#courSearch').on('click',function(){
 	$("#pagination").twbsPagination('destroy');
 	courseSearch(currPage);
+	
+	function courseSearch(page){
+		
+		var pagePerNum = 10;
+		
+		var selectCo =$("input:radio[name='selectCo']:checked").val();
+		console.log(selectCo);
+		 
+		 var courseNameSearch = $("#courseNameSearch option:selected").val();
+		 console.log(courseNameSearch);
+		 
+		 var keyword = $("#keyword").val();
+		 console.log(keyword);
+		 
+		 var startSearch = $("#startSearch").val();
+		 console.log(startSearch);
+		 
+		 var endSearch = $("#endSearch").val();
+		 console.log(endSearch);
+		 
+		 $.ajax({
+			 type:'get',
+			 url:'assCourSearch.ajax',
+			 data:{
+				 cnt : pagePerNum,
+				 page : page,
+				 courseNameSearch : courseNameSearch,
+				 keyword : keyword,
+				 startSearch : startSearch,
+				 endSearch : endSearch 
+			 },
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				
+				drawList(data.courList);
+				currPage = data.currPage;
+				
+				//플러그인 사용 페이징
+				$("#pagination").twbsPagination({
+					startPage:data.currPage, //시작페이지
+					totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+					visiblePages: 5, // 한번에 보여줄 페이지 수
+					onPageClick:function(e,page){
+						console.log(page);
+						currPage=page;
+						courseSearch(page);
+					}
+				});
+			},
+			error:function(e){
+				console.log(e);
+			}
+		 });
+
+		}
+	
 });
 
 
-function courseSearch(page){
-		
-	var pagePerNum = 10;
-	
-	var selectCo =$("input:radio[name='selectCo']:checked").val();
-	console.log(selectCo);
-	 
-	 var courseNameSearch = $("#courseNameSearch option:selected").val();
-	 console.log(courseNameSearch);
-	 
-	 var keyword = $("#keyword").val();
-	 console.log(keyword);
-	 
-	 var startSearch = $("#startSearch").val();
-	 console.log(startSearch);
-	 
-	 var endSearch = $("#endSearch").val();
-	 console.log(endSearch);
-	 
-	 $.ajax({
-		 type:'get',
-		 url:'assCourSearch.ajax',
-		 data:{
-			 cnt : pagePerNum,
-			 page : page,
-			 subName : subName,
-			 courseNameSearch : courseNameSearch,
-			 keyword : keyword,
-			 startSearch : startSearch,
-			 endSearch : endSearch 
-		 },
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-			
-			drawList(data.courList);
-			currPage = data.currPage;
-			
-			//플러그인 사용 페이징
-			$("#pagination").twbsPagination({
-				startPage:data.currPage, //시작페이지
-				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages: 5, // 한번에 보여줄 페이지 수
-				onPageClick:function(e,page){
-					console.log(page);
-					currPage=page;
-					courseSearch(page);
-				}
-			});
-		},
-		error:function(e){
-			console.log(e);
-		}
-	 });
 
-	}
 
 
 
@@ -379,10 +331,7 @@ function assStuList(){
 		}
 	});	
 }
-function esc(){
-	
-	window.close();
-}
+
 
 
 

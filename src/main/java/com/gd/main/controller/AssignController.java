@@ -38,9 +38,9 @@ public class AssignController {
 	@ResponseBody
 	public HashMap<String, Object> list(HttpSession session, 
 			@RequestParam HashMap<String, String> params) {
-		logger.info("배정 리스트 요청" + params);
 		
-	
+		
+		logger.info("배정 리스트 요청" + params);	
 		
 		return service.assList(params);
 	}
@@ -124,24 +124,19 @@ public class AssignController {
 			 if(session.getAttribute("loginId") != null) {
 					
 				session.setAttribute("stu_no", stu_no); 
+				
 				page = "./assign/assStuList";	 
 			} 
 			return page;
 		}
 	  
 	  @RequestMapping("/assStuList.ajax")
-	  @ResponseBody public HashMap<String, Object> assStuList(HttpSession session,@RequestParam HashMap<String, String> params){
+	  @ResponseBody 
+	  public HashMap<String, Object> assStuList(HttpSession session,@RequestParam HashMap<String, String> params){
 	  
 	  logger.info("학생 배정 페이지 이동");
-	  
-		/*
-		 * HashMap<String, Object> map = new HashMap<String, Object>(); 
-		 *  
-		 * AssListDTO dto = service.assStuCoList(cli_name);
-		 * 
-		 * map.put("dto", dto); logger.info("클라이언트 : " + dto);
-		 */
 	  String stu_no =(String) session.getAttribute("stu_no");
+	  
 	  
 	 return service.assStuCoList(params,stu_no);
 	 }
@@ -173,8 +168,6 @@ public class AssignController {
 		
 			return map;
 		}
-	  
-		
 		//과정 검색
 		@RequestMapping("/assCourSearch.ajax")
 		@ResponseBody
@@ -205,6 +198,36 @@ public class AssignController {
 			  
 			 return service.assStuListInsert(params,stu_no);
 			 }
+		
+		 @RequestMapping("/coSturSearch.go")
+			public String coSturSearch(HttpSession session, Model model) {
+				
+				 String page = "home";
+				 if(session.getAttribute("loginId") != null) {
+					//session.setAttribute("stu_no", stu_no); 	
+					
+					page = "./assign/coSturSearch";
+				 }
+				return page;
+			}
+		 
+		 @RequestMapping("/assStuListchange.ajax")
+		 @ResponseBody 
+			public HashMap<String, Object> assStuListchange(HttpSession session,@RequestParam HashMap<String, String> params){
+				  
+				  logger.info("학생 배정 페이지 이동");
+				  
+					/*
+					 * HashMap<String, Object> map = new HashMap<String, Object>(); 
+					 *  
+					 * AssListDTO dto = service.assStuCoList(cli_name);
+					 * 
+					 * map.put("dto", dto); logger.info("클라이언트 : " + dto);
+					 */
+				  String stu_no =(String) session.getAttribute("stu_no");
+
+				 return service.assStuListchange(params,stu_no);
+				 }
 
 
 }

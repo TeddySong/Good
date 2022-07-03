@@ -201,7 +201,7 @@
 											<th>학생번호</th>
 												<td id="stu_no"></td>
 												<td>
-													<button id="cli_nameSearch" onclick="">검색</button>
+													<button id="cli_nameSearch" onclick="stuSearch_pop()">검색</button>
 													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">수정</button>
 												</td>
 												<td id ="coSearch"  colspan="1" >
@@ -272,12 +272,13 @@ function listCall(page){
 
 	$.ajax({
 		type:'get',
-		url:'assStuList.ajax',
+		url:'assStuList.ajax',  
 		data:{},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
 			$('#stu_no').html(data.stu_no);
+			//$('#cli_name').html(data.cli_name);
 			drawList(data.assStuCoList);
 		 	//$('#cli_name').html(data.dto.cli_name);
 			/* $('#sub_name').html(data.dto.sub_name);
@@ -312,11 +313,6 @@ function listCall(page){
 	$('#assStuCoList').append(content);
 	
 } */
-
-
-
-
-
  function drawList(assStuCoList){
 	var cliName=assStuCoList.slice(0);
 	var pop = cliName.pop();
@@ -356,6 +352,10 @@ function coSearch_pop(){
 
 }
 
-	
+function stuSearch_pop(){
+	var stu_no=$("#stu_no").html();
+	window.open("/coSturSearch.go", "new","width=1000, height=700, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+
+}
 </script>
 </html>

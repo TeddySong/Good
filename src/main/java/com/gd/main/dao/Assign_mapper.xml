@@ -4,40 +4,53 @@
 <mapper namespace="com.gd.main.dao.AssignDAO">
 
 <!-- 과정전체 배정리스트 -->
-<select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
-	select c2.co_no
-		   , c2.co_name
-	       , c2.co_startTime
-	       , c2.co_startDate
-	       , c.cli_name
-	       , c.cli_phone
-	       , e.emp_name
-	       , c2.co_condition
-      from assign a
-           , student s
-           , client c
-           , course c2
-           , employee e
-           , subject s2
-    where a.stu_no = s.stu_no 
-       and s.cli_no = c.cli_no
-       and e.emp_no = s.emp_no
-       and c2.co_no = a.co_no
-      <where>
-		<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
-			<if test="assSearchTarget.equals('co_name')">
-				and c2.co_name LIKE concat('%',#{search},'%')
-			</if>
-			<if test="assSearchTarget.equals('emp_name')">
-				and e.emp_name LIKE concat('%',#{search},'%')
-			</if>
-			<if test="assSearchTarget.equals('co_condition')">
-				and c2.co_condition LIKE concat('%',#{search},'%')
-			</if>
-		</if>
-	</where>
-		 limit #{cnt} OFFSET #{offset}
-</select>
+	<select id="assList" resultType="com.gd.main.dto.AssListDTO" parameterType="hashmap">
+		
+		 select c2.co_no,c2.co_name,c2.co_startTime,c2.co_startDate,c.cli_name,c.cli_phone,e.emp_name,c2.co_condition
+			from assign a,student s ,client c ,course c2 ,employee e
+			where a.stu_no = s.stu_no and s.cli_no = c.cli_no and c2.co_no = a.co_no and s.emp_no = e.emp_no
+					  <if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+					 	<if test="assSearchTarget.equals('co_name')">
+							and c2.co_name LIKE concat('%',#{search},'%')
+						</if>
+						<if test="assSearchTarget.equals('emp_name')">
+							and e.emp_name LIKE concat('%',#{search},'%')
+						</if>
+						<if test="assSearchTarget.equals('co_condition')">
+							and c2.co_condition LIKE concat('%',#{search},'%')
+						</if>
+					</if> 
+		<!-- <if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+					
+					<if test="assSearchTarget.equals('emp_name')">
+						and e.emp_name LIKE concat('%',#{search},'%')
+					</if>
+					<if test="assSearchTarget.equals('co_condition')">
+						and c2.co_condition LIKE concat('%',#{search},'%')
+					</if>
+			</if> -->
+		<!-- ORDER BY c2.co_no DESC limit #{cnt} OFFSET #{offset} -->
+		<!-- select c2.co_no
+			   , c2.co_name
+		       , c2.co_startTime
+		       , c2.co_startDate
+		       , c.cli_name
+		       , c.cli_phone
+		       , e.emp_name
+		       , c2.co_condition
+	      from assign a
+	           , student s
+	           , client c
+	           , course c2
+	           , employee e
+	           , subject s2
+	    where a.stu_no = s.stu_no 
+	       and s.cli_no = c.cli_no
+	       and e.emp_no = s.emp_no
+	       and c2.co_no = a.co_no -->
+	       
+	         
+	</select>
 <!-- 선택된 과정에 대한 배정 리스트 -->
 <select id ="assCoList" resultType="hashmap" >
 
@@ -57,6 +70,22 @@
 			and e.emp_no = s.emp_no 
 			and c2.co_no = a.co_no
 			and c2.co_no = #{co_no} 
+		<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+			 	<if test="assSearchTarget.equals('cli_name')">
+					and c.cli_name  LIKE concat('%',#{search},'%')
+				</if>
+				<if test="assSearchTarget.equals('stu_no')">
+					and s.stu_no = #{search}
+				</if>
+				<if test="assSearchTarget.equals('cli_phone')">
+					and c.cli_phone LIKE concat('%',#{search},'%')
+				</if>
+				<if test="assSearchTarget.equals('ass_condition')">
+					and a.ass_condition LIKE concat('%',#{search},'%')
+				</if>
+			</if> 
+		
+		
 
 <!-- select co_name,stu_no,cli_name,cli_phone,emp_name,ass_condition from assign a
 		left outer join client c on c.cli_no = stu_no
@@ -73,9 +102,6 @@ select a.stu_no, cli_name , co_name ,co_startDate,co_endDate,co_startTime,ass_co
 from assign a,student s ,client c ,course c2 
 	where a.stu_no = s.stu_no and s.cli_no = c.cli_no and c2.co_no = a.co_no and a.stu_no=#{stu_no}
 	
- 		
-
-
 	<!-- select cli_name 
 		, s2.sub_name 
 		, c2.co_name 
@@ -150,6 +176,11 @@ from assign a,student s ,client c ,course c2
 		INSERT INTO assign(ass_condition, stu_no, co_no) VALUES(#{ass_condition},#{stu_no},#{co_no})
 	</insert>
 	
+	<select id="assStuListchange" resultType="hashmap">
+
+	select s.stu_no, c.cli_name 
+		from student s ,client c 
+	where s.cli_no  = c.cli_no  and s.stu_no =#{stuCo}
 	
-	
+	</select>
 </mapper>

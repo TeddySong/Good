@@ -23,6 +23,10 @@ public interface AssignDAO {
 
 	ArrayList<AssListDTO> allPage(HashMap<String, Object> map);
 
+	ArrayList<AssListDTO> assStuListchange(HashMap<String, Object> assMap);
+
+
+
 	
 
 	

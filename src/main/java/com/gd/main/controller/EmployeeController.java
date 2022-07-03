@@ -23,8 +23,7 @@ public class EmployeeController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	
-	//직원일지 등록
-	
+	//직원일지 등록	
 	@RequestMapping(value="/empLogRegister.go")
 	public String stuLogRegisterGo(@RequestParam String emp_no, HttpSession session) {
 		logger.info("직원일지 등록페이지 이동"+ emp_no); //직원의 사번 가져오기?
@@ -42,12 +41,8 @@ public class EmployeeController {
 	       return service.empLogRegister(params);
 	    }
 	
-	//
-	//
-	//
 	
-	//직원일지 페이지 
-	
+	//직원일지 페이지
 	  @RequestMapping(value = "/empLogList.go") 
 	  public String emplogListGo(Model model, HttpSession session, 
 			  @RequestParam String emp_no) {
@@ -62,32 +57,6 @@ public class EmployeeController {
 	  }
 	
 	
-	
-	 /*직원일지 페이지 임시생성
-	@RequestMapping(value = "/empLogList.go", method = RequestMethod.GET)
-	public String emplogListGo(Model model,HttpSession session) {
-		
-		 String page = "home";
-
-		 if(session.getAttribute("loginId") != null) {
-			 page = "./employee/empList";
-		} 
-		return page;
-	}
-	
-	//직원 리스트 페이지 이동 임시생성
-	@RequestMapping("/empLogList.ajax")
-	@ResponseBody
-	public HashMap<String, Object> list(HttpSession session, @RequestParam HashMap<String, String> params) {
-		logger.info("배정 리스트 요청");
-		return service.list(params);
-	}
-	
-	*/
-	
-	
-	
-	
 	//직원 수정
 	@RequestMapping(value = "/empUpdate.go")
 	public String getSelectImpInfo(Model model, HttpSession session, int emp_no) {
@@ -97,8 +66,7 @@ public class EmployeeController {
 		EmployeeDTO employeeDTO = service.getselectEmpMyInfo(emp_no);
 		model.addAttribute("employeeDTO", employeeDTO);
 		
-		return "./employee/empUpdate";
-		
+		return "./employee/empUpdate";	
 	}
 	
 	 @RequestMapping("/empUpdate.ajax")
@@ -112,8 +80,8 @@ public class EmployeeController {
 		
 		 return map;
 	 }
-	//직원 목록페이지 이동
 	 
+	//직원 목록페이지 이동
 	@RequestMapping(value = "/empList.go")
 	public String empListGo() {
 	logger.info("직원 목록 페이지!");
@@ -143,10 +111,7 @@ public class EmployeeController {
 		return service.empList(params,false);
 	}
 	
-	//
 	
-	
-
 	// 직원 등록 페이지로 이동
 	@RequestMapping(value = "/empRegister.go")
 	public String empRegister() throws Exception {

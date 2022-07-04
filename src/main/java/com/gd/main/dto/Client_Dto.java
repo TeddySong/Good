@@ -19,11 +19,11 @@ public class Client_Dto {
 	 private int sub_no;
 	 
 	 //cli_log
-	  @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	  @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH시mm분", timezone = "Asia/Seoul")
 	  private Date cli_log_date;
 	  private String cli_log_content;
 	  private String cli_log_result;
-	   @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	   @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd  HH시mm분", timezone = "Asia/Seoul")
 	  private Date cli_log_Dday;
 	  private String cli_log_Dtime;
 	
@@ -35,9 +35,9 @@ public class Client_Dto {
 	 private String emp_position;
 	 private String  emp_id;
 	 private String emp_pw;
-	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	 private Date emp_startDate;
-	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	 @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	 private Date emp_endDate;
 	 private String emp_condition;
 	 

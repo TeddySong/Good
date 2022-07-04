@@ -136,26 +136,51 @@
 
 <table class="table table-striped">
 	<thead>
-	<tr>
-	<td colspan="4" style="text-align:end;">상담일정 검색 : </td>
-<td colspan="1"><input type="date" name="chkDate"/></td>
-<td colspan="1">
-	<select name="searchType" style="width:100%;">
+	<tr >
+<!-- <td colspan="2" style="text-align:right;  ">상담일정 검색 : </td>
+<td style="text-align:right;"><input type="date" name="chkDate"/></td>
+<td  style="text-align:right;">
+	<select name="searchType" >
 		<option value="client">방문자</option>
 		<option value="phone">연락처</option>
 		<option value="emp">상담자</option>
 	</select>
 </td>
-<td colspan="1">
+<td colspan="1.8" style="text-align:right; width:20%;" >
 <input type="text" style="width:100%;" name="keyword" placeholder="검색어를 입력하세요"/>
-</td>
-<td>
+</td> -->
+
+<div >
+<td colspan="8" style="align:right; " >
+<div style=" float:left; align:right; position:relative; left:960px;">상담일정 검색 : </div>
+<div style=" float:left; align:right; position:relative; left:970px;"><input type="date" name="chkDate"/></div>
+	<div style=" float:left; position:relative; left:980px;" >
+	<select name="searchType" >
+		<option value="client">방문자</option>
+		<option value="phone">연락처</option>
+		<option value="emp">상담자</option>
+	</select>
+	</div>
+<div style=" float:left; position:relative; left:990px;">
+<input type="text" style="width:100%;" name="keyword" placeholder="검색어를 입력하세요"/>
+</div>
+<div style=" float:left; position:relative; left:1000px ;">
 <button type="button" id="searchBtn" class="goodRegister" onclick="searchBtn()">검색</button>
 <button type="button" class="goodRegister" onclick="cliList()">목록</button>
+</div>
+
 </td>
+</div>
 </tr>
 		<tr>
-		<th>상담번호</th><th>방문자</th><th>상담날짜</th><th>상담시간</th><th>연락처</th><th>담당자</th><th>상담신청날짜</th><th>상담결과</th>
+		<th  style="width:5%;">상담번호</th>
+		<th  style="width:10%;">방문자</th>
+		<th style="width:20%;">상담일정</th><!-- <th>상담시간</th> -->
+		<th  style="width:20%;">연락처</th>
+		<th  style="width:10%;">담당자</th>
+		<th style="width:20%; text-align:center;">상담신청날짜</th>
+		<th style="width:15%; text-align:center;">상담결과</th>
+		<th style="width:5%;"></th>
 		</tr>
 	</thead>
 	<tbody id="list">
@@ -164,7 +189,7 @@
 	
 	<!-- 페이징  -->
 		<tr>
-			<td colspan="8" id="paging">
+			<td colspan="7" id="paging">
 				<!-- plugin 사용법(twbspagination) -->
 				<div class="container">
 					<nav arial-label="Page navigation" style="text-align:center">
@@ -290,11 +315,12 @@ function drawList(data){
 		content +='<td>'+item.cli_no+'</td>'; 
 		content +='<td><a href=clientDetail.go?cli_no='+item.cli_no+'>'+item.cli_name+'</a></td>'; 
 		content +='<td>'+item.cli_log_Dday+'</td>'; 
-		content +='<td>'+item.cli_log_Dtime+'</td>'; 
+	/* 	content +='<td>'+item.cli_log_Dtime+'</td>'; */ 
 		content +='<td>'+item.cli_phone+'</td>'; 
 		content +='<td>'+item.emp_name+'</td>'; 
-		content +='<td>'+item.cli_log_date+'</td>'; 
-		content +='<td>'+item.cli_log_result+'</td>'; 
+		content +='<td style=" text-align:center;">'+item.cli_log_date+'</td>'; 
+		content +='<td style=" text-align:center;">'+item.cli_log_result+'</td>'; 
+		content +='<td></td>'; 
 		content +='</tr>'; 
 		/* } */
 /* 		}

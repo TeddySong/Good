@@ -123,8 +123,8 @@
 				<table id="goodList" style="border:1px solid black" class="table table-striped">
 					<thead class="clog-head">
 						<tr> <td>상담결과:${clog.cli_log_result} </td>
-							<td>상담일정 :<fmt:formatDate value="${clog.cli_log_Dday}" pattern="yyyy년MM월dd일"/></td>
-							<td>상담 시간:${clog.cli_log_Dtime}</td>
+							<td>상담일정 :<fmt:formatDate value="${clog.cli_log_Dday}" pattern="yyyy년MM월dd일 HH시mm분" /></td>
+							<%-- <td>상담 시간:${clog.cli_log_Dtime}</td> --%>
 						</tr>
 						<tr> 
 							<td colspan="3">작성시간:<fmt:formatDate value="${clog.cli_log_date}" pattern="yyyy년MM월dd일HH시mm분"/> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <span>작성자:${clog.emp_name}</span></td>

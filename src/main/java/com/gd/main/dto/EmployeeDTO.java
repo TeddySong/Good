@@ -24,6 +24,15 @@ public class EmployeeDTO{
 	private Date emp_log_date;
 	private String emp_log_content;
 	private String emp_log_condition;
+	private String empName;
+	public String getEmp_writer_no() {
+		return emp_writer_no;
+	}
+	public void setEmp_writer_no(String emp_writer_no) {
+		this.emp_writer_no = emp_writer_no;
+	}
+	private String emp_writer_no;
+	
 	/* private int emp_writer_no; */
 
 	
@@ -38,6 +47,12 @@ public class EmployeeDTO{
 
 
 
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 	/*
 	 * public int getEmp_writer_no() { return emp_writer_no; }
 	 * 

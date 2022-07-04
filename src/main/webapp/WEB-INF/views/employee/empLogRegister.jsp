@@ -184,6 +184,9 @@
 </body>
 <script>
 
+
+
+
 function empLogRegisterDo(){
 	console.log('직원일지등록')
 	var $empName= $("#empName").html();

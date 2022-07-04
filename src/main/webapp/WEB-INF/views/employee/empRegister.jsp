@@ -198,7 +198,10 @@
 	<table id="goodList">
 		<tr>
 			<th>ID</th>
-			<td><input type="text" id="emp_id" name="emp_id"/></td>			
+			<td>
+			<input type="text" id="emp_id" name="emp_id"/>
+			<button onclick="empOverlay()" class="goodRegister">중복체크</button>			
+			</td>						
 		</tr>
 		<tr>
 			<th>PW</th>
@@ -207,8 +210,7 @@
 		<tr>
 			<th>직원명</th>
 			<td>
-            	<input type="text" id="emp_name"  name="emp_name" value=""/>
-            	<button onclick="empOverlay()" class="goodRegister">중복체크</button>
+            	<input type="text" id="emp_name"  name="emp_name" value=""/>            	
             </td>			
 		</tr>
 		<tr>
@@ -263,18 +265,18 @@
 var overChk = false; //중복체크 여부
 
 function empOverlay(){
-	var emp_name = $("#emp_name").val();
-	console.log('직원명 중복 체크'+emp_name);
+	var emp_id = $("#emp_id").val();
+	console.log('아이디 중복 체크'+emp_id);
 	$.ajax({
 		type:'get',
 		url:'empOverlay.ajax',
-		data:{chkName:emp_name},
+		data:{chkId:emp_id},
 		dataType:'JSON',
 		success:function(data){
 			if(data.empOverlay){
-				alert("사용중인 직원명입니다.");
+				alert("사용중인 아이디입니다.");
 			} else {
-				alert("사용 가능한 직원명입니다.");
+				alert("사용 가능한 아이디입니다.");
 				overChk = true;
 			}
 		},

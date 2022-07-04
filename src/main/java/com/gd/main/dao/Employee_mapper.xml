@@ -112,11 +112,11 @@
 	
 	
 	<select id="empOverlay" parameterType="String" resultType="String">
-		SELECT emp_name
+		SELECT emp_id
 		FROM 
 			employee
 		WHERE 
-			emp_name=#{emp_name}		
+			emp_id=#{emp_id}		
 		<!-- SELECT emp_name FROM employee WHERE emp_name = #{chkName} -->
 	</select>
 	

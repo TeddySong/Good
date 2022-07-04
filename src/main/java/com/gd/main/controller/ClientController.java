@@ -88,7 +88,7 @@ public class ClientController {
 		logger.info("id는" + loginId);
 		
 		
-		if (loginId.equals("emp0")) {
+		if (loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 			int cnt = service.ajaxDelete(delList);
 			map.put("msg", delList.size() + "중" + cnt + " 개 삭제 완료");
 		} else {

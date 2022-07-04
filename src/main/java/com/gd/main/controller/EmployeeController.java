@@ -32,7 +32,13 @@ public class EmployeeController {
 		
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
-			page="./employee/empLogRegister";
+			String loginId=(String) session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+				page="./employee/empLogRegister";	
+			}else {
+				model.addAttribute("msg","권한이 없습니다.");
+				page="Empty";
+				}			
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
@@ -91,10 +97,22 @@ public class EmployeeController {
 		logger.info("상세보기 페이지 이동:"+emp_no);
 		session.setAttribute("emp_no", emp_no);
 		logger.info("상세보기 페이지 이동:"+emp_no);
-		EmployeeDTO employeeDTO = service.getselectEmpMyInfo(emp_no);
-		model.addAttribute("employeeDTO", employeeDTO);
+		String loginId=(String)session.getAttribute("loginId");
+		String page="emp_login";
+		if(loginId != null) {
+			if (loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 		
-		return "./employee/empUpdate";	
+			EmployeeDTO employeeDTO = service.getselectEmpMyInfo(emp_no);
+			model.addAttribute("employeeDTO", employeeDTO);
+			page="./employee/empUpdate";
+		} else {
+			page="./employee/empList";
+			model.addAttribute("msg", "권한이 없습니다.");
+		}
+		}else {
+			model.addAttribute("msg","로그인이 필요한 서비스입니다.");
+		}
+		return page;	
 	}
 	
 	 @RequestMapping("/empUpdate.ajax")
@@ -155,7 +173,13 @@ public class EmployeeController {
 		
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 			page="./employee/empRegister";
+			} else {
+				page="./employee/empList";
+				model.addAttribute("msg","권한이 없습니다");
+			}
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
@@ -166,9 +190,9 @@ public class EmployeeController {
 	// 직원명 중복체크
 	@RequestMapping(value = "/empOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> empOverlay(@RequestParam String chkName) {
-		logger.info("직원명 중복체크 : " + chkName);
-		return service.empOverlay(chkName);
+	public HashMap<String, Object> empOverlay(@RequestParam String chkId) {
+		logger.info("직원명 중복체크 : " + chkId);
+		return service.empOverlay(chkId);
 	}
 
 	// 직원 등록

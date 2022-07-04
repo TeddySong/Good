@@ -308,6 +308,7 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 
 
 	public String nameGet(String stu_no) {
+		logger.info("수강신청" + stu_no);
 		return dao.nameGet(stu_no);
 	}
 	

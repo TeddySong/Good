@@ -155,10 +155,9 @@ select a.co_no,a.stu_no, cli_name , co_name , co_startDate, co_endDate, co_start
 </select>
 
 <select id="nameGet" resultType="String">
-select distinct cli_name from assign a 
-left outer join student s ON s.stu_no = a.stu_no 
+select cli_name from student s 
 left outer join client c on c.cli_no = s.cli_no 
-where a.stu_no=#{param1}
+where s.stu_no=#{param1}
 </select>
 
 

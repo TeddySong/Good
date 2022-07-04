@@ -315,6 +315,17 @@ function cliStuUpdate(){
 	
 	console.log(params);
 	
+	if($('#cli_name').val() == ""){
+		alert("이름을 입력해주세요")
+		$('#cli_name').focus();
+	} else if($('#cli_phone').val().length<12){
+		alert("연락처를 확인해주세요")
+		$('#cli_phone').focus();
+	} else if($('#emp_no').val() == ""){
+		alert("담당직원을 확인해주세요")
+		$('#cli_name').focus();
+	} else{
+			
 	$.ajax({
 		type:'get',
 		url:'cliStuFinUpdate.ajax',
@@ -342,6 +353,7 @@ function cliStuUpdate(){
 		
 }
 
+}
 const autoHyphen = (target) => {
 	 target.value = target.value
 	   .replace(/[^0-9]/g, '')

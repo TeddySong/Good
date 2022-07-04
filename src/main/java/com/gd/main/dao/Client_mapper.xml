@@ -341,9 +341,9 @@
 		</select>
 		
 		<select id="shcekList" parameterType="hashmap" resultType="com.gd.main.dto.Client_Dto">
-			select t.* from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,max(cli_log_Dday)as cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
+	select t.* from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
 			left join client_log cl on cl.cli_no = c.cli_no 
-			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result order by cli_log_date desc ) as t 
+			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result,cli_log_Dday having cli_log_date= max(cli_log_date) order by cli_log_date desc ) as t 
 			<where>
 				<!--   t.cli_log_result ='상담예정'  --><!--or  cli_log_result ='상담완료' -->
 				

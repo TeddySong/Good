@@ -172,7 +172,13 @@ public class CourseController {
 		
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 			page="redirect:/courseRegister.do";
+			} else {
+				page="./course/courList";
+				model.addAttribute("msg","권한이 없습니다");
+			}			
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}	
@@ -286,8 +292,14 @@ public class CourseController {
 		logger.info("과정 수정 페이지 이동");
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
-			session.setAttribute("co_no", co_no);
-			page="redirect:/courseUpdate.do";
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+				session.setAttribute("co_no", co_no);
+				page="redirect:/courseUpdate.do";
+			} else {
+				page="./course/courList";
+				model.addAttribute("msg","권한이 없습니다");
+			}				
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}	

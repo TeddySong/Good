@@ -33,9 +33,7 @@ public class StudentController {
 			page="./student/stuList";
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
-		}
-		
-		
+		}	
 		
 		return page;
 	}

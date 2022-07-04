@@ -78,7 +78,13 @@ public class HomeController {
 	
 	
 	
-	
+	// 로그아웃
+		@RequestMapping(value = "/logout.do")
+		public String logout(Model model, HttpSession session) {
+			session.removeAttribute("loginId");
+			model.addAttribute("msg","로그아웃 되었습니다.");
+			return "emp_login";
+		}	
 	
 	
 	

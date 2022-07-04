@@ -26,9 +26,18 @@ public class StudentController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/stuList.go")
-	public String stuListGo() {	
+	public String stuListGo(Model model, HttpSession session) {	
 		logger.info("수강생 리스트 페이지 이동");
-		return "./student/stuList";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./student/stuList";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		
+		
+		return page;
 	}
 	
 	

@@ -166,7 +166,7 @@
 		<tr><th colspan="2">상담일지 작성</th></tr>
 		<tr style="height:180px;">
 			<td colspan="2" >
-				<textarea style="width:100%; height:180px;" name="cli_log_content"></textarea>
+				<textarea style="width:100%; height:180px;" name="cli_log_content" placeholder="내용을 입력해 주세요 (1000자 이내)"></textarea>
 			</td>
 		</tr>
 		
@@ -205,7 +205,12 @@ function validate() {
     	alert('상담내용을 입력해 주세요.');
     	text.focus();
         return false;
-    }else{
+    }else if($('textarea[name=cli_log_content]').val().length>1000){
+    	alert('1000자 이내로 작성해 주세요.');
+    	return false; 
+    }
+    
+    else{
     	return confirm('상담내용을 등록하시겠습니까?');    	
     }
 }

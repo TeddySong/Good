@@ -198,7 +198,7 @@
 		<tr>
 			<th>PW</th>
 			<td style="text-align:start;"><input type="password" id="emp_pw" style="width:80%;" name="emp_pw" value="${employeeDTO.emp_pw}"/>
-			<button type="button" style="width:10%;" id="eye">보기</button></td>
+			<button type="button" class="goodRegister" style="width:10%;" id="eye">보기</button></td>
 		</tr>
 		<tr>
 			<th>직원명</th>
@@ -249,8 +249,8 @@
 		</tr> 
 		<tr>
 			<th colspan="2">
-				<input type="button" id="button1" value="수정" onclick="empUpdate()"/>
-				<input type="button" id="button2" value="취소" onclick="location.href='empList.go'"/>
+				<input type="button" id="button1" class="goodRegister" value="수정" onclick="empUpdate()"/>
+				<input type="button" id="button2" class="goodRegister" value="취소" onclick="location.href='empList.go'"/>
 			</th>		
 		</tr>
 	</table>

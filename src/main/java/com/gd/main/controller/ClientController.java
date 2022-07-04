@@ -256,10 +256,10 @@ public class ClientController {
 		return service.checkListDo(params);
 	}
 
-	@RequestMapping("/firstRegister.go")
-	public String firstReg() {
-		return "client/firstRegister";
-	}
+	/*
+	 * @RequestMapping("/firstRegister.go") public String firstReg() { return
+	 * "client/firstRegister"; }
+	 */
 
 	/*
 	 * @RequestMapping("/homeSubDetail.do") public String detailPage(@RequestParam
@@ -323,37 +323,38 @@ public class ClientController {
 	 */
 
 	// 홈페이지 상담신청
-	@RequestMapping("/homeCliReg")
-	@ResponseBody
-	public String homeReg(@RequestParam(value = "cli_name", required = false) String cli_name,
-			@RequestParam(value = "cli_phone", required = false) String cli_phone,
-			@RequestParam(value = "cli_req", required = false) String cli_req,
-			@RequestParam(value = "sub_no", required = false) ArrayList<Integer> sub_no) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-//		System.out.println(cli_name);
-//		System.out.println(cli_phone);
-//		System.out.println(cli_req);
-		System.out.println(sub_no);
-		map.put("cli_name", cli_name);
-		map.put("cli_phone", cli_phone);
-		map.put("cli_req", cli_req);
-		// @RequestParam(value="parameter이름[]")List<String>
-		// System.out.println(params);
-//		
-//		List<String> sub = (List<String>) params.get("sub_name");
-//		for (String string : sub) {
-//			System.out.println(string);
-//		}
-		String msg = "상담신청 오류발생.";
-		if (service.cliReg(map) > 0) {
-			msg = "상담신청을 완료했습니다. 감사합니다.";
-			service.cliRegCo(sub_no);
-		}
-
-		map.put("msg", msg);
-
-		return "redirect:/homeSubDetail3.do";
+	/*
+	 * @RequestMapping("/homeCliReg")
+	 * 
+	 * @ResponseBody public String homeReg(@RequestParam(value = "cli_name",
+	 * required = false) String cli_name,
+	 * 
+	 * @RequestParam(value = "cli_phone", required = false) String cli_phone,
+	 * 
+	 * @RequestParam(value = "cli_req", required = false) String cli_req,
+	 * 
+	 * @RequestParam(value = "sub_no", required = false) ArrayList<Integer> sub_no)
+	 * { HashMap<String, Object> map = new HashMap<String, Object>();
+	 * 
+	 * // System.out.println(cli_name); // System.out.println(cli_phone); //
+	 * System.out.println(cli_req); System.out.println(sub_no); map.put("cli_name",
+	 * cli_name); map.put("cli_phone", cli_phone); map.put("cli_req", cli_req);
+	 * // @RequestParam(value="parameter이름[]")List<String> //
+	 * System.out.println(params); // // List<String> sub = (List<String>)
+	 * params.get("sub_name"); // for (String string : sub) { //
+	 * System.out.println(string); // } String msg = "상담신청 오류발생."; if
+	 * (service.cliReg(map) > 0) { msg = "상담신청을 완료했습니다. 감사합니다.";
+	 * service.cliRegCo(sub_no); }
+	 * 
+	 * map.put("msg", msg);
+	 * 
+	 * return "redirect:/homeSubDetail3.do"; }
+	 */
+	@RequestMapping(value="/")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		String msg =  "로그인이 필요한 서비스입니다.";
+		session.setAttribute("msg", msg);
+		return "emp_login";
 	}
-
 }

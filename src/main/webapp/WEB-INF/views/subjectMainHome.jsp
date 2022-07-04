@@ -96,7 +96,7 @@
       <div class="table-cell">
         <div class="container">
           <!--<p class="display-6 color-d">Hello, world!</p>-->
-          <h1 class="hero-title mb-4">세상을 바꾸는 힘<br>굳이 IT 아카데미.</h1>
+          <h1 class="hero-title mb-4">세상을 바꾸는 힘,<br>굳이 IT 아카데미.</h1>
           <p class="hero-subtitle"><span class="typed" data-typed-items="굳이 IT를 공부해야할까요?, , 굳이 IT를 공부해야합니다., "></span></p>
           <!-- <p class="pt-3"><a class="btn btn-primary btn js-scroll px-4" href="#about" role="button">Learn More</a></p> -->
         </div>

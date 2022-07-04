@@ -218,7 +218,7 @@
        	<tr>
            <th>직급</th>
            <td>
-              <select id="emp_position" name="emp_position" >
+              <select id="emp_position" style="width:80%;" name="emp_position" >
 	            <option value="사원">사원</option>
 	            <option value="대리">대리</option>
 	            <option value="팀장">팀장</option>
@@ -230,7 +230,7 @@
 		<tr>
 			<th>입사일</th>
 			<td>
-         		<input type="date" id="emp_startDate" name="classStart" value="" min="2022-06-01" max="2100-06-01"/>
+         		<input type="date" id="emp_startDate" style="width:30%;" name="classStart" value="" min="2022-06-01" max="2100-06-01"/>
 			</td>			
 		</tr>
 	 	<tr>

@@ -214,7 +214,7 @@ function empLogRegisterDo(){
 		},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
+			console.log(data.empNo);
 			if(data.success){
 			alert("직원일지 등록이 되었습니다!");
 			opener.parent.location.href='empLogList.go?emp_no='+(data.empNo);

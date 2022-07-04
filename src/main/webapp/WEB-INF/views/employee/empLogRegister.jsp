@@ -187,12 +187,12 @@
 
 function empLogRegisterDo(){
 	console.log('직원일지등록')
-	var $empNo = $('#empNo');
+	var $empNo= $('#empNo');
 	var $emp_no=$('#emp_no');
 	var $emp_log_content = $('#emp_log_content');
 	var $emp_log_condition = $("#empCondtion");
 	
-	console.log($emp_no.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
+	console.log($empNo.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
 	
 	/*유효성 검사  */
 	 if($emp_log_content.val()==""){       //히스토리(내용)이 비었으면

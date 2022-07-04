@@ -193,27 +193,29 @@
 		</tr>
 		<tr>
 			<th>ID</th>
-			<td><input type="text" id="emp_id" name="emp_id" value="${employeeDTO.emp_id}"/></td>			
+			<td style="text-align:start;"><input type="text" id="emp_id" style="width:80%;" name="emp_id" value="${employeeDTO.emp_id}"/></td>			
 		</tr>
 		<tr>
 			<th>PW</th>
-			<td><input type="text" id="emp_pw" name="emp_pw" value="${employeeDTO.emp_pw}"/></td>
+			<td style="text-align:start;"><input type="password" id="emp_pw" style="width:80%;" name="emp_pw" value="${employeeDTO.emp_pw}"/>
+			<button type="button" style="width:10%;" id="eye">보기</button></td>
 		</tr>
 		<tr>
 			<th>직원명</th>
-			<td>
-            	<input type="text" id="emp_name"  name="emp_name" value="${employeeDTO.emp_name}"/>
+			<td style="text-align:start;">
+            	<input type="text" id="emp_name"  name="emp_name" style="width:80%;" value="${employeeDTO.emp_name}"/>
             </td>			
 		</tr>
 		<tr>
 			<th>연락처</th>
-			<td><input type="text" id="emp_phone" name="emp_phone" value="${employeeDTO.emp_phone}"></td>			
+			<td style="text-align:start;" >
+				<input type="text" id="emp_phone" name="emp_phone" style="width:80%;" value="${employeeDTO.emp_phone}"></td>			
 		</tr>
        	<tr>
            <th>직급</th>
-           <td>
-              <select id="emp_position" name="emp_position">
-              	<option value="">${employeeDTO.emp_position}</option>
+           <td style="text-align:start;">
+              <select id="emp_position" name="emp_position" style="width:80%;">
+              	<%-- <option value="">${employeeDTO.emp_position}</option> --%>
 	            <option value="사원">사원</option>
 	            <option value="대리">대리</option>
 	            <option value="팀장">팀장</option>
@@ -224,21 +226,25 @@
        </tr>
 		<tr>
 			<th>입사일</th>
-			<td>
-         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_startDate}" pattern="yyyy-MM-dd" />">
+			<td style="text-align:start;">
+         		<input type="date" style="width:80%" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_startDate}" pattern="yyyy-MM-dd" />">
          	</td>			
 		</tr>
 		<tr>
 			<th>퇴사일</th>
-			<td>
-				<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_endDate}" pattern="yyyy-MM-dd" />">
+			<td style="text-align:start;">
+				<input type="date" style="width:80%" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_endDate}" pattern="yyyy-MM-dd" />">
 			</td>			
 		</tr>			
 	 	<tr>
 			<th>재직상태</th>
-			<td>
-				<input type="text" id="emp_condition" name="condition" value="${employeeDTO.emp_condition}"><br>
+			<td style="text-align:start;">
+				<%-- <input type="text" id="emp_condition" name="condition" value="${employeeDTO.emp_condition}"><br> --%>
 				<!-- input type="text" id="condition" name="condition"/> -->
+			    <select id="emp_condition" name="emp_condition" style="width:80%;">
+			    <option value="재직">재직</option>
+	            <option value="퇴사">퇴사</option>		
+	            </select>	
 			</td>			
 		</tr> 
 		<tr>
@@ -302,5 +308,14 @@ function empUpdate(){
 		}
 	});
 } 
+
+
+
+$('#eye').on("mousedown", function(){
+    $('#emp_pw').attr('type',"text");
+}).on('mouseup mouseleave', function() {
+    $('#emp_pw').attr('type',"password");
+});
+
 </script>
 </html>

@@ -298,7 +298,7 @@
 		</select>
 		
 		<select id="regSub" resultType="HashMap">
-			SELECT sub_name, sub_no FROM subject;
+			SELECT sub_name, sub_no FROM subject WHERE not sub_condition  in('숨김')
 		</select>
 		
 		<select id="cli_no" resultType="integer">

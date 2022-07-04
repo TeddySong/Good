@@ -151,7 +151,8 @@
 				</tr>
 				<tr>
  					<td>${sessionScope.empName}</td>
-					<td id=empNo class="hidden">${sessionScope.empNo}</td> 
+					<td id=empNo class="hidden">${sessionScope.empNo}</td>
+					<td id=emp_no class="hidden">${sessionScope.emp_no}</td> 
 					<td>   <!-- 작성사유 -->
 						<select id="empCondtion" style="width:100%; text-align:center;">
 					    	<option>기타</option>
@@ -186,7 +187,8 @@
 
 function empLogRegisterDo(){
 	console.log('직원일지등록')
-	var $emp_no = $('#empNo');
+	var $empNo = $('#empNo');
+	var $emp_no=$('#emp_no');
 	var $emp_log_content = $('#emp_log_content');
 	var $emp_log_condition = $("#empCondtion");
 	
@@ -207,6 +209,7 @@ function empLogRegisterDo(){
 		type:'get',
 		url:'empLogRegister.ajax',
 		data:{
+			empNo:$empNo.html(),
 			emp_no:$emp_no.html(),
 			emp_log_condition : $emp_log_condition.val(),
 			emp_log_content:$emp_log_content.val()	
@@ -230,9 +233,10 @@ function empLogRegisterDo(){
 	});
 
 	}
-	function wclose(){
-		window.close();
-	}
+	
+}
+function wclose(){
+	window.close();
 }
 </script>
 </html>

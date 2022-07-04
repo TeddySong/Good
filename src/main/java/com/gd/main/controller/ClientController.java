@@ -84,8 +84,11 @@ public class ClientController {
 	public HashMap<String, Object> delete(HttpSession session,
 			@RequestParam(value = "delList[]") ArrayList<String> delList) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		if (session.getAttribute("loginId") == "emp0") {
+		String loginId = (String) session.getAttribute("loginId");
+		logger.info("id는" + loginId);
+		
+		
+		if (loginId.equals("emp0")) {
 			int cnt = service.ajaxDelete(delList);
 			map.put("msg", delList.size() + "중" + cnt + " 개 삭제 완료");
 		} else {

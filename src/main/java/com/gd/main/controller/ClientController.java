@@ -175,10 +175,10 @@ public class ClientController {
 	public @ResponseBody HashMap<String, Object> search(@RequestParam HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		// logger.info("리스트 요청"+params);
-		System.out.println("리스트 요청" + params);
+		//System.out.println("리스트 요청" + params);
 //		 HashMap<String, Object> list  = service.ajaxSearch(params);
 //		System.out.println(list.get(0));
-		System.out.println("어떻게 보낼지.");
+	//	System.out.println("어떻게 보낼지.");
 		return service.ajaxSearch(params);
 	}
 

@@ -35,6 +35,11 @@ public interface EmployeeDAO {
 
 	int empRegister(HashMap<String, Object> params);
 
+	String getWriterNo(String loginId);
+
+	String getWriterName(String loginId);
+
+
 
 
 

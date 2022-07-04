@@ -2,6 +2,8 @@ package com.gd.main.controller;
 
 import java.util.ArrayList;   
 import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,10 +43,12 @@ public class EmployeeController {
 	@RequestMapping("/empLogRegister.ajax")
 	   @ResponseBody
 	    public HashMap<String, Object> empLogRegister(
-	          @RequestParam HashMap<String, String> params) {
-	       
+	          @RequestParam HashMap<String, String> params, HttpSession session) {
+			String loginId = (String) session.getAttribute("loginId");
+			logger.info("loginId : " + loginId);
+	       logger.info("값확인:"+params);
 	       logger.info("직원일지쓰기");
-	       return service.empLogRegister(params);
+	       return service.empLogRegister(params, loginId);
 	    }
 	
 	
@@ -57,6 +61,15 @@ public class EmployeeController {
 	  
 	  if(session.getAttribute("loginId") != null) {
 	  ArrayList<EmployeeDTO> dto =service.empLogList(emp_no); 
+		
+		/*
+		 * for (EmployeeDTO employeeDTO : dto) {
+		 * System.out.println("????"+employeeDTO.getEmp_name());
+		 * System.out.println("????22"+employeeDTO.getEmp_name());
+		 * 
+		 * }
+		 */
+		 
 	  if(dto != null) {
 	  logger.info("리스트 사이즈:"+dto.size()); 
 	  String empName=service.empName(emp_no); 

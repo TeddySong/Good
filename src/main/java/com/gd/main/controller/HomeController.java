@@ -61,8 +61,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
-	public String loginSuccess(Model model) {			
-		return "emp_main";
+	public String loginSuccess(Model model, HttpSession session) {
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="emp_main";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		return page;
 	}
 	
 	@RequestMapping(value = "/class_main.go", method = RequestMethod.GET)
@@ -72,7 +78,13 @@ public class HomeController {
 	
 	
 	
-	
+	// 로그아웃
+		@RequestMapping(value = "/logout.do")
+		public String logout(Model model, HttpSession session) {
+			session.removeAttribute("loginId");
+			model.addAttribute("msg","로그아웃 되었습니다.");
+			return "emp_login";
+		}	
 	
 	
 	

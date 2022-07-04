@@ -36,13 +36,13 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <h1 class="logo"><a href="/subjectMainHome.go">GOOD2 IT Academy</a></h1>
+      <h1 class="logo"><a href="subjectMainHome.do">GOOD2 IT Academy</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="/subjectMainHome.go">Home</a></li>
+          <li><a class="nav-link scrollto " href="subjectMainHome.do">Home</a></li>
           <!-- <li><a class="nav-link scrollto" href="#about">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
           <li><a class="nav-link scrollto " href="subjectMainHome.do#work">과목</a></li>
@@ -80,7 +80,7 @@
           <h2 class="hero-title mb-4">과목 상세보기</h2>
           <ol class="breadcrumb d-flex justify-content-center">
             <li class="breadcrumb-item">
-              <a href="/subjectMainHome.go">Home</a>
+              <a href="subjectMainHome.do">Home</a>
             </li>
             <li class="breadcrumb-item active">${dto.sub_name}</li>
           </ol>

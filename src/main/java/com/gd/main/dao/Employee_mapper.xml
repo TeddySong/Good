@@ -4,27 +4,33 @@
 <mapper namespace="com.gd.main.dao.EmployeeDAO">
 
 <insert id="empLogRegister" parameterType='hashmap'>
-		INSERT INTO employee_log (emp_no, emp_log_content, emp_log_condition)
-		VALUES (#{emp_no}, #{emp_log_content}, #{emp_log_condition})
+	<!-- INSERT INTO employee_log (emp_writer_no,emp_no, emp_log_content, emp_log_condition)
+		VALUES (#{emp_writer_no},#{emp_no}, #{emp_log_content}, #{emp_log_condition})   -->
+	
+	
+	INSERT INTO employee_log(emp_no,emp_log_content, emp_log_condition)
+	VALUES (#{emp_no}, #{emp_log_content},#{emp_log_condition}) 
+	
 	</insert>
 
 <select id="empLogList" resultType="com.gd.main.dto.EmployeeDTO" parameterType="String">
-	<!-- 직원일지 호출 -->
-	SELECT 
-		e.emp_name,
-		el.emp_log_date,
-		el.emp_log_condition,
-		el.emp_log_content,
-		el.emp_no
-	FROM 
-		employee_log el 
-	JOIN 
-		employee e 
-	ON 
-		el.emp_no = e.emp_no 
-	WHERE 
-		e.emp_no = #{emp_no}
+   <!-- 직원일지 호출 -->
+   SELECT 
+      e.emp_name,
+      el.emp_log_date,
+      el.emp_log_condition,
+      el.emp_log_content,
+      el.emp_no
+   FROM 
+      employee_log el 
+   JOIN 
+      employee e 
+   ON 
+      el.emp_no = e.emp_no 
+   WHERE 
+      e.emp_no = #{emp_no}
 </select>
+
 		
 
 <select id="empName" resultType="String">
@@ -131,5 +137,15 @@
 			,emp_condition =#{emp_condition}
 		WHERE emp_no= #{emp_no} 
 	</update>
-
+	
+	
+	<select id="getWriterNo" resultType="String">
+		SELECT emp_no FROM employee
+			WHERE #{param1} = emp_id
+	</select>
+	
+	<select id="getWriterName" resultType="String">
+		SELECT emp_name FROM employee
+			WHERE #{param1} = emp_id
+	</select>
 </mapper>

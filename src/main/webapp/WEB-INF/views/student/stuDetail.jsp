@@ -110,7 +110,7 @@
                     <a class="nav-link" id="navbarDropdown" href="/" role="button"><i class="fas fa-user fa-fw"></i> 홈페이지</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link" id="navbarDropdown" href="#" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
+                    <a class="nav-link" id="navbarDropdown" href="logout.do" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
                 </li>
             </ul>
         </nav>
@@ -199,6 +199,7 @@
                             <div>
                             <div style="width:80%; text-align:end;">
                             <input type="button" value="학사일지" onclick="stuLog()"/>
+                            <input type="button" value="수강신청" onclick="location.href='assStuList.go?stu_no=${stu_no}'"/>
                             </div>
                                 <table id="goodList">                                	
                                 	<tr id="stu_no_tr">

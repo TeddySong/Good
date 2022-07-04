@@ -18,8 +18,22 @@ public class AssListDTO {
 	private String emp_name;
 	private String co_condition;
 	private int co_no;
+	private String co_capacity;
+	private int countName;
 
 	
+	public int getCountName() {
+		return countName;
+	}
+	public void setCountName(int countName) {
+		this.countName = countName;
+	}
+	public String getCo_capacity() {
+		return co_capacity;
+	}
+	public void setCo_capacity(String co_capacity) {
+		this.co_capacity = co_capacity;
+	}
 	//배정 과정상세보기 필요 컬럼
 	private String ass_condition;
 	private int stu_no;

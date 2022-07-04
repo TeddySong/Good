@@ -150,8 +150,7 @@
 					<th>히스토리</th>
 				</tr>
 				<tr>
- 					<td>${sessionScope.empName}</td>
-					<td id=empNo class="hidden">${sessionScope.empNo}</td>
+ 					<td id =empName>${sessionScope.empName}</td>
 					<td id=emp_no class="hidden">${sessionScope.emp_no}</td> 
 					<td>   <!-- 작성사유 -->
 						<select id="empCondtion" style="width:100%; text-align:center;">
@@ -187,12 +186,14 @@
 
 function empLogRegisterDo(){
 	console.log('직원일지등록')
-	var $empNo= $('#empNo');
-	var $emp_no=$('#emp_no');
+	var $empName= $("#empName").html();
+	var $emp_no=$('#emp_no').html();
+	console.log($emp_no);
 	var $emp_log_content = $('#emp_log_content');
 	var $emp_log_condition = $("#empCondtion");
+
 	
-	console.log($empNo.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
+	//console.log($empNo.html() + '/' + $emp_log_content.val() + '/' + $emp_log_condition.val());
 	
 	/*유효성 검사  */
 	 if($emp_log_content.val()==""){       //히스토리(내용)이 비었으면
@@ -209,10 +210,12 @@ function empLogRegisterDo(){
 		type:'get',
 		url:'empLogRegister.ajax',
 		data:{
-			empNo:$empNo.html(),
-			emp_no:$emp_no.html(),
+			emp_no:$emp_no, 
+			empName:$empName,
+			/*  emp_writer_no:$empNo.html(),  */
+			//emp_no:$emp_no.html(),
 			emp_log_condition : $emp_log_condition.val(),
-			emp_log_content:$emp_log_content.val()	
+			emp_log_content:$emp_log_content.val()
 
 		},
 		dataType:'JSON',

@@ -271,20 +271,25 @@ function listCall(page){
 		},
 		dataType:'JSON',
 		success:function(data){
-				console.log(data);
-				drawList(data.list);
-				currPage = data.currPage;
-				
-				$("#pagination").twbsPagination({
-					startPage: data.currPage, //시작 페이지
-					totalPages: data.pages, //총 페이지
-					visiblePages: 5, //한번에 보여줄 리스트 수
-					onPageClick: function(e,page){
-						console.log(page); //사용자가 클릭한 페이지
-						currPage = page;
-						listCall(page);
-					}
-				});
+				if(data.login){
+					console.log(data);
+					drawList(data.list);
+					currPage = data.currPage;
+					
+					$("#pagination").twbsPagination({
+						startPage: data.currPage, //시작 페이지
+						totalPages: data.pages, //총 페이지
+						visiblePages: 5, //한번에 보여줄 리스트 수
+						onPageClick: function(e,page){
+							console.log(page); //사용자가 클릭한 페이지
+							currPage = page;
+							listCall(page);
+						}
+					});
+				}else{
+					alert('로그인이 필요한 서비스입니다.');
+					location.href='/login.go';
+				}
 		},
 		error:function(e){
 			console.log(e);
@@ -425,8 +430,13 @@ function scrDel() {
 			dataType:'JSON',
 			success:function(data){
 				console.log(data);
-				alert(data.msg);
-				location.href='/scriptlist.go';
+				if(data.login){
+					alert(data.msg);
+					location.href='/scriptlist.go';
+				}else{
+					alert('로그인이 필요한 서비스입니다.');
+					location.href='/login.go';
+				}
 			},
 			error:function(e){
 				console.log(e);

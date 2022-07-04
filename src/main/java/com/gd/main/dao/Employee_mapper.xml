@@ -71,7 +71,7 @@
 						AND emp_phone  LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						AND emp_position LIKE concat('%',#empSearchContent},'%')
+						AND emp_position LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
 						AND emp_condition LIKE concat('%',#{empSearchContent},'%')
@@ -94,7 +94,7 @@
 						AND emp_phone LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_position')">
-						AND emp_position LIKE concat('%',#empSearchContent},'%')
+						AND emp_position LIKE concat('%',#{empSearchContent},'%')
 					</if>
 					<if test="empSearchCategory.equals('emp_condition')">
 						AND emp_condition LIKE concat('%',#{empSearchContent},'%')

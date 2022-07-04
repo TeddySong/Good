@@ -195,8 +195,9 @@
 										<th>직원번호</th>
 										<td id="stu_no"></td>
 									</tr>
+									<tr>
 									<th>이름</th>
-										<td><input type="text" id="cli_name" readonly placeholder="수정버튼을 눌러주세요"/>
+										<td><input type="text" id="cli_name" readonly/>
 										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:18%;">고객수정</button>
 										</td>
 									</tr>

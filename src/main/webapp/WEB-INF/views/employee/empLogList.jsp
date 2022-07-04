@@ -206,27 +206,6 @@
 </tr>
 </table>
 
-<!-- 		<div>
-			<form name="search-form" autocomplete="off">
-				<select name="taye">
-					<option selected value="">검색 내용 선택</option>
-					<option value="직원명">직원명</option>
-					<option value="연락처">연락처</option>
-					<option value="직급">직급</option>
-					<option value="재직상태">재직상태</option>
-				</select>
-				<input type="text" name="keyword" placeholder="검색어를 입력해주세요" value=""></input>
-				<input type="button" onclick="getSerachList()" class="btn btn-outline-primary mr-2" value="검색"></input>
-			</form>
-		</div>
-		 -->
- <!-- 	<div style="float:right; font-size:20px; font-weitht:bold;">
- 		<input type="button" value="선택수정"  onclick="UpdateValue();">
-    	<button onclick="location.href='/empList.go'">목록</button>
-	</div>
-	<div style="float:right; font-size:20px;">
-		<button onclick="location.href='/eeeeeeeeee.go'">등록</button>
-	</div> -->
 	<br></br>		
 	<table id="goodList">		
 		<thead>
@@ -248,7 +227,7 @@
 			<c:forEach items="${dto}" var="employee_log">  <!-- c:foreach : 목록을 입력받아서 목록의 갯수만큼 반복하는 반복문 -->
 				<tr>  
 				<td><fmt:formatDate value="${employee_log.emp_log_date}"  pattern="yyyy-MM-dd" /></td> <!-- 작성일-->
-					<td>${employee_log.emp_name}</td> 			<!-- 작성자 -->
+					<td>${employee_log.empName}</td> 			<!-- 작성자 -->
 					<td>${employee_log.emp_no}</td> 	 
 					<td>${employee_log.emp_log_condition}</td>	 <!--  작성사유 -->
 					<td>${employee_log.emp_log_content}</td> 	<!-- 히스토리(내용) -->

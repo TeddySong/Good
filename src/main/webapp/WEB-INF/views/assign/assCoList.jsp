@@ -245,65 +245,101 @@ var currPage = 1;
 
 listCall(currPage);
 
-$('#assSearch').on('click',function(){
-	$("#pagination").twbsPagination('destroy');
-	listCall(currPage);
-});
-
-
 function listCall(page){
 	
-	var cnt =10;
-	
-	
-	console.log("param page : " + page);
-	
-	var assSearchTarget = $("#coName option:selected").val();
-	console.log(assSearchTarget);
-
-	var search = $("#search").val();
-	console.log(search);
-	
-	
-	
+	var pagePerNum = 10;
 	
 	$.ajax({
 		type:'get',
 		url:'assCoList.ajax',
 		data:{
-			cnt : cnt,
-			page : page,
-			assSearchTarget : assSearchTarget,
-			search : search
+			cnt : pagePerNum,
+			page : page
 		},
 		dataType:'JSON',
 		success:function(data){
-			console.log(data);
+			//console.log(data);
+			$('#stu_no').html(data.stu_no);
 			drawList(data.assCoList);
 			currPage=data.currPage;
-			/* $('#co_name').html(data.dto.co_name);
-			$('#stu_no').html(data.dto.stu_no);
-			$('#cli_name').html(data.dto.cli_name);
-			$('#cli_phone').html(data.dto.cli_phone);
-			$('#emp_name').html(data.dto.emp_name);
-			$('#ass_condition').html(data.dto.ass_condition); */
 			
+			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
-				startPage: data.currPage, //시작페이지
-				totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-				visiblePages:5,  //한번에 보여줄 페이지 수
-				onPageClick: function(e,page){
+				startPage:data.currPage, //시작페이지
+				totalPages:data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages: 5, // 한번에 보여줄 페이지 수
+				onPageClick:function(e,page){
 					console.log(page);
 					currPage=page;
 					listCall(page);
 				}
 			});
+			
 		},
-		error:function(error){
-			console.log(error);
+		error:function(e){
+			console.log(e);
 		}
 	});
+	
+	
 }
+$('#assSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	coSearList(currPage);
+
+
+	function coSearList(page){
+		
+		var cnt =10;
+		console.log("param page : " + page);
+		
+		var assSearchTarget = $("#coName option:selected").val();
+		console.log(assSearchTarget);
+	
+		var search = $("#search").val();
+		console.log(search);
+		
+		$.ajax({
+			type:'get',
+			url:'assCoListSe.ajax',
+			data:{
+				cnt : cnt,
+				page : page,
+				assSearchTarget : assSearchTarget,
+				search : search
+				
+			},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data);
+				$('#stu_no').html(data.stu_no);
+				drawList(data.assCoList);
+				currPage=data.currPage;
+				
+				/* $('#co_name').html(data.dto.co_name);
+				$('#stu_no').html(data.dto.stu_no);
+				$('#cli_name').html(data.dto.cli_name);
+				$('#cli_phone').html(data.dto.cli_phone);
+				$('#emp_name').html(data.dto.emp_name);
+				$('#ass_condition').html(data.dto.ass_condition); */
+				
+				$("#pagination").twbsPagination({
+					startPage: data.currPage, //시작페이지
+					totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+					visiblePages:5,  //한번에 보여줄 페이지 수
+					onPageClick: function(e,page){
+						console.log(page);
+						currPage=page;
+						listCall(page);
+					}
+				});
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+	}
+});
 
 function drawList(assCoList){
 	var content="";

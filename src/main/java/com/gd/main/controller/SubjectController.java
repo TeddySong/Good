@@ -175,7 +175,12 @@ public class SubjectController {
 	@ResponseBody
 	public HashMap<String, Object> scriptlist(@RequestParam HashMap<String, String> params, HttpSession session) {
 		logger.info("과목 후기 리스트 요청" + params);
-		return service.scriptlist(params);
+		boolean login = false;
+		
+		if(session.getAttribute("loginId") != null){
+			login = true;
+		}
+		return service.scriptlist(params,login);
 	}
 	
 	/*중복 코드 정리
@@ -216,12 +221,18 @@ public class SubjectController {
 	
 	@RequestMapping("/scrDel.ajax")
 	@ResponseBody
-	public HashMap<String, Object> scrDel(@RequestParam (value="scrDelList[]") ArrayList<String> scrDelList) {
+	public HashMap<String, Object> scrDel(@RequestParam (value="scrDelList[]") ArrayList<String> scrDelList, HttpSession session) {
+		
+		boolean login = false;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info("scrDelList : " + scrDelList);
 		
-		int cnt = service.scrDel(scrDelList);
-		map.put("msg",cnt + " 개 삭제 완료됐습니다.");
+		if(session.getAttribute("loginId") != null) {
+			login = true;
+			int cnt = service.scrDel(scrDelList);
+			map.put("msg",cnt + " 개 삭제 완료됐습니다.");
+		}
+		map.put("login", login);
 		
 		return map;
 	}

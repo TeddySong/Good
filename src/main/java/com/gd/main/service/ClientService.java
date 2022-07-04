@@ -124,12 +124,12 @@ public class ClientService {
 		
 		int allCnt = dao.ajaxSearchCnt(data);
 		//logger.info("allCnt44 : "+allCnt);
-		System.out.println("allCnt44 : "+allCnt);
+		//System.out.println("allCnt44 : "+allCnt);
 		int pages = allCnt%cnt > 0 ? (allCnt/cnt)+1 : (allCnt/cnt);
 		
 		
 		//logger.info("pages : "+pages);
-		System.out.println("pages : "+pages);
+		//System.out.println("pages : "+pages);
 		
 		if(pages==0) {pages=1;}
 		
@@ -145,7 +145,7 @@ public class ClientService {
 		
 		int offset = (page-1) * cnt;
 		//logger.info("offset : "+offset);
-		System.out.println("offset : "+offset);
+	//	System.out.println("offset : "+offset);
 		
 	
 		data.put("cnt", cnt);

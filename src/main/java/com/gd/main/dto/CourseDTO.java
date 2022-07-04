@@ -9,9 +9,9 @@ public class CourseDTO {
 	private int co_no;
 	private String co_name;
 	private String sub_name;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date co_startDate;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date co_endDate;
 	private String co_condition;
 	private String co_startTime;

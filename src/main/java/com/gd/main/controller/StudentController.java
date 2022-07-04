@@ -466,6 +466,22 @@ public class StudentController {
 		return map;
 	}
 	
+	@RequestMapping(value="/stuDelete.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stuDelete(HttpSession session,
+			@RequestParam HashMap<String, String> params, Model model) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String loginId=(String) session.getAttribute("loginId");
+		if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+			int cnt = service.stuDelete(params);
+			map.put("msg", "삭제가 완료되었습니다.");
+			} else {				
+				map.put("msg","권한이 없습니다");
+			}
 	
+		return map;
+		
+	}
 	
 }

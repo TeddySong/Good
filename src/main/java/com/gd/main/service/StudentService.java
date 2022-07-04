@@ -261,4 +261,11 @@ public class StudentService {
 		  return success; 
 		  }
 
+	public int stuDelete(HashMap<String, String> params) {
+		int cnt = 0;
+		cnt = dao.stuDelete(params);
+		
+		return cnt;
+	}
+
 }

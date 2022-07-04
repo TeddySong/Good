@@ -158,5 +158,8 @@
 		WHERE cli_no = #{cli_no}
 	</update>
 	
+	<delete id="stuDelete" parameterType='String'>
+		DELETE FROM student WHERE stu_no=#{stu_no}
+	</delete>
 	
 </mapper>

@@ -350,5 +350,11 @@ public class ClientController {
 	 * 
 	 * return "redirect:/homeSubDetail3.do"; }
 	 */
-
+	@RequestMapping(value="/")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginId");
+		String msg =  "로그인이 필요한 서비스입니다.";
+		session.setAttribute("msg", msg);
+		return "emp_login";
+	}
 }

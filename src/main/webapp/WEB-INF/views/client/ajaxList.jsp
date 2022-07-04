@@ -130,7 +130,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link" id="navbarDropdown" href="logout.do" role="button"><i class="fas fa-user fa-fw"></i> Log Out</a>
                 </li>
-            </ul>
+            </ul> 
         </nav>
 
 <div class="container-fluid px-4">

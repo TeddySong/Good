@@ -50,7 +50,13 @@ public class SubjectController {
 		logger.info("과목 등록 페이지 이동");
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 			page="./subject/subRegister";
+			} else {
+				page="./subject/subList";
+				model.addAttribute("msg","권한이 없습니다");
+			}
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
@@ -144,8 +150,14 @@ public class SubjectController {
 		
 		String page="emp_login";
 		if(session.getAttribute("loginId") != null) {
-			session.setAttribute("sub_no", sub_no);
-			page="./subject/subUpdate";
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+				session.setAttribute("sub_no", sub_no);
+				page="./subject/subUpdate";
+			} else {
+				page="./subject/subList";
+				model.addAttribute("msg","권한이 없습니다");
+			}
 		}else {
 			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}

@@ -273,6 +273,11 @@
 
 </body>
 <script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
 var currPage = 1;
 
 listCall(currPage);

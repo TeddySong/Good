@@ -114,7 +114,7 @@
 			<tr><td>상담 신청시간 :<fmt:formatDate value="${data.cli_qDate}" pattern="yyyy년MM월dd일 HH시mm분" /></td></tr>
 			<tr class="find-btn"><td style="text-align:end;"><button class="goodRegister" style="font-size:20px; width:30%;" type="button" id="cliUpdatego"> 수정</button></td></tr>
 			<tr><td><h3>상담요청 내용</h3></td></tr>
-			<tr><td><textarea class="form-control" id="log" name="opinion" style="border:2px solid black; font-size:20px;" readonly>${data.cli_req}</textarea></td></tr>		
+			<tr><td><textarea class="form-control" id="log" name="opinion" style="border:2px solid black; font-size:20px; height:150px; resize:none;" readonly>${data.cli_req}</textarea></td></tr>		
 		</table>
 </div>		    
  <div style="width:65%; margin: 0 20px; float:right;">     
@@ -123,8 +123,8 @@
 				<table id="goodList" style="border:1px solid black" class="table table-striped">
 					<thead class="clog-head">
 						<tr> <td>상담결과:${clog.cli_log_result} </td>
-							<td>상담일정 :<fmt:formatDate value="${clog.cli_log_Dday}" pattern="yyyy년MM월dd일"/></td>
-							<td>상담 시간:${clog.cli_log_Dtime}</td>
+							<td>상담일정 :<fmt:formatDate value="${clog.cli_log_Dday}" pattern="yyyy년MM월dd일 HH시mm분" /></td>
+							<%-- <td>상담 시간:${clog.cli_log_Dtime}</td> --%>
 						</tr>
 						<tr> 
 							<td colspan="3">작성시간:<fmt:formatDate value="${clog.cli_log_date}" pattern="yyyy년MM월dd일HH시mm분"/> &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <span>작성자:${clog.emp_name}</span></td>
@@ -134,7 +134,7 @@
 					<tbody>    
 					<tr>
 						<td colspan="3" class="clog-body" readonly >
-							<textarea class="form-control" style="border:2px solid black; font-size:20px;" readonly>${clog.cli_log_content}</textarea>
+							<textarea class="form-control" style="border:2px solid black; font-size:20px; resize:none;" readonly>${clog.cli_log_content}</textarea>
 						</td>
 					</tr>
 					</tbody>
@@ -197,7 +197,7 @@
         <table id="goodList" class="table table-striped">
         	<tr><td>회원번호</td><td>${data.cli_no}</td></tr>
         	<tr><td>고객명</td><td><input type="text" value="${data.cli_name}" id="cli_name"/></td></tr>
-        	<tr><td>연락처</td><td><input type="text" value="${data.cli_phone}" id="cli_phone"/></td></tr>        	       		
+        	<tr><td>연락처</td><td><input oninput="autoHyphen(this)" maxlength="13" type="text" value="${data.cli_phone}" id="cli_phone"/></td></tr>        	       		
         </table>
       
       </div>
@@ -353,6 +353,11 @@ function cliList(){
 	location.href="cliList.go";
 }
 
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
  
 </script>
 </html>

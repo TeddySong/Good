@@ -298,7 +298,7 @@
 		</select>
 		
 		<select id="regSub" resultType="HashMap">
-			SELECT sub_name, sub_no FROM subject;
+			SELECT sub_name, sub_no FROM subject WHERE not sub_condition  in('숨김')
 		</select>
 		
 		<select id="cli_no" resultType="integer">
@@ -312,9 +312,9 @@
 				LEFT JOIN client c ON c.emp_no = e.emp_no 
 				WHERE c.cli_no= #{cli_no}
 		</select>
-		
+		<!-- ,#{cli_log_Dtime} -->
 		<insert id="scheRegister" parameterType="hashmap">
-			INSERT INTO client_log(cli_log_Dday,cli_log_Dtime,cli_log_content,cli_no,emp_no,cli_log_result)values(#{cli_log_Dday},#{cli_log_Dtime},#{cli_log_content},#{cli_no},#{emp_no},#{cli_log_result}) 
+			INSERT INTO client_log(cli_log_Dday,cli_log_content,cli_no,emp_no,cli_log_result)values(#{cli_log_Dday},#{cli_log_content},#{cli_no},#{emp_no},#{cli_log_result}) 
 		</insert>
 		
 		<select id="checkCnt" parameterType="hashmap" resultType="int">
@@ -340,10 +340,11 @@
 			</where>
 		</select>
 		
-		<select id="shcekList" parameterType="hashmap" resultType="com.gd.main.dto.Client_Dto">
-			select t.* from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
+<select id="shcekList" parameterType="hashmap" resultType="com.gd.main.dto.Client_Dto">
+	select d.* from (select t.* from (select  distinct c.cli_no,cli_name,cli_phone, max(cli_log_date) as cli_log_date ,cli_log_Dday,cli_log_Dtime, cli_log_result, emp_name from client c 
 			left join client_log cl on cl.cli_no = c.cli_no 
-			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result order by cli_log_date desc ) as t 
+			left join employee e on e.emp_no = c.emp_no group by c.cli_no , cl.cli_log_result,cli_log_Dday having cli_log_date= max(cli_log_date) order by cli_log_date desc ) as t 
+		group by t.cli_no having t.cli_log_result='상담예정')as d
 			<where>
 				<!--   t.cli_log_result ='상담예정'  --><!--or  cli_log_result ='상담완료' -->
 				
@@ -352,27 +353,26 @@
 			
 			</if> -->
 			<if test="cli_log_Dday!=null and  cli_log_Dday!='' ">
-				and t.cli_log_Dday >= #{cli_log_Dday}
+				and d.cli_log_Dday >= #{cli_log_Dday}
 			</if>
 			<if test= "searchType !='' and searchType != null and keyword!='' and keyword!=null ">
 				<if test="searchType.equals('client')">
-				  	AND t.cli_name LIKE  concat('%',#{keyword},'%') 
+				  	AND d.cli_name LIKE  concat('%',#{keyword},'%') 
 				</if>
 				 <if test="searchType.equals('phone')">
-				 	and t.cli_phone like concat('%',#{keyword},'%')
+				 	and d.cli_phone like concat('%',#{keyword},'%')
 				 </if>
 				 <if test="searchType.equals('emp')">
-					and t.emp_name like concat('%',#{keyword},'%')
+					and d.emp_name like concat('%',#{keyword},'%')
 				</if>
 			</if>
 			 
 			</where>
 			
-			group by t.cli_no having t.cli_log_result='상담예정'
-			order by t.cli_log_date desc limit #{cnt}  offset #{offset}
+			
+			order by d.cli_log_date desc limit #{cnt}  offset #{offset}
 			<!-- order by cli_log_date desc limit #{offset},#{cnt} -->
 		</select>
-		
 		<!-- <select id="chkEndCnt" resultType="int">
 			select cli_no from client_log cl  where  cl.cli_log_result = '상담완료' order by cli_no asc
 		</select>

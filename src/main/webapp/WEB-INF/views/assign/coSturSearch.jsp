@@ -254,7 +254,7 @@ function drawList(list){
 	
 	list.forEach(function(item){
 		content += '<tr>';
-		content += '<td><input type="radio" name=stuCo value='+item.stu_no+'></td>'
+		content += '<td><input type="radio" name="stuCo" value='+item.stu_no+'></td>'
 		content += '<td>'+item.stu_no+'</td>';
 		content += '<td>'+item.cli_name+'</td>';
 		content += '<td>'+item.cli_phone+'</td>';		

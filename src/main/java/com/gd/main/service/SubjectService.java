@@ -173,7 +173,7 @@ public class SubjectService {
 	}
 	
 
-	public HashMap<String, Object> scriptlist(HashMap<String, String> params) {
+	public HashMap<String, Object> scriptlist(HashMap<String, String> params, boolean login) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		String sub_no = params.get("sub_no");
@@ -205,6 +205,7 @@ public class SubjectService {
 		ArrayList<SubDTO> scrSubSearch = dao.scrSubSearch(sub_no, cnt, offset);
 		ArrayList<SubDTO> scSubCondition = dao.scSubCondition(subCo, cnt, offset);
 		map.put("list", list);
+		map.put("login", login);
 		map.put("scrSubSearch", scrSubSearch);
 		map.put("scSubCondition", scSubCondition);
 

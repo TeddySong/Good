@@ -9,11 +9,13 @@ public interface AssignDAO {
 	
 	ArrayList<AssListDTO> allCount(HashMap<String, Object> map);
 	
+	ArrayList<AssListDTO> allCoCount(HashMap<String, Object> map);
+	
 	ArrayList<AssListDTO> assList(HashMap<String, Object> map);
 
 	ArrayList<AssListDTO> assCoList(HashMap<String, Object> assMap);
 
-	ArrayList<AssListDTO> assStuCoList(HashMap<String, Object> assMap);
+	ArrayList<AssListDTO> assStuCoList(String stu_no);
 	
 	int allCount1(HashMap<String, Object> searchResult);
 
@@ -28,6 +30,8 @@ public interface AssignDAO {
 	int coSearchUp(HashMap<String, Object> assMap);
 
 	int coSearchDel(HashMap<String, Object> assMap);
+
+	String nameGet(String stu_no);
 
 
 

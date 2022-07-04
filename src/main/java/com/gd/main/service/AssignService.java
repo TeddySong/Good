@@ -2,7 +2,6 @@ package com.gd.main.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,9 +44,9 @@ public class AssignService {
 		//총 (allCnt) / 페이지동 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		ArrayList<AssListDTO> allCount = dao.allCount(map);
 		int allCnt = allCount.size();
-		logger.info("총페이지 : " + allCnt);
+		logger.info("allCnt : " + allCnt);
 		int pages = allCnt % cnt > 0 ? (allCnt / cnt) + 1 : (allCnt / cnt);
-		logger.info("리스트 : " + pages);
+		logger.info("총페이지 : " + pages);
 		
 		if(page > pages) {//5개씩 보는 마지막 페이지로 갔을 대 , 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결
 			page = pages;
@@ -62,7 +61,7 @@ public class AssignService {
 		map.put("offset", offset);
 
 		ArrayList<AssListDTO> assList = dao.assList(map);
-		logger.info("assList : ",assList.size());
+		logger.info("assList : " + assList.size());
 		map.put("assList", assList);
 		
 		logger.info("리스트 배열: " + assList);
@@ -94,8 +93,8 @@ public class AssignService {
 		  
 		  //assMap.put("params", params);
 		  
-		  ArrayList<AssListDTO> allCount = dao.allCount(map);
-		  int allCnt = allCount.size();
+		  ArrayList<AssListDTO> allCoCount = dao.allCoCount(map);
+		  int allCnt = allCoCount.size();
 		  logger.info("allCnt : " + allCnt);
 		  int pages = allCnt % cnt > 0?(allCnt/cnt) + 1: (allCnt/cnt);
 		  logger.info("pages : " + pages);
@@ -116,18 +115,22 @@ public class AssignService {
 		  return map;
 	  }
 
-	public HashMap<String, Object> assStuCoList(HashMap<String, String> params, String stu_no) {
+	public ArrayList<AssListDTO> assStuCoList(String stu_no) {
 		
-		HashMap<String, Object> assMap = new HashMap<String, Object>();
-		assMap.put("params", params);
-		assMap.put("stu_no", stu_no);
-
-		ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(assMap);
-		assMap.put("assStuCoList", assStuCoList);
 		
-		logger.info(assMap + "~");
 		
-		return assMap;
+		return dao.assStuCoList(stu_no);
+		/*
+		 * HashMap<String, Object> assMap = new HashMap<String, Object>();
+		 * assMap.put("params", params); assMap.put("stu_no", stu_no);
+		 * 
+		 * ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(assMap);
+		 * assMap.put("assStuCoList", assStuCoList);
+		 * 
+		 * logger.info(assMap + "~");
+		 * 
+		 * return assMap;
+		 */
 	}
 
 
@@ -300,6 +303,12 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		logger.info(assMap + "~");
 		
 		return assMap;
+	}
+
+
+
+	public String nameGet(String stu_no) {
+		return dao.nameGet(stu_no);
 	}
 	
 

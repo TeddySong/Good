@@ -198,9 +198,7 @@
 											<th>과정명</th>
 											<th>강의시간</th>
 											<th>개강일</th>
-											<th>학생명</th>
-											<th>연락처</th>
-											<th>담당자</th>
+											<th>배정현황</th>											
 											<th>수강상태</th>
 										</tr>
 									</thead>
@@ -209,7 +207,7 @@
 									</tbody>
 									<tr>
 									<!-- plugin 사용법(twbspagination) -->
-										<td colspan="8" id ="paging">
+										<td colspan="5" id ="paging">
 											<div class="container">
 												<nav arial-lable="Page navigation" style="text-align:center">
 													<ul class="pagination" id="pagination"></ul>
@@ -242,7 +240,7 @@ $('#assSearch').on('click',function(){
 
 function listCall(page){
 	
-	var cnt = 10;
+	var pagePerNum = 10;
 	
 	var assSearchTarget = $("#coName option:selected").val();
 	console.log(assSearchTarget);
@@ -256,7 +254,7 @@ function listCall(page){
 		type:'get',
 		url:'assignList.ajax',
 		data:{
-			cnt : cnt,
+			cnt : pagePerNum,
 			page : page,
 			assSearchTarget : assSearchTarget,
 			search : search
@@ -347,9 +345,7 @@ function listCall(page){
 				content +='<td><a href="assCoList.go?co_no='+item.co_no+'">'+item.co_name+'</a></td>';
 				content +='<td>'+item.co_startTime+'</td>';
 				content +='<td>'+nowDate+'</td>';
-				content +='<td>'+item.cli_name+'</td>';
-				content +='<td>'+item.cli_phone+'</td>';
-				content +='<td>'+item.emp_name+'</td>';
+				content +='<td>'+item.countName+'/'+item.co_capacity+'</td>';				
 				content +='<td>'+item.co_condition+'</td>'; 
 				content +='<tr>';
 			});

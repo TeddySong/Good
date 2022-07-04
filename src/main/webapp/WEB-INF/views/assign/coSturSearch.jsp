@@ -29,6 +29,7 @@
             }
             
    #goodList th {
+   			width:80%;
 			background-color:#505050;
 			color:#FFFFFF;
 			text-align:center;
@@ -79,8 +80,8 @@
                                 <i class="fas fa-table me-1"></i>
                                 수강생리스트
                             </div>
-                            <div>
-                            	<table id="goodList">
+                            <div style="margin:0 auto;">
+                            	<table id="goodList" >
                             		<tr>
                             			<td>
                             				<select id="stuSearchCategory" style="width:100%;">
@@ -94,7 +95,7 @@
                             			<td style="text-align:center"><button id="stuSearch" class="goodRegister" style="width:100%;">검색</button></td>
                             		
 										<td  style="text-align:end; font-size:20px;">
-									<button class="goodRegister" onclick = "location.href=assStuList()" >등록</button>
+									<button class="goodRegister" style="width:100%;" onclick="assStuList()" >등록</button>
 										</td>
 															
                             		</tr>
@@ -102,14 +103,14 @@
                                 <table id="goodList">
 									<thead>
 										<tr>
-											<th></th>
-											<th>학번</th>
-											<th>이름</th>
-											<th>연락처</th>
-											<th>생년월일</th>
-											<th>나이</th>
-											<th>성별</th>
-											<th>담당직원</th>
+											<th style="width:5%;"></th>
+											<th style="width:5%;">학번</th>
+											<th style="width:15%;">이름</th>
+											<th style="width:20%;">연락처</th>
+											<th style="width:20%;">생년월일</th>
+											<th style="width:10%;">나이</th>
+											<th style="width:5%;">성별</th>
+											<th style="width:20%;">담당직원</th>
 										</tr>
 									</thead>
 									<tbody id="list">
@@ -117,7 +118,7 @@
 									</tbody>
 									
 									<tr>
-										<td colspan="7" id="paging">
+										<td colspan="8" id="paging">
 										<!-- twbspagination 플러그인 -->
 										<div class="container">
 											<nav arial-label="Page navigation" style="text-align:center">

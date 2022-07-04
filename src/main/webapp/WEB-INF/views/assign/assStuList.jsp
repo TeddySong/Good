@@ -47,12 +47,12 @@
 	}
 	
 	.register {
-		display: block;
-		margin: 20px auto;
+		
+		padding:10px 10px;
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
-		padding: 10px 20px;
+		
 	    color: rgb(26 18 50 / 100%);
 	    font-size: 18px;
 	    font-weight: 500;
@@ -194,63 +194,73 @@
 											<input type = "text" id= "search"/>
 											<button class="registerSh" id = "assSearch" >검색</button>
 										</tr> -->
-										<tr>
-											<h3>과정 상세정보</h3>		
+										<tr ><th colspan="6"><h3>과정 상세정보</h3></th></tr>
+											<tr>		
 											<th>학생명</th>
 												<td>
-													<input type="text" id=cli_name value="${cli_name}">
+													<input type="text" id=cli_name value="${nameGet}">
 												</td>
 											<th>학생번호</th>
 												<td id="stu_no"></td>
 												<td>
-													<button id="cli_nameSearch" onclick="stuSearch_pop()">학생검색</button>
-													<button id="cli_nameSearch" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">학생수정</button>
+													<button id="cli_nameSearch" class="register" onclick="stuSearch_pop()">학생검색</button>
+													<button id="cli_nameSearch" class="register" onclick="location.href='stuDetail.go?stu_no=${stu_no}'">학생수정</button>
 												</td>
 												<td id ="coSearch"  colspan="1" >
-													<button onclick="coSearch_pop()">과정검색</button></td>
-												</td>
+													<button onclick="coSearch_pop()" class="register" >과정검색</button></td>												
 										</tr>
 										<tr>
-											<th></th>
-											<th>과정명</th>
-											<th>개강일</th>
-											<th>종강일</th>
-											<th>강의시간</th>														
-											<th>수강상태</th>
+											<th style="width:10%;"></th>
+											<th style="width:25%;">과정명</th>
+											<th style="width:20%;">개강일</th>
+											<th style="width:20%;">종강일</th>
+											<th style="width:15%;">강의시간</th>														
+											<th style="width:10%;">수강상태</th>
+										</tr>
+										<tr>
+										<th style="text-align:end;" colspan="6">
+										<select id="coCondition" style="width:20%;" name="coCondition">
+													<option value="재학">재학</option>
+													<option value="대기">대기</option>
+													<option value="철회">철회</option>
+													<option value="수료">수료</option>
+												</select>
+											</th>
 										</tr>
 									</thead>
 									<tbody id="assStuCoList">
-										
-									<!-- 	<tr>
-											<td id ="sub_name"></td>
+										<%-- <c:forEach items="${dto}" var="dto">
+										<tr>
+											<td><input type="radio" name="selectAss" id="co_no"></td>							
 											<td id ="co_name"></td>
 											<td id ="co_startDate"></td>	
 											<td id ="co_endDate"></td>
 											<td id ="co_startTime"></td>
-											<td id ="ass_condition">
-												<select id="coCondition">
-													<option value="ass_condition">대기</option>
-													<option value="ass_condition">대기</option>
-													<option value="ass_condition">철회</option>
-													<option value="ass_condition">수료</option>
+											<td>
+												<select id="ass_condition">
+													<option value="재학">재학</option>
+													<option value="대기">대기</option>
+													<option value="철회">철회</option>
+													<option value="수료">수료</option>
 												</select>
 											</td>
-											<td id = "coSearch"><button>검색</button></td>
-										</tr> -->
+											<!-- <td id = "coSearch"><button>검색</button></td> -->
+										</tr>
+										</c:forEach> --%>
 									</tbody>
 									<tr>
-											<td colspan="5" >
-												<button id="coSearchUp">수업수정</button>
-												<button id="coSearchDel">수업삭제</button>								
+											<td colspan="6" >
+												<button id="coSearchUp" class="register" >수업수정</button>
+												<button id="coSearchDel" class="register" >수업삭제</button>								
 											</td>
 									<!-- plugin 사용법(twbspagination) -->
-										<td colspan="8" id ="paging">
+										<!-- <td colspan="8" id ="paging">
 											<div class="container">
 												<nav arial-lable="Page navigation" style="text-align:center">
 													<ul class="pagination" id="pagination"></ul>
 												</nav>
 											</div>
-										</td>
+										</td> -->
 									</tr>							
 								</table>								
                             </div>
@@ -282,8 +292,12 @@ function listCall(page){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
+			
 			$('#stu_no').html(data.stu_no);
-			drawList(data.assStuCoList);
+			$('#cli_name').html(data.dto.cli_name);
+			drawList(data.dto);
+			
+			//conditionGet(data.assStuCoList);
 		},
 		error:function(error){
 			console.log(error);
@@ -292,12 +306,82 @@ function listCall(page){
 	});
 }
 
+/* function drawList(assStuCoList){
+	var content="";
+	assStuCoList.forEach(function(item){
+		
+		content += '<tr>';
+		content += '<td>'+item.cli_name+'</td>';
+		content += '<td>'+item.sub_name+'</td>';
+		content += '<td>'+item.co_name+'</td>';		
+		content += '<td>'+item.co_startDate+'</td>';
+		content += '<td>'+item.co_endDate+'</td>';
+		content += '<td>'+item.ass_condition+'</td>';
+		content += '</tr>'; 
+	});
+	$('#assStuCoList').empty();
+	$('#assStuCoList').append(content);
+	
+} */
+  function drawList(dto){
+	//var cliName=assStuCoList.slice(0);
+	//var pop = cliName.pop();
+	//console.log(pop.cli_name);
+	var assCondition = assStuCoList
+	
+	
+	console.log(stu_no);
+	var content="";
+
+	dto.forEach(function(item){		
+		
+		
+		var startErrorDate = new Date(item.co_startDate).toLocaleDateString("ko-kr");
+		//var startnowDate = new Date(startErrorDate.setDate(startErrorDate.getDate()).toLocaleDateString("ko-kr");
+		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
+		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
+		content += '<tr>';
+		content += '<td><input type="radio" name=selectAss value='+item.co_no+'>'+item.co_no+'</td>';	
+		content += '<td>'+item.co_name+'</td>';		
+		content += '<td>'+startErrorDate+'</td>';
+		content += '<td>'+endErrorDate+'</td>';
+		content += '<td>'+item.co_startTime+'</td>';	
+		content += '<td><input type="text" style="width:100%; text-align:center;" value="'+item.ass_condition+'" readonly/></td>;'
+		/* content += getOption(item.ass_condition); */
+/* 		content +=	'<option id="aaa" value="재학">재학</option>';
+		content +=	'<option id="bbb" value="수료">수료</option>'
+		content +=	'<option id="ccc" value="철회">철회</option>';
+		content +=	'<option id="ddd" value="대기">대기</option>'; */		
+		content += '</tr>';		
+		
+	});
+	//$('#cli_name').val(pop.cli_name);
+	$('#assStuCoList').empty();
+	$('#assStuCoList').append(content);
+} 
+
+
+
+
+/* function getOption(con){	
+	var content = '<td><select id="coCondition" name="coCondition">';
+	content += con == "재학" ? '<option value="재학" selected>재학</option>' : '<option value="재학">재학</option>'
+	content += con == "수료" ? '<option value="수료" selected>수료</option>' :	'<option value="수료">수료</option>'
+	content +=	 con == "철회" ? '<option value="철회" selected>철회</option>' : '<option value="철회">철회</option>';
+	content +=	 con == "대기" ? '<option value="대기" selected>대기</option>' : '<option value="대기">대기</option>';
+	content +='</select>';
+	content +='</td>';
+	return content;
+	
+} */
+
 //업데이트
+
 $('#coSearchUp').on('click',function(){
 	
 	var stuCo = $('input[name="selectAss"]:checked').val();
 	console.log(stuCo);
-	var ass_condition = $('#coCondition option:selected').val();
+	var ass_condition = $('select[name="coCondition"]').val();
 	console.log(ass_condition);
 	
 	$.ajax({
@@ -312,8 +396,11 @@ $('#coSearchUp').on('click',function(){
 			console.log(data);
 			$('#stu_no').html(data.stu_no);
 			//drawList(data.assStuCoList);
+			alert("수정이 완료되었습니다");
+			history.go(0);
 		},
 		error:function(error){
+			alert("수정에 실패했습니다");
 			console.log(error);
 		}
 	});
@@ -339,67 +426,15 @@ $('#coSearchDel').on('click',function(){
 			console.log(data);
 			$('#stu_no').html(data.stu_no);
 			//drawList(data.assStuCoList);
+			alert("삭제되었습니다");
+			history.go(0);
 		},
 		error:function(error){
+			alert("수강상태를 확인해주세요")
 			console.log(error);
 		}
 	});
 });
-
-
-
-
-/* function drawList(assStuCoList){
-	var content="";
-	assStuCoList.forEach(function(item){
-		
-		content += '<tr>';
-		content += '<td>'+item.cli_name+'</td>';
-		content += '<td>'+item.sub_name+'</td>';
-		content += '<td>'+item.co_name+'</td>';		
-		content += '<td>'+item.co_startDate+'</td>';
-		content += '<td>'+item.co_endDate+'</td>';
-		content += '<td>'+item.ass_condition+'</td>';
-		content += '</tr>'; 
-	});
-	$('#assStuCoList').empty();
-	$('#assStuCoList').append(content);
-	
-} */
- function drawList(assStuCoList){
-	//var cliName=assStuCoList.slice(0);
-	//var pop = cliName.pop();
-	//console.log(pop.cli_name);
-	var assCondition = assStuCoList
-	
-	
-	console.log(stu_no);
-	var content="";
-
-	assStuCoList.forEach(function(item){
-		
-		var startErrorDate = new Date(item.co_startDate).toLocaleDateString("ko-kr");
-		//var startnowDate = new Date(startErrorDate.setDate(startErrorDate.getDate()).toLocaleDateString("ko-kr");
-		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
-		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
-		content += '<tr>';
-		content += '<td><input type="radio" name=selectAss value='+item.co_no+'>'+item.co_no+'</td>';	
-		content += '<td>'+item.co_name+'</td>';		
-		content += '<td>'+startErrorDate+'</td>';
-		content += '<td>'+endErrorDate+'</td>';
-		content += '<td>'+item.co_startTime+'</td>';
-		content += '<td>'+item.ass_condition+'<select id="coCondition" name="coCondition">';
-		content +=	'<option value="재학">재학</option>';
-		content +=	'<option value="수료">수료</option>'
-		content +=	'<option value="철회">철회</option>';
-		content +=	'<option value="대기">대기</option>';
-		content +='</td>';
-		content += '</tr>';
-	});
-	//$('#cli_name').val(pop.cli_name);
-	$('#assStuCoList').empty();
-	$('#assStuCoList').append(content);
-} 
 
 function coSearch_pop(){
 	var stu_no=$("#stu_no").html();

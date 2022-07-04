@@ -199,6 +199,7 @@
                             <div>
                             <div style="width:80%; text-align:end;">
                             <input type="button" value="학사일지" onclick="stuLog()"/>
+                            <input type="button" value="수강신청" onclick="location.href='assStuList.go?stu_no=${stu_no}'"/>
                             </div>
                                 <table id="goodList">                                	
                                 	<tr id="stu_no_tr">

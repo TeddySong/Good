@@ -197,7 +197,7 @@
         <table id="goodList" class="table table-striped">
         	<tr><td>회원번호</td><td>${data.cli_no}</td></tr>
         	<tr><td>고객명</td><td><input type="text" value="${data.cli_name}" id="cli_name"/></td></tr>
-        	<tr><td>연락처</td><td><input type="text" value="${data.cli_phone}" id="cli_phone"/></td></tr>        	       		
+        	<tr><td>연락처</td><td><input oninput="autoHyphen(this)" maxlength="13" type="text" value="${data.cli_phone}" id="cli_phone"/></td></tr>        	       		
         </table>
       
       </div>
@@ -353,6 +353,11 @@ function cliList(){
 	location.href="cliList.go";
 }
 
+const autoHyphen = (target) => {
+	 target.value = target.value
+	   .replace(/[^0-9]/g, '')
+	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+	}
  
 </script>
 </html>

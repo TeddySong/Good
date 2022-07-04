@@ -1,5 +1,6 @@
 package com.gd.main.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gd.main.dto.AssListDTO;
 import com.gd.main.service.AssignService;
 
 @Controller
@@ -122,10 +124,11 @@ public class AssignController {
 		public String assStuList(HttpSession session, @RequestParam String stu_no, Model model) {
 			 String page = "home";
 			 if(session.getAttribute("loginId") != null) {
-					
+				String nameGet = service.nameGet(stu_no);	
 				session.setAttribute("stu_no", stu_no);
 				
-				
+				logger.info("이름:" + nameGet);
+				model.addAttribute("nameGet",nameGet);
 				page = "./assign/assStuList";	 
 			} 
 			return page;
@@ -137,9 +140,24 @@ public class AssignController {
 	  
 	  logger.info("학생 배정 페이지 이동");
 	  String stu_no =(String) session.getAttribute("stu_no");
-	
-	  
-	 return service.assStuCoList(params,stu_no);
+	  HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		logger.info("상세 데이터 요청 : " + stu_no);
+		
+		boolean login = false;
+		
+		if(session.getAttribute("loginId")!=null){
+		
+		ArrayList<AssListDTO> dto = service.assStuCoList(stu_no);
+		
+		map.put("dto", dto);
+		login=true;
+		map.put("stu_no", stu_no);		
+		logger.info("클라이언트 : {}", dto );
+		}
+		
+	map.put("login", login);
+	return map;
 	 }
 	  
 	  @RequestMapping("/coSearchUp.ajax")

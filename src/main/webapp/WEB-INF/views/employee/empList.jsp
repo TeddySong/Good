@@ -388,7 +388,7 @@ function EmpUpdateForm(){
 	if(emp_no>0){
 		location.href='empUpdate.go?emp_no='+emp_no;	
 	}else{
-		alert("수정할 직원명을 먼저 선택하세요");   //에러400에 대한 alert경고창
+		alert("직원을 선택하세요!");   //에러400에 대한 alert경고창
 	}
 	
 }

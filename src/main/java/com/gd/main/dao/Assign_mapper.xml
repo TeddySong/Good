@@ -15,9 +15,6 @@
 					 	<if test="assSearchTarget.equals('co_name')">
 							and c.co_name LIKE concat('%',#{search},'%')
 						</if>
-						<if test="assSearchTarget.equals('emp_name')">
-							and e.emp_name LIKE concat('%',#{search},'%')
-						</if>
 						<if test="assSearchTarget.equals('co_condition')">
 							and c.co_condition LIKE concat('%',#{search},'%')
 						</if>
@@ -51,9 +48,9 @@
 	
 	
 <!-- 선택된 과정에 대한 배정 리스트 -->
-<select id ="assCoList"  resultType="hashmap" >
+<select id ="assCoList"  resultType="com.gd.main.dto.AssListDTO">
 
-	select c2.co_name
+<!-- 	select c2.co_name
 			, s.stu_no
 			, c.cli_name 
 			, c.cli_phone 
@@ -68,30 +65,43 @@
 			and s.cli_no = c.cli_no 
 			and e.emp_no = s.emp_no 
 			and c2.co_no = a.co_no
-			and c2.co_no = #{co_no} 
-			and a.ass_condition != '철회'			
-			<where>
+			and a.ass_condition != '철회'		
+			and c2.co_no = #{co_no} -->
+			
+			select  c.co_name
+			, s.stu_no
+			, c2.cli_name 
+			, c2.cli_phone 
+			, e.emp_name 
+			, a.ass_condition 
+			from assign a
+			left outer join course c ON c.co_no = a.co_no
+			left outer join student s on a.stu_no = s.stu_no
+			left outer join client c2 on c2.cli_no = s.cli_no
+			left outer join employee e on e.emp_no = s.emp_no
+			 <where>  
+			 	c.co_no = ${co_no} and a.ass_condition != '철회'
 				<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
 					 	<if test="assSearchTarget.equals('cli_name')">
-							and c.cli_name  LIKE concat('%',#{search},'%')
+							and c2.cli_name LIKE concat('%',#{search},'%')
 						</if>
 						<if test="assSearchTarget.equals('stu_no')">
 							and s.stu_no = #{search}
 						</if>
 						<if test="assSearchTarget.equals('cli_phone')">
-							and c.cli_phone LIKE concat('%',#{search},'%')
+							and c2.cli_phone LIKE concat('%',#{search},'%')
 						</if>
 						<if test="assSearchTarget.equals('ass_condition')">
 							and a.ass_condition LIKE concat('%',#{search},'%')
 						</if>
-					</if> 
-			</where>
+				</if> 
 			ORDER BY s.stu_no DESC limit #{cnt} OFFSET #{offset}
+			</where>
 </select>
 
-<select id ="allCoCount"  resultType="hashmap" >
+<select id ="allCoCount"  resultType="com.gd.main.dto.AssListDTO" >
 
-	select c2.co_name
+	<!-- select c2.co_name
 			, s.stu_no
 			, c.cli_name 
 			, c.cli_phone 
@@ -106,24 +116,39 @@
 			and s.cli_no = c.cli_no 
 			and e.emp_no = s.emp_no 
 			and c2.co_no = a.co_no
-			and c2.co_no = #{co_no}
 			and a.ass_condition != '철회'
-		<where>
-			<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
-				 	<if test="assSearchTarget.equals('cli_name')">
-						and c.cli_name  LIKE concat('%',#{search},'%')
-					</if>
-					<if test="assSearchTarget.equals('stu_no')">
-						and s.stu_no = #{search}
-					</if>
-					<if test="assSearchTarget.equals('cli_phone')">
-						and c.cli_phone LIKE concat('%',#{search},'%')
-					</if>
-					<if test="assSearchTarget.equals('ass_condition')">
-						and a.ass_condition LIKE concat('%',#{search},'%')
-					</if>
+			and c2.co_no = #{co_no} -->
+			
+			select  c.co_name
+			, s.stu_no
+			, c2.cli_name 
+			, c2.cli_phone 
+			, e.emp_name 
+			, a.ass_condition 
+			from assign a
+			left outer join course c ON c.co_no = a.co_no
+			left outer join student s on a.stu_no = s.stu_no
+			left outer join client c2 on c2.cli_no = s.cli_no
+			left outer join employee e on e.emp_no = s.emp_no
+			<where>  
+			 	c.co_no = ${co_no} and a.ass_condition != '철회'
+				<if test="assSearchTarget != null and assSearchTarget != '' and search != null and search != ''">
+					 	<if test="assSearchTarget.equals('cli_name')">
+							and c2.cli_name LIKE concat('%',#{search},'%')
+						</if>
+						<if test="assSearchTarget.equals('stu_no')">
+							and s.stu_no = #{search}
+						</if>
+						<if test="assSearchTarget.equals('cli_phone')">
+							and c2.cli_phone LIKE concat('%',#{search},'%')
+						</if>
+						<if test="assSearchTarget.equals('ass_condition')">
+							and a.ass_condition LIKE concat('%',#{search},'%')
+						</if>
 				</if> 
-		</where>
+			<!-- ORDER BY s.stu_no DESC limit #{cnt} OFFSET #{offset} -->
+			</where>
+				
 </select>
 
 <select id="assStuCoList" resultType="com.gd.main.dto.AssListDTO">
@@ -161,7 +186,7 @@ where s.stu_no=#{param1}
 </select>
 
 
-<select id="courList2" parameterType="hashmap" resultType="com.gd.main.dto.CourseDTO">
+<select id="courList2" parameterType="hashmap" resultType="com.gd.main.dto.AssListDTO">
 		SELECT co_no, co_name, subject.sub_no, subject.sub_name, co_startDate, co_endDate, 
 		co_startTime, co_condition FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
@@ -188,7 +213,7 @@ where s.stu_no=#{param1}
 		
 	</select>
 
-	<!-- <select id="allCount" parameterType="hashmap" resultType="int">
+	 <select id="allCountCo" parameterType="hashmap" resultType="int">
 		SELECT COUNT(co_no) FROM course
 		LEFT OUTER JOIN subject ON subject.sub_no = course.sub_no
 		<where>
@@ -211,7 +236,7 @@ where s.stu_no=#{param1}
 				</if>
 			</if>
 		</where>
-	</select> -->
+	</select>
 	
 	<insert id="assStuListInsert" parameterType="hashmap">
 		INSERT INTO assign(ass_condition, stu_no, co_no) VALUES(#{ass_condition},#{stu_no},#{co_no})

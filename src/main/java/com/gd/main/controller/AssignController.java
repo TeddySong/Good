@@ -70,6 +70,7 @@ public class AssignController {
 		return page;
 	}
 	
+	
 	/*
 	 * //과정배정 리스트 페이지 이동
 	 * 
@@ -102,6 +103,19 @@ public class AssignController {
 		 
 		 return service.assCoList(params,co_no);
 	 }
+	
+	//과정 검색
+	@RequestMapping("/assCoListSe.ajax")
+	@ResponseBody
+	public HashMap<String, Object> assCoListSe(
+			@RequestParam HashMap<String, String> params,HttpSession session){
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("검색결과 리스트 요청"+params);
+		 String co_no =(String) session.getAttribute("co_no");
+	
+		return service.assCoList(params, co_no);
+	}
+
 	
 	
 	/*

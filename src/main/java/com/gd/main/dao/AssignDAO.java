@@ -19,8 +19,6 @@ public interface AssignDAO {
 	
 	int allCount1(HashMap<String, Object> searchResult);
 
-	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
-
 	int assStuListInsert(HashMap<String, Object> assMap);
 
 	ArrayList<AssListDTO> allPage(HashMap<String, Object> map);
@@ -32,6 +30,14 @@ public interface AssignDAO {
 	int coSearchDel(HashMap<String, Object> assMap);
 
 	String nameGet(String stu_no);
+
+	ArrayList<AssListDTO> allCoCountList(HashMap<String, Object> map);
+
+	int allCoStList(HashMap<String, Object> map);
+
+	ArrayList<AssListDTO> courList2(HashMap<String, Object> searchResult);
+
+	int allCountCo(HashMap<String, Object> searchResult);
 
 
 

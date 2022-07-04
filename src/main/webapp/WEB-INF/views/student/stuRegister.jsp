@@ -261,29 +261,14 @@
 									        </select>
 								        </td>
 									</tr>
-									</table>
-									<table id="goodList">
-									<thead>
-									<tr>
-										<th colspan="2">과목정보</th>										
-									</tr>
-									<!-- <tr>																			
-											<td colspan="2" style="text-align:end;">
-												<input type="button" value="과목추가" onclick="subSearch_pop()"/>
-												<input type="button" value="과목삭제" onclick="#"/>
-											</td>										
-									</tr> -->
-									</thead>
-									<tbody id="subtable">
-										
-									</tbody>									
 									<tr>
 										<th colspan="2">
 											<input type="button" value="등록완료" onclick="stuRegister()"/>
 											<input type="button" value="돌아가기" onclick="location.href='/stuList.go'"/>
 										</th>				
-									</tr>									
-								</table>  				
+									</tr>
+									</table>
+									  				
                             </div>                            
                         </div>
                     </div>
@@ -388,10 +373,18 @@ function stuRegister(){
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
+			if(data.login){
 			/* stuSub(data.stu_no); */
+			alert('등록이 완료되었습니다.');
 			location.href='stuList.go';	
+			} else{
+				alert('로그인이 필요한 서비스입니다.');
+				location.href='/login.go';
+			}
+			
 		},
 		error:function(error){
+			alert('등록에 실패하였습니다.')
 			console.log(error);
 		}
 	});	

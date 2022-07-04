@@ -152,9 +152,10 @@ public class EmployeeService {
 		
 		if(row>0) {
 			success = true;
-		
+			
 		}
-		logger.info("수정성공 : "+success);
+		logger.info("수정된 데이터 수:"+row);
+		logger.info("수정된 데이터 : "+success);
 		/* result.put("success",success); */
 		return success;
 	}
@@ -168,9 +169,17 @@ public class EmployeeService {
 
 
 
+
+
+
+
+
+
 	
 
 }
+
+
 
 
 

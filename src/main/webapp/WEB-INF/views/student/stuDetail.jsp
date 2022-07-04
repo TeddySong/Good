@@ -273,6 +273,7 @@
 		dataType:'JSON',
 		success:function(data){
 			 console.log(data);
+			 if(data.login){
 			 $('#cli_no').html(data.dto.cli_no);
 			$('#stu_no').html(data.dto.stu_no);
 			$('#cli_name').html(data.dto.cli_name);			
@@ -284,7 +285,12 @@
 			$('#stu_condition').html(data.dto.stu_condition);
 			
 			subSearch(data.dto.cli_no);
-			
+			 } else{				 
+				 alert('로그인이 필요한 서비스입니다.');
+					location.href='/';
+			 }
+			 
+			 
 		},
 		error:function(error){
 			console.log(error);

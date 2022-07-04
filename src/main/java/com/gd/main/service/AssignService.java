@@ -2,6 +2,7 @@ package com.gd.main.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.gd.main.dao.AssignDAO;
 import com.gd.main.dto.AssListDTO;
-import com.gd.main.dto.CourseDTO;
-import com.gd.main.dto.StuDTO;
 
 @Service
 public class AssignService {
@@ -40,19 +39,9 @@ public class AssignService {
 		// 5페이지 -> 20
 		
 		map.put("cnt", cnt);
-		
 		map.put("assSearchTarget", assSearchTarget);
 		map.put("search", search);
-		
-		//HashMap<String, Object> data = new HashMap<String, Object>();
-		
-		/*
-		 * logger.info("조건검색 : " + search + "/" + assSearchTarget);
-		 *  logger.info("리스트 : + map);
-		 */
-		
-		
-		
+	
 		//총 (allCnt) / 페이지동 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
 		ArrayList<AssListDTO> allCount = dao.allCount(map);
 		int allCnt = allCount.size();
@@ -91,18 +80,40 @@ public class AssignService {
 		    *  int page =Integer.parseInt(params.get("page"));
 			*/
 		  
-		  HashMap<String, Object> assMap = new HashMap<String, Object>();
-		  assMap.put("params", params);
-		  assMap.put("co_no", co_no);
-		  logger.info(assMap + "/");
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  int cnt = Integer.parseInt(params.get("cnt"));
+		  int page = Integer.parseInt(params.get("page"));
+		  String assSearchTarget = params.get("assSearchTarget");
+		  String search = params.get("search");
+		  logger.info("보여줄 페이지 : " + page);
 		  
-		  ArrayList<AssListDTO> assCoList = dao.assCoList(assMap);
+		  map.put("cnt", cnt);
+		  map.put("assSearchTarget", assSearchTarget);
+		  map.put("search", search);
+		  map.put("co_no", co_no);
 		  
-		  assMap.put("assCoList", assCoList);
+		  //assMap.put("params", params);
 		  
-		  logger.info(assMap + "~");
+		  ArrayList<AssListDTO> allCount = dao.allCount(map);
+		  int allCnt = allCount.size();
+		  logger.info("allCnt : " + allCnt);
+		  int pages = allCnt % cnt > 0?(allCnt/cnt) + 1: (allCnt/cnt);
+		  logger.info("pages : " + pages);
 		  
-		  return assMap;
+		  map.put("pages", pages);
+		  map.put("currPage", page);
+		  
+		  int offset = (page-1) * cnt;
+		  logger.info("offset : " + offset);
+		  map.put("offset", offset);
+		  		  
+		  logger.info(map + "/");
+		  
+		  ArrayList<AssListDTO> assCoList = dao.assCoList(map);
+		  logger.info(assCoList + "~");
+		  map.put("assCoList", assCoList);
+	
+		  return map;
 	  }
 
 	public HashMap<String, Object> assStuCoList(HashMap<String, String> params, String stu_no) {
@@ -110,7 +121,7 @@ public class AssignService {
 		HashMap<String, Object> assMap = new HashMap<String, Object>();
 		assMap.put("params", params);
 		assMap.put("stu_no", stu_no);
-		
+
 		ArrayList<AssListDTO> assStuCoList = dao.assStuCoList(assMap);
 		assMap.put("assStuCoList", assStuCoList);
 		
@@ -158,23 +169,7 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 					"startSearch : "+startSearch+" / "+
 					"endSearch : "+endSearch);
 		
-		//총 갯수(allCnt) / 페이지당 보여줄 갯수(cnt) = 생성 가능한 페이지(pages)
-
-		/*
-		 * int allCnt = dao.allCount(searchResult);
-		 * 
-		 * logger.info("allCnt : "+allCnt); int pages = allCnt % cnt > 0 ? (allCnt /
-		 * cnt)+1 : (allCnt / cnt); logger.info("pages : "+pages);
-		 * 
-		 * if(pages==0) {pages=1;}
-		 * 
-		 * if(page > pages) { //5개씩 보는 마지막 페이지로 갔을 때, 15개씩 보는 걸로 바꿨을때 뜨는 에러 해결 page =
-		 * pages; }
-		 * 
-		 * map.put("pages", pages); //만들 수 있는 최대 페이지 수
-		 * 
-		 * map.put("currPage", page); //현재 페이지
-		 */
+	
 		map.put("stu_no", stu_no);
 		
 		int offset = (page-1) * cnt;
@@ -219,6 +214,93 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		return assMap;
 		
 		}
+
+
+
+	public HashMap<String, Object> assStuListchange(HashMap<String, String> params, String stu_no) {
+		
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		int stuCo  = Integer.parseInt(params.get("stuCo"));
+		assMap.put("stuCo", stuCo);
+		logger.info(assMap + "sss");
+		//HashMap<String, Object> assMap = new HashMap<String, Object>();
+		assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		logger.info(stu_no);
+		
+		ArrayList<AssListDTO> assStuListchange = dao.assStuListchange(assMap);
+		assMap.put("assStuListchange", assStuListchange);
+		
+		logger.info(assMap + "~");
+		
+		return assMap;
+
+		
+	}
+
+	public HashMap<String, Object> coSearchUp(HashMap<String, String> params, String stu_no ) {
+		
+		
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		int stuCo  = Integer.parseInt(params.get("stuCo"));
+		String ass_condition = params.get("ass_condition");
+		assMap.put("stuCo", stuCo);
+		assMap.put("ass_condition",ass_condition);
+		//assMap.put("co_no", co_no);
+		logger.info("나오려나...? "+assMap);
+		//assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		
+		//ArrayList<AssListDTO> coSearchUp = dao.coSearchUp(assMap);
+		//assMap.put("coSearchUp", coSearchUp);
+		
+		int row = dao.coSearchUp(assMap);
+		
+		boolean cnt = false;
+		if (row > 0) {
+			cnt = true;
+
+		}
+		assMap.put("success", cnt);
+		
+		
+		
+		logger.info(assMap + "~");
+		
+		return assMap;
+	}
+
+
+
+	public HashMap<String, Object> coSearchDel(HashMap<String, String> params, String stu_no) {
+		HashMap<String, Object> assMap = new HashMap<String, Object>();
+		int stuCo  = Integer.parseInt(params.get("stuCo"));
+		String ass_condition = params.get("ass_condition");
+		assMap.put("stuCo", stuCo);
+		assMap.put("ass_condition",ass_condition);
+		//assMap.put("co_no", co_no);
+		logger.info("나오려나...? "+assMap);
+		//assMap.put("params", params);
+		assMap.put("stu_no", stu_no);
+		
+		//ArrayList<AssListDTO> coSearchUp = dao.coSearchUp(assMap);
+		//assMap.put("coSearchUp", coSearchUp);
+		
+		int row = dao.coSearchDel(assMap);
+		
+		boolean cnt = false;
+		if (row > 0) {
+			cnt = true;
+
+		}
+		assMap.put("success", cnt);
+		
+		
+		
+		logger.info(assMap + "~");
+		
+		return assMap;
+	}
 	
 
 		/*

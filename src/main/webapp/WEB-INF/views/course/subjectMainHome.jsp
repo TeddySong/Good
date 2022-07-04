@@ -132,7 +132,7 @@
                     <div class="work-box">
                     <!-- <a href="assets/img/work-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"> -->
                         <div class="work-img">
-                        <img src="/photo/${dangwa.subimg_newName}" alt="" class="img-fluid">
+                        <a href="subjectDetailHome.do?sub_no=${dangwa.sub_no}"><img src="/photo/${dangwa.subimg_newName}" alt="" class="img-fluid"></a>
                         </div>
                     <!-- </a> -->
                     <div class="work-content">
@@ -162,7 +162,7 @@
                     <div class="work-box">
                     <!-- <a href="assets/img/work-1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox"> -->
                         <div class="work-img">
-                        <img src="/photo/${jonghab.subimg_newName}" alt="" class="img-fluid">
+                        <a href="subjectDetailHome.do?sub_no=${jonghab.sub_no}"><img src="/photo/${jonghab.subimg_newName}" alt="" class="img-fluid"></a>
                         </div>
                     <!-- </a> -->
                     <div class="work-content">

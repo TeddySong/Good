@@ -225,15 +225,15 @@
 		<tr>
 			<th>입사일</th>
 			<td>
-         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_startDate}" />
-			</td>			
+         		<input type="date" id="emp_startDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_startDate}" pattern="yyyy-MM-dd" />">
+         	</td>			
 		</tr>
 		<tr>
 			<th>퇴사일</th>
 			<td>
-         		<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="${employeeDTO.emp_endDate}" />
+				<input type="date" id="emp_endDate" name="classStart" min="2015-06-01" max="2100-06-01" value="<fmt:formatDate value="${employeeDTO.emp_endDate}" pattern="yyyy-MM-dd" />">
 			</td>			
-		</tr>		
+		</tr>			
 	 	<tr>
 			<th>재직상태</th>
 			<td>
@@ -272,7 +272,7 @@ function empUpdate(){
 	var $emp_endDate=$("#emp_endDate").val();
 	var $emp_condition=$("#emp_condition").val();
 
-
+	
 	$.ajax({
 		type:'post',
 		url:'empUpdate.ajax',
@@ -291,11 +291,10 @@ function empUpdate(){
 		success:function(data){
 			console.log(data);
 			if(data.success){
-				alert("수정이 되었습니다!");
+				alert("직원수정이 되었습니다!");
 				location.href="empList.go";
 			} else {
-				alert("로그인이 필요한 서비스입니다.");
-				location.href='/login.go';
+				alert("직원수정에 실패했습니다.")
 			}
 		},
 		error:function(e){

@@ -187,7 +187,6 @@
                                 	<thead>
 										<tr>
 											<select id="coName">
-										
 												<option value="co_name">과정</option>
 												<option value="emp_name">담당직원</option>
 												<option value="co_condition">수강상태</option>
@@ -237,13 +236,19 @@ listCall(currPage);
 
 $('#assSearch').on('click',function(){
 	$("#pagination").twbsPagination('destroy');
-	assSearchCall(currPage);
+	listCall(currPage);
 });
 
 
 function listCall(page){
 	
 	var cnt = 10;
+	
+	var assSearchTarget = $("#coName option:selected").val();
+	console.log(assSearchTarget);
+
+	var search = $("#search").val();
+	console.log(search);
 	
 	console.log("param page : " + page);
 	
@@ -252,13 +257,16 @@ function listCall(page){
 		url:'assignList.ajax',
 		data:{
 			cnt : cnt,
-			page : page
+			page : page,
+			assSearchTarget : assSearchTarget,
+			search : search
 		},
 		dataType:'JSON',
 		success:function(data){
 			console.log(data);
 			drawList(data.assList);
 			currPage = data.currPage;
+			
 			
 			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
@@ -277,53 +285,54 @@ function listCall(page){
 			console.log(e);
 		}
 	});
+	
+	
 }	
-		//검색
-function assSearchCall(page){
+
+//검색	
+/* function assSearchCall(page){
 	
-		
-		var cnt = 10;
-			
-			
-		var assSearchTarget = $("#coName option:selected").val();
-		console.log(assSearchTarget);
+	var cnt = 10;
+
+	var assSearchTarget = $("#coName option:selected").val();
+	console.log(assSearchTarget);
+
+	var search = $("#search").val();
+	console.log(search);
 	
-		var search = $("#search").val();
-		console.log(search);
-		
-		$.ajax({
-			type:'get',
-			url:'assignSearch.ajax',
-			data:{
-				cnt : cnt,
-				page : page,
-				assSearchTarget:assSearchTarget,
-				search:search
-				},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data);
-				drawList(data.assList);
-				currPage = data.currPage;
-				
-				//플러그인 사용 페이징
-				$("#pagination").twbsPagination({
-					startPage: data.currPage, //시작페이지
-					totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
-					visiblePages:5,  //한번에 보여줄 페이지 수
-					onPageClick: function(e,page){
-						console.log(page);
-						currPage=page;
-						listCall(page);
-					}
-				});
-				
+	$.ajax({
+		type:'get',
+		url:'assignSearch.ajax',
+		data:{
+			cnt : cnt,
+			page : page,
+			assSearchTarget : assSearchTarget,
+			search : search
 			},
-			error:function(e){
-				console.log(e);
-			}
-		}); 
-	}
+		dataType:'JSON',
+		success:function(data){
+			console.log(data);
+			drawList(data.assList);
+			currPage = data.currPage;
+			
+			//플러그인 사용 페이징
+			$("#pagination").twbsPagination({
+				startPage: data.currPage, //시작페이지
+				totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages:5,  //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
+					console.log(page);
+					currPage=page;
+					listCall(page);
+				}
+			});
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+} */
 
 	function drawList(assList){
 		var content="";

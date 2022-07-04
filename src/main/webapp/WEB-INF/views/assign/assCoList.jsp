@@ -245,17 +245,36 @@ var currPage = 1;
 
 listCall(currPage);
 
+$('#assSearch').on('click',function(){
+	$("#pagination").twbsPagination('destroy');
+	listCall(currPage);
+});
+
+
 function listCall(page){
 	
-	var pagePerNum = 10;
+	var cnt =10;
+	
+	
 	console.log("param page : " + page);
+	
+	var assSearchTarget = $("#coName option:selected").val();
+	console.log(assSearchTarget);
+
+	var search = $("#search").val();
+	console.log(search);
+	
+	
+	
 	
 	$.ajax({
 		type:'get',
 		url:'assCoList.ajax',
 		data:{
-			cnt : pagePerNum,
-			page : page
+			cnt : cnt,
+			page : page,
+			assSearchTarget : assSearchTarget,
+			search : search
 		},
 		dataType:'JSON',
 		success:function(data){
@@ -268,8 +287,17 @@ function listCall(page){
 			$('#cli_phone').html(data.dto.cli_phone);
 			$('#emp_name').html(data.dto.emp_name);
 			$('#ass_condition').html(data.dto.ass_condition); */
-			 
 			
+			$("#pagination").twbsPagination({
+				startPage: data.currPage, //시작페이지
+				totalPages: data.pages, //총 페이지(전체게시물 / 한 페이지에 보여줄 게시물 수)
+				visiblePages:5,  //한번에 보여줄 페이지 수
+				onPageClick: function(e,page){
+					console.log(page);
+					currPage=page;
+					listCall(page);
+				}
+			});
 		},
 		error:function(error){
 			console.log(error);
@@ -284,7 +312,7 @@ function drawList(assCoList){
 		content += '<tr>';
 		content += '<td>'+item.co_name+'</td>';
 		content += '<td>'+item.stu_no+'</td>';
-		content += '<td><a href="assStuList.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';		
+		content += '<td ><a id ="cliName" href="assStuList.go?stu_no='+item.stu_no+'">'+item.cli_name+'</a></td>';		
 		content += '<td>'+item.cli_phone+'</td>';
 		content += '<td>'+item.emp_name+'</td>';
 		content += '<td>'+item.ass_condition+'</td>';

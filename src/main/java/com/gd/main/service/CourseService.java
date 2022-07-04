@@ -125,7 +125,7 @@ public class CourseService {
 	}
 
 	
-	public HashMap<String, Object> courRegister(HashMap<String, Object> params) {
+	public HashMap<String, Object> courRegister(HashMap<String, Object> params, boolean login) {
 		HashMap<String, Object> regiResult = new HashMap<String, Object>();
 		
 		//subject 테이블에 넣을 값(sub_no,sub_name) 객체화
@@ -141,6 +141,7 @@ public class CourseService {
 			success = true;
 		}
 		
+		regiResult.put("login", login);
 		regiResult.put("success", success);
 		
 		return regiResult;

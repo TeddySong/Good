@@ -142,7 +142,7 @@
 	<input name="cli_no" value="${data.cli_no}">
 	<input name="emp_no" value="${data2.emp_no}">
 	</td>
-	<td>	<input type="date" name="cli_log_Dday"/></td>
+	<td><input type="date" name="cli_log_Dday"/></td>
 	<td><input type="time" name="cli_log_Dtime"/></td>
 	<!-- <input type="text" name="cli_log_Dtime" class="timepicker"/> -->
 	</tr>

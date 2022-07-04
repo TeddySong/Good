@@ -282,7 +282,7 @@ public class ClientService {
 	 */
 	int allCnt= dao.checkCnt(map);
 	
-	System.out.println("allcnt: "+allCnt);
+	//System.out.println("allcnt: "+allCnt);
 	int pages = allCnt%cnt>0 ? (allCnt/cnt)+1 : (allCnt/cnt);
 	if(pages==0) {pages=1;}
 	if(page>pages) {page=pages;}
@@ -296,6 +296,8 @@ public class ClientService {
 	
 	
 	ArrayList<Client_Dto> list = dao.shcekList(map);
+
+	
 	map.put("list", list);
 	return map;
 	}

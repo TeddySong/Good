@@ -31,7 +31,7 @@
             
    #goodList th {
 			background-color:#505050;
-			color:#FFFFFF;
+			color:#black;
 			text-align:center;
 		}
 		

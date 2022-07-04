@@ -26,7 +26,7 @@ public class CourseController {
 	@Autowired ClientService clientService;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	
+	/*
 	//과목 리스트 메인 페이지 이동
 	@RequestMapping(value = "/subjectMainHome.go")
 	public String classMain(Model model){
@@ -35,6 +35,7 @@ public class CourseController {
 
 		return page;
 	}
+	*/
 	
 	//과목,과정 리스트 호출
 	@RequestMapping(value = "/subjectMainHome.do")
@@ -60,7 +61,7 @@ public class CourseController {
 		 
 		 
 		logger.info("과목 리스트 메인 페이지 요청");
-		page = "./course/subjectMainHome";
+		page = "subjectMainHome";
 
 		return page;
 	}
@@ -98,7 +99,7 @@ public class CourseController {
 		logger.info("과목 상세 홈페이지 이동 : "+dto);
 		model.addAttribute("dto", dto);
 		model.addAttribute("homeSrcList", homeSrcList);
-		return "./course/subjectDetailHome";
+		return "subjectDetailHome";
 		
 	}
 	
@@ -195,11 +196,17 @@ public class CourseController {
 	//과정 등록
 	@RequestMapping("/courRegister.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courRegister(
+	public HashMap<String, Object> courRegister(HttpSession session,
 			@RequestParam HashMap<String, Object> params){
 		
+		boolean login = false;
+		
+		if(session.getAttribute("loginId") != null){
+			login = true;
+		}
+		
 		logger.info("과정 등록하기 : "+params);
-		return service.courRegister(params);
+		return service.courRegister(params,login);
 	}
 	
 	

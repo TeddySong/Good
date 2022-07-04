@@ -151,7 +151,7 @@
 							<br/><br/>
 							<div style="text-align:center;">
 							<button onclick="stuLogRegisterDo()" class="goodRegister">완료</button>
-							<button onclick="window.close()'" class="goodRegister">취소</button>
+							<button onclick="window.close()" class="goodRegister">취소</button>
 							</div>
                         </div>
                     </div>
@@ -170,6 +170,8 @@ function stuLogRegisterDo(){
 	var $stu_no = $('#student_no');
 	var $emp_no = $('#empNo');
 	var $stu_log_content = $('#stu_log_content');
+	
+	if($stu_log_content.val() != ""){
 	
 	$.ajax({
 		type:'get',
@@ -190,7 +192,10 @@ function stuLogRegisterDo(){
 		}
 	});
 	
-	
+	} else {
+		alert("내용을 입력해주세요.");
+		$stu_log_content.focus();
+	}
 	
 }
 

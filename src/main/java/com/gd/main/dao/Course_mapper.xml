@@ -27,7 +27,7 @@
 				</if>
 			</if>
 		</where>
-		ORDER BY co_no DESC LIMIT #{cnt} OFFSET #{offset}
+		ORDER BY co_startDate LIMIT #{cnt} OFFSET #{offset}
 	</select>
 	
 	<select id="allCount" parameterType="hashmap" resultType="int">

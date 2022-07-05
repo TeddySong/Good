@@ -137,9 +137,11 @@
             </div>
             <div class="portfolio-description">
               <h2>과목후기</h2>
+              <ul>
               <c:forEach items="${homeSrcList}" var="homeSrcList">
-              	<p>${homeSrcList.scr_content}</p>
+              	<li>${homeSrcList.scr_content}</li>
               </c:forEach>
+              </ul>
             </div>
 			<center>
 				<button class="btn btn-primary" onclick="location.href='subjectMainHome.do#contact'" width="288px">상담신청</button>

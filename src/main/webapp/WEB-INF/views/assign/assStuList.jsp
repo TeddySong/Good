@@ -198,7 +198,7 @@
 											<tr>		
 											<th>학생명</th>
 												<td>
-													<input type="text" id=cli_name value="${nameGet}" readonly/>
+													${nameGet}
 												</td>
 											<th>학생번호</th>
 												<td id="stu_no"></td>

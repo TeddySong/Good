@@ -95,7 +95,7 @@
                             			<td style="text-align:center"><button id="stuSearch" class="goodRegister" style="width:100%;">검색</button></td>
                             		
 										<td  style="text-align:end; font-size:20px;">
-									<button class="goodRegister" style="width:100%;" onclick="assStuList()" >등록</button>
+									<button class="goodRegister" style="width:100%;" onclick="assStuList()" >선택</button>
 										</td>
 															
                             		</tr>

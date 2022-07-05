@@ -134,7 +134,7 @@
 					<tbody>    
 					<tr>
 						<td colspan="3" class="clog-body" readonly >
-							<textarea class="form-control" style="border:2px solid black; font-size:20px; resize:none;" readonly>${clog.cli_log_content}</textarea>
+							<textarea class="form-control" style="border:2px solid black; font-size:20px; resize:none; height:150px;" readonly>${clog.cli_log_content}</textarea>
 						</td>
 					</tr>
 					</tbody>

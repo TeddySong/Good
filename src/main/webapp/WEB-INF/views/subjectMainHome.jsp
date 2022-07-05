@@ -311,7 +311,7 @@
 													다. 대검찰청 첨단범죄수사과 ( www.spo.go.kr / 02-3480-2000 )
 													라. 경찰청 사이버테러대응센터 ( www.ctrc.go.kr / 02-392-0330 )
 				        		</textarea></td></tr>
-				        	<tr><td colspan="4" id="infoCheck"><input  type="checkbox"> 개인정보 취급방침 </td></tr>
+				        	<tr><td colspan="4" id="infoCheck"><input  type="checkbox" checked  > 개인정보 취급방침 </td></tr>
 				        	<tr> 
 				        		
 				        		<td colspan="4"><button id="regBtn" class="btn btn-primary" width="288px">전송</button></td>

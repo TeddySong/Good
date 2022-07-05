@@ -215,7 +215,7 @@ public class ClientController {
 	@RequestMapping("/scheRegister.do")
 	public String scheRegisterDo(RedirectAttributes re, @RequestParam HashMap<String, String> params) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		System.out.println("params:" + params);
+		//System.out.println("params:" + params);
 		// 넘어온 값들 저장
 
 		String cli_log_content = params.get("cli_log_content");
@@ -263,100 +263,7 @@ public class ClientController {
 		return service.checkListDo(params);
 	}
 
-	/*
-	 * @RequestMapping("/firstRegister.go") public String firstReg() { return
-	 * "client/firstRegister"; }
-	 */
-
-	/*
-	 * @RequestMapping("/homeSubDetail.do") public String detailPage(@RequestParam
-	 * String sub_no, HttpSession session, Model model) {
-	 * logger.info("상세보기 페이지 이동 : " +sub_no); session.setAttribute("sub_no",
-	 * sub_no);
-	 * 
-	 * SubDTO subDetail = subService.subDetail(sub_no); ArrayList<SubDTO> srcList =
-	 * subService.subDetailsc(sub_no); ArrayList<SubDTO> photoList =
-	 * subService.subCurriDetail(sub_no); ArrayList<SubDTO> subImgList =
-	 * subService.subImgDetail(sub_no);
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("subDetail", subDetail); model.addAttribute("srcList",
-	 * srcList); model.addAttribute("photoList", photoList);
-	 * model.addAttribute("subImgList", subImgList); return
-	 * "./client/homeSubDetail"; }
-	 * 
-	 * 
-	 * 
-	 * @RequestMapping("/homeSubDetail2.do") public String detailPage2(@RequestParam
-	 * String sub_no, HttpSession session, Model model) {
-	 * logger.info("상세보기 페이지 이동 : " +sub_no); session.setAttribute("sub_no",
-	 * sub_no);
-	 * 
-	 * SubDTO subDetail = subService.subDetail(sub_no); ArrayList<SubDTO> srcList =
-	 * subService.subDetailsc(sub_no); ArrayList<SubDTO> photoList =
-	 * subService.subCurriDetail(sub_no); ArrayList<SubDTO> subImgList =
-	 * subService.subImgDetail(sub_no);
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("subDetail", subDetail); model.addAttribute("srcList",
-	 * srcList); model.addAttribute("photoList", photoList);
-	 * model.addAttribute("subImgList", subImgList); return
-	 * "./client/homeSubDetail2"; }
-	 * 
-	 * @RequestMapping("/homeSubDetail3.do") public String detailPage3( HttpSession
-	 * session, Model model) { HashMap<String, Object> map = new HashMap<String,
-	 * Object>();
-	 * 
-	 * logger.info("상세보기 페이지 이동 : " +sub_no); session.setAttribute("sub_no",
-	 * sub_no);
-	 * 
-	 * SubDTO subDetail = subService.subDetail(sub_no); ArrayList<SubDTO> srcList =
-	 * subService.subDetailsc(sub_no); ArrayList<SubDTO> photoList =
-	 * subService.subCurriDetail(sub_no); ArrayList<SubDTO> subImgList =
-	 * subService.subImgDetail(sub_no);
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("subDetail", subDetail); model.addAttribute("srcList",
-	 * srcList); model.addAttribute("photoList", photoList);
-	 * model.addAttribute("subImgList", subImgList);
-	 * 
-	 * ArrayList< HashMap<String, Object>> subList= service.regSub();
-	 * map.put("subList", subList); model.addAttribute("subList", subList);
-	 * 
-	 * return "client/homeSubDetail3"; }
-	 */
-
-	// 홈페이지 상담신청
-	/*
-	 * @RequestMapping("/homeCliReg")
-	 * 
-	 * @ResponseBody public String homeReg(@RequestParam(value = "cli_name",
-	 * required = false) String cli_name,
-	 * 
-	 * @RequestParam(value = "cli_phone", required = false) String cli_phone,
-	 * 
-	 * @RequestParam(value = "cli_req", required = false) String cli_req,
-	 * 
-	 * @RequestParam(value = "sub_no", required = false) ArrayList<Integer> sub_no)
-	 * { HashMap<String, Object> map = new HashMap<String, Object>();
-	 * 
-	 * // System.out.println(cli_name); // System.out.println(cli_phone); //
-	 * System.out.println(cli_req); System.out.println(sub_no); map.put("cli_name",
-	 * cli_name); map.put("cli_phone", cli_phone); map.put("cli_req", cli_req);
-	 * // @RequestParam(value="parameter이름[]")List<String> //
-	 * System.out.println(params); // // List<String> sub = (List<String>)
-	 * params.get("sub_name"); // for (String string : sub) { //
-	 * System.out.println(string); // } String msg = "상담신청 오류발생."; if
-	 * (service.cliReg(map) > 0) { msg = "상담신청을 완료했습니다. 감사합니다.";
-	 * service.cliRegCo(sub_no); }
-	 * 
-	 * map.put("msg", msg);
-	 * 
-	 * return "redirect:/homeSubDetail3.do"; }
-	 */
+	
 	@RequestMapping(value="/")
 	public String logout(HttpSession session) {
 		session.removeAttribute("loginId");

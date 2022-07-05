@@ -453,7 +453,7 @@ function drawList(list){
 		list.forEach(function(item){
 			
 			if(item.emp_name==null){item.emp_name= '미정';}
-			if(item.cli_log_result==null){item.cli_log_result='상담 전';}
+			if(item.cli_log_result==null){item.cli_log_result=" ";}
 		
 			//console.log(item);
 			content += '<tr>';

@@ -117,7 +117,7 @@
 			<tr><td><textarea class="form-control" id="log" name="opinion" style="border:2px solid black; font-size:20px; height:150px; resize:none;" readonly>${data.cli_req}</textarea></td></tr>		
 		</table>
 </div>		    
- <div style="width:65%; margin: 0 20px; float:right;">     
+ <div style="width:65%; margin: 0 20px; float:right; overflow-y:scroll; height:700px;">     
       				<h1>▶ 상담일지</h1>	
 			<c:forEach items="${data_log}" var="clog"> 
 				<table id="goodList" style="border:1px solid black" class="table table-striped">
@@ -134,7 +134,7 @@
 					<tbody>    
 					<tr>
 						<td colspan="3" class="clog-body" readonly >
-							<textarea class="form-control" style="border:2px solid black; font-size:20px; resize:none; height:150px;" readonly>${clog.cli_log_content}</textarea>
+							<textarea class="form-control" style="border:2px solid black; font-size:20px; resize:none; height:200px;" readonly>${clog.cli_log_content}</textarea>
 						</td>
 					</tr>
 					</tbody>

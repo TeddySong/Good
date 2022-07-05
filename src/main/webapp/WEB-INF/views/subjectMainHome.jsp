@@ -438,7 +438,7 @@ $('#regBtn').on('click',function(){
 			dataType:'json',
 			success:function(data){
 				console.log(data);
-				alert('고객을 등록했습니다.');
+				alert('상담 신청 완료되었습니다.');
 	/* 			listCall(currPage);
 				$('#myModal').modal('hide'); */
 				location.reload();

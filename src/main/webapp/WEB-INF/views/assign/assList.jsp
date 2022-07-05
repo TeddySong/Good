@@ -188,7 +188,6 @@
 										<tr>
 											<select id="coName">
 												<option value="co_name">과정</option>
-												<option value="emp_name">담당직원</option>
 												<option value="co_condition">수강상태</option>
 											</select>
 											<input type = "text" id= "search"/>
@@ -199,7 +198,7 @@
 											<th>강의시간</th>
 											<th>개강일</th>
 											<th>배정현황</th>											
-											<th>수강상태</th>
+											<th>과정상태</th>
 										</tr>
 									</thead>
 									<tbody id="list">

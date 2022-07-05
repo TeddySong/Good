@@ -188,7 +188,7 @@ function listCall(page){
 			//console.log(data);
 			$('#stu_no').html(data.stu_no);
 			drawList(data.courList);
-			/* currPage=data.currPage;
+			currPage=data.currPage;
 			
 			//플러그인 사용 페이징
 			$("#pagination").twbsPagination({
@@ -200,7 +200,7 @@ function listCall(page){
 					currPage=page;
 					listCall(page);
 				}
-			}); */
+			});
 			
 		},
 		error:function(e){

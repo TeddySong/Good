@@ -47,17 +47,21 @@ public class ClientController {
 			model.addAttribute("data", data);
 			model.addAttribute("data_log", data_log);
 
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
 
 		return page;
 	}
 
 	@RequestMapping("/cliList.go")
-	public String ajaxhome(String cli_name, String cli_phone, HttpSession session) {
+	public String ajaxhome(Model model,String cli_name, String cli_phone, HttpSession session) {
 		String page = "emp_login";
 
 		if (session.getAttribute("loginId") != null) {
 			page = "client/ajaxList";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
 
 		return page;
@@ -88,7 +92,7 @@ public class ClientController {
 		logger.info("id는" + loginId);
 		
 		
-		if (loginId.equals("emp0")) {
+		if (loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
 			int cnt = service.ajaxDelete(delList);
 			map.put("msg", delList.size() + "중" + cnt + " 개 삭제 완료");
 		} else {
@@ -202,6 +206,8 @@ public class ClientController {
 			// System.out.println("이름"+data2.getEmp_name());
 			model.addAttribute("data", data);
 			model.addAttribute("data2", data2);
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
 
 		return page;
@@ -237,12 +243,14 @@ public class ClientController {
 
 // 일정 리스트 이동 
 	@RequestMapping("/checkList.go")
-	public String checkListGo(HttpSession session) {
+	public String checkListGo(Model model, HttpSession session) {
 
 		String page = "emp_login";
 
 		if (session.getAttribute("loginId") != null) {
 			page = "client/checkList";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
 		return page;
 	}

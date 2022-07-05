@@ -3,15 +3,13 @@ package com.gd.main.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,8 +27,15 @@ public class SubjectController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/subList.go", method = RequestMethod.GET)
-	public String subListGo(Model model) {			
-		return "./subject/subList";
+	public String subListGo(Model model, HttpSession session) {			
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./subject/subList";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;		
 	}
 	
 	@RequestMapping(value = "/subList.ajax")
@@ -41,9 +46,22 @@ public class SubjectController {
 	}
 	
 	@RequestMapping(value = "/subRegister.go")
-	public String subRegisterGo() {
+	public String subRegisterGo(Model model, HttpSession session) {
 		logger.info("과목 등록 페이지 이동");
-		return "./subject/subRegister";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+			page="./subject/subRegister";
+			} else {
+				page="./subject/subList";
+				model.addAttribute("msg","권한이 없습니다");
+			}
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;		
 	}
 	
 	@RequestMapping("/subOverlay.ajax")
@@ -127,11 +145,25 @@ public class SubjectController {
 	
 	
 	@RequestMapping("/subUpdate.go")
-	public String subUpdatePage(@RequestParam String sub_no, HttpSession session) {
+	public String subUpdatePage(@RequestParam String sub_no, Model model, HttpSession session) {
 		logger.info("수정 페이지 이동 : " +sub_no);
-		session.setAttribute("sub_no", sub_no);
 		
-		return "./subject/subUpdate";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+				session.setAttribute("sub_no", sub_no);
+				page="./subject/subUpdate";
+			} else {
+				page="./subject/subList";
+				model.addAttribute("msg","권한이 없습니다");
+			}
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;	
+		
 	}
 	
 	@RequestMapping("/subUpdate.ajax")
@@ -166,9 +198,17 @@ public class SubjectController {
 	
 	
 	@RequestMapping("/scriptlist.go")
-	public String listPage() {
+	public String listPage(Model model, HttpSession session) {
 		logger.info("과목후기 리스트 페이지 이동");
-		return "./subject/scriptlist";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./subject/scriptlist";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;		
 	}
 	
 	@RequestMapping("/scriptlist.ajax")
@@ -238,9 +278,17 @@ public class SubjectController {
 	}
 	
 	@RequestMapping("/scrReg.go")
-	public String scrRegGo() {
+	public String scrRegGo(Model model, HttpSession session) {
 		logger.info("과목후기 등록 페이지");
-		return "./subject/scrRegister";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			page="./subject/scrRegister";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}
+		
+		return page;	
 	}
 	
 	@RequestMapping("/scrSubReg.ajax")

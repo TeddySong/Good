@@ -71,13 +71,13 @@
 
 	<div>
 		<table>
-			<tr><td style="font-size:15px; height:5%; font-family: 'Noto Sans KR', sans-serif;">직원전용페이지</td></tr>
-			<tr><td style="text-align:center; font-size:35px; height:25%">Welcome to Good2 IT!</td></tr>		
-			<tr><td style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;ID</td></tr>
-			<tr><th style="height:15%"><input type="text" name="emp_id" placeholder="ID를 입력하세요"/></th></tr>
-			<tr><td style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;Password</td></tr>
-			<tr><th style="height:15%"><input type="password" name="emp_pw" placeholder="패스워드를 입력하세요"/></th></tr>
-			<tr><th style="height:20%"><input type="button" class="goodRegister" onclick="empLogin()" value="Log In"/></th></tr>			
+			<tr><td style="font-size:15px; height:5%; font-family: 'Noto Sans KR', sans-serif;">직원전용페이지 <td style="text-align:end; font-family: 'Noto Sans KR', sans-serif; font-size:15px;"><a href='/'>홈페이지로 돌아가기</a></td></td></tr>
+			<tr><td colspan="2" style="text-align:center; font-size:35px; height:25%">Welcome to Good2 IT!</td></tr>		
+			<tr><td colspan="2" style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;ID</td></tr>
+			<tr><th colspan="2" style="height:15%"><input type="text" name="emp_id" placeholder="ID를 입력하세요"/></th></tr>
+			<tr><td colspan="2" style="height:10%">&nbsp;&nbsp;&nbsp;&nbsp;Password</td></tr>
+			<tr><th colspan="2" style="height:15%"><input type="password" name="emp_pw" placeholder="패스워드를 입력하세요"/></th></tr>
+			<tr><th colspan="2" style="height:20%"><input type="button" class="goodRegister" onclick="empLogin()" value="Log In"/></th></tr>			
 		</table>
 	</div>
     

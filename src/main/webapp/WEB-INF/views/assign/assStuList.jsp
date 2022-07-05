@@ -438,7 +438,7 @@ $('#coSearchDel').on('click',function(){
 
 function coSearch_pop(){
 	var stu_no=$("#stu_no").html();
-	window.open("/coSearList.go?stu_no="+stu_no,"new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	window.open("/coSearList.go?stu_no="+stu_no,"new","width=1300, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 
 }
 

@@ -198,10 +198,10 @@
 <td>
 <button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrDel()">삭제</button>
 <button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="scrRegister_pop()">등록</button>
+<button class="goodRegister" style="width:30%; padding:5px 10px;" onclick="location.href='subList.go'" class="goodRegister">과목</button>
 </td>
 </tr>
 </table>
-<br/>
 <table id="goodList">
 	 	<thead>
 	 		<tr>

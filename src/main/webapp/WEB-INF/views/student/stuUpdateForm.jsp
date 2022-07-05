@@ -66,7 +66,7 @@
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
-		padding: 10px 20px;
+		padding: 10px 10px;
 	    color: rgb(26 18 50 / 100%);
 	    font-size: 18px;
 	    font-weight: 500;
@@ -84,7 +84,7 @@
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
-		padding: 5px 20px;
+		padding: 5px 5px;
 	    color: rgb(26 18 50 / 100%);
 	    font-size: 18px;
 	    font-weight: 500;
@@ -216,7 +216,7 @@
 									<tr>
 									<th>이름</th>
 										<td><input type="text" id="cli_name" readonly/>
-										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:9%;">고객수정</button>
+										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:9%;">수정</button>
 										<button onclick="stuDelete()" class="goodRegister" style="width:9%;">삭제</button>
 										</td>
 									</tr>

@@ -130,6 +130,7 @@
 	<update id="empUpdate" parameterType="hashmap">
  		UPDATE employee SET 
 			emp_id = #{emp_id}
+			,emp_name = #{emp_name}
 			,emp_pw= #{emp_pw}
 			,emp_phone = #{emp_phone}
 			,emp_position = #{emp_position}

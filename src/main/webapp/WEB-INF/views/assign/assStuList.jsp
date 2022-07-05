@@ -341,7 +341,7 @@ function listCall(page){
 		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
 		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		content += '<tr>';
-		content += '<td><input type="radio" name=selectAss value='+item.co_no+'>'+item.co_no+'</td>';	
+		content += '<td><input type="radio" name=selectAss value='+item.co_no+'></td>';	
 		content += '<td>'+item.co_name+'</td>';		
 		content += '<td>'+startErrorDate+'</td>';
 		content += '<td>'+endErrorDate+'</td>';

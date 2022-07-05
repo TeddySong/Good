@@ -325,7 +325,7 @@
 			<where>
 			 <!-- cl.cli_log_result ='상담예정' --> 
 			<if test="cli_log_Dday!=null and  cli_log_Dday!='' ">
-				and d.cli_log_Dday >= #{cli_log_Dday}
+				and d.cli_log_Dday LIKE  concat('%',#{cli_log_Dday},'%')  
 			</if>
 			<if test= "searchType !='' and searchType != null and keyword!='' and keyword!=null ">
 				<if test="searchType.equals('client')">
@@ -354,7 +354,7 @@
 			
 			</if> -->
 			<if test="cli_log_Dday!=null and  cli_log_Dday!='' ">
-				and d.cli_log_Dday >= #{cli_log_Dday}
+				and d.cli_log_Dday    LIKE  concat('%',#{cli_log_Dday},'%')  
 			</if>
 			<if test= "searchType !='' and searchType != null and keyword!='' and keyword!=null ">
 				<if test="searchType.equals('client')">

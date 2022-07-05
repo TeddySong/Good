@@ -325,7 +325,7 @@ function searchClick(page){
  
 /* $('#searchBtn').on('click',function(){ */
 	
-	 var pagePerNum=5;
+	 var pagePerNum=10;
 	//var page= null;
 	if( page==null){
 		page=1;

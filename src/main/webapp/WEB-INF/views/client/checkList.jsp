@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>고객리스트</title>
 <link rel="icon" href="resources/img/icon.png">
 <link href="../resources/img/goodfavicon.png" rel="icon">
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />

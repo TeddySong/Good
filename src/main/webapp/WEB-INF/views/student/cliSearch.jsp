@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>고객 검색</title>
+<title>직원전용페이지</title>
 <link href="../resources/img/goodfavicon.png" rel="icon">
 <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
 <link href="../resources/CSS/emp/empStyle.css" rel="stylesheet" />

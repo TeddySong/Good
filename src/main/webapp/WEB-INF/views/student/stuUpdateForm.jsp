@@ -77,6 +77,24 @@
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
 	}
+	
+	.goodRegister{
+	position: relative;		
+		margin: 0 auto;
+		max-width: 180px;
+		text-decoration: none;
+		border-radius: 4px;
+		padding: 5px 20px;
+	    color: rgb(26 18 50 / 100%);
+	    font-size: 18px;
+	    font-weight: 500;
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+	}
+	
+	.goodRegister:hover{
+	color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+	}
 		
 </style>
 </head>
@@ -175,11 +193,11 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">수강생 등록</h1>                        
+                        <h1 class="mt-4">수강생 수정</h1>                        
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>
-                                수강생등록
+                                수강생수정
                             </div>
                             <div>
                                 <table id="goodList">
@@ -192,13 +210,14 @@
 										<td id="emp_no"></td>
 									</tr>
 									<tr class="hidden">
-										<th>직원번호</th>
+										<th>학생번호</th>
 										<td id="stu_no"></td>
 									</tr>
 									<tr>
 									<th>이름</th>
 										<td><input type="text" id="cli_name" readonly/>
-										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:18%;">고객수정</button>
+										<button onclick="cliUpdate_pop()" class="goodRegister" style="width:9%;">고객수정</button>
+										<button onclick="stuDelete()" class="goodRegister" style="width:9%;">삭제</button>
 										</td>
 									</tr>
 									<tr>
@@ -510,6 +529,33 @@ function stuUpdate(){
 		
 	}
 	
+	
+	function stuDelete(){
+		var $stu_no = $('#stu_no').html();
+		
+		$.ajax({
+			type:'get',
+			url:'stuDelete.ajax',
+			data:{
+				stu_no:$stu_no
+			},
+			dataType:'json',
+			success:function(data){		
+				console.log(data);
+				if(confirm('고객 정보를 삭제하시겠습니까?')){
+					alert(data.msg);
+					location.href='stuList.go';
+				}else{
+					location.reload();
+				}				
+			},
+			error:function(error){
+				console.log(error);
+			}
+		});
+		
+		
+	}
 	
 	
 	

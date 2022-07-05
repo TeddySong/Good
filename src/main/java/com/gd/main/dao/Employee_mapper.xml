@@ -8,8 +8,8 @@
 		VALUES (#{emp_writer_no},#{emp_no}, #{emp_log_content}, #{emp_log_condition})   -->
 	
 	
-	INSERT INTO employee_log(emp_no,emp_log_content, emp_log_condition)
-	VALUES (#{emp_no}, #{emp_log_content},#{emp_log_condition}) 
+	INSERT INTO employee_log(emp_no,emp_log_content, emp_log_condition,emp_Writer_no)
+	VALUES (#{emp_no}, #{emp_log_content},#{emp_log_condition},#{empName}) 
 	
 	</insert>
 
@@ -17,6 +17,7 @@
    <!-- 직원일지 호출 -->
    SELECT 
       e.emp_name,
+      emp_writer_no,
       el.emp_log_date,
       el.emp_log_condition,
       el.emp_log_content,
@@ -111,11 +112,11 @@
 	
 	
 	<select id="empOverlay" parameterType="String" resultType="String">
-		SELECT emp_name
+		SELECT emp_id
 		FROM 
 			employee
 		WHERE 
-			emp_name=#{emp_name}		
+			emp_id=#{emp_id}		
 		<!-- SELECT emp_name FROM employee WHERE emp_name = #{chkName} -->
 	</select>
 	

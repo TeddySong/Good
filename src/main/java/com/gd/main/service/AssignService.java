@@ -172,8 +172,17 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 					"startSearch : "+startSearch+" / "+
 					"endSearch : "+endSearch);
 		
+		int allCnt = dao.allCountCo(searchResult);
+
+		logger.info("allCnt : "+allCnt);
+		int pages = allCnt % cnt > 0 ? (allCnt / cnt)+1 : (allCnt / cnt);
+		logger.info("pages : "+pages);
+		
+		map.put("pages", pages); //만들 수 있는 최대 페이지 수
+		
+		map.put("currPage", page); //현재 페이지
 	
-		map.put("stu_no", stu_no);
+		//map.put("stu_no", stu_no);
 		
 		int offset = (page-1) * cnt;
 		logger.info("offset,cnt : "+offset+","+cnt); //offset:게시글 시작번호

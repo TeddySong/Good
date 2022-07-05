@@ -107,11 +107,13 @@ public class CourseController {
 	
 	//과정 리스트 페이지 이동
 	@RequestMapping(value = "/courList.go")
-	public String courListGo(Model moel, HttpSession session) {
-		String page = "home";
+	public String courListGo(Model model, HttpSession session) {
+		String page = "emp_login";
 		
 		if(session.getAttribute("loginId") != null) {
 			page = "redirect:/courList.do";
+		}	else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
 		}
 		logger.info("과정 리스트 페이지 이동");
 		//return "./course/courList";
@@ -165,9 +167,23 @@ public class CourseController {
 	
 	//과정 등록 페이지 이동
 	@RequestMapping("/courRegister.go")
-	public String registerPage() {
+	public String registerPage(Model model, HttpSession session) {
 		logger.info("과정 등록 페이지 이동");
-		return "redirect:/courseRegister.do";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+			page="redirect:/courseRegister.do";
+			} else {
+				page="./course/courList";
+				model.addAttribute("msg","권한이 없습니다");
+			}			
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}	
+		
+		return page;
 	}
 	
 	//과정 등록 페이지에 데이터 뿌려주기
@@ -228,10 +244,18 @@ public class CourseController {
 	
 	//과정 상세 페이지 이동
 	@RequestMapping("/courDetail.go")
-	public String courDetailPage(@RequestParam String co_no, HttpSession session) {
+	public String courDetailPage(@RequestParam String co_no, Model model, HttpSession session) {
 		logger.info("상세보기 페이지 이동 : "+co_no);
-		session.setAttribute("co_no",co_no);
-		return "./course/courDetail";
+		
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			session.setAttribute("co_no",co_no);
+			page="./course/courDetail";
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}	
+		
+		return page;
 	}
 	
 	//과정 상세보기
@@ -264,10 +288,23 @@ public class CourseController {
 	
 	//과정 수정 페이지 이동
 	@RequestMapping("/courUpdate.go")
-	public String courUpdatePage(@RequestParam String co_no, HttpSession session) {
+	public String courUpdatePage(@RequestParam String co_no, Model model, HttpSession session) {
 		logger.info("과정 수정 페이지 이동");
-		session.setAttribute("co_no", co_no);
-		return "redirect:/courseUpdate.do";
+		String page="emp_login";
+		if(session.getAttribute("loginId") != null) {
+			String loginId = (String)session.getAttribute("loginId");
+			if(loginId.equals("emp0") || loginId.equals("emp1") || loginId.equals("emp2")) {
+				session.setAttribute("co_no", co_no);
+				page="redirect:/courseUpdate.do";
+			} else {
+				page="./course/courList";
+				model.addAttribute("msg","권한이 없습니다");
+			}				
+		}else {
+			model.addAttribute("msg", "로그인이 필요한 서비스 입니다");
+		}	
+		
+		return page;
 	}
 		
 	

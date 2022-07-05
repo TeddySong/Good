@@ -43,6 +43,8 @@ public interface StudentDAO {
 	StuDTO cliInfoGet(String cli_no);
 
 	int cliStuFinUpdate(HashMap<String, String> params);
+
+	int stuDelete(HashMap<String, String> params);
 	 
 	/*
 	 * void stuSubRegister(HashMap<String, Object> map);

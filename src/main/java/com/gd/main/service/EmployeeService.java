@@ -55,7 +55,7 @@ public class EmployeeService {
 	//직원일지 리스트 
 	public ArrayList<EmployeeDTO> empLogList(String emp_no){
 		logger.info("리스트 서비스 요청");
-		logger.info("받아온 넘버 : " + emp_no);		
+		logger.info("받아온 넘버 : " + emp_no);
 		return dao.empLogList(emp_no);
 	}
 	
@@ -127,11 +127,11 @@ public class EmployeeService {
 			return map;
 		}
 	
-	public HashMap<String, Object> empOverlay(String chkName) {
+	public HashMap<String, Object> empOverlay(String chkId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		String overName = dao.empOverlay(chkName);
-		logger.info("중복 직원명이 있나? "+overName);
-		boolean over = overName==null?false:true; //over == true : 얘 중복이야
+		String overId = dao.empOverlay(chkId);
+		logger.info("중복 아이디가 있나? "+overId);
+		boolean over = overId==null?false:true; //over == true : 얘 중복이야
 		//조건:overId가 null 맞아? 참이면 false(조건1) 거짓이면 true(조건2)
 		map.put("empOverlay", over);
 		

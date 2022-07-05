@@ -226,6 +226,11 @@
 
 </body>
 <script>
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
 listCall();
 
 //과목 검색

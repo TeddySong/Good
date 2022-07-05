@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>직원전용페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style></style>
 </head>

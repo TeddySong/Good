@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gd.main.dto.Client_Dto;
-import com.gd.main.dto.SubDTO;
 import com.gd.main.service.ClientService;
 import com.gd.main.service.SubjectService;
 
@@ -363,6 +362,7 @@ public class ClientController {
 		session.removeAttribute("loginId");
 		String msg =  "로그인이 필요한 서비스입니다.";
 		session.setAttribute("msg", msg);
+	
 		return "emp_login";
 	}
 }

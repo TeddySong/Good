@@ -442,9 +442,9 @@ function drawList(courList){
 	
 	courList.forEach(function(item){
 		var errorDate = new Date(item.co_startDate);
-		var nowDate = new Date(errorDate.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
+		var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		var errorDate2 = new Date(item.co_endDate);
-		var nowDate2 = new Date(errorDate2.setDate(errorDate.getDate()+1)).toLocaleDateString("ko-kr");
+		var nowDate2 = new Date(errorDate2.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		
 		//console.log(item);
 		content += '<tr>';

@@ -155,6 +155,8 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		searchResult.put("courseNameSearch", courseNameSearch);
 		searchResult.put("keyword", keyword);
 		
+		searchResult.put("cnt", cnt);
+		
 		
 		//입력된 날짜가 빈값일 때
 		if(startSearch == "") {
@@ -171,6 +173,7 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 					"keyword : "+keyword+" / "+
 					"startSearch : "+startSearch+" / "+
 					"endSearch : "+endSearch);
+		logger.info("cnt : " +cnt);
 		
 		int allCnt = dao.allCountCo(searchResult);
 
@@ -186,10 +189,9 @@ HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int offset = (page-1) * cnt;
 		logger.info("offset,cnt : "+offset+","+cnt); //offset:게시글 시작번호
-		
-		
-		searchResult.put("cnt", cnt);
 		searchResult.put("offset", offset);
+		logger.info("offset : " + offset);
+		
 		
 		
 		ArrayList<AssListDTO> courList = dao.courList2(searchResult);

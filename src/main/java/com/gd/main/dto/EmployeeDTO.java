@@ -25,6 +25,7 @@ public class EmployeeDTO{
 	private String emp_log_content;
 	private String emp_log_condition;
 	private String empName;
+	
 	public String getEmp_writer_no() {
 		return emp_writer_no;
 	}

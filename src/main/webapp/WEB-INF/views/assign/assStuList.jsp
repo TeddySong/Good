@@ -198,7 +198,7 @@
 											<tr>		
 											<th>학생명</th>
 												<td>
-													<input type="text" id=cli_name value="${nameGet}" readonly/>
+													${nameGet}
 												</td>
 											<th>학생번호</th>
 												<td id="stu_no"></td>
@@ -341,7 +341,7 @@ function listCall(page){
 		var endErrorDate = new Date(item.co_endDate).toLocaleDateString("ko-kr");
 		//var nowDate = new Date(errorDate.setDate(errorDate.getDate())).toLocaleDateString("ko-kr");
 		content += '<tr>';
-		content += '<td><input type="radio" name=selectAss value='+item.co_no+'>'+item.co_no+'</td>';	
+		content += '<td><input type="radio" name=selectAss value='+item.co_no+'></td>';	
 		content += '<td>'+item.co_name+'</td>';		
 		content += '<td>'+startErrorDate+'</td>';
 		content += '<td>'+endErrorDate+'</td>';
@@ -438,7 +438,7 @@ $('#coSearchDel').on('click',function(){
 
 function coSearch_pop(){
 	var stu_no=$("#stu_no").html();
-	window.open("/coSearList.go?stu_no="+stu_no,"new","width=1000, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
+	window.open("/coSearList.go?stu_no="+stu_no,"new","width=1300, height=650, left=600 ,top=200, resizable=no, scrollbars=no, status=no, location=no, directories=no;");
 
 }
 

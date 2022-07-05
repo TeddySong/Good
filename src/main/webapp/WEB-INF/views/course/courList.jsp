@@ -52,8 +52,7 @@
 	}
 	
 	.goodRegister {
-		display: inline;
-		margin: 20px 20px 0 20px auto;
+		display: inline;		
 		max-width: 180px;
 		text-decoration: none;
 		border-radius: 4px;
@@ -219,9 +218,12 @@
 							<br/>
 						    
 						    <!--표-->
-						    <button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
+						    
 							<table id="goodList">
 								<thead>
+								<tr><th colspan="7" style="text-align:end; width:70%;">
+								<button onclick="location.href='courRegister.go'" class="goodRegister">등록</button>
+								</th></tr>
 									<tr>
 										<th>과정번호</th>
 										<th>과정명</th>

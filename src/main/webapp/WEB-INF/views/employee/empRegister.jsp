@@ -301,15 +301,15 @@ function save(){
 		 if($emp_id.val()==""){
 			 alert('ID를 입력해주세요!');
 			 $emp_id.focus();
+		 }else if(!overChk){
+			 alert('ID 중복을 확인해주세요!');
+			 $emp_id.focus();	 
 		 }else if($emp_pw.val() ==""){
 			 alert('PW를 입력해주세요!');
 			 $emp_pw.focus();
 		 }else if($emp_name.val() ==""){
 			 alert('직원명을 입력해주세요!');
 			 $emp_name.focus();
-		 }else if(!overChk){
-			 alert('직원명 중복을 확인해주세요!');
-			 $emp_name.focus();	 
 		 }else if($emp_phone.val()==""){
 			 alert('연락처를 입력해주세요!');
 			 $emp_phone.focus();

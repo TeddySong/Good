@@ -204,7 +204,7 @@
 </body>
 <script>
 var currPage = 1;
-var pagePerNum = 5; 
+var pagePerNum = 10; 
 var endcnt =[];
 
 	

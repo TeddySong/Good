@@ -273,7 +273,7 @@ listCall(currPage);
 }); */
 
 function listCall(page){
-	 var pagePerNum=5;
+	 var pagePerNum=10;
 
 	$.ajax({
 		type:'GET',

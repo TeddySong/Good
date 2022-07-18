@@ -26,17 +26,6 @@ public class CourseController {
 	@Autowired ClientService clientService;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	/*
-	//과목 리스트 메인 페이지 이동
-	@RequestMapping(value = "/subjectMainHome.go")
-	public String classMain(Model model){
-		
-		String page = "redirect:/subjectMainHome.do";
-
-		return page;
-	}
-	*/
-	
 	//과목,과정 리스트 호출
 	@RequestMapping(value = "/subjectMainHome.do")
 	public String classMainHome(Model model){
@@ -80,17 +69,7 @@ public class CourseController {
 	public String subjectDetailHomepage(Model model,String sub_no){
 		
 		String page = "emp_login";
-		/*
-		//단과 리스트
-		ArrayList<CourseDTO> dangwa = service.dangwa();
-		logger.info("단과 과목 갯수 : "+dangwa.size());
-		model.addAttribute("dangwa",dangwa);
-		
-		//종합 리스트
-		ArrayList<CourseDTO> jonghab = service.jonghab();
-		logger.info("단과 과목 갯수 : "+jonghab.size());
-		model.addAttribute("jonghab",jonghab);
-		*/
+
 		ArrayList<CourseDTO> homeSrcList = service.homeSrcList(sub_no);
 		 
 		//과목 상세 뿌려주기
@@ -136,8 +115,6 @@ public class CourseController {
 		ArrayList<CourseDTO> courseName = service.courseName();
 		logger.info("과정 갯수 : "+courseName.size());
 		model.addAttribute("courseName",courseName);
-		
-		//CourseDTO dto = service.courDetail2(co_no);
 
 		page = "./course/courList";
 
@@ -148,19 +125,12 @@ public class CourseController {
 	//리스트 호출
 	@RequestMapping("/courList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courList(
-			@RequestParam HashMap<String, String> params) {
-		//HashMap<String, Object> map = new HashMap<String, Object>();
+	public HashMap<String, Object> courList(@RequestParam HashMap<String, String> params) {
 		logger.info("과정 리스트 요청 : "+params);	
 	
 		HashMap<String, Object> map = service.courList2(params);
 		ArrayList<CourseDTO> courList = (ArrayList<CourseDTO>) map.get("courList");
 		logger.info("test");
-		/*
-		for (CourseDTO dto : courList) {
-			logger.info(dto.getCo_startDate()+" >>> "+dto.getCo_endDate());
-		}
-		*/
 		return map;
 	}
 
@@ -232,13 +202,10 @@ public class CourseController {
 		
 		//과정 상세보기 정보
 		CourseDTO dto = service.courDetail2(co_no);
-		//CourseDTO dto2 = service.callSubNo(co_no);
 		
 		logger.info("과정 상세 페이지 이동 : "+dto);
 		model.addAttribute("dto", dto);
-		//model.addAttribute("dto2",dto2);
 		return "./course/courseDetail";
-		//return "redirect:/courseDetail.do";
 	}
 	
 	
@@ -265,11 +232,6 @@ public class CourseController {
 		
 		boolean login = false;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//과목명 리스트
-		//ArrayList<CourseDTO> subName = service.subName();
-		//logger.info("과목 갯수 : "+subName.size());
-		//page = "./course/courseUpdate";
-		//model.addAttribute("subName",subName);
 		
 		//로그인 여부 확인
 		if(session.getAttribute("loginId") != null) {
@@ -306,36 +268,6 @@ public class CourseController {
 		
 		return page;
 	}
-		
-	
-	/*
-	//과정 수정 페이지에 데이터 뿌려주기
-	@RequestMapping(value = "/courUpdateForm.do")
-	public String courseUpdatePage(Model model,HttpSession session,
-			@RequestParam String co_no){
-		String page = "redirect:/courUpdateForm.do";
-		logger.info("수정 상세보기 요청 : "+co_no);
-		
-		logger.info("과정수정 페이지에 과목 이름 호출");
-		//과목명 리스트
-		ArrayList<CourseDTO> subName = service.subName();
-		logger.info("과목 갯수 : "+subName.size());
-		//page = "./course/courseUpdate";
-		model.addAttribute("subName",subName);		
-		
-		if(session.getAttribute("loginId") != null) {
-			CourseDTO dto = service.courDetail2(co_no);
-			if(dto != null) {
-				model.addAttribute("dto", dto);
-				page = "./course/courseUpdate";
-			} else {
-				model.addAttribute("msg", "로그인이 필요한 서비스입니다.");
-			}
-		}
-		
-		return page;
-	}
-	*/
 	
 	
 	//과정 수정
@@ -379,9 +311,7 @@ public class CourseController {
 	//과정 검색
 	@RequestMapping("/courSearch.ajax")
 	@ResponseBody
-	public HashMap<String, Object> courSearch(
-			@RequestParam HashMap<String, String> params){
-		//HashMap<String, Object> map = new HashMap<String, Object>();
+	public HashMap<String, Object> courSearch(@RequestParam HashMap<String, String> params){
 		logger.info("검색결과 리스트 요청"+params);
 		return service.courList2(params);
 	}

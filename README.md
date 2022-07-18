@@ -1,6 +1,10 @@
-# Good2 IT Academy 웹사이트&ERP  
+# Good2 IT Academy 웹사이트 & ERP  
 <p align="center"><img src="../DevFolio/Group.png" width=""></p>  
-![mockup](../DevFolio/Group.png "mockupImage")  
+![alt image](../DevFolio/Group.png "mockupImage")  
+<a href="#">
+	<img src="../DevFolio/Group.png" width="400px" alt="sample image">
+</a>  
+
 
 * Demo :  
 

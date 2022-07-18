@@ -4,6 +4,13 @@
 
 
 * __Demo__ :  
+  * Log in  
+  
+| ID | PW | 권한 |  
+| ------ | --- | --- |  
+| emp0\~2 | emp0\~2 | 관리자 |  
+| emp3\~9 | emp3\~9 | 직원 |  
+
 
 * __개발 목표__ : Java와 Spring Framework를 이용한 학원 ERP 사이트 구축  
 * __사용 기술__  
@@ -13,4 +20,3 @@
   * jQuery  
   * MyBatis  
   * Bootstrap  
-* __Advanced Feature__

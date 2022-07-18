@@ -1,9 +1,6 @@
 # Good2 IT Academy 웹사이트 & ERP  
-<p align="center"><img src="../DevFolio/Group.png" width=""></p>  
-![alt image](../DevFolio/Group.png "mockupImage")  
-<a href="#">
-	<img src="../DevFolio/Group.png" width="400px" alt="sample image">
-</a>  
+ 
+![Group](https://user-images.githubusercontent.com/99333136/179507226-a0e16f28-7682-4e6d-a174-30c6a1dcf0a3.png)  
 
 
 * Demo :  
